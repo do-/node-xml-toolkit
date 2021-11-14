@@ -1,0 +1,22 @@
+{
+  "name": "xml-toolkit",
+  "version": "0.0.1",
+  "description": "Collection of classes for dealing with XML",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-/node-xml-toolkit.git"
+  },
+  "keywords": [
+    "xml"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/do-/node-xml-toolkit/issues"
+  },
+  "homepage": "https://github.com/do-/node-xml-toolkit#readme"
+}
