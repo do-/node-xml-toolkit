@@ -19,6 +19,8 @@ console.log (xml)
 async function main () {
 
 	await test_001_lexer_sync ('E05a.xml')
+//	await test_001_lexer_sync ('not-sa01.xml')
+//	await test_001_lexer_sync ('not-sa02.xml')
 
 }
 
