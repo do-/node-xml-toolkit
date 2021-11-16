@@ -11,7 +11,9 @@ async function test_001_lexer_sync (fn) {
 	
 console.log (xml)
 
-	const lexer = new XMLLexer ()
+	const lexer = new XMLLexer ({
+//		encoding: 'ascii',
+	})
 
 	lexer.on ('data', data => console.log ({data}))
 	
