@@ -4,7 +4,10 @@ const {XMLLexer} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
-	const xml = fs.readFileSync ('test/' + fn, 'utf-8')
+	const xml = fs.readFileSync (
+		'test/' + fn
+//		, 'utf-8'
+	)
 	
 console.log (xml)
 
@@ -12,7 +15,7 @@ console.log (xml)
 
 	lexer.on ('data', data => console.log ({data}))
 	
-	for (let c of xml) lexer.write (c); lexer.end ()
+	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
 
 //	lexer.end (xml)
 
