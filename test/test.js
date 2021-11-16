@@ -12,9 +12,9 @@ console.log (xml)
 
 	lexer.on ('data', data => console.log ({data}))
 	
-//	for (let c of xml) lexer.write (c); lexer.end ()
+	for (let c of xml) lexer.write (c); lexer.end ()
 
-	lexer.end (xml)
+//	lexer.end (xml)
 
 }
 
