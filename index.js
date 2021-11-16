@@ -1,3 +1,4 @@
-const XMLLexer = require ('./lib/XMLLexer')
+const XMLLexer   = require ('./lib/XMLLexer')
+const Attributes = require ('./lib/Attributes')
 
-module.exports = {XMLLexer}
+module.exports = {XMLLexer, Attributes}

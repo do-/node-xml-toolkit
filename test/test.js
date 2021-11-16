@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLLexer} = require ('../')
+const {XMLLexer, Attributes} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -36,7 +36,18 @@ async function test_002_lexer_stream (fn) {
 //		encoding: 'ascii',
 	})
 
-	lexer.on ('data', data => console.log ({data}))
+	lexer.on ('data', data => {
+	
+		let a = new Attributes (data)
+		
+		console.log (new Attributes (data).toObject ())
+	
+//	for (let kv of a) console.log (kv)
+	
+//		for (let [, k1, v1, k2, v2] of data.matchAll (/([^\s=]+)='([^']+)'|([^\s=]+)="([^"]+)"/g)) console.log ([k1 || k2, v1 || v2]) // "'
+	}
+//		console.log ({data})
+	)
 	
 	return new Promise ((ok, fail) => {
 		
@@ -53,12 +64,12 @@ async function test_002_lexer_stream (fn) {
 
 async function main () {
 
-	await test_001_lexer_sync ('E05a.xml')
+//	await test_001_lexer_sync ('E05a.xml')
 //	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
 //	await test_001_lexer_sync ('param_types.xml')
 //	await test_001_lexer_sync ('E05a.xml')
-//	await test_002_lexer_stream ('param_types.xml')
+	await test_002_lexer_stream ('param_types.xml')
 //	await test_002_lexer_stream ('not-sa02.xml')
 
 }
