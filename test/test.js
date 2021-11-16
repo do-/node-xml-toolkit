@@ -28,6 +28,7 @@ console.log (xml)
 async function test_002_lexer_stream (fn) {
 
 	const is = fs.createReadStream ('test/' + fn, {
+//		encoding: 'utf8',
 	})
 	
 	const lexer = new XMLLexer ({
@@ -52,12 +53,13 @@ async function test_002_lexer_stream (fn) {
 
 async function main () {
 
-//	await test_001_lexer_sync ('E05a.xml')
+	await test_001_lexer_sync ('E05a.xml')
 //	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
 //	await test_001_lexer_sync ('param_types.xml')
 //	await test_001_lexer_sync ('E05a.xml')
-	await test_002_lexer_stream ('param_types.xml')
+//	await test_002_lexer_stream ('param_types.xml')
+//	await test_002_lexer_stream ('not-sa02.xml')
 
 }
 
