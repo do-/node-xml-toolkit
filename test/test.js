@@ -36,17 +36,13 @@ async function test_002_lexer_stream (fn) {
 //		encoding: 'ascii',
 	})
 
+/*
 	lexer.on ('data', data => {
 	
 		let a = new Attributes (data)
 		
-		console.log (new Attributes (data).toObject ())
+		console.log (new Attributes (data).toMap ())
 	
-//	for (let kv of a) console.log (kv)
-	
-//		for (let [, k1, v1, k2, v2] of data.matchAll (/([^\s=]+)='([^']+)'|([^\s=]+)="([^"]+)"/g)) console.log ([k1 || k2, v1 || v2]) // "'
-	}
-//		console.log ({data})
 	)
 	
 	return new Promise ((ok, fail) => {
@@ -59,6 +55,19 @@ async function test_002_lexer_stream (fn) {
 		is.pipe (lexer)
 		
 	})
+*/
+
+	is.pipe (lexer)
+	
+	for await (const i of lexer) if (/^<PARAMTYPE /.test (i)) {
+	
+		let a = new Attributes (i)
+
+		console.log (a.asObject ())
+		
+		for (let j of a) console.log (j)
+
+	}
 
 }
 
