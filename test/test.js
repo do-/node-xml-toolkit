@@ -16,12 +16,12 @@ console.log (xml)
 //		encoding: 'ascii',
 	})
 
-	lexer.on ('data', data => console.log ({data}))
+	lexer.on ('data', data => console.log (new Attributes (data)))
 	
 //	for (let c of xml) lexer.write (c); lexer.end ()
-	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
+//	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
 
-//	lexer.end (xml)
+	lexer.end (xml)
 
 }
 
@@ -38,13 +38,16 @@ async function test_002_lexer_stream (fn) {
 
 	is.pipe (lexer)
 	
-	for await (const i of lexer) if (/^<PARAMTYPE /.test (i)) {
+	for await (const i of lexer) 
+//	if (/^<PARAMTYPE /.test (i)) 
+	{
+		console.log ({i})
 	
-		let a = new Attributes (i)
+//		let a = new Attributes (i)
 
-		console.log (a.asObject ())
+//		console.log (a.asObject ())
 		
-		for (let j of a) console.log (j)
+//		for (let j of a) console.log (j)
 
 	}
 
@@ -96,12 +99,12 @@ async function main () {
 //	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
 //	await test_001_lexer_sync ('param_types.xml')
-//	await test_001_lexer_sync ('E05a.xml')
+	await test_002_lexer_stream ('E05a.xml')
 //	await test_002_lexer_stream ('param_types.xml')
 //	await test_002_lexer_stream ('not-sa02.xml')
 //	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
-	await test_003_emitter_sync ('not-sa01.xml')
+//	await test_003_emitter_sync ('not-sa01.xml')
 
 }
 
