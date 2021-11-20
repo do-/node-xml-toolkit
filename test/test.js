@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLEventEmitter, XMLLexer, Attributes} = require ('../')
+const {SAXEventEmitter, XMLLexer, Attributes} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -69,7 +69,7 @@ console.log (xml)
 		stripSpace: true,
 	})
 
-	const sax = new XMLEventEmitter ({})
+	const sax = new SAXEventEmitter ({})
 
 	lex.pipe (sax)
 
@@ -98,11 +98,11 @@ async function main () {
 //	await test_001_lexer_sync ('E05a.xml')
 //	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
-	await test_001_lexer_sync ('param_types.xml')
+//	await test_001_lexer_sync ('param_types.xml')
 //	await test_002_lexer_stream ('E05a.xml')
 //	await test_002_lexer_stream ('param_types.xml')
 //	await test_002_lexer_stream ('not-sa02.xml')
-//	await test_003_emitter_sync ('E05a.xml')
+	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
 

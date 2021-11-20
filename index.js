@@ -1,5 +1,5 @@
 const Attributes      = require ('./lib/Attributes')
 const XMLLexer        = require ('./lib/XMLLexer')
-const XMLEventEmitter = require ('./lib/XMLEventEmitter')
+const SAXEventEmitter = require ('./lib/SAXEventEmitter')
 
-module.exports = {XMLEventEmitter, XMLLexer, Attributes}
+module.exports = {SAXEventEmitter, XMLLexer, Attributes}
