@@ -11,9 +11,9 @@
     "url": "git+https://github.com/do-/node-xml-toolkit.git"
   },
   "keywords": [
-    "xml"
+    "xml sax stax"
   ],
-  "author": "",
+  "author": "Dmitry Ovsyanko",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/do-/node-xml-toolkit/issues"
