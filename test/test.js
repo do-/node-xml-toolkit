@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {SAXEventEmitter, XMLLexer, Attributes} = require ('../')
+const {SAXEventEmitter, SAXEvent, XMLLexer} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -16,7 +16,7 @@ console.log (xml)
 //		encoding: 'ascii',
 	})
 
-	lexer.on ('data', data => console.log (new Attributes (data)))
+	lexer.on ('data', data => console.log (new SAXEvent (data).attributes))
 	
 //	for (let c of xml) lexer.write (c); lexer.end ()
 //	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
@@ -43,12 +43,6 @@ async function test_002_lexer_stream (fn) {
 	{
 		console.log ({i})
 	
-//		let a = new Attributes (i)
-
-//		console.log (a.asObject ())
-		
-//		for (let j of a) console.log (j)
-
 	}
 
 }
@@ -98,11 +92,11 @@ async function main () {
 //	await test_001_lexer_sync ('E05a.xml')
 //	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
-//	await test_001_lexer_sync ('param_types.xml')
+	await test_001_lexer_sync ('param_types.xml')
 //	await test_002_lexer_stream ('E05a.xml')
 //	await test_002_lexer_stream ('param_types.xml')
 //	await test_002_lexer_stream ('not-sa02.xml')
-	await test_003_emitter_sync ('E05a.xml')
+//	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
 
