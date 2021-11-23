@@ -1,6 +1,6 @@
 {
   "name": "xml-toolkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Collection of classes for dealing with XML",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "url": "git+https://github.com/do-/node-xml-toolkit.git"
   },
   "keywords": [
-    "xml sax stax"
+    "xml",
+    "sax",
+    "stax"
   ],
   "author": "Dmitry Ovsyanko",
   "license": "MIT",
