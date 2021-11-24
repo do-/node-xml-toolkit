@@ -98,9 +98,10 @@ async function main () {
 //	await test_002_lexer_stream ('E05a.xml')
 //	await test_002_lexer_stream ('param_types.xml')
 //	await test_002_lexer_stream ('not-sa02.xml')
-	await test_003_emitter_sync ('E05a.xml')
+//	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
+	await test_003_emitter_sync ('ent.xml')
 
 }
 
