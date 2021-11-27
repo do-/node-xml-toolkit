@@ -70,7 +70,7 @@ console.log (xml)
 
 	lex.pipe (sax)
 
-/*
+
 	for (let event of [
 		'StartDocument',
 		'ProcessingInstruction',
@@ -81,20 +81,13 @@ console.log (xml)
 		'EndElement',
 		'EndDocument',
 	]) sax.on (event, data => console.log ([event, data]))
-*/
 
-	sax.on ('StartElement', event => {
-	
-		console.log ({event})
-		
-		const attr = new AttributesMap (sax)
-		
-		event.writeAttributesToMap (attr)
-		
-		console.log ({attr})
-		
+
+/*
+	sax.on ('StartElement', event => {	
+		console.log ([event, event.attributes])
 	})
-
+*/
 //	lexer.on ('data', data => console.log ({data}))
 	
 //	for (let c of xml) lexer.write (c); lexer.end ()
