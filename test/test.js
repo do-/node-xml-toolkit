@@ -80,7 +80,7 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data]))
+	]) sax.on (event, data => console.log ([event, data.src, data.name, data.level, (data.parent || {}).name]))
 
 
 /*
@@ -109,7 +109,8 @@ async function main () {
 //	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
-	await test_003_emitter_sync ('ent.xml')
+//	await test_003_emitter_sync ('ent.xml')
+	await test_003_emitter_sync ('soap.xml')
 
 }
 

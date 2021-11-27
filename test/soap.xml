@@ -1,0 +1,40 @@
+<?xml version="1.0"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Header/>
+  <SOAP-ENV:Body>
+    <SendRequestRequest xmlns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1" xmlns:ns0="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1">
+      <SenderProvidedRequestData Id="Ue7e71ce1-7ce3-4ca5-a689-1a8f2edbb1af">
+        <MessageID>3931cda8-3245-11ec-b0bc-000c293433a0</MessageID>
+        <ns0:MessagePrimaryContent>
+          <ExportDebtRequestsRequest xmlns="urn:dom.gosuslugi.ru/debt-responses/1.0.0" xmlns:ns0="urn:dom.gosuslugi.ru/common/1.2.0">
+            <ns0:information-system-id>1f0823b4-9c11-4622-a561-6bae5c0a00ba</ns0:information-system-id>
+            <ns0:organization-id>6eef689e-48bb-4eb0-55da-18b6db9909b7</ns0:organization-id>
+            <request-id>87c4c940-6ad3-11eb-9439-0242ac130002</request-id>
+          </ExportDebtRequestsRequest>
+        </ns0:MessagePrimaryContent>
+        <TestMessage xmlns:ns1="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1"/>
+      </SenderProvidedRequestData>
+      <CallerInformationSystemSignature>
+        <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod Algorithm="urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-256"/>
+            <ds:Reference URI="#Ue7e71ce1-7ce3-4ca5-a689-1a8f2edbb1af">
+              <ds:Transforms>
+                <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                <ds:Transform Algorithm="urn://smev-gov-ru/xmldsig/transform"/>
+              </ds:Transforms>
+              <ds:DigestMethod Algorithm="urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-256"/>
+              <ds:DigestValue>XrXb2BlS8uo68tyQ++KE1yPjj5y3TynCaRIpXeL5uPk=</ds:DigestValue>
+            </ds:Reference>
+          </ds:SignedInfo>
+          <ds:SignatureValue>9Th1waEJy83XQxxKD5DXT29g885RhJoYe3ZQ1HrbrQLCEBchCCTJtcThYmNBPL/HzF2gp7KQs3gXrnsj+OBlJQ==</ds:SignatureValue>
+          <ds:KeyInfo>
+            <ds:X509Data>
+              <ds:X509Certificate>MIIMUDCCC/2gAwIBAgIQP5mOAGqs0aNB/xUqRR4HXDAKBggqhQMHAQEDAjCCAYgxHDAaBgkqhkiG9w0BCQEWDWNhQGlhYy5zcGIucnUxGDAWBgUqhQNkARINMTAzNzg0MzA0MjkwNzEaMBgGCCqFAwOBAwEBEgwwMDc4MTUwMDA4NzAxCzAJBgNVBAYTAlJVMSkwJwYDVQQIDCA3OCDQodCw0L3QutGCLdCf0LXRgtC10YDQsdGD0YDQszEmMCQGA1UEBwwd0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LMxYzBhBgNVBAkMWtCi0YDQsNC90YHQv9C+0YDRgtC90YvQuSDQv9C10YDQtdGD0LvQvtC6LCDQtC42LCDQm9C40YLQtdGAINCQLCDQv9C+0LzQtdGJ0LXQvdC40Y8gN9CdIDjQnTEZMBcGA1UECwwQ0J7RgtC00LXQuyDihJY0MDEoMCYGA1UECgwf0KHQn9CxINCT0KPQnyDCq9Ch0J/QsSDQmNCQ0KbCuzEoMCYGA1UEAwwf0KHQn9CxINCT0KPQnyDCq9Ch0J/QsSDQmNCQ0KbCuzAeFw0yMDExMDUwODI5MTJaFw0yMTExMDUwODI5MTJaMIIDPjE4MDYGA1UECQwv0KPQu9C40YbQsCDQp9Cw0LnQutC+0LLRgdC60L7Qs9C+LCDQtNC+0LwgNDYtNDgxLjAsBgkqhkiG9w0BCQIMH9CW0LjQu9C40YnQvdGL0Lkg0LrQvtC80LjRgtC10YIxFjAUBgUqhQNkAxILMDE0MjM3NTA0MDkxGDAWBgUqhQNkARINMTE3Nzg0NzM4NDYwNDEaMBgGCCqFAwOBAwEBEgwwMDc4NDIxNDQ2OTQxLTArBgkqhkiG9w0BCQEWHm4ubS5sZXRlbmtvQGdjanMuZ2suZ292LnNwYi5ydTELMAkGA1UEBhMCUlUxKTAnBgNVBAgMIDc4INCh0LDQvdC60YIt0J/QtdGC0LXRgNCx0YPRgNCzMSYwJAYDVQQHDB3QodCw0L3QutGCLdCf0LXRgtC10YDQsdGD0YDQszGBuTCBtgYDVQQKDIGu0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LPRgdC60L7QtSDQs9C+0YHRg9C00LDRgNGB0YLQstC10L3QvdC+0LUg0LrQsNC30LXQvdC90L7QtSDRg9GH0YDQtdC20LTQtdC90LjQtSDCq9CT0L7RgNC+0LTRgdC60L7QuSDRhtC10L3RgtGAINC20LjQu9C40YnQvdGL0YUg0YHRg9Cx0YHQuNC00LjQucK7MR8wHQYDVQQLDBbQoNGD0LrQvtCy0L7QtNGB0YLQstC+MSgwJgYDVQQqDB/QndCw0YLQsNC70YzRjyDQnNCw0YDQutC+0LLQvdCwMRcwFQYDVQQEDA7Qm9C10YLQtdC90LrQvjEZMBcGA1UEDAwQ0JTQuNGA0LXQutGC0L7RgDGBuTCBtgYDVQQDDIGu0KHQsNC90LrRgi3Qn9C10YLQtdGA0LHRg9GA0LPRgdC60L7QtSDQs9C+0YHRg9C00LDRgNGB0YLQstC10L3QvdC+0LUg0LrQsNC30LXQvdC90L7QtSDRg9GH0YDQtdC20LTQtdC90LjQtSDCq9CT0L7RgNC+0LTRgdC60L7QuSDRhtC10L3RgtGAINC20LjQu9C40YnQvdGL0YUg0YHRg9Cx0YHQuNC00LjQucK7MGYwHwYIKoUDBwEBAQEwEwYHKoUDAgIkAAYIKoUDBwEBAgIDQwAEQPNb6cTW3Af1Dd+FCuHe0d5UMrZqwpfNhWvQNZcXaDASJ0l2fFJSlE7nNNredpmnFun9fymc/fzkn2eXenUoQTKjggaAMIIGfDAOBgNVHQ8BAf8EBAMCBPAwHQYDVR0OBBYEFNfuoEdafhph65QjEm2bg2+OLUgBMCUGA1UdJQQeMBwGCCsGAQUFBwMCBgYqhQNkAgIGCCsGAQUFBwMBMIIBawYIKwYBBQUHAQEEggFdMIIBWTA0BggrBgEFBQcwAYYoaHR0cDovLzQ2LjI0My4xNzcuMTE0L29jc3AtMjAxOS9vY3NwLnNyZjA0BggrBgEFBQcwAYYoaHR0cDovLzEwLjE0Ni4xNDAuMjUxL29jc3AtMjAxOS9vY3NwLnNyZjA5BggrBgEFBQcwAoYtaHR0cDovL2NhLmlhYy5zcGIucnUvY2VydC9pYWNfZ29zdDEyXzIwMTkuY2VyMDoGCCsGAQUFBzAChi5odHRwOi8vNDYuMjQzLjE3Ny4xMTQvY2VydC9pYWNfZ29zdDEyXzIwMTkuY2VyMDgGCCsGAQUFBzAChixodHRwOi8vMTAuMTI4LjMxLjY1L2NlcnQvaWFjX2dvc3QxMl8yMDE5LmNlcjA6BggrBgEFBQcwAoYuaHR0cDovLzEwLjE0Ni4xNDAuMjUxL2NlcnQvaWFjX2dvc3QxMl8yMDE5LmNlcjAdBgNVHSAEFjAUMAgGBiqFA2RxATAIBgYqhQNkcQIwKQYDVR0RBCIwIIIPMTkyLjE2OC4xMjQuMTE0gg0xMC4xNDYuMTM2LjgyMCsGA1UdEAQkMCKADzIwMjAxMTA1MDgyOTEyWoEPMjAyMTExMDUwODI5MTJaMIIB1QYFKoUDZHAEggHKMIIBxgxHItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiINCy0LXRgNGB0LjRjyA0LjAgKNC40YHQv9C+0LvQvdC10L3QuNC1IDItQmFzZSkMgbgi0J/RgNC+0LPRgNCw0LzQvNC90L4t0LDQv9C/0LDRgNCw0YLQvdGL0Lkg0LrQvtC80L/Qu9C10LrRgSAi0KPQtNC+0YHRgtC+0LLQtdGA0Y/RjtGJ0LjQuSDRhtC10L3RgtGAICLQmtGA0LjQv9GC0L7Qn9GA0L4g0KPQpiIg0LLQtdGA0YHQuNC4IDIuMCIgKNCy0LDRgNC40LDQvdGCINC40YHQv9C+0LvQvdC10L3QuNGPIDUpDF/QodC10YDRgtC40YTQuNC60LDRgiDRgdC+0L7RgtCy0LXRgtGB0YLQstC40Y8g0KTQodCRINCg0L7RgdGB0LjQuCDQodCkLzEyNC0zMzgwINC+0YIgMTEuMDUuMjAxOAxf0KHQtdGA0YLQuNGE0LjQutCw0YIg0YHQvtC+0YLQstC10YLRgdGC0LLQuNGPINCk0KHQkSDQoNC+0YHRgdC40Lgg0KHQpC8xMjgtMzU5MiDQvtGCIDE3LjEwLjIwMTgwIwYFKoUDZG8EGgwYItCa0YDQuNC/0YLQvtCf0YDQviBDU1AiMIHcBgNVHR8EgdQwgdEwMqAwoC6GLGh0dHA6Ly9jYS5pYWMuc3BiLnJ1L2NybC9pYWNfZ29zdDEyXzIwMTkuY3JsMDOgMaAvhi1odHRwOi8vNDYuMjQzLjE3Ny4xMTQvY3JsL2lhY19nb3N0MTJfMjAxOS5jcmwwMaAvoC2GK2h0dHA6Ly8xMC4xMjguMzEuNjUvY3JsL2lhY19nb3N0MTJfMjAxOS5jcmwwM6AxoC+GLWh0dHA6Ly8xMC4xNDYuMTQwLjI1MS9jcmwvaWFjX2dvc3QxMl8yMDE5LmNybDCCAV8GA1UdIwSCAVYwggFSgBSHkwY/UCNEFZdFnKgDUjeBE9Mm2aGCASykggEoMIIBJDEeMBwGCSqGSIb3DQEJARYPZGl0QG1pbnN2eWF6LnJ1MQswCQYDVQQGEwJSVTEYMBYGA1UECAwPNzcg0JzQvtGB0LrQstCwMRkwFwYDVQQHDBDQsy4g0JzQvtGB0LrQstCwMS4wLAYDVQQJDCXRg9C70LjRhtCwINCi0LLQtdGA0YHQutCw0Y8sINC00L7QvCA3MSwwKgYDVQQKDCPQnNC40L3QutC+0LzRgdCy0Y/Qt9GMINCg0L7RgdGB0LjQuDEYMBYGBSqFA2QBEg0xMDQ3NzAyMDI2NzAxMRowGAYIKoUDA4EDAQESDDAwNzcxMDQ3NDM3NTEsMCoGA1UEAwwj0JzQuNC90LrQvtC80YHQstGP0LfRjCDQoNC+0YHRgdC40LiCChfr3OEAAAAAAtYwCgYIKoUDBwEBAwIDQQDvSaXWsDR4CcS3fpeZxTf7gxxHEEt1FDqmziCOoFgt+QB8vHjYX0Y8quPdCkOr/c0OevLeiKzAs/TR7L0RLj0r</ds:X509Certificate>
+            </ds:X509Data>
+          </ds:KeyInfo>
+        </ds:Signature>
+      </CallerInformationSystemSignature>
+    </SendRequestRequest>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
