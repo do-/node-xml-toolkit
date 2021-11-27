@@ -80,7 +80,7 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data.src, data.name, data.level, (data.parent || {}).name]))
+	]) sax.on (event, data => console.log ([event, data.src, data]))
 
 
 /*
