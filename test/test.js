@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {SAXEventEmitter, SAXEvent, XMLLexer} = require ('../')
+const {SAXEventEmitter, SAXEvent, XMLLexer, AttributesMap} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -65,10 +65,12 @@ console.log (xml)
 
 	const sax = new SAXEventEmitter ({
 		stripSpace: true,
+//		useEntities: false,
 	})
 
 	lex.pipe (sax)
 
+/*
 	for (let event of [
 		'StartDocument',
 		'ProcessingInstruction',
@@ -79,6 +81,19 @@ console.log (xml)
 		'EndElement',
 		'EndDocument',
 	]) sax.on (event, data => console.log ([event, data]))
+*/
+
+	sax.on ('StartElement', event => {
+	
+		console.log ({event})
+		
+		const attr = new AttributesMap (sax)
+		
+		event.writeAttributesToMap (attr)
+		
+		console.log ({attr})
+		
+	})
 
 //	lexer.on ('data', data => console.log ({data}))
 	
