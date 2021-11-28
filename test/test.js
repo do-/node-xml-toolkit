@@ -67,7 +67,7 @@ console.log (xml)
 		stripSpace: true,
 		find: e => true
 //			&& e.type  === SAXEvent.TYPES.CHARACTERS
-			&& e.level === 5
+			&& e.level === 6
 			
 //		useEntities: false,
 	})
@@ -84,7 +84,7 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data, data.text, data.parent.parent.parent]))
+	]) sax.on (event, data => console.log ([event, data, data.name, data.localName]))
 
 
 /*
