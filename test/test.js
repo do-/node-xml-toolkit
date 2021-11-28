@@ -84,7 +84,19 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data, data.name, data.localName, data.namespaceURI, Object.fromEntries (data.attributes.entries ())]))
+	]) sax.on (event, data => {
+	
+		console.log ([event, data, data.name, data.localName, data.namespaceURI])
+		
+		const {attributes} = data; for (const [k, v] of attributes.entries ()) {
+		
+			console.log ([k, attributes.getLocalName (k), attributes.getNamespaceURI (k), v])
+		
+		}
+		
+	})
+		
+	
 
 
 /*
