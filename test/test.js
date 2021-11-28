@@ -65,8 +65,8 @@ console.log (xml)
 
 	const sax = new SAXEventEmitter ({
 		stripSpace: true,
-		filter: e => true
-			&& e.type  === SAXEvent.TYPES.CHARACTERS
+		find: e => true
+//			&& e.type  === SAXEvent.TYPES.CHARACTERS
 			&& e.level === 5
 			
 //		useEntities: false,
@@ -84,7 +84,7 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data.src, data]))
+	]) sax.on (event, data => console.log ([event, data, data.text, data.parent.parent.parent]))
 
 
 /*
