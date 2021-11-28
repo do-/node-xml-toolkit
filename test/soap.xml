@@ -6,7 +6,7 @@
         <MessageID>3931cda8-3245-11ec-b0bc-000c293433a0</MessageID>
         <ns0:MessagePrimaryContent>
           <ExportDebtRequestsRequest xmlns="urn:dom.gosuslugi.ru/debt-responses/1.0.0" xmlns:ns0="urn:dom.gosuslugi.ru/common/1.2.0">
-            <ns0:information-system-id>1f0823b4-9c11-4622-a561-6bae5c0a00ba</ns0:information-system-id>
+            <ns0:information-system-id ns0:foo="bar" foo="bar">1f0823b4-9c11-4622-a561-6bae5c0a00ba</ns0:information-system-id>
             <ns0:organization-id>6eef689e-48bb-4eb0-55da-18b6db9909b7</ns0:organization-id>
             <request-id>87c4c940-6ad3-11eb-9439-0242ac130002</request-id>
           </ExportDebtRequestsRequest>
