@@ -84,7 +84,7 @@ console.log (xml)
 		'Characters',
 		'EndElement',
 		'EndDocument',
-	]) sax.on (event, data => console.log ([event, data, data.name, data.localName]))
+	]) sax.on (event, data => console.log ([event, data, data.name, data.localName, data.namespaceURI]))
 
 
 /*
