@@ -91,6 +91,12 @@ console.log (xml)
 		const {attributes} = data; for (const [k, v] of attributes.entries ()) {
 		
 			console.log ([k, attributes.getLocalName (k), attributes.getNamespaceURI (k), v])
+
+			console.log ([attributes.get ('ns0:foo')])
+			
+			console.log ([attributes.get ('foo')])
+			
+			console.log ([attributes.get ('foo', 'urn:dom.gosuslugi.ru/common/1.2.0')])
 		
 		}
 		
