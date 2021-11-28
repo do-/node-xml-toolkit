@@ -65,8 +65,10 @@ console.log (xml)
 
 	const sax = new SAXEventEmitter ({
 		stripSpace: true,
+		collect: e => true,
 		find: e => true
 //			&& e.type  === SAXEvent.TYPES.CHARACTERS
+			&& e.type  === SAXEvent.TYPES.END_ELEMENT
 			&& e.level === 6
 			
 //		useEntities: false,
