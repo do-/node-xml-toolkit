@@ -65,6 +65,10 @@ console.log (xml)
 
 	const sax = new SAXEventEmitter ({
 		stripSpace: true,
+		filter: e => true
+			&& e.type  === SAXEvent.TYPES.CHARACTERS
+			&& e.level === 5
+			
 //		useEntities: false,
 	})
 
