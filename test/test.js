@@ -68,9 +68,11 @@ console.log (xml)
 		collect: e => true,
 		find: e => true
 //			&& e.type  === SAXEvent.TYPES.CHARACTERS
+			&& e.localName === 'MessagePrimaryContent'
 			&& e.type  === SAXEvent.TYPES.END_ELEMENT
-			&& e.level === 6
-			
+//			&& e.level === 6
+		,
+		map: ({localName, text, children}) => ({localName, text, children})
 //		useEntities: false,
 	})
 
