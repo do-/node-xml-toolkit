@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {SAXEventEmitter, SAXEvent, XMLLexer, AttributesMap} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -63,7 +63,7 @@ console.log (xml)
 //		stripSpace: true,
 	})
 
-	const sax = new SAXEventEmitter ({
+	const sax = new XMLReader ({
 		stripSpace: true,
 		collect: e => true,
 		find: e => true
