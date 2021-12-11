@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, MoxyLikeJsonEncoder} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -68,11 +68,11 @@ console.log (xml)
 		collect: e => true,
 		find: e => true
 //			&& e.type  === SAXEvent.TYPES.CHARACTERS
-			&& e.localName === 'MessagePrimaryContent'
+			&& e.localName === 'SendRequestRequest'
 			&& e.type  === SAXEvent.TYPES.END_ELEMENT
 //			&& e.level === 6
 		,
-		map: ({localName, text, children}) => ({localName, text, children})
+		map: MoxyLikeJsonEncoder ({wrap: 1})
 //		useEntities: false,
 	})
 
@@ -90,6 +90,11 @@ console.log (xml)
 		'EndDocument',
 	]) sax.on (event, data => {
 	
+//		console.log ([event, data])
+		
+		console.log (JSON.stringify (data, null, 2))
+
+/*	
 		console.log ([event, data, data.name, data.localName, data.namespaceURI])
 		
 		const {attributes} = data; for (const [k, v] of attributes.entries ()) {
@@ -103,7 +108,7 @@ console.log (xml)
 			console.log ([attributes.get ('foo', 'urn:dom.gosuslugi.ru/common/1.2.0')])
 		
 		}
-		
+*/		
 	})
 		
 	
