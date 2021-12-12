@@ -1,6 +1,6 @@
 {
   "name": "xml-toolkit",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Collection of classes for dealing with XML",
   "main": "index.js",
   "scripts": {
