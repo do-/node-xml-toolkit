@@ -59,11 +59,7 @@ console.log (xml)
 
 	const sax = new XMLReader ({
 		stripSpace: true,
-		collect: e => true,
-		find: e => true
-			&& e.localName === 'SendRequestRequest'
-			&& e.type  === SAXEvent.TYPES.END_ELEMENT
-		,
+		filterElements: 'SendRequestRequest',
 		map: MoxyLikeJsonEncoder ({wrap: 1})
 	})
 
@@ -82,9 +78,9 @@ console.log (xml)
 */
 
 	
-	sax.process (fs.createReadStream ('test/' + fn))
+//	sax.process (fs.createReadStream ('test/' + fn))
 	
-//	sax.process (xml)
+	sax.process (xml)
 
 //console.log (sax)
 //console.log (sax.isSAX)
