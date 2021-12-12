@@ -87,12 +87,12 @@ console.log (xml)
 
 
 	let s = ''
-	for await (const {type, src, xml, parent} of sax) {
-		s += xml
-//		console.log ([type, src, xml, (parent || {}).localName])
+	for await (const e of sax) {
+//		s += xml
+		console.log ([e.type, e.isStartElement, e.isEndElement , e.isCharacters])
 	}
 
-console.log ([xml, s])
+//console.log ([xml, s])
 
 //	const v = await sax.findFirst ()
 
