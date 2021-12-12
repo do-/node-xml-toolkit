@@ -57,74 +57,41 @@ async function test_003_emitter_sync (fn) {
 	
 console.log (xml)
 
-	const lex = new XMLLexer ({
-//		maxLength: 40,
-//		encoding: 'ascii',
-//		stripSpace: true,
-	})
-
 	const sax = new XMLReader ({
 		stripSpace: true,
 		collect: e => true,
 		find: e => true
-//			&& e.type  === SAXEvent.TYPES.CHARACTERS
 			&& e.localName === 'SendRequestRequest'
 			&& e.type  === SAXEvent.TYPES.END_ELEMENT
-//			&& e.level === 6
 		,
 		map: MoxyLikeJsonEncoder ({wrap: 1})
-//		useEntities: false,
 	})
-
-	lex.pipe (sax)
-
-
-	for (let event of [
-		'StartDocument',
-		'ProcessingInstruction',
-		'Comment',
-		'DTD',
-		'StartElement',
-		'Characters',
-		'EndElement',
-		'EndDocument',
-	]) sax.on (event, data => {
-	
-//		console.log ([event, data])
-		
-		console.log (JSON.stringify (data, null, 2))
-
-/*	
-		console.log ([event, data, data.name, data.localName, data.namespaceURI])
-		
-		const {attributes} = data; for (const [k, v] of attributes.entries ()) {
-		
-			console.log ([k, attributes.getLocalName (k), attributes.getNamespaceURI (k), v])
-
-			console.log ([attributes.get ('ns0:foo')])
-			
-			console.log ([attributes.get ('foo')])
-			
-			console.log ([attributes.get ('foo', 'urn:dom.gosuslugi.ru/common/1.2.0')])
-		
-		}
-*/		
-	})
-		
-	
-
 
 /*
-	sax.on ('StartElement', event => {	
-		console.log ([event, event.attributes])
+	for (let event of [
+		'data',
+		'close',
+		'end',
+		'finish',
+//		'EndElement',
+	]) sax.on (event, data => {
+			
+		console.log ([JSON.stringify (data, null, 2), event])
+	
 	})
 */
-//	lexer.on ('data', data => console.log ({data}))
-	
-//	for (let c of xml) lexer.write (c); lexer.end ()
-//	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
 
-	lex.end (xml)
+	
+	sax.process (fs.createReadStream ('test/' + fn))
+	
+//	sax.process (xml)
+
+//console.log (sax)
+//console.log (sax.isSAX)
+
+	for await (const e of sax) {
+		console.log (e)
+	}
 
 }
 
