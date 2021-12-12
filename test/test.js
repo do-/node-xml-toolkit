@@ -89,9 +89,15 @@ console.log (xml)
 //console.log (sax)
 //console.log (sax.isSAX)
 
+/*
 	for await (const e of sax) {
 		console.log (e)
 	}
+*/
+
+	const v = await sax.findFirst ()
+
+	console.log (JSON.stringify (v, null, 2))
 
 }
 
