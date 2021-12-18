@@ -58,7 +58,7 @@ async function test_003_emitter_sync (fn) {
 console.log (xml)
 
 	const sax = new XMLReader ({
-		stripSpace: true,
+//		stripSpace: true,
 		filterElements: 'SendRequestRequest',
 		map: MoxyLikeJsonEncoder ({wrap: 1})
 	})
