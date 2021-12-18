@@ -58,9 +58,9 @@ async function test_003_emitter_sync (fn) {
 console.log (xml)
 
 	const sax = new XMLReader ({
-//		stripSpace: true,
-//		filterElements: 'SendRequestRequest',
-//		map: MoxyLikeJsonEncoder ({wrap: 1})
+		stripSpace: true,
+		filterElements: 'SendRequestRequest',
+		map: MoxyLikeJsonEncoder ({wrap: 1})
 	})
 
 /*
@@ -77,26 +77,22 @@ console.log (xml)
 	})
 */
 
-	
-//	sax.process (fs.createReadStream ('test/' + fn))
-	
-	sax.process (xml)
-
+		
 //console.log (sax)
 //console.log (sax.isSAX)
 
-
+/*
 	let s = ''
 	for await (const e of sax) {
-//		s += xml
-		console.log ([e.type, e.isStartElement, e.isEndElement , e.isCharacters])
+		s += xml
+//		console.log ([e.type, e.isStartElement, e.isEndElement , e.isCharacters])
 	}
-
+*/
 //console.log ([xml, s])
 
-//	const v = await sax.findFirst ()
+	const v = await sax.process (xml).findFirst ()
 
-//	console.log (JSON.stringify (v, null, 2))
+	console.log (JSON.stringify (v, null, 2))
 
 }
 

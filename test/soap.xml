@@ -2,7 +2,7 @@
   <SOAP-ENV:Header/>
   <SOAP-ENV:Body>
     <SendRequestRequest xmlns="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.1" xmlns:ns0="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.1">
-      <SenderProvidedRequestData Id="Ue7e71ce1-7ce3-4ca5-a689-1a8f2edbb1af">
+      <SenderProvidedRequestData Id="Ue7e71ce1-7ce3-4ca5-a689-1a8f2edbb1af" IDDQD="">
         <MessageID>3931cda8-3245-11ec-b0bc-000c293433a0</MessageID>
         <ns0:MessagePrimaryContent>
           <ExportDebtRequestsRequest xmlns="urn:dom.gosuslugi.ru/debt-responses/1.0.0" xmlns:ns0="urn:dom.gosuslugi.ru/common/1.2.0">
