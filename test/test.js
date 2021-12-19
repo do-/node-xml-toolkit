@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, MoxyLikeJsonEncoder} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -60,7 +60,11 @@ console.log (xml)
 	const sax = new XMLReader ({
 //		stripSpace: true,
 		filterElements: 'SendRequestRequest',
-		map: MoxyLikeJsonEncoder ({wrap: 1})
+		map: XMLNode.toObject ({
+//			wrap: 1,
+			getName: (localName, namespaceURI) => (!namespaceURI ? '' : '{' + namespaceURI + '}') + localName,
+			map: o => Object.fromEntries (Object.entries (o).map (([k, v]) => [k + '111', v]))
+		})
 	})
 
 /*
