@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -100,6 +100,19 @@ console.log (xml)
 
 }
 
+async function test_004_schemata (fn) {
+
+	let xs = await XMLSchemata.fromFile ('test/dom-gosuslugi-ru-smev3-debt-requests.xsd')
+	
+	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-requests/1.0.0').get ('ImportDebtRequestsRequest').complexType.complexContent.extension)
+
+	console.log (xs.get ('urn:dom.gosuslugi.ru/common/1.2.0').get ('BaseRequestType').sequence )
+
+	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-requests/1.0.0').get ('ActionType').restriction)
+
+ 
+}
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -113,7 +126,8 @@ async function main () {
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
 //	await test_003_emitter_sync ('ent.xml')
-	await test_003_emitter_sync ('soap.xml')
+//	await test_003_emitter_sync ('soap.xml')
+	await test_004_schemata ()
 
 }
 
