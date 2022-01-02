@@ -105,9 +105,11 @@ async function test_004_schemata (fn) {
 	let xs = await XMLSchemata.fromFile ('test/dom-gosuslugi-ru-smev3-debt-requests.xsd')
 	
 	console.log (JSON.stringify (xs.get ('urn:dom.gosuslugi.ru/debt-requests/1.0.0')
-//	.get ('ImportDebtRequestsRequest')
+	.get ('ImportDebtRequestsRequest')
 	, null, 2))
-
+	console.log (
+	xs.getSchemaByLocalName ('ImportDebtRequestsRequest')
+	)
 /*	
 	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-requests/1.0.0').get ('ImportDebtRequestsRequest').complexType.complexContent.extension)
 
