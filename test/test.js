@@ -103,7 +103,7 @@ console.log (xml)
 async function test_004_schemata (fn) {
 
 	let xs = await XMLSchemata.fromFile ('test/dom-gosuslugi-ru-smev3-debt-requests.xsd')
-		
+/*		
 	const localName = 'ImportDebtRequestsRequest'
 	
 	const s = xs.getSchemaByLocalName (localName)
@@ -111,8 +111,8 @@ async function test_004_schemata (fn) {
 	const o = s.get (localName)
 	
 	const nspm = xs.getNamespacePrefixesMap (o)
-	
-	console.log (nspm)
+*/	
+	console.log (xs.stringify ({ImportDebtRequestsRequest: {}}))
 	
 	//getNamespacePrefixesMap
 /*	
