@@ -112,7 +112,36 @@ async function test_004_schemata (fn) {
 	
 	const nspm = xs.getNamespacePrefixesMap (o)
 */	
-	console.log (xs.stringify ({ImportDebtRequestsRequest: {}}))
+	console.log (xs.stringify ({
+	
+   "ImportDebtRequestsRequest" : {
+      "information-system-id" : "35a823b4-55da-4622-a561-6bae5c0a00ba",
+      "organization-id" : "6eef689e-48bb-4eb0-9c11-18b6db9909b7",
+      "action" : [ {
+         "transport-id" : "be03eb8e-6f80-11eb-9439-0242ac130002",
+         "action-type" : "SEND",
+         "request-data" : {
+            "applicant-info" : {
+               "firstname" : "Иванов",
+               "lastname" : "Иван",
+               "middlename" : "Иванович",
+               "snils" : "11111111145",
+               "document" : {
+                  "type" : 1,
+                  "series" : "1234",
+                  "number" : "123456"
+               }
+            },
+            "housing-fund-object" : {
+               "house-id" : "e786b770-28e6-4557-8dde-86e8e347587e",
+               "address-details" : "кв. 27"
+            },
+            "executor-id" : "df82b6d8-66d8-11eb-ae93-0242ac130002"
+         }
+      } ]
+   }
+	
+	}))
 	
 	//getNamespacePrefixesMap
 /*	
