@@ -115,6 +115,7 @@ async function test_004_schemata (fn) {
 	console.log (xs.stringify ({
 	
    "ImportDebtRequestsRequest" : {
+      "Id": 1,
       "information-system-id" : "35a823b4-55da-4622-a561-6bae5c0a00ba",
       "organization-id" : "6eef689e-48bb-4eb0-9c11-18b6db9909b7",
       "action" : [ {
