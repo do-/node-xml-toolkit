@@ -125,7 +125,7 @@ async function test_004_schemata (fn) {
                "firstname" : "Иванов",
                "lastname" : "Иван",
                "middlename" : "Иванович",
-               "snils" : "11111111145",
+               "snils" : "111111111>45",
                "document" : {
                   "type" : 1,
                   "series" : "1234",
