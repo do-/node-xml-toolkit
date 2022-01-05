@@ -54,4 +54,24 @@ let xmlResult = ''; for await (const node of new XMLReader ().process (xmlSource
     node.xml
 ```
 
+* [Serializing an Object According to an XML Schema](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Serializing-an-Object-According-to-an-XML-Schema)
+
+```js
+const data = {ExportDebtRequestsResponse: {	
+  "request-data": {
+   // ...
+  }
+}
+
+const xs = await XMLSchemata.fromFile ('xs.xsd')
+
+const xml = xs.stringify (data)
+
+/* result:
+<ns0:ExportDebtRequestsResponse xmlns:ns0="urn:...">
+  <ns0:request-data>
+    <!-- ... and so on ... -->
+*/
+```
+
 More information available in [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
