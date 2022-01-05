@@ -136,7 +136,7 @@ async function test_004_schemata (fn) {
       },
       "period": {
         "start-date": "2018-02-01",
-        "end-date": "2021-01-31"
+        "end-date": new Date ()
       },
       "organization": {
         "organization-root-id": "6eef689e-48bb-4eb0-9c11-18b6db9909b7",
@@ -148,7 +148,7 @@ async function test_004_schemata (fn) {
         "fio": "Четвертак Иван Иванович"
       },
       "status": "PROCESSED",
-      "result": "4",
+      "result": 4,
       "creation-date": "2021-02-04",
       "sent-date": "2021-02-04",
       "response-date": "2021-02-08",
@@ -160,7 +160,7 @@ async function test_004_schemata (fn) {
         },
         "response": {
           "type": "PROVIDED",
-          "has-debt": "false",
+          "has-debt": true,
           "debt-info": [
             {
               "person": {
