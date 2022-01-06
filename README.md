@@ -57,6 +57,8 @@ let xmlResult = ''; for await (const node of new XMLReader ().process (xmlSource
 * [Serializing an Object According to an XML Schema](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Serializing-an-Object-According-to-an-XML-Schema)
 
 ```js
+const {XMLSchemata} = require ('xml-toolkit')
+
 const data = {ExportDebtRequestsResponse: {	
   "request-data": {
    // ...
