@@ -210,6 +210,53 @@ async function test_004_schemata (fn) {
  
 }
 
+async function test_005_schemata (fn) {
+
+	const xs = await XMLSchemata.fromFile ('test/20040.wsdl')
+	
+	const data = {
+	
+	  "AppData": {
+		"info": {
+		  "person": {
+			"fNameCiv": "ППП",
+			"iNameCiv": "ППП",
+			"mNameCiv": null,
+			"docDatCiv": "1973-03-01"
+		  },
+		  "snils": "022-114-680 91",
+		  "document": {
+			"codeKind": "01",
+			"numDoc": "999999",
+			"seriesDoc": "9999",
+			"dateDoc": "2022-03-05"
+		  },
+		  "startDate": "2021-08-01",
+		  "endDate": "2022-01-31T00:00:00",
+		  "child": {
+			"fNameCiv": "ООО",
+			"iNameCiv": "ООО",
+			"mNameCiv": null,
+			"docDatCiv": "2022-02-08"
+		  },
+		  "childDocument": {
+			"codeKind": "03",
+			"numDoc": "333333",
+			"seriesDoc": "333333333",
+			"dateDoc": "2022-03-01"
+		  },
+		  "childSnils": "109-598-827 12"
+		}
+	  }
+	
+	}, {info} = data.AppData
+	
+	const m = xs.createMarshaller ('AppDataChildDotation', 'http://smev.gosuslugi.ru/rev111111')
+		
+	console.log (m.stringify ({info}))
+ 
+}
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -225,6 +272,7 @@ async function main () {
 //	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
 	await test_004_schemata ()
+	await test_005_schemata ()
 
 }
 
