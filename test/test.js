@@ -253,7 +253,7 @@ async function test_005_schemata (fn) {
 	
 	const m = xs.createMarshaller ('AppDataChildDotation', 'http://smev.gosuslugi.ru/rev111111')
 		
-	console.log (m.stringify ({info}))
+	console.log (m.stringify ({info}, 'AppData'))
  
 }
 
@@ -271,7 +271,7 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 //	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-//	await test_004_schemata ()
+	await test_004_schemata ()
 	await test_005_schemata ()
 
 }
