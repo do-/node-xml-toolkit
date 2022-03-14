@@ -271,7 +271,7 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 //	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
+//	await test_004_schemata ()
 	await test_005_schemata ()
 
 }
