@@ -270,6 +270,39 @@ async function test_005_schemata (fn) {
 
 }
 
+async function test_006_schemata (fn) {
+
+	const xs = await XMLSchemata.fromFile ('test/snils-by-additionalData-1.0.1.xsd')
+	
+	const data = {
+	  "SnilsByAdditionalDataRequest": {
+		"FamilyName": "ИВАНОВ",
+		"FirstName": "ИВАН",
+		"Patronymic": "ИВАНОВИЧ",
+		"BirthDate": "1967-05-21",
+		"Gender": "Male",
+		"BirthPlace": {
+		  "PlaceType": "ОСОБОЕ",
+		  "Settlement": "ЗАГОРСК",
+		  "District": "ЛЕНИНСКИЙ",
+		  "Region": "МОСКОВСКАЯ ОБЛАСТЬ",
+		  "Country": "РФ"
+		},
+		"PassportRF": {
+		  "Series": "0005",
+		  "Number": "777777",
+		  "IssueDate": "1986-06-13",
+		  "Issuer": "ОВД"
+		}
+	  }
+	}
+	
+//	const m = xs.createMarshaller ('AppDataChildDotation', 'http://smev.gosuslugi.ru/rev111111')
+
+	console.log (xs.stringify (data))
+
+}
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -286,6 +319,7 @@ async function main () {
 //	await test_003_emitter_sync ('soap.xml')
 	await test_004_schemata ()
 	await test_005_schemata ()
+	await test_006_schemata ()
 
 }
 

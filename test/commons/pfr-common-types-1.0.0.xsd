@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://common.kvs.pfr.com/1.0.0" xmlns:smev="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" targetNamespace="http://common.kvs.pfr.com/1.0.0" elementFormDefault="qualified">
+    <xs:import namespace="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" schemaLocation="smev-supplementary-commons-1.0.1.xsd"/>
+    <xs:complexType name="BirthPlaceType">
+        <xs:sequence>
+            <xs:element name="PlaceType" type="smev:string-50" nillable="false"/>
+            <xs:element name="Settlement" type="smev:string-50" nillable="false"/>
+            <xs:element name="District" type="smev:string-50" minOccurs="0"/>
+            <xs:element name="Region" type="smev:string-50" minOccurs="0"/>
+            <xs:element name="Country" type="smev:string-50" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentificationDocumentType">
+        <xs:sequence>
+            <xs:element name="Type" type="smev:string-200" nillable="false"/>
+            <xs:element name="Document" type="smev:NotRestrictedDocumentType" nillable="false"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:group name="AllIdentityDocumentType-Group">
+        <xs:sequence>
+            <xs:choice>
+                <xs:group ref="smev:PrimaryIdentityDocument-ModelGroup"/>
+                <xs:group ref="smev:WeakIdentityDocument-ModelGroup"/>
+                <xs:group ref="smev:TemporaryIdentityDocument-ModelGroup"/>
+                <xs:element name="PfrIdentificationDocument" type="tns:IdentificationDocumentType"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+</xs:schema>
