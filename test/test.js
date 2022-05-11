@@ -273,7 +273,7 @@ async function test_005_schemata (fn) {
 async function test_006_schemata (fn) {
 
 	const xs = await XMLSchemata.fromFile ('test/snils-by-additionalData-1.0.1.xsd')
-	
+
 	const data = {
 	  "SnilsByAdditionalDataRequest": {
 		"FamilyName": "ИВАНОВ",
