@@ -216,6 +216,10 @@ async function test_004_schemata (fn) {
 	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-requests/1.0.0').get ('ActionType').restriction)
 */
  
+	console.log (xs.stringify ({
+  		"ExportDebtRequestsRequest": {Id: 1}	
+	})) 
+ 
 }
 
 async function test_005_schemata (fn) {
