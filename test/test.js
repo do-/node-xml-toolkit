@@ -117,6 +117,10 @@ async function test_004_schemata (fn) {
 */
 
 	console.log (xs.stringify ({
+  		"ExportDebtRequestsRequest": {Id: 1}	
+	}))
+	
+	if (0) console.log (xs.stringify ({
   "ExportDebtRequestsResponse": {	
     "request-data": {
       "request-id": "bac4c940-6ad3-11eb-9439-0242ac130002",
@@ -321,8 +325,8 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
-//	await test_005_schemata ()
+//	await test_004_schemata ()
+	await test_005_schemata ()
 //	await test_006_schemata ()
 
 }
