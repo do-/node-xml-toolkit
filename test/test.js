@@ -59,12 +59,15 @@ console.log (xml)
 
 	const sax = new XMLReader ({
 //		stripSpace: true,
+//		filterElements: 'root',		
+//		filterElements: 'PARAMTYPES'
 		filterElements: 'SendRequestRequest',
-		map: XMLNode.toObject ({
+		map: n => n.detach ({nsMap: true}),
+//		map: XMLNode.toObject ({
 //			wrap: 1,
-			getName: (localName, namespaceURI) => (!namespaceURI ? '' : '{' + namespaceURI + '}') + localName,
-			map: o => Object.fromEntries (Object.entries (o).map (([k, v]) => [k + '111', v]))
-		})
+//			getName: (localName, namespaceURI) => (!namespaceURI ? '' : '{' + namespaceURI + '}') + localName,
+//			map: o => Object.fromEntries (Object.entries (o).map (([k, v]) => [k + '111', v]))
+//		})
 	})
 
 /*
@@ -315,11 +318,11 @@ async function main () {
 //	await test_003_emitter_sync ('E05a.xml')
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
-//	await test_003_emitter_sync ('ent.xml')
-//	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
-	await test_005_schemata ()
-	await test_006_schemata ()
+// 	await test_003_emitter_sync ('ent.xml')
+	await test_003_emitter_sync ('soap.xml')
+//	await test_004_schemata ()
+//	await test_005_schemata ()
+//	await test_006_schemata ()
 
 }
 
