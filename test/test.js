@@ -114,7 +114,8 @@ async function test_004_schemata (fn) {
 	const o = s.get (localName)
 	
 	const nspm = xs.getNamespacePrefixesMap (o)
-*/	
+*/
+
 	console.log (xs.stringify ({
   "ExportDebtRequestsResponse": {	
     "request-data": {
@@ -319,8 +320,8 @@ async function main () {
 //	await test_003_emitter_sync ('param_types.xml')
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
-	await test_003_emitter_sync ('soap.xml')
-//	await test_004_schemata ()
+//	await test_003_emitter_sync ('soap.xml')
+	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
 
