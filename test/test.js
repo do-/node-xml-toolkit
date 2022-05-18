@@ -219,6 +219,8 @@ async function test_004_schemata (fn) {
 	console.log (xs.stringify ({
   		"ExportDebtRequestsRequest": {Id: 1}	
 	})) 
+
+//	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-responses/1.0.0').get ('AttachmentType')) 
  
 }
 
@@ -330,8 +332,8 @@ async function main () {
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
 	await test_004_schemata ()
-//	await test_005_schemata ()
-//	await test_006_schemata ()
+	await test_005_schemata ()
+	await test_006_schemata ()
 
 }
 
