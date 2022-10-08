@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -317,6 +317,14 @@ async function test_006_schemata (fn) {
 
 }
 
+async function test_007_wsdl (fn) {
+
+	const soap = await SOAP11.fromFile ('test/20186.wsdl')
+
+	console.log (soap.http ({GetForm9Sync: {address: {Region: {Code: 78}}}}))
+
+}
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -331,9 +339,10 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
-	await test_005_schemata ()
-	await test_006_schemata ()
+//	await test_004_schemata ()
+//	await test_005_schemata ()
+//	await test_006_schemata ()
+	await test_007_wsdl ()
 
 }
 

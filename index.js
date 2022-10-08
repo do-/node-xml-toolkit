@@ -7,5 +7,6 @@ for (const name of [
 	'MoxyLikeJsonEncoder',
 	'XMLNode',
 	'XMLSchemata',
+	'SOAP11',
 
 ]) module.exports [name] = require ('./lib/' + name)
