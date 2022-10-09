@@ -76,4 +76,18 @@ const xml = xs.stringify (data)
 */
 ```
 
+* Invoking a [SOAP 1.1](https://github.com/do-/node-xml-toolkit/wiki/SOAP11) Web Service
+
+```js
+const http = require ('http')
+const {SOAP11} = require ('xml-toolkit')
+
+const soap = await SOAP11.fromFile ('their.wsdl')
+
+const {method, headers, body} = soap.http ({RequestElementNameOfTheirs: {amount: '0.01'}})
+
+const rq = http.request (endpointURL, {method, headers})
+rq.write (body)
+```
+
 More information available in [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
