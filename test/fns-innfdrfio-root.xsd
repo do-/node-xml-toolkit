@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by VI (GNIVC FNS RF) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://x-artefacts-fns-innfdrfio/root/085-05/4.0.0" xmlns:smev="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" xmlns:fns="urn://x-artefacts-fns/commons/4.0.0" targetNamespace="urn://x-artefacts-fns-innfdrfio/root/085-05/4.0.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-fns/commons/4.0.0" schemaLocation="commons/fns-common-types.xsd"/>
+	<xs:import namespace="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" schemaLocation="commons/smev-supplementary-commons.xsd"/>
+	<xs:element name="INNFDRFIORequest">
+		<xs:annotation>
+			<xs:documentation>Запрос сведений об ИНН физического лица на основании данных о ФИО и дате рождения</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DataPersonRequest">
+					<xs:annotation>
+						<xs:documentation>Сведения о физическом лице, в отношении которого выполняется запрос</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Patronymic">
+								<xs:annotation>
+									<xs:documentation>Отчество</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="fns:string-60"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SignLackPatronymic">
+								<xs:annotation>
+									<xs:documentation>Признак отсутствия отчества   </xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="fns:string-1">
+										<xs:enumeration value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:choice>
+						<xs:attribute name="BirthDate" type="xs:date" use="required">
+							<xs:annotation>
+								<xs:documentation>Дата рождения</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="FamilyName" type="fns:string-60" use="required">
+							<xs:annotation>
+								<xs:documentation>Фамилия</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="FirstName" type="fns:string-60" use="required">
+							<xs:annotation>
+								<xs:documentation>Имя</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="IDRequest" type="fns:IDRequestType" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса, сформированный запрашивающей стороной</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="INNFDRFIOResponse">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос сведений об ИНН физического лица на основании данных о ФИО и дате рождения</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="PhysicalPersonINN" type="fns:PhysicalPersonINNType">
+					<xs:annotation>
+						<xs:documentation>ИНН физического лица</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TreatmentCode">
+					<xs:annotation>
+						<xs:documentation>Код обработки запроса</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="fns:digits-2"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="IDRequest" type="fns:IDRequestType" use="optional">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса, сформированный запрашивающей стороной</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

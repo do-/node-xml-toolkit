@@ -325,6 +325,45 @@ async function test_007_wsdl (fn) {
 
 }
 
+async function test_008_schemata (fn) {
+
+	const xs = await XMLSchemata.fromFile ('test/30017.xsd')
+
+	const data = 
+	
+		{"FNSINNSingularRequest":
+			{
+				"СведЮЛ": {
+					"ОГРН":"1037843048880",
+					"ИННЮЛ":"7825497650",
+					"НаимОрг":"Нагрузочное тестирование"
+				},
+				"СведФЛ": {
+					"ДатаРожд":"1973-07-14",
+					"МестоРожд":null,
+					"ФИО":{
+						"Фамилия":"ВАЛЕРЬЕВНА",
+						"Имя":"1973-07-14",
+						"Отчество":"1973-07-14"
+					},
+				"УдЛичнФЛ":{
+					"КодВидДок":"21",
+					"ВыдДок":"11",
+					"КодВыдДок":"111 111",
+					"ДатаДок":"2022-10-01",
+					"СерНомДок":"11 11 111111"}
+				},
+				"ИдЗапрос":"7daf950d-d71c-ea20-eaa9-5096324ca3b3"
+			}
+		}
+
+	
+
+	console.log (xs.stringify (data))
+
+}
+
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -341,8 +380,9 @@ async function main () {
 //	await test_003_emitter_sync ('soap.xml')
 //	await test_004_schemata ()
 //	await test_005_schemata ()
-//	await test_006_schemata ()
-	await test_007_wsdl ()
+	await test_006_schemata ()
+//	await test_007_wsdl ()
+	await test_008_schemata ()
 
 }
 

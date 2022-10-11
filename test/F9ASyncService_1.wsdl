@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:i0="http://schemas.datacontract.org/2004/07/GetForm9ASync" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:ns0="http://tempuri.org/Imports" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/">
+
+   <wsdl:types>
+
+      <xsd:schema targetNamespace="http://tempuri.org/Imports" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+         <xsd:import schemaLocation="F9ASyncService.xsd" namespace="http://tempuri.org/" />
+         <xsd:import schemaLocation="F9ASyncService_1_2.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+         <xsd:import schemaLocation="F9ASyncService_1.xsd" namespace="http://schemas.datacontract.org/2004/07/GetForm9ASync" />
+      </xsd:schema>
+
+   </wsdl:types>
+
+   <wsdl:message name="IF9Service_GetForm9Async_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetForm9Async" />
+   </wsdl:message>
+
+   <wsdl:message name="IF9Service_GetForm9Async_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetForm9AsyncResponse" />
+   </wsdl:message>
+
+   <wsdl:message name="IF9Service_GetStatus_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetStatus" />
+   </wsdl:message>
+
+   <wsdl:message name="IF9Service_GetStatus_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetStatusResponse" />
+   </wsdl:message>
+
+   <wsdl:portType name="VCKP_F9ASyncService_v2PortType">
+
+      <wsdl:operation name="GetForm9Async">
+         <wsdl:input wsaw:Action="http://tempuri.org/IF9Service/GetForm9Async" message="tns:IF9Service_GetForm9Async_InputMessage" />
+         <wsdl:output wsaw:Action="http://tempuri.org/IF9Service/GetForm9AsyncResponse" message="tns:IF9Service_GetForm9Async_OutputMessage" />
+      </wsdl:operation>
+
+      <wsdl:operation name="GetStatus">
+         <wsdl:input wsaw:Action="http://tempuri.org/IF9Service/GetStatus" message="tns:IF9Service_GetStatus_InputMessage" />
+         <wsdl:output wsaw:Action="http://tempuri.org/IF9Service/GetStatusResponse" message="tns:IF9Service_GetStatus_OutputMessage" />
+      </wsdl:operation>
+   </wsdl:portType>
+
+   <wsdl:binding name="VCKP_F9ASyncService_v2Soap11Binding" type="tns:VCKP_F9ASyncService_v2PortType">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+
+      <wsdl:operation name="GetForm9Async">
+         <soap:operation style="document" soapAction="http://tempuri.org/IF9Service/GetForm9Async" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="GetStatus">
+         <soap:operation style="document" soapAction="http://tempuri.org/IF9Service/GetStatus" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+
+   <wsdl:service name="VCKP_F9ASyncService_v2">
+      <wsdl:port name="VCKP_F9ASyncService_v2HttpSoap11Endpoint" binding="tns:VCKP_F9ASyncService_v2Soap11Binding">
+         <soap:address location="http://esb.smev.vpn:10180/services/VCKP_F9ASyncService_v2.VCKP_F9ASyncService_v2HttpSoap11Endpoint" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
