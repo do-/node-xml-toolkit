@@ -444,7 +444,7 @@ async function main () {
 //	await test_003_emitter_sync ('soap.xml')
 //	await test_004_schemata ()
 //	await test_005_schemata ()
-	await test_006_schemata ()
+//	await test_006_schemata ()
 //	await test_007_wsdl ()
 	await test_008_schemata ()
 
