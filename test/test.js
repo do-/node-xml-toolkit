@@ -330,6 +330,8 @@ async function test_007_wsdl (fn) {
 
 	console.log (soap.http ({GetForm9Sync: {address: {Region: {Code: 78}}}}))
 
+	console.log (soap)
+
 }
 
 async function test_008_schemata (fn) {
@@ -364,9 +366,9 @@ async function test_008_schemata (fn) {
 			}
 		}
 
-	
+//	console.log (xs.stringify (data))
 
-	console.log (xs.stringify (data))
+//	console.log (xs)
 
 }
 
@@ -374,7 +376,7 @@ async function test_008_schemata (fn) {
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
-	await test_001_lexer_sync ('not-sa01.xml')
+//await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
 //	await test_001_lexer_sync ('param_types.xml')
 //	await test_002_lexer_stream ('E05a.xml')
@@ -388,7 +390,7 @@ async function main () {
 //	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
-//	await test_007_wsdl ()
+	await test_007_wsdl ()
 //	await test_008_schemata ()
 
 }
