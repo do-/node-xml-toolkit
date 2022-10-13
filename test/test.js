@@ -15,8 +15,15 @@ console.log (xml)
 //		maxLength: 40,
 //		encoding: 'ascii',
 	})
+	
 
-	lexer.on ('data', data => console.log (new SAXEvent (data).attributes))
+	lexer.on ('data', data => {
+	
+		const e = new SAXEvent (data)
+
+		console.log ([e, e.type])	
+
+	})
 	
 //	for (let c of xml) lexer.write (c); lexer.end ()
 //	for (let c of xml) lexer.write (Buffer.from ([c])); lexer.end ()
@@ -367,7 +374,7 @@ async function test_008_schemata (fn) {
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
-//	await test_001_lexer_sync ('not-sa01.xml')
+	await test_001_lexer_sync ('not-sa01.xml')
 //	await test_001_lexer_sync ('not-sa02.xml')
 //	await test_001_lexer_sync ('param_types.xml')
 //	await test_002_lexer_stream ('E05a.xml')
@@ -380,9 +387,9 @@ async function main () {
 //	await test_003_emitter_sync ('soap.xml')
 //	await test_004_schemata ()
 //	await test_005_schemata ()
-	await test_006_schemata ()
+//	await test_006_schemata ()
 //	await test_007_wsdl ()
-	await test_008_schemata ()
+//	await test_008_schemata ()
 
 }
 
