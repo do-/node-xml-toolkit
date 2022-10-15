@@ -8,5 +8,6 @@ for (const name of [
 	'XMLNode',
 	'XMLSchemata',
 	'SOAP11',
+	'EntityResolver',
 
 ]) module.exports [name] = require ('./lib/' + name)
