@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, EntityResolver} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, EntityResolver, XMLIterator} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -374,8 +374,6 @@ async function test_008_schemata (fn) {
 
 function test_010_node () {
 
-	const er = new EntityResolver ()
-
 	for (const s of 
 		[
 			'<a />zzz',
@@ -386,12 +384,29 @@ function test_010_node () {
 		]
 	) {
 	
-		let n = new XMLNode (s, er)
+		let n = new XMLNode (s)
 		
 		n.trim ()
 		
 		console.log (n)		
 	
+	}
+
+}
+
+function test_011_iterator (fn) {
+
+	const xml = fs.readFileSync (
+		'test/' + fn
+		, 'utf-8'
+	)
+	
+console.log (xml)
+
+	for (const i of new XMLIterator (xml)) {
+
+console.log (i.detach ())
+
 	}
 
 }
@@ -416,7 +431,8 @@ async function main () {
 //	await test_007_wsdl ()
 //	await test_008_schemata ()
 
-	test_010_node ()
+//	test_010_node ()
+	test_011_iterator ('20040.wsdl')
 	
 }
 
