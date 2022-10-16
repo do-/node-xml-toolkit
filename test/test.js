@@ -405,7 +405,7 @@ console.log (xml)
 
 	for (const i of new XMLIterator (xml)) {
 
-console.log (i.detach ())
+console.log ([i, i.detach ()])
 
 	}
 
@@ -432,7 +432,8 @@ async function main () {
 //	await test_008_schemata ()
 
 //	test_010_node ()
-	test_011_iterator ('20040.wsdl')
+	test_011_iterator ('param_types.xml')
+//	test_011_iterator ('20040.wsdl')
 	
 }
 
