@@ -338,7 +338,7 @@ async function test_007_wsdl (fn) {
 
 	console.log (soap.http ({GetForm9Sync: {address: {Region: {Code: 78}}}}))
 
-	console.log (soap)
+//	console.log (soap)
 
 }
 
@@ -453,10 +453,10 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
+//	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
-//	await test_007_wsdl ()
+	await test_007_wsdl ()
 //	await test_008_schemata ()
 
 //	test_010_node ()
