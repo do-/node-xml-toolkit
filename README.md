@@ -99,7 +99,7 @@ const xml = xs.stringify (data)
 const http = require ('http')
 const {SOAP11} = require ('xml-toolkit')
 
-const soap = await SOAP11.fromFile ('their.wsdl')
+const soap = new SOAP11 ('their.wsdl')
 
 const {method, headers, body} = soap.http ({RequestElementNameOfTheirs: {amount: '0.01'}})
 

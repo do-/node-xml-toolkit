@@ -335,8 +335,12 @@ async function test_006_schemata (fn) {
 async function test_007_wsdl (fn) {
 
 	const soap = await SOAP11.fromFile ('test/20186.wsdl')
+	const soaps = new SOAP11 ('test/20186.wsdl')
+	
+	const d = {GetForm9Sync: {address: {Region: {Code: 78}}}}
 
-	console.log (soap.http ({GetForm9Sync: {address: {Region: {Code: 78}}}}))
+	console.log (soap.http (d))
+	console.log (soaps.http (d))
 
 //	console.log (soap)
 
