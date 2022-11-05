@@ -113,6 +113,7 @@ console.log (xml)
 async function test_004_schemata (fn) {
 
 	let xs = await XMLSchemata.fromFile ('test/dom-gosuslugi-ru-smev3-debt-responses.xsd')
+	let xss = new XMLSchemata ('test/dom-gosuslugi-ru-smev3-debt-responses.xsd')
 /*		
 	const localName = 'ImportDebtRequestsRequest'
 	
@@ -127,7 +128,7 @@ async function test_004_schemata (fn) {
 	}))
 */
 	
-	console.log (xs.stringify ({
+	const d = {
   "ExportDebtRequestsResponse": {	
     "request-data": {
       "request-id": "bac4c940-6ad3-11eb-9439-0242ac130002",
@@ -212,7 +213,9 @@ async function test_004_schemata (fn) {
       }
     }
   }
-}))
+}
+	console.log (xs.stringify (d))
+	console.log (xss.stringify (d))
 	
 	//getNamespacePrefixesMap
 /*	
@@ -226,6 +229,9 @@ async function test_004_schemata (fn) {
 	console.log (xs.stringify ({
   		"ExportDebtRequestsRequest": {Id: 1}	
 	})) 
+	console.log (xss.stringify ({
+  		"ExportDebtRequestsRequest": {Id: 1}	
+	})) 
 
 //	console.log (xs.get ('urn:dom.gosuslugi.ru/debt-responses/1.0.0').get ('AttachmentType')) 
  
@@ -234,6 +240,7 @@ async function test_004_schemata (fn) {
 async function test_005_schemata (fn) {
 
 	const xs = await XMLSchemata.fromFile ('test/20040.wsdl')
+	const xss = new XMLSchemata ('test/20040.wsdl')
 	
 	const data = {
 	
@@ -274,26 +281,26 @@ async function test_005_schemata (fn) {
 	
 //	const m = xs.createMarshaller ('AppDataChildDotation', 'http://smev.gosuslugi.ru/rev111111')
 
-	console.log (xs.stringify (
-	
-		{childDotation2Request: {			
-			Message: {
-				TestMsg: "Тестовый запроc",
-			},
-			MessageData: {
-				AppData: {
-					info
-				}
+	const d = {childDotation2Request: {			
+		Message: {
+			TestMsg: "Тестовый запроc",
+		},
+		MessageData: {
+			AppData: {
+				info
 			}
-		}}	
-	
-	))
+		}
+	}}	
+
+	console.log (xs.stringify (d))
+	console.log (xss.stringify (d))
 
 }
 
 async function test_006_schemata (fn) {
 
 	const xs = await XMLSchemata.fromFile ('test/snils-by-additionalData-1.0.1.xsd')
+	const xss = new XMLSchemata ('test/snils-by-additionalData-1.0.1.xsd')
 
 	const data = {
 	  "SnilsByAdditionalDataRequest": {
@@ -321,6 +328,7 @@ async function test_006_schemata (fn) {
 //	const m = xs.createMarshaller ('AppDataChildDotation', 'http://smev.gosuslugi.ru/rev111111')
 
 	console.log (xs.stringify (data))
+	console.log (xss.stringify (data))
 
 }
 
@@ -337,6 +345,7 @@ async function test_007_wsdl (fn) {
 async function test_008_schemata (fn) {
 
 	const xs = await XMLSchemata.fromFile ('test/30017.xsd')
+	const xss = new XMLSchemata ('test/30017.xsd')
 
 	const data = 
 	
@@ -366,9 +375,10 @@ async function test_008_schemata (fn) {
 			}
 		}
 
-//	console.log (xs.stringify (data))
-
 //	console.log (xs)
+
+	console.log (xs.stringify (data))
+	console.log (xss.stringify (data))
 
 }
 
@@ -423,8 +433,8 @@ function test_012_parser (fn) {
 const parser = new XMLParser  ({})
 const doc = parser.process (xml)
 
-for (const element of doc.detach ().children) {
-  console.log (element.attributes)
+for (const element of doc.children) {
+  console.log (element)
 }
 
 }
@@ -443,7 +453,7 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-//	await test_004_schemata ()
+	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
 //	await test_007_wsdl ()
@@ -453,7 +463,7 @@ async function main () {
 //	test_011_iterator ('param_types.xml')
 //	test_011_iterator ('20040.wsdl')
 
-	test_012_parser ('param_types.xml')
+//	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 	
 }
