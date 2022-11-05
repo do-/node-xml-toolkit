@@ -8,6 +8,23 @@ npm i xml-toolkit
 ```
 
 # Using
+
+* [Parsing a small file completely](XMLParser)
+
+```js
+const fs = require ('fs')
+const {XMLParser} = require ('xml-toolkit')
+
+const xml    = fs.readFileSync ('doc.xml')
+const parser = new XMLParser  ({...options})
+
+const document = parser.process (xml)
+
+for (const element of document.detach ().children) {
+  console.log (element.attributes)
+}
+```
+
 * [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List)
 
 ```js
