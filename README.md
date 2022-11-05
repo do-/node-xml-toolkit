@@ -82,7 +82,7 @@ const data = {ExportDebtRequestsResponse: {
   }
 }
 
-const xs = await XMLSchemata.fromFile ('xs.xsd')
+const xs = new XMLSchemata ('xs.xsd')
 
 const xml = xs.stringify (data)
 
