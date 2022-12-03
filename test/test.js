@@ -392,6 +392,8 @@ async function test_009_schemata (fn) {
 
 	console.log (xs)
 
+	console.log (xs.stringify ({AckResponse: null}))
+
 }
 
 function test_010_node () {
