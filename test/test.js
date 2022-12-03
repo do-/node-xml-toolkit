@@ -453,6 +453,21 @@ for (const element of doc.children) {
 
 }
 
+function test_013_soap () {
+
+	const xs = new XMLSchemata ('test/soap.xsd')
+
+	console.log (xs)
+
+	console.log (xs.stringify ({
+		Envelope: {
+			Body: {null: {'<foo>bar</foo>': {Id: 1}}},
+		}
+	}))
+
+}
+
+
 async function main () {
 
 //	await test_001_lexer_sync ('E05a.xml')
@@ -472,7 +487,7 @@ async function main () {
 //	await test_006_schemata ()
 //	await test_007_wsdl ()
 //	await test_008_schemata ()
-	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
+//	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
 //	test_009_schemata ('sign.xsd')
 
 //	test_010_node ()
@@ -481,6 +496,8 @@ async function main () {
 
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
+
+test_013_soap ()
 	
 }
 
