@@ -386,6 +386,14 @@ async function test_008_schemata (fn) {
 
 }
 
+async function test_009_schemata (fn) {
+
+	const xs = new XMLSchemata ('test/' + fn)
+
+	console.log (xs)
+
+}
+
 function test_010_node () {
 
 	for (const s of 
@@ -460,8 +468,10 @@ async function main () {
 //	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
-	await test_007_wsdl ()
+//	await test_007_wsdl ()
 //	await test_008_schemata ()
+	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
+//	test_009_schemata ('sign.xsd')
 
 //	test_010_node ()
 //	test_011_iterator ('param_types.xml')
