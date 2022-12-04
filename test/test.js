@@ -457,7 +457,7 @@ function test_013_soap () {
 
 	const xs = new XMLSchemata ('test/soap.xsd')
 
-	console.log (xs)
+//	console.log (xs)
 
 	console.log (xs.stringify ({
 		Envelope: {
@@ -482,11 +482,11 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-//	await test_004_schemata ()
-//	await test_005_schemata ()
-//	await test_006_schemata ()
-//	await test_007_wsdl ()
-//	await test_008_schemata ()
+	await test_004_schemata ()
+	await test_005_schemata ()
+	await test_006_schemata ()
+	await test_007_wsdl ()
+	await test_008_schemata ()
 //	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
 //	test_009_schemata ('sign.xsd')
 
@@ -497,7 +497,7 @@ async function main () {
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 
-test_013_soap ()
+// test_013_soap ()
 	
 }
 
