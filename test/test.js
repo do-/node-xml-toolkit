@@ -455,7 +455,7 @@ for (const element of doc.children) {
 
 function test_013_soap () {
 
-	const xs11 = new XMLSchemata ('test/soap-1.1.xsd')
+	const xs11 = new XMLSchemata ('lib/soap-1.1.xsd')
 
 //	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/'))
 //	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').getType ('Fault').children[0].children)
@@ -528,6 +528,10 @@ function test_013_soap () {
 */
 
 	console.log (xs11.stringify (soap11))
+	
+	
+	console.log (SOAP11.message (xs11.stringify ({Fault})))
+	
 /*	
 	const xs12 = new XMLSchemata ('test/soap-1.2.xsd')
 
