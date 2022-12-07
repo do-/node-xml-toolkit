@@ -334,11 +334,13 @@ async function test_006_schemata (fn) {
 
 function test_007_wsdl (fn) {
 
-	const soap = new SOAP11 ('test/20186.wsdl')
+	const soap11 = new SOAP11 ('test/20186.wsdl')
+	const soap12 = new SOAP12 ('test/20186.wsdl')
 	
 	const d = {GetForm9Sync: {address: {Region: {Code: 78}}}}
 
-	console.log (soap.http (d))
+	console.log (soap11.http (d))
+	console.log (soap12.http (d))
 
 }
 
@@ -502,7 +504,7 @@ async function main () {
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 
- test_013_soap ()
+// test_013_soap ()
 	
 }
 
