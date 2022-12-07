@@ -455,15 +455,105 @@ for (const element of doc.children) {
 
 function test_013_soap () {
 
-	const xs = new XMLSchemata ('test/soap.xsd')
+	const xs11 = new XMLSchemata ('test/soap-1.1.xsd')
 
-//	console.log (xs)
-
+//	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/'))
+//	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').getType ('Fault').children[0].children)
+//	console.log (xs.getType ('Fault'))	
+	
+/*
 	console.log (xs.stringify ({
 		Envelope: {
 			Body: {null: {'<foo>bar</foo>': {Id: 1}}},
 		}
 	}))
+
+
+			<faultcode>SOAP-ENV:Client</faultcode>
+			<faultstring>Message does not have necessary info</faultstring>
+			<faultactor>http://gizmos.com/order</faultactor>
+			<detail>
+				<PO:order xmlns:PO="http://gizmos.com/orders/">Quantity element does not have a value</PO:order>
+				<PO:confirmation xmlns:PO="http://gizmos.com/confirm">Incomplete address: no zip code</PO:confirmation>
+			</detail>
+
+
+*/
+
+	let Fault = {
+		faultcode: 'SOAP-ENV:Client',
+		faultstring: 'Message does not have necessary info',
+		faultactor: 'http://gizmos.com/order',
+		detail: {
+			null: {
+				[`
+					<PO:order xmlns:PO="http://gizmos.com/orders/">Quantity element does not have a value</PO:order>
+					<PO:confirmation xmlns:PO="http://gizmos.com/confirm">Incomplete address: no zip code</PO:confirmation>
+				`]: {}
+			}
+		}
+	}
+
+	const soap11 = {
+		Envelope: {
+			Body: {
+				null: {
+					[xs11.stringify ({Fault})]: {}
+				}
+			}
+		}
+	}
+
+/*
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+	<env:Header/>
+	<env:Body>
+		<env:Fault>
+			<env:Code>
+				<env:Value>env:Sender</env:Value>
+			</env:Code>
+			<env:Reason>
+				<env:Text xml:lang="en-US">Message does not have necessary info</env:Text>
+			</env:Reason>
+			<env:Role>http://gizmos.com/order</env:Role>
+			<env:Detail>
+				<PO:order xmlns:PO="http://gizmos.com/orders/">Quantity element does not have a value</PO:order>
+				<PO:confirmation xmlns:PO="http://gizmos.com/confirm">Incomplete address: no zip code</PO:confirmation>
+			</env:Detail>
+		</env:Fault>
+	</env:Body>
+</env:Envelope>
+*/
+
+	console.log (xs11.stringify (soap11))
+	
+	const xs12 = new XMLSchemata ('test/soap-1.2.xsd')
+
+	Fault = {
+		Code: {Value: 'env:Sender'},
+		Reason: {Text: 'Message does not have necessary info'},
+		Role: 'http://gizmos.com/order',
+		Detail: {
+			null: {
+				[`
+					<PO:order xmlns:PO="http://gizmos.com/orders/">Quantity element does not have a value</PO:order>
+					<PO:confirmation xmlns:PO="http://gizmos.com/confirm">Incomplete address: no zip code</PO:confirmation>
+				`]: {}
+			}
+		}
+	}
+	
+	const soap12 = {
+		Envelope: {
+			Body: {
+				null: {
+					[xs12.stringify ({Fault})]: {}
+				}
+			}
+		}
+	}
+
+	console.log (xs12.stringify (soap12))
 
 }
 
@@ -482,11 +572,13 @@ async function main () {
 //	await test_003_emitter_sync ('not-sa01.xml')
 // 	await test_003_emitter_sync ('ent.xml')
 //	await test_003_emitter_sync ('soap.xml')
-	await test_004_schemata ()
-	await test_005_schemata ()
-	await test_006_schemata ()
-	await test_007_wsdl ()
-	await test_008_schemata ()
+
+//	await test_004_schemata ()
+//	await test_005_schemata ()
+//	await test_006_schemata ()
+//	await test_007_wsdl ()
+//	await test_008_schemata ()
+	
 //	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
 //	test_009_schemata ('sign.xsd')
 
@@ -497,7 +589,7 @@ async function main () {
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 
-// test_013_soap ()
+ test_013_soap ()
 	
 }
 
