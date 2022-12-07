@@ -480,8 +480,10 @@ function test_013_soap () {
 
 */
 
+
+
 	let Fault = {
-		faultcode: 'SOAP-ENV:Client',
+		faultcode: {localName: 'Client', namespaceURI: 'http://schemas.xmlsoap.org/soap/envelope/'},
 		faultstring: 'Message does not have necessary info',
 		faultactor: 'http://gizmos.com/order',
 		detail: {
@@ -526,7 +528,7 @@ function test_013_soap () {
 */
 
 	console.log (xs11.stringify (soap11))
-	
+/*	
 	const xs12 = new XMLSchemata ('test/soap-1.2.xsd')
 
 	Fault = {
@@ -554,7 +556,7 @@ function test_013_soap () {
 	}
 
 	console.log (xs12.stringify (soap12))
-
+*/
 }
 
 
