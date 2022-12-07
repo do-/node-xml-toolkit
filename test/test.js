@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, EntityResolver, XMLIterator, XMLParser} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, SOAP12, EntityResolver, XMLIterator, XMLParser, SOAPFault} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -457,16 +457,17 @@ function test_013_soap () {
 		<PO:order xmlns:PO="http://gizmos.com/orders/">Quantity element does not have a value</PO:order>
 		<PO:confirmation xmlns:PO="http://gizmos.com/confirm">Incomplete address: no zip code</PO:confirmation>
 	`	
-	console.log (
-		SOAP11.message (
-			SOAP11.fault ('Message does not have necessary info', {
+	
+	const f = 
+			new SOAPFault ('Message does not have necessary info', {
 				code: 'Client',
 				actor: 'http://gizmos.com/order',
 				detail
 			})
-		)
-	)
 	
+	console.log (SOAP11.message (f))
+	console.log (SOAP12.message (f))
+
 }
 
 
