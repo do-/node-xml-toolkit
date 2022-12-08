@@ -339,7 +339,7 @@ function test_007_wsdl (fn) {
 	
 	const d = {GetForm9Sync: {address: {Region: {Code: 78}}}}
 
-//	console.log (soap11.http (d))
+	console.log (soap11.http (d))
 	console.log (soap12.http (d))
 
 }
