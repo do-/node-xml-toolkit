@@ -25,7 +25,7 @@ for (const element of document.detach ().children) {
 }
 ```
 
-* [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List)
+* [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List), streaming mode
 
 ```js
 const {XMLReader, XMLNode} = require ('xml-toolkit')
@@ -50,7 +50,7 @@ const records = new XMLReader ({
 // records.on ('data', record => doSomethingWith (record))
 ```
 
-* [Getting a Single Element](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Getting-a-Single-Element)
+* [Getting a Single Element](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Getting-a-Single-Element), streaming mode
 
 ```js
 const {XMLReader, XMLNode} = require ('xml-toolkit')
@@ -93,13 +93,13 @@ const xml = xs.stringify (data)
 */
 ```
 
-* Invoking a [SOAP 1.1](https://github.com/do-/node-xml-toolkit/wiki/SOAP11) Web Service
+* Invoking a [SOAP 1.1](https://github.com/do-/node-xml-toolkit/wiki/SOAP11) or [SOAP 1.2](https://github.com/do-/node-xml-toolkit/wiki/SOAP12) Web Service
 
 ```js
 const http = require ('http')
-const {SOAP11} = require ('xml-toolkit')
+const {SOAP11, SOAP12} = require ('xml-toolkit')
 
-const soap = new SOAP11 ('their.wsdl')
+const soap = new SOAP11 ('their.wsdl') // or SOAP12
 
 const {method, headers, body} = soap.http ({RequestElementNameOfTheirs: {amount: '0.01'}})
 
@@ -107,4 +107,4 @@ const rq = http.request (endpointURL, {method, headers})
 rq.write (body)
 ```
 
-More information available in [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
+For more information, see [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
