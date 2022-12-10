@@ -1,5 +1,5 @@
 # node-xml-toolkit
-Collection of classes for dealing with XML
+XML parsers (synchronous, streaming), marshaller, SOAP adapters (1.1, 1.2)
 
 # Installation
 
