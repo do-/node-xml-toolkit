@@ -1,6 +1,6 @@
 {
   "name": "xml-toolkit",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "Collection of classes for dealing with XML",
   "main": "index.js",
   "scripts": {
@@ -12,8 +12,9 @@
   },
   "keywords": [
     "xml",
-    "sax",
-    "stax"
+    "soap",
+    "xsd",
+    "sax"
   ],
   "author": "Dmitry Ovsyanko",
   "license": "MIT",
