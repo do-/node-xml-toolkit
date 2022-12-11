@@ -107,7 +107,7 @@ const rq = http.request (endpointURL, {method, headers})
 rq.write (body)
 ```
 
-[Implementing](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Implement-a-SOAP-Web-Service) a SOAP service
+* [Implementing](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Implement-a-SOAP-Web-Service) a SOAP service
 
 ```js
 const {XMLSchemata, SOAP11, SOAP12, SOAPFault} = require ('xml-toolkit')
