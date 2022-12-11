@@ -107,4 +107,30 @@ const rq = http.request (endpointURL, {method, headers})
 rq.write (body)
 ```
 
+[Implementing](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Implement-a-SOAP-Web-Service) a SOAP service
+
+```js
+const {XMLSchemata, SOAP11, SOAP12, SOAPFault} = require ('xml-toolkit')
+
+const SOAP = SOAP11 // or SOAP12
+
+const xs = new XMLSchemata (`myService.wsdl`)
+
+let body, statusCode; try {  
+  body = xs.stringify (myMethod (/*...*/))
+  statusCode = 200
+}
+catch (x) {
+  body = new SOAPFault (x)
+  statusCode = 500
+}
+
+rp.writeHead (statusCode, {
+  'Content-Type': SOAP.contentType,
+})
+
+const xml = SOAP.message (body)
+rp.end (xml)
+```
+
 For more information, see [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
