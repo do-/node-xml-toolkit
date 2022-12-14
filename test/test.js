@@ -337,7 +337,7 @@ function test_007_wsdl (fn) {
 	const soap11 = new SOAP11 ('test/20186.wsdl')
 	const soap12 = new SOAP12 ('test/20186.wsdl')
 	
-	const d = {GetForm9Sync: {address: {Region: {Code: 78}}}}
+	const d = {"GetForm9Sync":{"person":{"LastName":"ИВАНОВА","FirstName":"ПЕТР","SecondName":null,"BirthDate":"1970-11-11"},"address":{"Region":{"Code":"78","Name":"Санкт-Петербург"},"Street":{"Code":6597,"Name":"Московский пр-кт"},"House":"д. 18 литера Е","Flat":"33"}}}
 
 	console.log (soap11.http (d))
 	console.log (soap12.http (d))
