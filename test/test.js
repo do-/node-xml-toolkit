@@ -388,9 +388,18 @@ async function test_009_schemata (fn) {
 
 	const xs = new XMLSchemata ('test/' + fn)
 
-	console.log (xs)
+//	console.log (xs)
 
-	console.log (xs.stringify ({AckResponse: null}))
+//	console.log (xs.stringify ({AckResponse: null}))
+
+	const data = {
+		AckRequest: {
+			AckTargetMessage: {Id: "U${rp_message_id}", accepted: true},
+//			AckTargetMessage: 11111,
+		}
+	}
+
+	console.log (xs.stringify (data))
 
 }
 
@@ -491,10 +500,10 @@ async function main () {
 //	await test_004_schemata ()
 //	await test_005_schemata ()
 //	await test_006_schemata ()
-	test_007_wsdl ()
+//	test_007_wsdl ()
 //	await test_008_schemata ()
 	
-//	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
+	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
 //	test_009_schemata ('sign.xsd')
 
 //	test_010_node ()
