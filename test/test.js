@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const assert = require ('assert')
-const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, SOAP12, EntityResolver, XMLIterator, XMLParser, SOAPFault} = require ('../')
+const {XMLReader, SAXEvent, XMLLexer, AttributesMap, XMLNode, XMLSchemata, SOAP11, SOAP12, EntityResolver, XMLIterator, XMLParser, SOAPFault, SOAP} = require ('../')
 
 async function test_001_lexer_sync (fn) {
 
@@ -476,8 +476,8 @@ function test_013_soap () {
 				detail
 			})
 	
-	console.log (SOAP11.message (f))
-	console.log (SOAP12.message (f))
+	console.log (SOAP (1.1).message (f))
+	console.log (SOAP (1.2).message (f))
 
 }
 
@@ -513,7 +513,7 @@ async function main () {
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 
-// test_013_soap ()
+test_013_soap ()
 	
 }
 
