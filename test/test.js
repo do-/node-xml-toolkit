@@ -392,12 +392,24 @@ async function test_009_schemata (fn) {
 
 //	console.log (xs.stringify ({AckResponse: null}))
 
+/*
 	const data = {
 		AckRequest: {
 //			AckTargetMessage: {Id: 1, accepted: true, null: 2},
 			AckTargetMessage: 11111,
 		}
 	}
+*/
+
+	const data = {GetResponseRequest: {
+
+			MessageTypeSelector: {
+				Id: 1, 
+				Timestamp: new Date ()//.toJSON ()
+			}
+
+		}}
+
 
 	console.log (xs.stringify (data))
 
@@ -503,7 +515,7 @@ async function main () {
 //	test_007_wsdl ()
 //	await test_008_schemata ()
 	
-//	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
+	test_009_schemata ('smev-message-exchange-service-1.1.xsd')
 //	test_009_schemata ('sign.xsd')
 
 //	test_010_node ()
@@ -513,7 +525,7 @@ async function main () {
 //	test_012_parser ('param_types.xml')
 //	test_012_parser ('20040.wsdl')
 
-test_013_soap ()
+//test_013_soap ()
 	
 }
 
