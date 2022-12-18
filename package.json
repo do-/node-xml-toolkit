@@ -1,8 +1,9 @@
 {
   "name": "xml-toolkit",
-  "version": "1.0.32",
-  "description": "Collection of classes for dealing with XML",
+  "version": "1.0.33",
+  "description": "XML parser, marshaller, SOAP adapter",
   "main": "index.js",
+  "files": ["/lib"],
   "scripts": {
     "test": "node test/test.js"
   },
@@ -14,6 +15,7 @@
     "xml",
     "soap",
     "xsd",
+    "wsdl",
     "sax"
   ],
   "author": "Dmitry Ovsyanko",
