@@ -1,11 +1,25 @@
 {
   "name": "xml-toolkit",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "XML parser, marshaller, SOAP adapter",
   "main": "index.js",
-  "files": ["/lib"],
+  "files": ["/lib", "/badges"],
   "scripts": {
-    "test": "node test/test.js"
+    "test": "jest",
+    "test-ci": "jest --ci --coverage"
+  },
+  "jest": {
+	"collectCoverageFrom": [
+		"lib/**/*.js"
+	],
+	"coverageReporters": ["clover", "json", "lcov", "text", "json-summary"],
+  	"verbose": false,
+  	"testPathIgnorePatterns": [
+  		"/node_modules/",
+  		"/__tests__/0ld",
+  		"/__tests__/data",
+  		"/__tests__/lib"
+  	]
   },
   "repository": {
     "type": "git",
@@ -24,6 +38,9 @@
     "url": "https://github.com/do-/node-xml-toolkit/issues"
   },
   "homepage": "https://github.com/do-/node-xml-toolkit#readme",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
   "dependencies": {
     "string-escape-map": "^1.0.0"
   }
