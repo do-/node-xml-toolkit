@@ -1,0 +1,2458 @@
+<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://xml.apache.org/xml-soap" xmlns:ns1="http://mtsmkd-frontend/externalsoap/api/tep-export" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header>
+      <wsse:Security SOAP-ENV:actor="http://smev.gosuslugi.ru/actors/smev" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+         <wsse:BinarySecurityToken wsu:Id="SenderCertificate" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"/>
+         <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+               <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+               <SignatureMethod Algorithm="urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102012-gostr34112012-256"/>
+               <Reference URI="#body">
+                  <Transforms>
+                     <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                  </Transforms>
+                  <DigestMethod Algorithm="urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34112012-256"/>
+                  <DigestValue/>
+               </Reference>
+            </SignedInfo>
+            <SignatureValue/>
+            <KeyInfo>
+               <wsse:SecurityTokenReference>
+                  <wsse:Reference ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" URI="#SenderCertificate"/>
+               </wsse:SecurityTokenReference>
+            </KeyInfo>
+         </Signature>
+      </wsse:Security>
+   </SOAP-ENV:Header>
+   <SOAP-ENV:Body wsu:Id="body">
+      <ns1:houseByEasResponse>
+         <return xsi:type="ns2:Map">
+            <item>
+               <key xsi:type="xsd:string">house_id</key>
+               <value xsi:type="xsd:int">9456</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">eas_id</key>
+               <value xsi:type="xsd:int">22579</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">district_name</key>
+               <value xsi:type="xsd:string">Колпинский</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">street_name</key>
+               <value xsi:type="xsd:string">пос.Петро-Славянка, Совхозный пр.</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">house_num</key>
+               <value xsi:type="xsd:string">20</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">house_block</key>
+               <value xsi:type="xsd:string"/>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">house_letter</key>
+               <value xsi:type="xsd:string">А</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">department_name</key>
+               <value xsi:type="xsd:string">ГКУ ЖА Колпинского р-на</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">house_category_name</key>
+               <value xsi:type="xsd:string">«Хрущевки» кирпичные, постройки 1957-1970 г.г.</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">balance_value</key>
+               <value xsi:type="xsd:float">43955</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">hostel_room_count</key>
+               <value xsi:type="xsd:string"/>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">hostel_total_area</key>
+               <value xsi:type="xsd:string"/>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">hostel_living_area</key>
+               <value xsi:type="xsd:string"/>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">non_living_room_count</key>
+               <value xsi:type="xsd:string"/>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">non_living_room_total_area</key>
+               <value xsi:type="xsd:float">0</value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">common_info</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">house_series</key>
+                     <value xsi:type="xsd:string">Индивидуальный</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">build_year</key>
+                     <value xsi:type="xsd:string">до 1917</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">reconstruction_year</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">total_building_volume</key>
+                     <value xsi:type="xsd:float">11995</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">total_building_area</key>
+                     <value xsi:type="xsd:float">2246.1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">living_building_area</key>
+                     <value xsi:type="xsd:float">1518.51</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">living_building_area_privately_owned</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">living_building_area_state_owned</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">non_living_building_area</key>
+                     <value xsi:type="xsd:float">503.29</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">nlba_privately_owned</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">nlba_state_owned</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">building_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stairway_count</key>
+                     <value xsi:type="xsd:int">2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">floor_count</key>
+                     <value xsi:type="xsd:int">4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">residents_count</key>
+                     <value xsi:type="xsd:int">80</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">personal_account_count</key>
+                     <value xsi:type="xsd:int">31</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">mansard_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">common_parameters</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">management_org_id</key>
+                     <value xsi:type="xsd:int">74</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">private_date</key>
+                     <value xsi:type="xsd:int">1303675200000</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">create_date</key>
+                     <value xsi:type="xsd:string">26.04.45773</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">category_id</key>
+                     <value xsi:type="xsd:int">5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">inventory_number</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">inventory_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">registry_number</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">registry_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cadastre_number</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cadastre_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">failure_state</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cultural_object_sign</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">notes</key>
+                     <value xsi:type="xsd:string">*Площадь фактурного и окрасочного слоя дана
+                                за вычетом площади оконных проемов. **Сведения о балансовой
+                                восстановительной стоимости предоставлены в ценах 1969 года.
+                                ***Потребление электроэнергии, данные по приборам учета - нет
+                                сведений ( не заключены договора электросеабжения с энергоснабжающей
+                                организацией) 2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">archive</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">cleaning_areas</key>
+               <value xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="ns2:Map[55]">
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Уборочная площадь лестничных маршей и
+                                    площадок</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">67.20</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Уборочная площадь коридоров мест общего
+                                    пользования</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Уборочная площадь служебных помещений</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе:</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Офисные помещения</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Красные уголки, клубы, детские комнаты</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Технические помещения (теплоцентры,
+                                    водомерные узлы,электрощитовые, мусороприемные камеры и т.п.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Прочие</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Уборочная площадь придомовой территории</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">1316.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе с усовершенствованным
+                                    покрытием</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">88.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">1 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">88.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">88.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">2 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">3 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе с неусовершенствованным
+                                    покрытием</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">64.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">1 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">64.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">64.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">2 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">3 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе без покрытия</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">1 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">2 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">3 класс</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Механизир.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Ручная</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе газоны</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Газоны</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">1164.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">areas</key>
+               <value xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="ns2:Map[24]">
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Общая площадь земельного участка по
+                                    документам</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Кадастровый номер участка</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">По фактическому пользованию</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">2524.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе:</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Застроенная площадь</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">723.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Незастроенная площадь</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">1801.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">в том числе:</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Твердые покрытия</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">276.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Проезды</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Тротуары</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">276.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Прочие</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Площадки</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Детские</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Спортивные</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Прочие</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Зеленые насаждения</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Всего</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">1525.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Сквер</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Газон с деревьями</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string">1525.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">caption</key>
+                        <value xsi:type="xsd:string">Газон, цветники, и т.п.</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">value</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">кв. м.</value>
+                     </item>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">flat_parameters</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">communal</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:int">1</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">2</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">3</key>
+                           <value xsi:type="xsd:float">61.8</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">4</key>
+                           <value xsi:type="xsd:float">79.6</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">5</key>
+                           <value xsi:type="xsd:float">204.6</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">6</key>
+                           <value xsi:type="xsd:float">365.3</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">7</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_count_total</key>
+                           <value xsi:type="xsd:int">7</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">room_count_total</key>
+                           <value xsi:type="xsd:int">35</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_total_area_total</key>
+                           <value xsi:type="xsd:float">1053.3</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_living_area_total</key>
+                           <value xsi:type="xsd:float">711.3</value>
+                        </item>
+                     </value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">individual</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:int">1</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">2</key>
+                           <value xsi:type="xsd:float">250.4</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">3</key>
+                           <value xsi:type="xsd:float">57.6</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">4</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">5</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">6</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:int">7</key>
+                           <value xsi:type="xsd:int">0</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_count_total</key>
+                           <value xsi:type="xsd:int">7</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">room_count_total</key>
+                           <value xsi:type="xsd:int">15</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_total_area_total</key>
+                           <value xsi:type="xsd:float">465.21</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">flat_living_area</key>
+                           <value xsi:type="xsd:float">308</value>
+                        </item>
+                     </value>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">capital_repairs</key>
+               <value xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="ns2:Map[6]">
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">repair_year</key>
+                        <value xsi:type="xsd:string">2018</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">work_list</key>
+                        <value xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:int[1]">
+                           <item xsi:type="xsd:int">21</item>
+                        </value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">price</key>
+                        <value xsi:type="xsd:string">467041.64</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">work_volume</key>
+                        <value xsi:type="xsd:string">14</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">measure_unit</key>
+                        <value xsi:type="xsd:string">квартир</value>
+                     </item>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">energy_passport</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">max_energy_use</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:string">caption</key>
+                           <value xsi:type="xsd:string">удельная тепловая характеристика
+                                        здания</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">measure_unit</key>
+                           <value xsi:type="xsd:string">Вт/(м3∙°С)</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">value</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                     </value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">energy_resource_cost</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:string">caption</key>
+                           <value xsi:type="xsd:string">Удельная тепловая характеристика
+                                        здания</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">measure_unit</key>
+                           <value xsi:type="xsd:string">Вт/(м3∙°С)</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">value</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                     </value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">temperature_energy</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:string">caption</key>
+                           <value xsi:type="xsd:string">Водопроводная вода, за отчетный год</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">measure_unit</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">value</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                     </value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">metering_devices</key>
+                     <value xsi:type="ns2:Map">
+                        <item>
+                           <key xsi:type="xsd:string">caption</key>
+                           <value xsi:type="xsd:string">Балансодержатель прибора</value>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">measure_unit</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                        <item>
+                           <key xsi:type="xsd:string">value</key>
+                           <value xsi:type="xsd:string"/>
+                        </item>
+                     </value>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">metering_system</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">electric_power_total</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electric_power_light</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electric_power_load</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_total</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_hot_water</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_heating_ventilatin</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_cold_water</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_wastewater</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">thermal_energy_gas</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">structural_elements</key>
+               <value xsi:type="ns2:Map">
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_flat_length</key>
+                     <value xsi:type="xsd:float">97.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_flat_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">99</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_cellar_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">2.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_riser_pipe_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_length</key>
+                     <value xsi:type="xsd:float">59.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_length</key>
+                     <value xsi:type="xsd:float">314.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_riser_pipe_count</key>
+                     <value xsi:type="xsd:int">30</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_cellar_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">41.1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_flat_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">450</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_flat_heating_length</key>
+                     <value xsi:type="xsd:float">276</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_brass_valve_count</key>
+                     <value xsi:type="xsd:int">15</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_water_meter_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_cellar_valve_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water_ball_valve_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">sewerage_cellar_pipe_length</key>
+                     <value xsi:type="xsd:float">33.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">sewerage_cellar_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">8.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">sewerage_riser_pipe_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">sewerage_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">117</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">sewerage_revision_cover_count</key>
+                     <value xsi:type="xsd:int">12</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_length</key>
+                     <value xsi:type="xsd:float">59.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_cellar_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">2.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_flat_riser_pipe_length</key>
+                     <value xsi:type="xsd:float">99</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_riser_pipe_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_flat_length</key>
+                     <value xsi:type="xsd:float">97.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_catch_count</key>
+                     <value xsi:type="xsd:int">2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_cellar_valve_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_cellar_plug_valve_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hotwater_other_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">towel_dryer_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_entry_switch_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_group_panel_count</key>
+                     <value xsi:type="xsd:int">8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_power_panel_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_switch_panel_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_common_light_length</key>
+                     <value xsi:type="xsd:float">102.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_lift_power_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_meter_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_doublerate_meter_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_number_plate_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_daylight_lamp_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_incandescent_lamp_count</key>
+                     <value xsi:type="xsd:int">8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_arc_discharge_lamp_count</key>
+                     <value xsi:type="xsd:int">2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electricity_switch_count</key>
+                     <value xsi:type="xsd:int">5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuge_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cellar_area</key>
+                     <value xsi:type="xsd:float">511</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuge_metall_door_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_working_from_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_reconstruction_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_modernization_date</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuse_chute_shaft_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuse_chute_charging_valve_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuse_chute_chamber_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cellar_room_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuge_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">asphalt_cover_area</key>
+                     <value xsi:type="xsd:float">276</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">asphalt_cover_yard_passage_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">asphalt_cover_pavement_area</key>
+                     <value xsi:type="xsd:float">276</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">asphalt_cover_other_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">paved_cover_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stairway_sing_count</key>
+                     <value xsi:type="xsd:int">2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">bench_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lawn_enclosure_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_boom_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_house_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_swing_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_sandbox_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_bench_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_swedishwall_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">playground_lawn_enclosure_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">front_area_total</key>
+                     <value xsi:type="xsd:float">2392.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">front_area_facial</key>
+                     <value xsi:type="xsd:float">1341</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">front_area_yard</key>
+                     <value xsi:type="xsd:float">543.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">front_area_butt</key>
+                     <value xsi:type="xsd:float">507.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_plaster_area_total</key>
+                     <value xsi:type="xsd:float">2128.9</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_plaster_area_facial</key>
+                     <value xsi:type="xsd:float">1193.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_plaster_area_yard</key>
+                     <value xsi:type="xsd:float">483.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_plaster_area_butt</key>
+                     <value xsi:type="xsd:float">451.7</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_coating_area_total</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_coating_area_facial</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_coating_area_yard</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_coating_area_butt</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_texture_area_total</key>
+                     <value xsi:type="xsd:float">2128.9</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_texture_area_facial</key>
+                     <value xsi:type="xsd:float">1193.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_texture_area_yard</key>
+                     <value xsi:type="xsd:float">483.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_texture_area_butt</key>
+                     <value xsi:type="xsd:float">451.7</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_balcony_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_balcony_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_lodge_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_lodge_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_oriel_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_porch_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_metal_covering_area</key>
+                     <value xsi:type="xsd:float">96.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_parapet_length</key>
+                     <value xsi:type="xsd:float">28.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_cornice_length</key>
+                     <value xsi:type="xsd:float">132.9</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_belt_length</key>
+                     <value xsi:type="xsd:float">356.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_draught_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_window_cover_length</key>
+                     <value xsi:type="xsd:float">127.7</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_enclosure_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_wall_joint_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_glue_paint_area</key>
+                     <value xsi:type="xsd:float">345.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_oil_paint_area</key>
+                     <value xsi:type="xsd:float">293.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_other_area</key>
+                     <value xsi:type="xsd:float">156.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_heat_center_wall_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_pipe_area</key>
+                     <value xsi:type="xsd:float">2.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_radiator_area</key>
+                     <value xsi:type="xsd:float">3.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_stairway_grating_area</key>
+                     <value xsi:type="xsd:float">63.1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_window_grating_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_lift_grating_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_mailbox_area</key>
+                     <value xsi:type="xsd:float">0.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_stairway_internal_area</key>
+                     <value xsi:type="xsd:float">8.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_stairway_bottom_area</key>
+                     <value xsi:type="xsd:float">99.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">basement_socle</key>
+                     <value xsi:type="xsd:float">13.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">basement_blind_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">basement_volume</key>
+                     <value xsi:type="xsd:float">331</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">walls_area</key>
+                     <value xsi:type="xsd:float">2636.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">walls_partition_area</key>
+                     <value xsi:type="xsd:float">6096.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">inserted_floor_area</key>
+                     <value xsi:type="xsd:float">1533.8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">inserted_floor_cellar_area</key>
+                     <value xsi:type="xsd:float">563.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">inserted_floor_garret_area</key>
+                     <value xsi:type="xsd:float">597</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stairway_floor_area</key>
+                     <value xsi:type="xsd:float">56.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stairway_woodfloor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">pvc_tile_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">ceramic_tile_floor_area</key>
+                     <value xsi:type="xsd:float">75.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">granite_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heat_center_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">garbage_room_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">pit_floor_area</key>
+                     <value xsi:type="xsd:float">1.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">engine_room_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">linoleum_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">parquet_floor_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_stairway_radiator_count</key>
+                     <value xsi:type="xsd:int">8</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_flat_radiator_count</key>
+                     <value xsi:type="xsd:int">184</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_armature_count</key>
+                     <value xsi:type="xsd:int">60</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_insulation_area</key>
+                     <value xsi:type="xsd:float">78.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_steel_heater_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_convector_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_catch_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_valve_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_threewaycock_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_elevator_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_box_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_center_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">window_count</key>
+                     <value xsi:type="xsd:int">111</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">window_common_count</key>
+                     <value xsi:type="xsd:int">7</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">window_area</key>
+                     <value xsi:type="xsd:float">263.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">window_common_area</key>
+                     <value xsi:type="xsd:float">24.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">door_count</key>
+                     <value xsi:type="xsd:int">7</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">metal_door_count</key>
+                     <value xsi:type="xsd:int">4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">door_area</key>
+                     <value xsi:type="xsd:float">17.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">metal_door_area</key>
+                     <value xsi:type="xsd:float">9.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">glass_area</key>
+                     <value xsi:type="xsd:float">45.4</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stool_area</key>
+                     <value xsi:type="xsd:float">2.5</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">ironware_count</key>
+                     <value xsi:type="xsd:int">14</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cellar_window_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cellar_window_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_metal_area</key>
+                     <value xsi:type="xsd:float">874</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_roll_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_piece_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_lathing_area</key>
+                     <value xsi:type="xsd:float">821.6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_rafter_count</key>
+                     <value xsi:type="xsd:int">66</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_metal_parapet_length</key>
+                     <value xsi:type="xsd:float">28.2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_vent_hood_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_vent_count</key>
+                     <value xsi:type="xsd:int">38</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_cowl_count</key>
+                     <value xsi:type="xsd:int">6</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_manhole_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_exit_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_airhole_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_abatjour_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_abatjour_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_gutter_length</key>
+                     <value xsi:type="xsd:float">132.9</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_downpipe_count</key>
+                     <value xsi:type="xsd:int">13</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_downpipe_length</key>
+                     <value xsi:type="xsd:float">234</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_cornice_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_drainage_pipe_length</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_drainage_gutter_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">roof_safety_barrier_length</key>
+                     <value xsi:type="xsd:float">126.3</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">garret_rooms_area</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">garret_rooms_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">heating_type_id</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cold_water</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">hot_water_type_id</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">electric_supply_type_id</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">gas_supply_type_id</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">gas_pipe_laying_type_id</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">ventilation</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">external_drainage</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">internal_drainage</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">refuse_chute_count</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">stove_type_id</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_sliding_door_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">lift_opening_door_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">freight_elevators_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">freight_passenger_count</key>
+                     <value xsi:type="xsd:string"/>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">pzu_lock_count</key>
+                     <value xsi:type="xsd:int">2</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">code_lock_count</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">fire_defence</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">dispatching_systems</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">telephone</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">radio</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">antenna</key>
+                     <value xsi:type="xsd:int">1</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">cable_tv</key>
+                     <value xsi:type="xsd:int">0</value>
+                  </item>
+                  <item>
+                     <key xsi:type="xsd:string">disabled_people_lifts_count</key>
+                     <value xsi:type="xsd:string">0</value>
+                  </item>
+               </value>
+            </item>
+            <item>
+               <key xsi:type="xsd:string">current_repairs</key>
+               <value xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="ns2:Map[9]">
+                  <item xsi:type="ns2:Map">
+                     <item>
+                        <key xsi:type="xsd:string">current_repair_year</key>
+                        <value xsi:type="xsd:int">2021</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">name</key>
+                        <value xsi:type="xsd:string">Промазка фальцев и свищей мастикой в
+                                    покрытии из кровельной стали</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">spb_budget_money</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">planned_volume</key>
+                        <value xsi:type="xsd:string">87.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">planned_volume_cost</key>
+                        <value xsi:type="xsd:string">31183.00</value>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">executed_volume</key>
+                        <value xsi:nil="true"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">executed_volume_cost</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">executor</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                     <item>
+                        <key xsi:type="xsd:string">grant_recipient</key>
+                        <value xsi:type="xsd:string"/>
+                     </item>
+                  </item>                                 
+               </value>
+            </item>
+         </return>
+      </ns1:houseByEasResponse>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

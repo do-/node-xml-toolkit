@@ -13,6 +13,7 @@ for (const name of [
 	'XMLIterator',
 	'XMLParser',
 	'SOAPFault',
+	'SOAPEncoding',
 
 ]) module.exports [name] = require ('./lib/' + name)
 
