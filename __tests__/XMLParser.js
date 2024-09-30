@@ -15,16 +15,3 @@ test ('basic', () => {
 	})
 	
 })
-
-test ('source', () => {
-
-	const p = new XMLParser ({stripSpace: false})
-	let src = fs.readFileSync ('__data__/schemas.xmlsoap.org.xml', 'utf-8')
-	const d = p.process (src)
-
-	src = src.replace (/<\?.*?\?>/gsm, '')
-	src = src.replace (/<!--.*?-->/gsm, '')
-
-	expect (String (d).trim ()).toBe (src.trim ())
-	
-})

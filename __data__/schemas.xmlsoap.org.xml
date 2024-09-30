@@ -114,13 +114,7 @@ The name and trademarks of copyright holders may NOT be used in advertising or p
     <xs:sequence>
       <xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" />
     </xs:sequence>
-    <xs:anyAttribute namespace="##any" processContents="lax" /> 
+    <xs:anyAttribute namespace="##any" processContents="lax" />
   </xs:complexType>
 
 </xs:schema>
-
-
-
-
-
-
