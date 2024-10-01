@@ -54,3 +54,14 @@ Line2
 	expect (d.toString ({space: ' '})).toMatch ('<inner id="&quot;1&quot;">Line1&#xA;&lt;&lt;EOF&#xA;Line2</inner>')
 
 })
+
+test ('attr', () => {
+
+	const p = new XMLParser ()
+	const src = fs.readFileSync ('__data__/schemas.xmlsoap.org.xml', 'utf-8')
+	const d = p.process (src)
+	const s = d.toString ({space: 2, attrSpace: '\t'})
+
+	expect (s.split ('\n')).toHaveLength (162)
+	
+})
