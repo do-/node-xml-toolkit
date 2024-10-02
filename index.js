@@ -14,6 +14,7 @@ for (const name of [
 	'XMLParser',
 	'SOAPFault',
 	'SOAPEncoding',
+	'XMLPrinter',
 
 ]) module.exports [name] = require ('./lib/' + name)
 
