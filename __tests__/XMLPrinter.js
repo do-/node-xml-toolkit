@@ -44,12 +44,7 @@ test ('bad', () => {
 
 test ('self enclosing', () => {
 
-	const xp = new XMLPrinter ()
-	xp.openElement ('outer')
-	xp.writeCharacters ('')
-	xp.closeElement ()
-
-	expect (xp.text).toBe ('<outer />')
+	expect (new XMLPrinter ().openElement ('outer').writeCharacters ('').closeElement ().text).toBe ('<outer />')
 
 })
 
@@ -132,5 +127,16 @@ test ('indent attr', () => {
    />
   <leaf />
 </outer>`.trim ())
+
+})
+
+test ('decl', () => {
+
+	expect (new XMLPrinter ().writeXMLDecl ().text).toBe ('<?xml version="1.0"?>')
+	expect (new XMLPrinter ().writeXMLDecl ('utf-8').text).toBe ('<?xml version="1.0" encoding="utf-8"?>')
+	expect (new XMLPrinter ().writeXMLDecl (null, 'yes').text).toBe ('<?xml version="1.0" standalone="yes"?>')
+
+	expect (() => new XMLPrinter ().openElement ('outer').writeXMLDecl ()).toThrow ()
+	expect (() => new XMLPrinter ().writeXMLDecl (null, true)).toThrow ()
 
 })
