@@ -20,6 +20,12 @@ test ('indent', () => {
 	const src = fs.readFileSync ('__data__/schemas.xmlsoap.org.xml', 'utf-8')
 	const d = p.process (src)
 	const last = d.children [d.children.length - 1]
+
+	Object.defineProperty (last, 'namespacesMap', {
+		value: null,
+		writable: false,
+	})
+
 	const s = last.toString ({space: 2, EOL: '\r\n'}, 1)
 
 	expect (s.trimStart ()).toBe (src.slice (5966, -16))
@@ -34,7 +40,7 @@ test ('no indent', () => {
 	const last = d.children [d.children.length - 1].children [0]
 	const s = last.toString ({})
 
-	expect (s).toBe ('<xs:sequence><xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" /></xs:sequence>')
+	expect (s).toBe ('<xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax" /></xs:sequence>')
 
 	const last1 = d.children [d.children.length - 2].children [0]
 
@@ -62,6 +68,6 @@ test ('attr', () => {
 	const d = p.process (src)
 	const s = d.toString ({space: 2, attrSpace: '\t'})
 
-	expect (s.split ('\n')).toHaveLength (162)
+	expect (s.split ('\n')).toHaveLength (164)
 	
 })
