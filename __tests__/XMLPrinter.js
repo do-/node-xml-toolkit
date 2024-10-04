@@ -133,10 +133,19 @@ test ('indent attr', () => {
 test ('decl', () => {
 
 	expect (new XMLPrinter ().writeXMLDecl ().text).toBe ('<?xml version="1.0"?>')
-	expect (new XMLPrinter ().writeXMLDecl ('utf-8').text).toBe ('<?xml version="1.0" encoding="utf-8"?>')
-	expect (new XMLPrinter ().writeXMLDecl (null, 'yes').text).toBe ('<?xml version="1.0" standalone="yes"?>')
+	expect (new XMLPrinter ().writeXMLDecl ({encoding: 'utf-8'}).text).toBe ('<?xml version="1.0" encoding="utf-8"?>')
+	expect (new XMLPrinter ().writeXMLDecl ({standalone: true}).text).toBe ('<?xml version="1.0" standalone="yes"?>')
+	expect (new XMLPrinter ().writeXMLDecl ({encoding: 'ascii', standalone: 0}).text).toBe ('<?xml version="1.0" encoding="ascii" standalone="no"?>')
 
 	expect (() => new XMLPrinter ().openElement ('outer').writeXMLDecl ()).toThrow ()
-	expect (() => new XMLPrinter ().writeXMLDecl (null, true)).toThrow ()
+
+	const xp = (new XMLPrinter ({
+		decl: {encoding: 'utf-8'}, 
+		space: 1, 
+		EOL: '\n'
+	}))
+
+	expect (xp.openElement ('root').closeElement ().text).toBe ('<?xml version="1.0" encoding="utf-8"?>\n<root />')
+	expect (xp.reset ().openElement ('leaf').closeElement ().text).toBe ('<?xml version="1.0" encoding="utf-8"?>\n<leaf />')
 
 })
