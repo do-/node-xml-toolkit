@@ -71,3 +71,14 @@ test ('attr', () => {
 	expect (s.split ('\n')).toHaveLength (164)
 	
 })
+
+test ('ns', () => {
+
+	const p = new XMLParser ()
+	const src = '<root xmlns="urn://0" xmlns:ns1="urn://1"><leaf ns1:id="1" /></root>'
+	const d = p.process (src)
+	const dst = d.toString ({})
+
+	expect (dst).toBe (src)
+	
+})
