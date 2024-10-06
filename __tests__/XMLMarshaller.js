@@ -80,3 +80,19 @@ test ('30441-2', async () => {
 	expect (obj).toStrictEqual (data)
 
 })
+
+test ('30442-1', async () => {
+
+	const [data, obj] = await get2 (30442, 1)
+
+	expect (obj).toStrictEqual (data)
+
+})
+
+test ('30442-2', async () => {
+
+	const [data, obj] = await get2 (30442, 2)
+
+	expect (obj).toStrictEqual (data)
+
+})
