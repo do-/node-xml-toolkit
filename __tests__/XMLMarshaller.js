@@ -30,9 +30,13 @@ const xform = async (data, code, getXS) => {
 const xformSync = async (data, code) => xform (data, code, getXSSync)
 const xformASync = async (data, code) => xform (data, code, getXSASync)
 
-const get2 = async (code) => {
+const get2 = async (code, postfix) => {
 
-	const data = require (`../__data__/${code}`)
+	let fn = '../__data__/' + code
+
+	if (postfix) fn += '-' + postfix
+
+	const data = require (fn)
 
 	const [oSync, oASync] = await Promise.all ([
 		xformSync (data, code),
@@ -55,9 +59,17 @@ test ('30017', async () => {
 
 })
 
-test ('30441', async () => {
+test ('30441-1', async () => {
 
-	const [data, obj] = await get2 (30441)
+	const [data, obj] = await get2 (30441, 1)
+
+	expect (obj).toStrictEqual (data)
+
+})
+
+test ('30441-2', async () => {
+
+	const [data, obj] = await get2 (30441, 2)
 
 	const rd = data.ExportDebtRequestsResponse ['request-data']
 
