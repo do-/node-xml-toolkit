@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn://x-artefacts-fns-inn-singular/root/270-18/4.0.1" xmlns:tns="urn://x-artefacts-fns-inn/commons/4.0.0" targetNamespace="urn://x-artefacts-fns-inn-singular/root/270-18/4.0.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-fns-inn/commons/4.0.0" schemaLocation="supplementary/fns-common-types.xsd"/>
+	<xs:element name="FNSINNSingularRequest">
+		<xs:annotation>
+			<xs:documentation>Запрос в Федеральную налоговую службу об ИНН физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="СведЮЛ">
+					<xs:annotation>
+						<xs:documentation>Сведения о юридическом лице, осуществляющем запрос</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="НаимОрг" type="tns:string-1000" use="required">
+							<xs:annotation>
+								<xs:documentation>Наименование организации</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ИННЮЛ" type="tns:ИННЮЛТип" use="required">
+							<xs:annotation>
+								<xs:documentation>ИНН юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ОГРН" type="tns:ОГРН" use="required">
+							<xs:annotation>
+								<xs:documentation>Основной государственный регистрационный номер юридического лица</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="СведФЛ" type="tns:СведФЛТип">
+					<xs:annotation>
+						<xs:documentation>Сведения о запрашиваемом физическом лице</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ИдЗапрос" type="tns:ИдЗапросТип" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FNSINNSingularResponse">
+		<xs:annotation>
+			<xs:documentation>Ответ на запрос в Федеральную налоговую службу об ИНН физического лица</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="ИдЗапрос" type="tns:ИдЗапросТип" use="required">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса, на который предоставляется ответ</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ИННФЛ" type="tns:ИННФЛТип" use="optional">
+				<xs:annotation>
+					<xs:documentation>ИНН физического лица</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
