@@ -32,7 +32,7 @@ const xformASync = async (data, code) => xform (data, code, getXSASync)
 
 const get2 = async (code) => {
 
-	const data = require (`../__data__/${code}.json`)
+	const data = require (`../__data__/${code}`)
 
 	const [oSync, oASync] = await Promise.all ([
 		xformSync (data, code),
@@ -50,6 +50,20 @@ test ('30017', async () => {
 	const [data, obj] = await get2 (30017)
 
 	delete data.FNSINNSingularRequest ['СведФЛ'] ['МестоРожд']
+
+	expect (obj).toStrictEqual (data)
+
+})
+
+test ('30441', async () => {
+
+	const [data, obj] = await get2 (30441)
+
+	const rd = data.ExportDebtRequestsResponse ['request-data']
+
+	rd.result = String (rd.result)
+	rd.period ['end-date'] = rd.period ['end-date'].toJSON ().substring (0, 10)
+	rd.subrequest.response ['has-debt'] = String (rd.subrequest.response ['has-debt'])
 
 	expect (obj).toStrictEqual (data)
 

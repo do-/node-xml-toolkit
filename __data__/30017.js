@@ -1,4 +1,4 @@
-{"FNSINNSingularRequest":
+module.exports = {"FNSINNSingularRequest":
 	{
 		"СведЮЛ": {
 			"ОГРН":"1037843048880",

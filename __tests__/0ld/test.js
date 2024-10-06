@@ -296,7 +296,7 @@ async function test_005_schemata (fn) {
 	console.log (xss.stringify (d))
 
 }
-
+/*
 async function test_006_schemata (fn) {
 
 	const xs = await XMLSchemata.fromFile ('test/snils-by-additionalData-1.0.1.xsd')
@@ -331,7 +331,7 @@ async function test_006_schemata (fn) {
 	console.log (xss.stringify (data))
 
 }
-
+*/
 function test_007_wsdl (fn) {
 
 	const soap11 = new SOAP11 ('test/20186.wsdl')
