@@ -18,11 +18,11 @@ const xform = async (data, code, getXS) => {
 	execSync (`xmllint --schema ${xsdPath} -`, {input: xml, stdio: 'pipe'})
 
 	const doc  = new XMLParser ().process (xml)
-
+/*
 	xml = doc.toString ({space: 2, decl: {}})
 	
 	execSync (`xmllint --schema ${xsdPath} -`, {input: xml, stdio: 'pipe'})
-
+*/
 	return dump (doc)
 
 }
@@ -94,5 +94,22 @@ test ('30442-2', async () => {
 	const [data, obj] = await get2 (30442, 2)
 
 	expect (obj).toStrictEqual (data)
+
+})
+
+test ('nillable', () => {
+
+	const xs = getXSSync (Path.join (__dirname, '..', '__data__', 'F9ASyncService_1.xsd'))
+
+	const m = xs.createMarshaller ('Person', 'http://schemas.datacontract.org/2004/07/GetForm9ASync', {space: 2})
+
+	const xml = m.stringify ({
+		LastName: 'LastName',
+		FirstName: 'FirstName',
+		SecondName: null,
+		BirthDate: new Date (0),
+	})
+
+	expect (xml).toMatch ('SecondName xsi:nil="true"')
 
 })
