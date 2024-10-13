@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:element name="GetStatus">
+    <xs:complexType>    
+      <xs:sequence>
+        <xs:element minOccurs="0" name="integer" type="xs:integer"/>
+        <xs:element minOccurs="0" name="nonNegativeInteger" type="xs:nonNegativeInteger"/>
+        <xs:element minOccurs="0" name="positiveInteger" type="xs:positiveInteger"/>
+        <xs:element minOccurs="0" name="nonPositiveInteger" type="xs:nonPositiveInteger"/>
+        <xs:element minOccurs="0" name="negativeInteger" type="xs:negativeInteger"/>			
+        <xs:element minOccurs="0" name="id" type="xs:long"/>
+        <xs:element minOccurs="0" name="n" type="xs:int"/>
+        <xs:element minOccurs="0" name="date" type="xs:date"/>
+        <xs:element minOccurs="0" name="dateTime" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="double" type="xs:double"/>
+        <xs:element minOccurs="0" name="float" type="xs:float"/>
+        <xs:element minOccurs="0" name="boolean" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="dec" type="xs:decimal"/>
+        <xs:element minOccurs="0" name="q" type="xs:QName"/>
+        <xs:element minOccurs="0" name="decimal">
+		<xs:simpleType>
+		  <xs:restriction base="xs:decimal">
+		    <xs:fractionDigits value="2" />
+		  </xs:restriction>
+		</xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="a">
+        <xs:simpleType>
+          <xs:restriction base="xs:date">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="dt">
+        <xs:simpleType>
+          <xs:annotation>
+          	<xs:documentation>?</xs:documentation>
+          </xs:annotation>        
+          <xs:restriction base="xs:dateTime">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="SetStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id">
+		<xs:simpleType>
+		      <xs:union>
+			<xs:simpleType>
+			  <xs:restriction base='xs:integer'/>
+			</xs:simpleType>
+			<xs:simpleType>
+			  <xs:restriction base='xs:string'/>
+			</xs:simpleType>
+		      </xs:union>        
+		</xs:simpleType>
+        </xs:element>
+      </xs:sequence>           
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="BetStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:long"/>
+      </xs:sequence>   
+      <xs:attribute name="a">
+        <xs:simpleType>
+		      <xs:union>
+			<xs:simpleType>
+			  <xs:restriction base='xs:integer'/>
+			</xs:simpleType>
+			<xs:simpleType>
+			  <xs:restriction base='xs:string'/>
+			</xs:simpleType>
+		      </xs:union>        
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

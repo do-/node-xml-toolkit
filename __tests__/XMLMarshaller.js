@@ -113,3 +113,57 @@ test ('nillable', () => {
 	expect (xml).toMatch ('SecondName xsi:nil="true"')
 
 })
+	
+test ('att simple type', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
+
+	const xs = getXSSync (xsdPath)
+
+	const m = xs.createMarshaller ('GetStatus')
+
+	function stringify (data, options) {
+
+		const xml = xs.createMarshaller ('GetStatus').stringify (data, options)
+
+		execSync (`xmllint --schema ${xsdPath} -`, {input: xml, stdio: 'pipe'})
+
+		return xml
+
+	}
+
+	expect (stringify ({integer: 11})).toMatch ('>11<')
+	expect (stringify ({nonNegativeInteger: 11})).toMatch ('>11<')
+	expect (stringify ({positiveInteger: 11})).toMatch ('>11<')
+	expect (stringify ({nonPositiveInteger: -11})).toMatch ('>-11<')
+	expect (stringify ({negativeInteger: -11})).toMatch ('>-11<')
+	expect (stringify ({id: '1', a: 0}, {declaration: {}})).toMatch (/^<\?xml version="1.0"\?>.*? a="1970-01-01".*?>1</)
+	expect (stringify ({id: 1, dt: 0}, 'GetStatus')).toMatch (' dt="1970-01-01')
+	expect (stringify ({double: '3.14'})).toMatch ('>3.14<')
+	expect (stringify ({double: Infinity})).toMatch ('>INF<')
+	expect (stringify ({double: -Infinity})).toMatch ('>-INF<')
+	expect (stringify ({float: '3.14'})).toMatch ('>3.14<')
+	expect (stringify ({float: Infinity})).toMatch ('>INF<')
+	expect (stringify ({float: -Infinity})).toMatch ('>-INF<')
+	expect (stringify ({boolean: 0})).toMatch ('>false<')
+	expect (stringify ({boolean: '0'})).toMatch ('>false<')
+	expect (stringify ({decimal: '1'})).toMatch ('>1.00<')
+	expect (stringify ({dateTime: '1970-01-01T00:00:00'})).toMatch ('>1970-01-01T00:00:00<')
+	expect (stringify ({dateTime: '1970-01-01'})).toMatch ('>1970-01-01T00:00:00<')
+	expect (stringify ({dec: 0})).toMatch ('>0<')
+	expect (stringify ({q: {localName: 'a', namespaceURI: 'http://www.w3.org/2001/XMLSchema'}})).toMatch ('>xs:a<')
+
+	expect (() => m.stringify ({date: '1970-01-01T'})).toThrow ()
+	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
+	expect (() => m.stringify ({decimal: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({double: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({float: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({id: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({n: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({n: 3.14})).toThrow ()
+	expect (() => m.stringify ({id: 1, a: []})).toThrow ()
+	expect (() => m.stringify ({id: 1, dt: []})).toThrow ()
+	expect (() => xs.createMarshaller ('SetStatus').stringify ({id: 1})).toThrow ()
+	expect (() => xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toThrow ()
+
+})
