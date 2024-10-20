@@ -14,6 +14,7 @@ module.exports = {
 	XMLPrinter:          require ('./lib/XMLPrinter'),
 	XMLReader:           require ('./lib/XMLReader'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
+	XSSimpleType:        require ('./lib/XSSimpleType'),
 }
 
 module.exports.SOAP = v => {switch (String (v)) {

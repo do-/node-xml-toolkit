@@ -113,7 +113,7 @@ test ('nillable', () => {
 	expect (xml).toMatch ('SecondName xsi:nil="true"')
 
 })
-	
+
 test ('att simple type', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
