@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.w3.org/2001/XMLSchema">
-	<xs:simpleType name="ENTITIES" />
+
+	<xs:simpleType name="anySimpleType" />
+	
+	<xs:simpleType name="ENTITIES">
+		<xs:restriction base="xs:anySimpleType" />
+	</xs:simpleType>
+	
+	<xs:simpleType name="IDREFS">
+		<xs:restriction base="xs:anySimpleType" />
+	</xs:simpleType>
+	
+	<xs:simpleType name="NMTOKENS">
+		<xs:restriction base="xs:anySimpleType" />
+	</xs:simpleType>	
+
+	<xs:simpleType name="anyAtomicType">
+		<xs:restriction base="xs:anySimpleType" />
+	</xs:simpleType>
+
+	<xs:simpleType name="dateTime">
+<!--	
+		<xs:restriction base="xs:anyAtomicType" />
+-->		
+	</xs:simpleType>
+
+	<xs:simpleType name="dateTimeStamp">
+		<xs:restriction base="xs:dateTime" />
+	</xs:simpleType>
+
+
 	<xs:simpleType name="ENTITY" />
 	<xs:simpleType name="ID" />
 	<xs:simpleType name="IDREF" />
-	<xs:simpleType name="IDREFS" />
 	<xs:simpleType name="NCName" />
 	<xs:simpleType name="NMTOKEN" />
-	<xs:simpleType name="NMTOKENS" />
 	<xs:simpleType name="NOTATION" />
 	<xs:simpleType name="Name" />
 	<xs:simpleType name="QName" />
-	<xs:simpleType name="anyAtomicType" />
-	<xs:simpleType name="anySimpleType" />
 	<xs:simpleType name="anyURI" />
 	<xs:simpleType name="base64Binary" />
 	<xs:simpleType name="boolean" />
 	<xs:simpleType name="byte" />
 	<xs:simpleType name="date" />
-	<xs:simpleType name="dateTime" />
-	<xs:simpleType name="dateTimeStamp" />
+	
+	
 	<xs:simpleType name="dayTimeDuration" />
 	<xs:simpleType name="decimal" />
 	<xs:simpleType name="double" />

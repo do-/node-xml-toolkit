@@ -1,5 +1,5 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat} = require ('../')
 
 test ('stringify', () => {
 
@@ -10,6 +10,20 @@ test ('stringify', () => {
 	expect (() => t.stringify (null)).toThrow ()
 	expect (t.stringify ('')).toBe ('')
 	expect (t.stringify (1)).toBe ('1')
+	
+})
+
+test ('stringify float', () => {
+
+	const t = new XSSimpleTypeFloat ()
+
+	expect (() => t.stringify ()).toThrow ()
+	expect (() => t.stringify (undefined)).toThrow ()
+	expect (() => t.stringify (null)).toThrow ()
+	expect (t.stringify (3.14)).toBe ('3.14')
+	expect (t.stringify (-0.7)).toBe ('-0.7')
+	expect (t.stringify (Number.POSITIVE_INFINITY)).toBe ('INF')
+	expect (t.stringify (Number.NEGATIVE_INFINITY)).toBe ('-INF')
 	
 })
 

@@ -1,3 +1,8 @@
+const {
+	XSSimpleType,
+	XSSimpleTypeFloat,
+} = require ('./lib/XSSimpleType')
+
 module.exports = {
 	AttributesMap:       require ('./lib/AttributesMap'),	
 	EntityResolver:      require ('./lib/EntityResolver'),	
@@ -14,7 +19,8 @@ module.exports = {
 	XMLPrinter:          require ('./lib/XMLPrinter'),
 	XMLReader:           require ('./lib/XMLReader'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
-	XSSimpleType:        require ('./lib/XSSimpleType'),
+	XSSimpleType,
+	XSSimpleTypeFloat
 }
 
 module.exports.SOAP = v => {switch (String (v)) {
