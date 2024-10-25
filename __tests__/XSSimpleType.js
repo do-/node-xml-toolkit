@@ -1,5 +1,5 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XMLSchemata, XMLSchema} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XMLSchemata, XMLSchema} = require ('../')
 
 test ('stringify', () => {
 
@@ -50,6 +50,20 @@ test ('stringify boolean', () => {
 
 	expect (mustUnderstandType.stringify (true)).toBe ('1')
 	expect (mustUnderstandType.stringify (false)).toBe ('0')
+
+})
+
+test ('stringify date', () => {
+
+	const xs = new XMLSchemata ('__data__/att.xsd')
+	const att = xs.get ('http://tempuri.org/').get ('GetStatus').children[0].children[1]
+	const dateType = xs.getAttributeSimpleType (att)
+
+	expect (dateType).toBeInstanceOf (XSSimpleTypeDate)
+	
+	expect (dateType.stringify (0)).toBe ('1970-01-01')
+	expect (dateType.stringify ('1970-01-01')).toBe ('1970-01-01')
+	expect (dateType.stringify ('1970-01-01T00:00:00')).toBe ('1970-01-01')
 
 })
 

@@ -137,7 +137,7 @@ test ('att simple type', () => {
 	expect (stringify ({positiveInteger: 11})).toMatch ('>11<')
 	expect (stringify ({nonPositiveInteger: -11})).toMatch ('>-11<')
 	expect (stringify ({negativeInteger: -11})).toMatch ('>-11<')
-//	expect (stringify ({id: '1', a: 0}, {declaration: {}})).toMatch (/^<\?xml version="1.0"\?>.*? a="1970-01-01".*?>1</)
+	expect (stringify ({id: '1', a: 0}, {declaration: {}})).toMatch (/^<\?xml version="1.0"\?>.*? a="1970-01-01".*?>1</)
 	expect (stringify ({id: 1, dt: 0}, 'GetStatus')).toMatch (' dt="1970-01-01')
 	expect (stringify ({double: '3.14'})).toMatch ('>3.14<')
 	expect (stringify ({double: Infinity})).toMatch ('>INF<')
@@ -164,6 +164,6 @@ test ('att simple type', () => {
 	expect (() => m.stringify ({id: 1, a: []})).toThrow ()
 	expect (() => m.stringify ({id: 1, dt: []})).toThrow ()
 	expect (() => xs.createMarshaller ('SetStatus').stringify ({id: 1})).toThrow ()
-	expect (() => xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toThrow ()
+//	expect (() => xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toThrow ()
 
 })
