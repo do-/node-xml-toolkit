@@ -1,6 +1,7 @@
 const {
 	XSSimpleType,
 	XSSimpleTypeFloat,
+	XSSimpleTypeBoolean,
 } = require ('./lib/XSSimpleType')
 
 module.exports = {
@@ -18,9 +19,11 @@ module.exports = {
 	XMLParser:           require ('./lib/XMLParser'),
 	XMLPrinter:          require ('./lib/XMLPrinter'),
 	XMLReader:           require ('./lib/XMLReader'),
+	XMLSchema:           require ('./lib/XMLSchema'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
 	XSSimpleType,
-	XSSimpleTypeFloat
+	XSSimpleTypeFloat,
+	XSSimpleTypeBoolean,
 }
 
 module.exports.SOAP = v => {switch (String (v)) {

@@ -1,5 +1,5 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser, XSSimpleTypeFloat} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XMLSchemata, XMLSchema} = require ('../')
 
 test ('stringify', () => {
 
@@ -27,6 +27,34 @@ test ('stringify float', () => {
 	
 })
 
+test ('stringify boolean', () => {
+
+	const xs = new XMLSchemata ('__data__/schemas.xmlsoap.org.xml')
+	expect (xs.getType (['boolean', XMLSchema.namespaceURI])._xsSimpleType).toBeInstanceOf (XSSimpleTypeBoolean)
+
+/*	
+	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('mustUnderstand'))
+	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('actor'))
+*/
+/*
+	console.log (
+		xs.getSimpleType (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('mustUnderstand'))		
+	)
+*/
+
+	const t = new XSSimpleTypeBoolean ()
+
+	expect (() => t.stringify ()).toThrow ()
+	expect (() => t.stringify (undefined)).toThrow ()
+	expect (() => t.stringify (null)).toThrow ()
+	expect (t.stringify (true)).toBe ('true')
+	expect (t.stringify (false)).toBe ('false')
+	
+	expect ([...t.strings (0)]).toStrictEqual (['false', '0'])
+	expect ([...t.strings ('Y')]).toStrictEqual (['true', '1'])
+
+})
+
 test ('restrict pattern', () => {
 
 	const p = new XMLParser ()
@@ -36,8 +64,6 @@ test ('restrict pattern', () => {
 
 	expect (t.test ('1')).toBe (true)
 	expect (t.test ('true')).toBe (false)
-
-//console.log (d.children [6].children [0].children [0])	
 	
 })
 

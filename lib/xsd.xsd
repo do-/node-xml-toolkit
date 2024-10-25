@@ -29,7 +29,6 @@
 		<xs:restriction base="xs:dateTime" />
 	</xs:simpleType>
 
-
 	<xs:simpleType name="ENTITY" />
 	<xs:simpleType name="ID" />
 	<xs:simpleType name="IDREF" />
