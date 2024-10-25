@@ -30,17 +30,12 @@ test ('stringify float', () => {
 test ('stringify boolean', () => {
 
 	const xs = new XMLSchemata ('__data__/schemas.xmlsoap.org.xml')
-	expect (xs.getType (['boolean', XMLSchema.namespaceURI])._xsSimpleType).toBeInstanceOf (XSSimpleTypeBoolean)
 
-/*	
-	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('mustUnderstand'))
-	console.log (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('actor'))
-*/
-/*
-	console.log (
-		xs.getSimpleType (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('mustUnderstand'))		
-	)
-*/
+	const booleanType = xs.getType (['boolean', XMLSchema.namespaceURI])._xsSimpleType		
+	expect (booleanType).toBeInstanceOf (XSSimpleTypeBoolean)
+
+	const mustUnderstandType = xs.getAttributeSimpleType (xs.get ('http://schemas.xmlsoap.org/soap/envelope/').get ('mustUnderstand'))		
+	expect (mustUnderstandType).toBeInstanceOf (XSSimpleTypeBoolean)
 
 	const t = new XSSimpleTypeBoolean ()
 
@@ -50,8 +45,11 @@ test ('stringify boolean', () => {
 	expect (t.stringify (true)).toBe ('true')
 	expect (t.stringify (false)).toBe ('false')
 	
-	expect ([...t.strings (0)]).toStrictEqual (['false', '0'])
-	expect ([...t.strings ('Y')]).toStrictEqual (['true', '1'])
+	expect (booleanType.stringify (true)).toBe ('true')
+	expect (booleanType.stringify (false)).toBe ('false')
+
+	expect (mustUnderstandType.stringify (true)).toBe ('1')
+	expect (mustUnderstandType.stringify (false)).toBe ('0')
 
 })
 
