@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.w3.org/2001/XMLSchema">
 
-	<xs:simpleType name="anySimpleType" />
+	<xs:simpleType name="anySimpleType" />	
+	<xs:simpleType name="ENTITIES" />
+	<xs:simpleType name="IDREFS" />
+	<xs:simpleType name="NMTOKENS"/>
+	<xs:simpleType name="anyAtomicType"/>
+	<xs:simpleType name="dateTime" />
+	<xs:simpleType name="dateTimeStamp"/>
 	
-	<xs:simpleType name="ENTITIES">
-		<xs:restriction base="xs:anySimpleType" />
-	</xs:simpleType>
-	
-	<xs:simpleType name="IDREFS">
-		<xs:restriction base="xs:anySimpleType" />
-	</xs:simpleType>
-	
-	<xs:simpleType name="NMTOKENS">
-		<xs:restriction base="xs:anySimpleType" />
-	</xs:simpleType>	
-
-	<xs:simpleType name="anyAtomicType">
-		<xs:restriction base="xs:anySimpleType" />
-	</xs:simpleType>
-
-	<xs:simpleType name="dateTime">
-<!--	
-		<xs:restriction base="xs:anyAtomicType" />
--->		
-	</xs:simpleType>
-
-	<xs:simpleType name="dateTimeStamp">
-		<xs:restriction base="xs:dateTime" />
-	</xs:simpleType>
-
 	<xs:simpleType name="ENTITY" />
 	<xs:simpleType name="ID" />
 	<xs:simpleType name="IDREF" />
@@ -73,4 +53,5 @@
 	<xs:simpleType name="unsignedLong" />
 	<xs:simpleType name="unsignedShort" />
 	<xs:simpleType name="yearMonthDuration" />
+	
 </xs:schema>
