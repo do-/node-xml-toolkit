@@ -17,6 +17,9 @@ test ('stringify float', () => {
 
 	const t = new XSSimpleTypeFloat ()
 
+	const o = {}; o.o = o
+
+	expect (() => t.stringify (o)).toThrow ()
 	expect (() => t.stringify ()).toThrow ()
 	expect (() => t.stringify (undefined)).toThrow ()
 	expect (() => t.stringify (null)).toThrow ()
@@ -41,15 +44,22 @@ test ('stringify boolean', () => {
 
 	expect (() => t.stringify ()).toThrow ()
 	expect (() => t.stringify (undefined)).toThrow ()
+	expect (() => t.stringify ('frue')).toThrow ()
 	expect (() => t.stringify (null)).toThrow ()
+	expect (() => t.stringify (2)).toThrow ()
 	expect (t.stringify (true)).toBe ('true')
 	expect (t.stringify (false)).toBe ('false')
 	
 	expect (booleanType.stringify (true)).toBe ('true')
 	expect (booleanType.stringify (false)).toBe ('false')
+	expect (booleanType.stringify ('1')).toBe ('true')
+	expect (booleanType.stringify (1)).toBe ('true')
+	expect (booleanType.stringify (0)).toBe ('false')
 
 	expect (mustUnderstandType.stringify (true)).toBe ('1')
 	expect (mustUnderstandType.stringify (false)).toBe ('0')
+	expect (mustUnderstandType.stringify (1)).toBe ('1')
+	expect (mustUnderstandType.stringify (0)).toBe ('0')
 
 })
 
