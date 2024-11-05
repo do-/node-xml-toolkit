@@ -243,4 +243,7 @@ test ('att simple type', () => {
 	expect (() => xs.getSchemaByLocalName ('0')).toThrow ()
 	expect (() => xs.getSchemaByLocalName ('date')).toThrow ()
 
+	expect (xs.ns.QName ('any', 'http://www.w3.org/2001/XMLSchema')).toBe ('xs:any')
+	expect (() => xs.ns.QName ('any', 'https://www.w3.org/2001/XMLSchema')).toThrow ()
+
 })
