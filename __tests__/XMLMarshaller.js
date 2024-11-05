@@ -97,6 +97,64 @@ test ('30442-2', async () => {
 
 })
 
+test ('20040', async () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', '20040.wsdl')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const data = {
+	
+		"AppData": {
+		  "info": {
+			"person": {
+			  "fNameCiv": "ППП",
+			  "iNameCiv": "ППП",
+			  "mNameCiv": null,
+			  "docDatCiv": "1973-03-01"
+			},
+			"snils": "022-114-680 91",
+			"document": {
+			  "codeKind": "01",
+			  "numDoc": "999999",
+			  "seriesDoc": "9999",
+			  "dateDoc": "2022-03-05"
+			},
+			"startDate": "2021-08-01",
+			"endDate": "2022-01-31T00:00:00",
+			"child": {
+			  "fNameCiv": "ООО",
+			  "iNameCiv": "ООО",
+			  "mNameCiv": null,
+			  "docDatCiv": "2022-02-08"
+			},
+			"childDocument": {
+			  "codeKind": "03",
+			  "numDoc": "333333",
+			  "seriesDoc": "333333333",
+			  "dateDoc": "2022-03-01"
+			},
+			"childSnils": "109-598-827 12"
+		  }
+		}
+	  
+	  }, {info} = data.AppData
+	    
+	  const d = {childDotation2Request: {			
+		  Message: {
+			  TestMsg: "Тестовый запроc",
+		  },
+		  MessageData: {
+			  AppData: {
+				  info
+			  }
+		  }
+	  }}	
+
+	  expect (xs.stringify (d)).toMatch ('childSnils>109-598-827 12<')
+
+})
+
 test ('nillable', () => {
 
 	const xs = getXSSync (Path.join (__dirname, '..', '__data__', 'F9ASyncService_1.xsd'))
@@ -158,6 +216,9 @@ test ('att simple type', () => {
 	expect (stringify ({id: 0n})).toMatch ('>0<')
 	expect (stringify ({q: {localName: 'a', namespaceURI: 'http://www.w3.org/2001/XMLSchema'}})).toMatch ('>xs:a<')
 
+	expect (xs.createMarshaller ('SetStatus').stringify ({id: 1})).toMatch ('>1<')
+	expect (xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toMatch (' a="0"')
+
 	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
 
 	expect (() => m.stringify ({decimal: NaN})).toThrow ()
@@ -171,7 +232,15 @@ test ('att simple type', () => {
 	expect (() => m.stringify ({n: 3.14})).toThrow ()
 	expect (() => m.stringify ({id: 1, a: []})).toThrow ()
 	expect (() => m.stringify ({id: 1, dt: []})).toThrow ()
-//	expect (() => xs.createMarshaller ('SetStatus').stringify ({id: 1})).toThrow ()
-//	expect (() => xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toThrow ()
+
+	expect (() => xs.stringify (null)).toThrow ()
+	expect (() => xs.stringify (0)).toThrow ()
+	expect (() => xs.stringify ({})).toThrow ('exactly 1')
+	expect (() => xs.stringify ({a: 1, b: 2})).toThrow ('exactly 1')	
+
+	expect (() => xs.getType (['0', '0'])).toThrow ()
+	expect (() => xs.getByReference (['0', '0'])).toThrow ()
+	expect (() => xs.getSchemaByLocalName ('0')).toThrow ()
+	expect (() => xs.getSchemaByLocalName ('date')).toThrow ()
 
 })

@@ -85,4 +85,9 @@
     </xs:complexType>
   </xs:element>
   
+  <xs:element name="date">
+  </xs:element>
+  
+  
+  
 </xs:schema>
