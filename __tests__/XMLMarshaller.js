@@ -148,6 +148,8 @@ test ('att simple type', () => {
 	expect (stringify ({boolean: 0})).toMatch ('>false<')
 	expect (stringify ({boolean: '0'})).toMatch ('>false<')
 	expect (stringify ({decimal: '1'})).toMatch ('>1.00<')
+	expect (stringify ({decimal: 1})).toMatch ('>1.00<')
+	expect (stringify ({decimal: 1n})).toMatch ('>1.00<')
 	expect (stringify ({dateTime: '1970-01-01T00:00:00'})).toMatch ('>1970-01-01T00:00:00<')
 	expect (stringify ({dateTime: '1970-01-01'})).toMatch ('>1970-01-01T00:00:00<')
 	expect (stringify ({dec: 0})).toMatch ('>0<')
@@ -155,7 +157,11 @@ test ('att simple type', () => {
 
 //	expect (() => m.stringify ({date: '1970-01-01T'})).toThrow ()
 //	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
+
+	expect (() => m.stringify ({decimal: NaN})).toThrow ()
 	expect (() => m.stringify ({decimal: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({decimal: true})).toThrow ()
+
 	expect (() => m.stringify ({double: Symbol ('')})).toThrow ()
 	expect (() => m.stringify ({float: Symbol ('')})).toThrow ()
 //	expect (() => m.stringify ({id: Symbol ('')})).toThrow ()
