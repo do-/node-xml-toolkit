@@ -1,6 +1,18 @@
 const fs = require ('fs')
 const {XMLParser, XMLNode} = require ('../')
 
+test ('param_types', () => {
+
+	const p = new XMLParser ()
+
+	const d = p.process (fs.readFileSync ('__data__/param_types.xml', 'utf-8'))
+
+	const [o] = XMLNode.toObject ({map: _ => [_]}) (d)
+
+	expect (o.PARAMTYPE).toHaveLength (15)
+
+})
+
 test ('basic', () => {
 
 	const p = new XMLParser ()
