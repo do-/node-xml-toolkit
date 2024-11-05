@@ -1,5 +1,6 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XMLSchemata, XMLSchema} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
+const { namespaceURI } = require('../lib/XMLSchema')
 
 test ('stringify', () => {
 
@@ -72,9 +73,38 @@ test ('stringify date', () => {
 	expect (dateType).toBeInstanceOf (XSSimpleTypeDate)
 	
 	expect (dateType.stringify (0)).toBe ('1970-01-01')
-	expect (dateType.stringify ('1970-01-01')).toBe ('1970-01-01')
+	expect (dateType.stringify ('1970-01-01')).toBe ('1970-01-01')	
 	expect (dateType.stringify ('1970-01-01T00:00:00')).toBe ('1970-01-01')
 
+	expect ([...dateType.strings ('1970-01-01Z00:00')]).toStrictEqual (['1970-01-01Z00:00', '1970-01-01'])
+
+})
+
+test ('stringify datetime', () => {
+
+	const dt = new XSSimpleTypeDateTime ()
+
+	expect ([...dt.strings ('1970-01-01T00:00:00Z00:00')]).toStrictEqual (['1970-01-01T00:00:00Z00:00', '1970-01-01T00:00:00'])
+
+})
+
+test ('stringify qname', () => {
+
+	const xs = new XMLSchemata ('__data__/att.xsd')
+
+	const att = xs.get ('http://tempuri.org/').get ('GetStatus').children[0].children[0].children.at (-2)
+
+	const q = xs.getAttributeSimpleType (att)
+
+	expect (q).toBeInstanceOf (XSSimpleTypeQName)
+
+	expect (() => q.stringify ({})).toThrow ()
+
+	expect (q.stringify ({localName: 'any'})).toBe ('any')
+	expect (q.stringify ({localName: 'any', namespaceURI: XMLSchema.namespaceURI})).toBe ('xs:any')
+
+	expect (() => q.stringify ({})).toThrow ()
+	
 })
 
 test ('restrict pattern', () => {
@@ -99,7 +129,5 @@ test ('restrict fractionDigits', () => {
 	) ()
 
 	expect (t.fractionDigits).toBe (2)
-
-//console.log (d.children [0].children [0].children [0].children.at (-1).children [0].children [0])
 
 })
