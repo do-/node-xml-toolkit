@@ -1,5 +1,6 @@
 const fs = require ('fs')
 const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
+const { XSSimpleTypeInteger } = require('../lib/XSSimpleType')
 
 test ('stringify', () => {
 
@@ -105,6 +106,21 @@ test ('stringify qname', () => {
 
 	expect (() => q.stringify ({})).toThrow ()
 	
+})
+
+
+test ('stringify long', () => {
+
+	const xs = new XMLSchemata ('__data__/att.xsd')
+
+	const att = xs.get ('http://tempuri.org/').get ('GetStatus').children[0].children[0].children [5]
+
+	const long = xs.getAttributeSimpleType (att)
+
+	expect (long).toBeInstanceOf (XSSimpleTypeInteger)
+
+	expect (() => long.stringify (Symbol ())).toThrow ()
+
 })
 
 test ('restrict pattern', () => {

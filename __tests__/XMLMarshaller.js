@@ -166,11 +166,11 @@ test ('att simple type', () => {
 
 	expect (() => m.stringify ({double: Symbol ('')})).toThrow ()
 	expect (() => m.stringify ({float: Symbol ('')})).toThrow ()
-//	expect (() => m.stringify ({id: Symbol ('')})).toThrow ()
-//	expect (() => m.stringify ({n: Symbol ('')})).toThrow ()
-//	expect (() => m.stringify ({n: 3.14})).toThrow ()
-//	expect (() => m.stringify ({id: 1, a: []})).toThrow ()
-//	expect (() => m.stringify ({id: 1, dt: []})).toThrow ()
+	expect (() => m.stringify ({id: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({n: Symbol ('')})).toThrow ()
+	expect (() => m.stringify ({n: 3.14})).toThrow ()
+	expect (() => m.stringify ({id: 1, a: []})).toThrow ()
+	expect (() => m.stringify ({id: 1, dt: []})).toThrow ()
 //	expect (() => xs.createMarshaller ('SetStatus').stringify ({id: 1})).toThrow ()
 //	expect (() => xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toThrow ()
 
