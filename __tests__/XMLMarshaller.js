@@ -153,10 +153,12 @@ test ('att simple type', () => {
 	expect (stringify ({dateTime: '1970-01-01T00:00:00'})).toMatch ('>1970-01-01T00:00:00<')
 	expect (stringify ({dateTime: '1970-01-01'})).toMatch ('>1970-01-01T00:00:00<')
 	expect (stringify ({dec: 0})).toMatch ('>0<')
+	expect (stringify ({dec: 0n})).toMatch ('>0<')
+	expect (stringify ({id: 0})).toMatch ('>0<')
+	expect (stringify ({id: 0n})).toMatch ('>0<')
 	expect (stringify ({q: {localName: 'a', namespaceURI: 'http://www.w3.org/2001/XMLSchema'}})).toMatch ('>xs:a<')
 
-//	expect (() => m.stringify ({date: '1970-01-01T'})).toThrow ()
-//	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
+	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
 
 	expect (() => m.stringify ({decimal: NaN})).toThrow ()
 	expect (() => m.stringify ({decimal: Symbol ('')})).toThrow ()

@@ -1,6 +1,5 @@
 const fs = require ('fs')
 const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
-const { namespaceURI } = require('../lib/XMLSchema')
 
 test ('stringify', () => {
 
@@ -84,6 +83,7 @@ test ('stringify datetime', () => {
 
 	const dt = new XSSimpleTypeDateTime ()
 
+	expect ([...dt.strings ('1970-01-01T00:00:00')]).toStrictEqual (['1970-01-01T00:00:00'])
 	expect ([...dt.strings ('1970-01-01T00:00:00Z00:00')]).toStrictEqual (['1970-01-01T00:00:00Z00:00', '1970-01-01T00:00:00'])
 
 })
@@ -129,5 +129,19 @@ test ('restrict fractionDigits', () => {
 	) ()
 
 	expect (t.fractionDigits).toBe (2)
+
+})
+
+test ('built in', () => {
+
+	const xs = new XMLSchemata ('__data__/att.xsd')
+
+	const xsb = xs.get (XMLSchema.namespaceURI)
+	
+	for (const i of xsb._src.children) {
+
+		expect (new (xsb.getSimpleTypeClass (i)) ()).toBeInstanceOf (XSSimpleType)
+		
+	}
 
 })

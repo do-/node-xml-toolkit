@@ -23,6 +23,7 @@ module.exports = {
 	XMLPrinter:          require ('./lib/XMLPrinter'),
 	XMLReader:           require ('./lib/XMLReader'),
 	XMLSchema:           require ('./lib/XMLSchema'),
+	XMLSchemaBuiltIn:    require ('./lib/XMLSchemaBuiltIn'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
 	XSSimpleType,
 	XSSimpleTypeFloat,
