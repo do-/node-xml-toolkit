@@ -44,16 +44,16 @@ test ('sax', async () => {
 
 	const reader = new XMLReader ()
 
-	await new Promise ((ok, fail) => {
+	const xml = await new Promise ((ok, fail) => {
 
 		reader.on ('error', fail)
-		reader.on (SAXEvent.TYPES.END_DOCUMENT, ok)
+		reader.on (SAXEvent.TYPES.END_DOCUMENT, e => ok (e.xml))
 
 		reader.process ('<a/>')
 
 	})
 
-	expect (null).toBeNull ()
+	expect (xml).toBe ('')
 
 })
 

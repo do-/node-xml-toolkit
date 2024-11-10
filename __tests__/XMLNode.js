@@ -44,3 +44,14 @@ test ('basic', () => {
 
 
 })
+
+test ('merge', () => {
+
+	const n = new XMLNode ('</a>')
+
+	n.children.push (new XMLNode ('1'))
+	n.children.push (new XMLNode ('2'))
+
+	expect (n.detach ().children).toStrictEqual (['12'])
+	
+})
