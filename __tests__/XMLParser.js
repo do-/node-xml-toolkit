@@ -6,6 +6,7 @@ test ('bad', () => {
 	const p = new XMLParser ()
 
 	expect (() => p.process ('<broken')).toThrow ('Unfinished')
+	expect (() => p.process ('<broken                                                    ')).toThrow ('Unfinished')
 	expect (() => p.process ('</broken>')).toThrow ('Unbalanced')
 
 })
@@ -15,6 +16,8 @@ test ('param_types', () => {
 	const p = new XMLParser ({useEntities: false, useNamespaces: false})
 
 	const d = p.process (fs.readFileSync ('__data__/param_types.xml', 'utf-8'))
+
+	expect (d.children [0].xml).toBe ('')
 
 	const [o] = XMLNode.toObject ({map: _ => [_]}) (d)
 
