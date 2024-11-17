@@ -73,3 +73,18 @@ test ('find none', async () => {
 	expect (result).toBeNull ()
 
 })
+
+test ('unbalanced', async () => {
+
+	const reader = new XMLReader ({filterElements : 'PARAMTYPES'})
+
+	await expect (
+		
+		new Promise ((ok, fail) => {
+			reader.findFirst ().then (ok, fail)
+			reader.end ('</a>')
+		})
+	
+	).rejects.toBeDefined ()
+
+})
