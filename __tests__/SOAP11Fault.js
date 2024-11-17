@@ -13,3 +13,13 @@ test ('basic', () => {
 	expect (err.headers).toStrictEqual ({'Content-Type': 'text/xml'})
 
 })
+
+test ('basic', () => {
+
+	const fault = new SOAPFault ('Test Message', {detail: 111, code: {localName: 'Fate', namespaceURI: 'http://schemas.xmlsoap.org/soap/envelope/'}})
+
+	const err = SOAP11.createError (fault)
+
+	expect (err.message).toMatch (':Fate</faultcode>')
+	
+})
