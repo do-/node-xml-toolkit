@@ -118,3 +118,121 @@ test ('overflow', async () => {
 	await expect (() => t (10)).rejects.toBeDefined ()
 
 })
+
+test ('x', async () => {
+
+	const lexer = new XMLLexer ({encoding: 'utf8'})
+
+	const a = await new Promise ((ok, fail) => {
+	
+		const a = []
+
+		lexer.on ('error', fail)
+		lexer.on ('end', () => ok (a))
+		lexer.on ('data', data => {	
+			const e = new SAXEvent (data)
+			if (e.src.trim () !== '') a.push (e)	
+		})
+
+		lexer.write ('<!ENTITY')
+		lexer.write (' internal " number99">')
+		lexer.end ()
+
+	})
+
+	expect (a[0].type).toBeNull ()
+
+})
+
+
+test ('xx', async () => {
+
+	const lexer = new XMLLexer ({encoding: 'utf8'})
+
+	const a = await new Promise ((ok, fail) => {
+	
+		const a = []
+
+		lexer.on ('error', fail)
+		lexer.on ('end', () => ok (a))
+		lexer.on ('data', data => {	
+			const e = new SAXEvent (data)
+			if (e.src.trim () !== '') a.push (e)	
+		})
+
+		lexer.write ('<')
+		lexer.write (' ')
+		lexer.write ('a/>')
+		lexer.end ()
+
+	})
+
+	expect (a[0].type).toBe ('StartElement')
+
+})
+
+
+test ('xx', async () => {
+
+	const lexer = new XMLLexer ({encoding: 'utf8'})
+
+	const a = await new Promise ((ok, fail) => {
+	
+		const a = []
+
+		lexer.on ('error', fail)
+		lexer.on ('end', () => ok (a))
+		lexer.on ('data', data => {	
+			const e = new SAXEvent (data)
+			if (e.src.trim () !== '') a.push (e)	
+		})
+
+		lexer.write ('<!')
+		lexer.write (' ')
+		lexer.write ('>')
+		lexer.end ()
+
+	})
+
+	expect (a[0].type).toBeNull ()
+
+})
+
+test ('pi', async () => {
+
+	const lexer = new XMLLexer ({encoding: 'utf8'})
+
+	const a = await new Promise ((ok, fail) => {
+	
+		const a = []
+
+		lexer.on ('error', fail)
+		lexer.on ('end', () => ok (a))
+		lexer.on ('data', data => {	
+			const e = new SAXEvent (data)
+			if (e.src.trim () !== '') a.push (e)	
+		})
+
+		lexer.write ('<?')
+		lexer.write ('ProcessingInstruction')
+		lexer.write ('>')
+		lexer.end ()
+
+	})
+
+	expect (a[0].type).toBe ('StartDocument')
+
+})
+
+test ('isClosing', async () => {
+
+	const lexer = new XMLLexer ()
+
+	lexer.awaited = Buffer.from ('--', 'ascii')
+	lexer.body = '++'
+	lexer.start = 0
+
+	expect (lexer.isClosing (0)).toBe (false)
+	expect (lexer.isClosing (1)).toBe (false)
+
+})
