@@ -1,5 +1,6 @@
 const fs = require ('fs')
 const Path = require ('path')
+const {PassThrough} = require ('stream')
 const {XMLParser, XMLReader, SAXEvent, XMLLexer} = require ('../')
 
 async function readerVsParser (fn, options = {}) {
@@ -83,6 +84,24 @@ test ('unbalanced', async () => {
 		new Promise ((ok, fail) => {
 			reader.findFirst ().then (ok, fail)
 			reader.end ('</a>')
+		})
+	
+	).rejects.toBeDefined ()
+
+})
+
+test ('overflow', async () => {
+
+	const src = new PassThrough ()
+
+	const reader = new XMLReader ({filterElements : 'PARAMTYPES'}).process (src, {maxLength: 10})
+
+	await expect (
+		
+		new Promise ((ok, fail) => {
+			reader.findFirst ().then (ok, fail)
+			src.write ('<a href="#"     ')
+			src.end ('>')
 		})
 	
 	).rejects.toBeDefined ()

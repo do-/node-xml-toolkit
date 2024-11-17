@@ -220,7 +220,7 @@ test ('pi', async () => {
 
 	})
 
-	expect (a[0].type).toBe ('StartDocument')
+	expect (a[0].type).toBe ('ProcessingInstruction')
 
 })
 
