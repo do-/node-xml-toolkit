@@ -89,9 +89,32 @@ test ('param_types', async () => {
     ])
 
 })
-/*
+
 test ('overflow', async () => {
 
-	await lex ('not-sa02', {maxLength: 1})
+	async function t (maxLength) {
 
-})*/
+		const lexer = new XMLLexer ({maxLength})
+
+		return new Promise ((ok, fail) => {
+	
+			const a = []
+	
+			lexer.on ('error', fail)
+			lexer.on ('end', () => ok (a))
+			lexer.on ('data', data => {	
+				const e = new SAXEvent (data)
+				if (e.src.trim () !== '') a.push (e.type)	
+			})
+	
+			lexer.write ('<a href="#"')
+			lexer.end ('>')
+		
+		}) 	
+
+	}
+
+	await t (11)
+	await expect (() => t (10)).rejects.toBeDefined ()
+
+})

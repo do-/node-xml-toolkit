@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const Path = require ('path')
-const {XMLParser, XMLReader, SAXEvent} = require ('../')
+const {XMLParser, XMLReader, SAXEvent, XMLLexer} = require ('../')
 
 async function readerVsParser (fn, options = {}) {
 
@@ -25,16 +25,18 @@ test ('bad', () => {
 	expect (() => new XMLReader ({filterElements: Symbol ()})).toThrow ()
 	expect (() => new XMLReader ({stripSpace: Symbol ()})).toThrow ()
 	expect (() => new XMLReader ({collect: Symbol ()})).toThrow ()
+	expect (() => {const l = new XMLLexer (); l.state = null; l.parse ()}).toThrow ()
 
 })
 
 test ('reader vs Parser', async () => {
 
 	await readerVsParser ('amp.xml', {stripSpace: false})
-
 	await readerVsParser ('param_types.xml', {useEntities: false, useNamespaces: false, filterElements : 'PARAMTYPES'})
-
 	await readerVsParser ('schemas.xmlsoap.org.xml')
+	await readerVsParser ('E05a.xml')
+	await readerVsParser ('not-sa01.xml')
+//	await readerVsParser ('not-sa02.xml')
 
 })
 
