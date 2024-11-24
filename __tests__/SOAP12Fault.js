@@ -20,3 +20,15 @@ test ('basic', () => {
 	validate (err.message)
 
 })
+
+test ('code', () => {
+
+	const fault = new SOAPFault ('Test Message', {code: {localName: 'Sender', namespaceURI: 'http://www.w3.org/2003/05/soap-envelope'}})
+
+	const err = SOAP12.createError (fault)
+
+	expect (err.message).toMatch (':Sender</')
+
+	validate (err.message)
+	
+})
