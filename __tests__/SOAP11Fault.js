@@ -11,13 +11,11 @@ test ('basic', () => {
 
 	const err = SOAP11.createError (fault)
 
+	expect (err.expose).toBe (true)
 	expect (err.statusCode).toBe (500)
 	expect (err.message).toMatch (':Server</faultcode>')
 	expect (err.message).toMatch ('>Test Message<')
 	expect (err.message).toMatch ('detail><id>1</id></')
-	expect (err.headers).toStrictEqual ({'Content-Type': 'text/xml'})
-
-	expect (err.expose).toBe (true)
 	expect (err.headers).toStrictEqual ({'Content-Type': 'text/xml'})
 
 	validate (err.message)
