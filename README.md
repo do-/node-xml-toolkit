@@ -1,10 +1,16 @@
-# node-xml-toolkit
-XML parsers (synchronous, streaming), marshaller, SOAP adapters (1.1, 1.2)
+![workflow](https://github.com/do-/node-xml-toolkit/actions/workflows/main.yml/badge.svg)
+![Jest coverage](./badges/coverage-jest%20coverage.svg)
+
+`node-xml-toolkit` is a pure node.js library for solving diverse XML related application tasks, e. g.:
+* scanning through multi gigabyte long XML files with a limited memory buffer;
+* invoke SOAP Web services given a WSDL, method name and a plain data object.
+
+It features both (fast and simple, but greedy) [synchronous](https://github.com/do-/node-xml-toolkit/wiki/XMLParser) and (trickier to use, but robust and streaming capable) [asynchronous](https://github.com/do-/node-xml-toolkit/wiki/XMLReader) XML parsers along with various tools for writing well formed XML: [according to a schema](https://github.com/do-/node-xml-toolkit/wiki/XMLMarshaller) or [without any](https://github.com/do-/node-xml-toolkit/wiki/XMLPrinter).
 
 # Installation
 
 ```
-npm i xml-toolkit
+npm install xml-toolkit
 ```
 
 # Using
@@ -133,4 +139,24 @@ const xml = SOAP.message (body)
 rp.end (xml)
 ```
 
-For more information, see [wiki docs](https://github.com/do-/node-xml-toolkit/wiki).
+# Motivation
+
+Unlike Java (with [JAXB](https://www.oracle.com/technical-resources/articles/javase/jaxb.html) and [JAX-WS](https://www.oracle.com/technical-resources/articles/javase/jax-ws-2.html)) and some other software development platforms dating back to late 1990s, the core node.js library doesn't offer any standard tool for dealing with XML.
+
+It might be a binding of a well known external library ([libxml](https://gitlab.gnome.org/GNOME/libxml2) comes to mind first — as it's [built in PostgreSQL](https://www.postgresql.org/docs/current/functions-xml.html) in many popular distros, for example), but, alas, nothing viable of this sort seem to be available.
+
+Pure js 3rd party modules are abundant, but after some real tasks based researches the author decided to start up yet another node.js DIY XML toolkit project to get the job done with:
+* minimum computing resources;
+* minimum lines of application code;
+* minimum external dependencies.
+
+# Limitations
+
+No W3C specification is 100% implemented here. For instance, DTDs are not supported, so, in theory, any rogue XML file using such bizarre deprecated feature as [Entity Declarations](https://www.w3.org/TR/xml/#sec-entity-decl) may crash the local XML parser.
+
+Though `node-xml-toolkit` has some support for [XMLSchema](https://github.com/do-/node-xml-toolkit/wiki/XMLSchema), it cannot be used for validation. Here, XML Schema is used only as a template for outputting valid XML provided a correct set of input data. That means, each `decimal` will be formatted with proper `fractionDigits`, but no CPU cycle will be spent on checking whether the incoming 10 char string fully conforms to the [`date`](https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html#date) lexical representation or not.
+
+In short, `node-xml-toolkit` may produce incorrect results for some input data, especially for deliberately broken ones.
+
+There are perfectly reliable external tools for XML validation: for instance, 
+[xmllint](https://linux.die.net/man/1/xmllint) (used in the test suite here) do just fine.
