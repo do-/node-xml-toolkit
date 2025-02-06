@@ -11,6 +11,18 @@ test ('bad', () => {
 
 })
 
+test ('innerText', () => {
+
+	const p = new XMLParser ()
+
+	const d = p.process ('<root>Before<si>a<t/>n<![CDATA[d]]></si>after</root>')
+
+	delete d.children [0].children
+
+	expect (d.innerText).toBe ('Beforeandafter')
+
+})
+
 test ('param_types', () => {
 
 	const p = new XMLParser ({useEntities: false, useNamespaces: false})
