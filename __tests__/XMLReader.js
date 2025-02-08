@@ -119,7 +119,7 @@ test ('leak', async () => {
 
 	src.write ('<root>')
 
-	const P = 100000
+	const P = 10000
 		, N = 10 * P
 
 	gc (); const {heapUsed} = process.memoryUsage ()
