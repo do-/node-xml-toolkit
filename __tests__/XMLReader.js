@@ -25,7 +25,6 @@ test ('bad', () => {
 
 	expect (() => new XMLReader ({filterElements: Symbol ()})).toThrow ()
 	expect (() => new XMLReader ({stripSpace: Symbol ()})).toThrow ()
-	expect (() => new XMLReader ({collect: Symbol ()})).toThrow ()
 	expect (() => {const l = new XMLLexer (); l.state = null; l.parse ()}).toThrow ()
 
 })
@@ -33,7 +32,7 @@ test ('bad', () => {
 test ('reader vs Parser', async () => {
 
 	await readerVsParser ('amp.xml', {stripSpace: false})
-	await readerVsParser ('param_types.xml', {useEntities: false, useNamespaces: false, filterElements : 'PARAMTYPES'})
+	await readerVsParser ('param_types.xml', {useEntities: false, useNamespaces: false})
 	await readerVsParser ('schemas.xmlsoap.org.xml')
 	await readerVsParser ('E05a.xml')
 	await readerVsParser ('not-sa01.xml')
@@ -105,5 +104,59 @@ test ('overflow', async () => {
 		})
 	
 	).rejects.toBeDefined ()
+
+})
+
+test ('leak', async () => {
+
+	require ('v8').setFlagsFromString ('--expose_gc')
+
+	const gc = require ('vm').runInNewContext('gc')
+
+	const src = new PassThrough ()
+
+	const reader = new XMLReader ({filterElements : 'leaf'}).process (src)
+
+	src.write ('<root>')
+
+	const P = 100000
+		, N = 10 * P
+
+	gc (); const {heapUsed} = process.memoryUsage ()
+	
+	await new Promise ((ok, fail) => {
+
+		src.on ('error', fail)
+		reader.on ('error', fail)
+		reader.on ('end', ok)
+
+		let n = 0
+
+		const flood = () => setImmediate (() => {
+
+			while (true) {
+
+				if (n ++ > N) return src.removeAllListeners ('drain').end ('<leaf><leaf /></leaf></root>')
+
+				if (!src.write ('<leaf id="' + Math.random () + '"/>')) return
+
+			}
+
+		})
+
+		src.on ('drain', flood); flood ()
+
+		reader.on ('data', node => {
+						
+			if (n % P === 0) {
+				gc ()
+				const mb = (process.memoryUsage ().heapUsed - heapUsed) / 1024 / 1024
+//				console.log (mb.toFixed (1) + ' Mb')
+				expect (mb).toBeLessThan (10)
+			}			
+	
+		})
+	
+	})
 
 })
