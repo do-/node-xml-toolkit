@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:gismu="urn://mvd/gismu/basic-types/1.2.0"
+            xmlns="urn://mvd/gismu/registration-commons/1.2.0"
+            targetNamespace="urn://mvd/gismu/registration-commons/1.2.0"
+            elementFormDefault="qualified">
+
+    <xsd:import namespace="urn://mvd/gismu/basic-types/1.2.0" schemaLocation="gismu-basic-types-1.2.0.xsd"/>
+
+    <xsd:complexType name="RegistrationRequest">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Параметры запроса получения регистрации</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="personInfo" type="PersonInfo">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Данные физлица</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="document" type="DocumentInfo">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Данные документа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="regAddressType" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Тип регистрации</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RegistrationValidityRequest">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Параметры запроса проверки действительности регистрации</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="RegistrationRequest">
+                <xsd:sequence>
+                    <xsd:element name="addressGuid" type="xsd:string" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Адрес регистрации в формате ФИАС</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="unstructuredAddress" type="xsd:string" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Неструктурированный адрес</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RegistrationValidityResponse">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Ответ на запрос проверки действительности регистрации</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="validRegistration" type="ValidRegistration">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Регистрация действительна</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:element name="invalidRegistration" type="InvalidRegistration">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Регистрация недействительна</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:element name="notFoundRegistration" type="NotFoundRegistration">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Информация о регистрации не найдена</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RegistrationInfo">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Данные регистрации</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="Address">
+                <xsd:sequence>
+                    <xsd:element name="region" type="gismu:String125" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Наименование региона</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="registrationDateFrom" type="xsd:date">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Дата начала срока регистрации</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="unstructuredAddress" type="xsd:string" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Неструктурированный адрес</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="PersonInfo">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">
+                Данные физлица: фамилия, имя, отчество (необязательное), дата рождения
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="gismu:PersonInfoBase">
+                <xsd:sequence>
+                    <xsd:element name="birthDate" type="xsd:date">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Дата рождения</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="DocumentInfo">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Данные документа: тип, серия, номер, дата выдачи</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice>
+            <xsd:element name="russianPassport" type="gismu:RussianPassport">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Паспорт гражданина РФ</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="foreignPassport" type="gismu:ForeignPassport">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Загранпаспорт гражданина РФ</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="birthCertificate" type="gismu:BirthCertificate">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Свидетельство о рождении</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="Address">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Адрес</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="regionOktmo" type="gismu:String125" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Кода региона по ОКТМО</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="district" type="gismu:String500" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Район</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="settlement" type="gismu:String125" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Населенный пункт</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="street" type="gismu:String125" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Улица</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="house" type="gismu:String25" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Дом</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="building" type="gismu:String25" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Корпус</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="flat" type="gismu:String25" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Квартира</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="AddressType">
+        <xsd:annotation>
+            <xsd:documentation>Тип адреса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="LIVING">
+                <xsd:annotation>
+                    <xsd:documentation>По месту жительства</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="STAYING">
+                <xsd:annotation>
+                    <xsd:documentation>По месту пребывания</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ValidRegistration">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Регистрация действительна</xsd:documentation>
+        </xsd:annotation>
+    </xsd:complexType>
+
+    <xsd:complexType name="InvalidRegistration">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Регистрация недействительна</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="unstructuredAddress" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="ru">Неструктурированный адрес</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NotFoundRegistration">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">Информация о регистрации не найдена</xsd:documentation>
+        </xsd:annotation>
+    </xsd:complexType>
+</xsd:schema>

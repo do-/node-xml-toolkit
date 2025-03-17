@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:rc="urn://mvd/gismu/registration-commons/1.2.0"
+            xmlns="urn://mvd/gismu/export-living-place-registration/1.2.0"
+            targetNamespace="urn://mvd/gismu/export-living-place-registration/1.2.0"
+            elementFormDefault="qualified">
+
+    <xsd:import namespace="urn://mvd/gismu/registration-commons/1.2.0"
+                schemaLocation="30681/gismu-registration-commons-1.2.0.xsd"/>
+
+    <xsd:element name="livingPlaceRegistrationRequest" type="rc:RegistrationRequest">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">
+                Параметры запроса регистрации по месту жительства
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="livingPlaceRegistrationResponse">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="ru">
+                Параметры ответа на запрос регистрации по месту жительства
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="personInfo" type="rc:PersonInfo">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Данные физлица</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:element name="document" type="rc:DocumentInfo">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Данные документа</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:element name="regAddressType" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="ru">Тип регистрации</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+
+                <xsd:choice>
+                    <xsd:element name="notFoundRegistration" type="rc:NotFoundRegistration">
+                        <xsd:annotation>
+                            <xsd:documentation xml:lang="ru">Информация о регистрации не найдена
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="regAddressItem" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:attributeGroup ref="regAddress"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:attributeGroup name="regAddress">
+        <xsd:annotation>
+            <xsd:documentation>Адреса регистрационного учета</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="fromDt" type="xsd:date" use="required"/>
+        <xsd:attribute name="toDt" type="xsd:date"/>
+        <xsd:attribute name="adressGUID" type="xsd:string"/>
+        <xsd:attribute name="fullAddress" type="xsd:string"/>
+    </xsd:attributeGroup>
+</xsd:schema>
