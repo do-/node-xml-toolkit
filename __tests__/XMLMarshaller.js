@@ -49,6 +49,14 @@ const get2 = async (code, postfix) => {
 
 }
 
+test ('30094', async () => {
+
+	const [data, obj] = await get2 (30094)
+
+	expect (obj).toStrictEqual (data)
+
+})
+
 test ('30368', async () => {
 
 	const [data, obj] = await get2 (30368)

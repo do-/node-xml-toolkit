@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kvs.pfr.com/benefits-common/1.0.0" xmlns:smev="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" targetNamespace="http://kvs.pfr.com/benefits-common/1.0.0" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="2.0">	
+	<import namespace="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.0.1" schemaLocation="smev-supplementary-commons-1.0.1.xsd"/>
+	<group name="RequestOnDateGroup">
+		<sequence>
+			<group ref="tns:BaseRequestDataGroup"/>
+			<element name="AppDate" type="date" nillable="false"/>
+		</sequence>
+	</group>
+	<group name="RequestOnPeriodGroup">
+		<sequence>
+			<group ref="tns:BaseRequestDataGroup"/>
+			<element name="BeginPeriod" type="date" nillable="false"/>
+			<element name="NumberOfMonths" type="int"/>
+		</sequence>
+	</group>
+	<group name="BaseRequestDataGroup">
+		<sequence>
+			<group ref="smev:PhysicalPersonQualifiedName-ModelGroup"/>
+			<element name="Snils" type="smev:SNILSType" nillable="false"/>
+			<element name="BirthDate" type="date" nillable="false"/>
+			<element name="Gender" type="smev:GenderType" nillable="false"/>
+		</sequence>
+	</group>
+	<group name="ResponseOnDateGroup">
+		<sequence>
+			<group ref="tns:BaseResponseDataGroup"/>
+			<element name="AppDate" type="date" nillable="false"/>
+			<element name="TotalPaymentsSum" type="decimal" nillable="false"/>
+			<element name="NumberOfPayments" type="int" nillable="false"/>
+			<element name="Payments" type="tns:PaymentsType" minOccurs="0"/>
+		</sequence>
+	</group>
+	<group name="ResponseOnPeriodGroup">
+		<sequence>
+			<group ref="tns:BaseResponseDataGroup"/>
+			<element name="BeginPeriod" type="date" nillable="false"/>
+			<element name="NumberOfMonths" type="int" nillable="false"/>
+			<element name="MonthlyPayments" type="tns:MonthlyPaymentsType" minOccurs="0"/>
+		</sequence>
+	</group>
+	<group name="BaseResponseDataGroup">
+		<sequence>
+			<group ref="smev:PhysicalPersonQualifiedName-ModelGroup"/>
+			<element name="Snils" type="smev:SNILSType" nillable="false"/>
+			<element name="BirthDate" type="date" nillable="false"/>
+			<element name="Gender" type="smev:GenderType" nillable="false"/>
+			<element name="ActualDate" type="date" nillable="false"/>
+			<element name="ExistData" type="boolean" nillable="false"/>
+		</sequence>
+	</group>
+	<complexType name="MonthlyPaymentsType">
+		<sequence>
+			<element name="MonthlyPayment" type="tns:MonthlyPaymentType" nillable="false" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="MonthlyPaymentType">
+		<sequence>
+			<element name="Year" type="gYear" nillable="false"/>
+			<element name="Month" type="gMonth" nillable="false"/>
+			<element name="TotalPaymentsSum" type="decimal" nillable="false"/>
+			<element name="NumberOfPayments" type="int" nillable="false"/>
+			<element name="Payments" type="tns:PaymentsType" nillable="false"/>
+		</sequence>
+	</complexType>
+	<complexType name="PaymentsType">
+		<sequence>
+			<element name="Payment" type="tns:PaymentType" nillable="false" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="PaymentType">
+		<sequence>
+			<group ref="tns:PaymentDataGroup"/>
+			<element name="PaymentDetail" type="tns:PaymentDetailType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<group name="PaymentDataGroup">
+		<sequence>
+			<element name="Type" type="string" nillable="false"/>
+			<element name="Base" type="string" minOccurs="0"/>
+			<element name="Sum" type="decimal" nillable="false"/>
+		</sequence>
+	</group>
+	<complexType name="PaymentDetailType">
+		<sequence>
+			<group ref="tns:PaymentDataGroup"/>
+		</sequence>
+	</complexType>
+</schema>

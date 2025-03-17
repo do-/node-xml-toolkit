@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kvs.pfr.com/benefits-care-for-period/1.0.1" xmlns:benefits="http://kvs.pfr.com/benefits-common/1.0.0"  targetNamespace="http://kvs.pfr.com/benefits-care-for-period/1.0.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://kvs.pfr.com/benefits-common/1.0.0" schemaLocation="./30094/benefits-common-1.0.0.xsd"/>	
+	<element name="BenefitsCareForPeriodRequest">
+		<complexType>
+			<group ref="benefits:RequestOnPeriodGroup"/>
+		</complexType>
+	</element>
+	<element name="BenefitsCareForPeriodResponse">
+		<complexType>			
+				<group ref="benefits:ResponseOnPeriodGroup" minOccurs="0"/>
+		</complexType>
+	</element>
+</schema>
