@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by VI (GNIVC FNS RF) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://x-artefacts-fns-ndfl3doh/root/210-18/4.0.1" xmlns:fnst="urn://x-artefacts-fns-ndfl3doh/types/4.0.1" targetNamespace="urn://x-artefacts-fns-ndfl3doh/root/210-18/4.0.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-fns-ndfl3doh/types/4.0.1" schemaLocation="./commons/fns-ndfl3doh-types.xsd"/>
+	<xs:element name="NDFL3DOHRequest">
+		<xs:annotation>
+			<xs:documentation>Запрос в Федеральную налоговую службу по данным о доходах физических лиц из налоговой декларации по налогу на доходы физических лиц (по форме 3-НДФЛ)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ФИОФЛ" type="fnst:PhysicalPersonNameType">
+					<xs:annotation>
+						<xs:documentation>Фамилия, имя, отчество физического лица</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:element name="ИННФЛ" type="fnst:PhysicalPersonINNType">
+						<xs:annotation>
+							<xs:documentation>ИНН физического лица</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="СведФЛ">
+						<xs:annotation>
+							<xs:documentation>Сведения о физическом лице (при отсутствии ИНН физического лица)</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="УдЛичн" type="fnst:IdentityDocumentShortType">
+									<xs:annotation>
+										<xs:documentation>Сведения о документе, удостоверяющем личность физического лица</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="ДатаРожд" type="xs:date" use="required">
+								<xs:annotation>
+									<xs:documentation>Дата рождения</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="ИдЗапрос" type="fnst:IDRequestType" use="optional">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса, сформированный запрашивающей стороной</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ОтчетГод" type="xs:gYear" use="required">
+				<xs:annotation>
+					<xs:documentation>Отчетный налоговый период</xs:documentation>
+					<xs:documentation>
+Год в формате ГГГГ</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NDFL3DOHResponse">
+		<xs:annotation>
+			<xs:documentation>Ответ Федеральной налоговой службы на запрос по данным о доходах физических лиц из налоговой декларации по налогу на доходы физических лиц (по форме 3-НДФЛ)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="СвНДФЛ3" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Сведения по представленной физическим лицом налоговой декларации по налогу на доходы физических лиц (по форме 3-НДФЛ)</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="СвФЛ">
+								<xs:annotation>
+									<xs:documentation>Сведения о физическом лице, представившем налоговую декларацию по налогу на доходы физических лиц (по форме 3-НДФЛ)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ФИОФЛ" type="fnst:PhysicalPersonNameType">
+											<xs:annotation>
+												<xs:documentation>Фамилия, имя, отчество физического лица</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:choice>
+											<xs:element name="ИННФЛ" type="fnst:PhysicalPersonINNType">
+												<xs:annotation>
+													<xs:documentation>ИНН физического лица</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="СведФЛ">
+												<xs:annotation>
+													<xs:documentation>Сведения о физическом лице (при отсутствии ИНН физического лица)</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="УдЛичн" type="fnst:IdentityDocumentShortType">
+															<xs:annotation>
+																<xs:documentation>Сведения о документе, удостоверяющем личность физического лица</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+													<xs:attribute name="ДатаРожд" type="xs:date" use="optional">
+														<xs:annotation>
+															<xs:documentation>Дата рождения</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+													<xs:attribute name="МестоРожд" type="fnst:string-255" use="optional">
+														<xs:annotation>
+															<xs:documentation>Место рождения</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ИтогУплВозв">
+								<xs:annotation>
+									<xs:documentation>Данные налоговой декларации по налогу на доходы физических лиц (по форме 3-НДФЛ)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="НалБаза" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Налоговая база</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Ставка" type="fnst:number-2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Налоговая ставка</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ВидДоход" use="optional">
+													<xs:annotation>
+														<xs:documentation>Вид дохода</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:string-1">
+															<xs:enumeration value="1"/>
+															<xs:enumeration value="2"/>
+															<xs:enumeration value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="НалБазаИсчисл" type="fnst:number-14_2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Налоговая база для исчисления налога</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ДоходИстРФ" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Доходы от источников в Российской Федерации (Приложение 1)</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:choice>
+													<xs:element name="ИстЮЛ">
+														<xs:annotation>
+															<xs:documentation>Сведения об источнике выплаты дохода - организации</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Наим" type="fnst:string-1000" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Наименование</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ИННЮЛ" type="fnst:LegalPersonINNType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>ИНН организации</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="КПП" type="fnst:KPPType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>КПП</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="ИстФЛИн">
+														<xs:annotation>
+															<xs:documentation>Сведения об источнике выплаты дохода - физическом лице / Сведения об источнике выплаты дохода, не имеющем представительства на территории Российской Федерации / Сведения об ином источнике выплаты дохода</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="ФИОИн" type="fnst:string-255" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Фамилия, имя, отчество физического лица / Наименование источника, не имеющего представительства на территории Российской Федерации / Иной источник</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ИННФЛ" type="fnst:PhysicalPersonINNType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>ИНН физического лица</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:choice>
+												<xs:attribute name="Ставка" type="fnst:number-2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Налоговая ставка</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ВидДоход" use="optional">
+													<xs:annotation>
+														<xs:documentation>Код вида дохода</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="fnst:digits-2">
+															<xs:enumeration value="01"/>
+															<xs:enumeration value="02"/>
+															<xs:enumeration value="03"/>
+															<xs:enumeration value="04"/>
+															<xs:enumeration value="05"/>
+															<xs:enumeration value="06"/>
+															<xs:enumeration value="07"/>
+															<xs:enumeration value="08"/>
+															<xs:enumeration value="09"/>
+															<xs:enumeration value="10"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="Доход" type="fnst:number-14_2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Сумма дохода</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ДоходИстИно" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Доходы от источников за пределами Российской Федерации, облагаемые налогом по ставке (Приложение 2)</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="РасчДохНалИно" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Расчет сумм доходов и налога</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="ОКСМ" type="fnst:OKCMType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Код страны по классификатору ОКСМ </xs:documentation>
+																	<xs:documentation>Принимает значение кода в соответствии с Общероссийским классификатором стран мира (ОКСМ)</xs:documentation>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/link">urn://x-artefacts-smev-gov-ru/link/esnsi2.0</xs:appinfo>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/name">ОКСМ</xs:appinfo>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/field">Код</xs:appinfo>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="КодВидДох" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Код вида дохода</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="fnst:digits-2">
+																		<xs:enumeration value="21"/>
+																		<xs:enumeration value="22"/>
+																		<xs:enumeration value="23"/>
+																		<xs:enumeration value="24"/>
+																		<xs:enumeration value="25"/>
+																		<xs:enumeration value="26"/>
+																		<xs:enumeration value="27"/>
+																		<xs:enumeration value="28"/>
+																		<xs:enumeration value="29"/>
+																		<xs:enumeration value="30"/>
+																		<xs:enumeration value="31"/>
+																		<xs:enumeration value="32"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="НаимИстДох" type="fnst:string-1000" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Наименование источника выплаты дохода</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ДоходИноРуб" type="fnst:number-14_2" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Сумма дохода, полученная в иностранной валюте в пересчёте в рубли</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Ставка" type="fnst:number-2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Ставка налога</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ДоходПредпр" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Доходы, полученные от предпринимательской, адвокатской деятельности и частной практики, а также расчет профессиональных налоговых вычетов, установленных пунктами 2, 3 статьи 221 Налогового кодекса Российской Федерации (Приложение 3)</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="РасчВидДеят" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Показатели, используемые для расчёта налоговой базы и суммы налога по виду деятельности</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="ВидДеят" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Код вида деятельности</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="fnst:digits-2">
+																		<xs:enumeration value="01"/>
+																		<xs:enumeration value="02"/>
+																		<xs:enumeration value="03"/>
+																		<xs:enumeration value="04"/>
+																		<xs:enumeration value="05"/>
+																		<xs:enumeration value="06"/>
+																		<xs:enumeration value="07"/>
+																		<xs:enumeration value="08"/>
+																		<xs:enumeration value="09"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="ОКВЭД" type="fnst:OKVEDType" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Код основного вида экономической деятельности</xs:documentation>
+																	<xs:documentation>Принимает значения в соответствии с Общероссийским классификатором видов экономической деятельности (Ред. 2) (ОКВЭД2)</xs:documentation>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/link">urn://x-artefacts-smev-gov-ru/link/esnsi2.0</xs:appinfo>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/name">ОКВЭД 2</xs:appinfo>
+																	<xs:appinfo source="urn://x-artefacts-smev-gov-ru/field">Код позиции</xs:appinfo>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Доход" type="fnst:number-14_2" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Сумма дохода </xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="РасхФакт" type="fnst:number-14_2" use="optional">
+																<xs:annotation>
+																	<xs:documentation>Сумма фактически произведенных расходов, учитываемых в составе профессионального налогового вычета</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ДоходИт" type="fnst:number-14_2" use="optional">
+													<xs:annotation>
+														<xs:documentation>Итоговая общая сумма дохода</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ОтчетГод" type="xs:gYear" use="required">
+							<xs:annotation>
+								<xs:documentation>Отчетный налоговый период</xs:documentation>
+								<xs:documentation>
+Год в формате ГГГГ</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ДокПредст" use="optional">
+							<xs:annotation>
+								<xs:documentation>Код категории налогоплательщика</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="fnst:string-3">
+									<xs:enumeration value="720"/>
+									<xs:enumeration value="730"/>
+									<xs:enumeration value="740"/>
+									<xs:enumeration value="750"/>
+									<xs:enumeration value="760"/>
+									<xs:enumeration value="770"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ИдЗапрос" type="fnst:IDRequestType" use="optional">
+				<xs:annotation>
+					<xs:documentation>Идентификатор запроса, сформированный запрашивающей стороной</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
