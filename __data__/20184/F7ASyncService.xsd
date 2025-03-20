@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:import schemaLocation="F7ASyncService_1.xsd" namespace="http://schemas.datacontract.org/2004/07/GetForm7Async"/>
+  <xs:element name="GetForm7Async">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="person" nillable="true" type="q1:Person" xmlns:q1="http://schemas.datacontract.org/2004/07/GetForm7Async"/>
+        <xs:element minOccurs="0" name="address" nillable="true" type="q2:Address" xmlns:q2="http://schemas.datacontract.org/2004/07/GetForm7Async"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetForm7AsyncResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetForm7AsyncResult" nillable="true" type="q3:Responce" xmlns:q3="http://schemas.datacontract.org/2004/07/GetForm7Async"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStatusResult" nillable="true" type="q4:Result" xmlns:q4="http://schemas.datacontract.org/2004/07/GetForm7Async"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
