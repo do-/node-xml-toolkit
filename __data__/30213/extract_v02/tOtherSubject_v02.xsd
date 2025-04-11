@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tContacts_v02.xsd"/>
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:complexType name="OtherSubject">
+		<xsd:annotation>
+			<xsd:documentation>Иной субъект</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="short_name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Краткое наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="comment" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Комментарий</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="print_text" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование для печати</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="registration_organ" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Регистрирующий орган</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contacts" type="Contacts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Контакты</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDocument_requisites_v02.xsd"/>
+	<xsd:include schemaLocation="tDict_v02.xsd"/>
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:complexType name="Subject">
+		<xsd:annotation>
+			<xsd:documentation>Предмет сделки</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="subject_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание предмета сделки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="share_subject_description" type="ShareSubjectDescription" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание предмета долевого участия</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="ShareSubjectDescription">
+		<xsd:annotation>
+			<xsd:documentation>Описание предмета долевого участия</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="house_descriptions" type="HouseDescriptions" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание домов</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="enforcement" type="Enforcement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Обеспечение исполнения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="text_enforcement" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание обеспечения исполнения (текст)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="deposit_info" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о нахождении объекта недвижимости в залоге у участника долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ods_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Текстовое описание объекта долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bank" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Банк, в котором в соответствии с договором участия в долевом строительстве должен быть открыт специальный счет эскроу для условного депонирования денежных средств в счет уплаты цены такого договора</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="another_guarantors" type="AnotherGuarantors" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Поручители/сопоручители, заключившие договор поручительства по обязательствам застройщика, размер уставного капитала которого не соответствует требованиям 214-ФЗ</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="HouseDescriptions">
+		<xsd:annotation>
+			<xsd:documentation>Описание домов</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="house_description" type="HouseDescription" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Описание дома</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HouseDescription">
+		<xsd:annotation>
+			<xsd:documentation>Описание дома</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="location_description" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения на земельном участке</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="house_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер дома</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="housing_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер корпуса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="building_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер строения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plan_room_quantity" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Планируемое количество создаваемых помещений</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plan_rooms_area" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Общая площадь создаваемых помещений (кв.м.)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="first_contract_mark" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Первый договор участия в долевом строительстве</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="first_ddu_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата регистрации первого договора участия в долевом строительстве</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room_descriptions" type="RoomDescriptions" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание помещений</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherGuarantors">
+		<xsd:annotation>
+			<xsd:documentation>Поручители/сопоручители, заключившие договор поручительства по обязательствам застройщика, размер уставного капитала которого не соответствует требованиям 214-ФЗ</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="another_guarantor" type="AnotherGuarantor" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Поручитель/сопоручитель, заключивший договор поручительства по обязательствам застройщика, размер уставного капитала которого не соответствует требованиям 214-ФЗ</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherGuarantor">
+		<xsd:annotation>
+			<xsd:documentation>Поручитель/сопоручитель, заключивший договор поручительства по обязательствам застройщика, размер уставного капитала которого не соответствует требованиям 214-ФЗ</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="another_guarantor_name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Поручитель/сопоручитель</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Enforcement">
+		<xsd:annotation>
+			<xsd:documentation>Обеспечение исполнения</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="insurance" type="Insurance">
+				<xsd:annotation>
+					<xsd:documentation>Страхование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="guarantee" type="Guarantee">
+				<xsd:annotation>
+					<xsd:documentation>Поручительство</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="Insurance">
+		<xsd:annotation>
+			<xsd:documentation>Страхование</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="insurer" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/145/items">Страховщик (в соответствии со Списком страховщиков, соответствующих требованиям 214-ФЗ)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="insurance_sum" type="xsd:decimal">
+				<xsd:annotation>
+					<xsd:documentation>Страховая сумма</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Guarantee">
+		<xsd:annotation>
+			<xsd:documentation>Поручительство</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="guarantor" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Поручитель</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="guarantee_sum" type="xsd:decimal">
+				<xsd:annotation>
+					<xsd:documentation>Cумма (размер) предоставляемого поручительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="RoomDescriptions">
+		<xsd:annotation>
+			<xsd:documentation>Описание помещений</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="room_description" type="RoomDescription" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Описание помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RoomDescription">
+		<xsd:annotation>
+			<xsd:documentation>Описание помещения</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="room_name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="floor_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер этажа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="plan_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер на плане</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room_area" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Площадь (кв.м.)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="purpose" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/67/items">Назначение помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="transfer_deadline" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Срок передачи застройщиком объекта долевого строительства участнику долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="guarantee_period" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Гарантийный срок на объект долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_become_oks" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата преобразования в ОКС</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cad_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровый номер, присвоенный объекту</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_numbers" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Зарегистрованные права</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="right_number" type="RegisteredRight" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Зарегистрированное право</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="text_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Текстовое описание помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

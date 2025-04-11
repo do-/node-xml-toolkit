@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:interdep="http://rosreestr.ru/services/v0.26/TInterdepStatement"
+           xmlns:requestEGRN="http://rosreestr.ru/services/v0.26/TStatementRequestEGRN"
+           xmlns:requestDoc="http://rosreestr.ru/services/v0.26/TRequestDocuments"
+           xmlns:request="http://rosreestr.ru/services/v0.26/TRequest"
+           xmlns:statement="http://rosreestr.ru/services/v0.26/TStatement"
+           xmlns:kuvd="http://rosreestr.ru/services/v0.26/KUVD"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           targetNamespace="http://rosreestr.ru/services/v0.26/allValidate" elementFormDefault="qualified"
+           vc:minVersion="1.1">
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/TStatementRequestEGRN" schemaLocation="RequestEGRN_v026.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/TInterdepStatement" schemaLocation="Interdep_v026.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/TRequestDocuments" schemaLocation="TRequestDocuments.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/TRequest" schemaLocation="TRequest.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/TStatement" schemaLocation="Statement_v026.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/KUVD" schemaLocation="TKUVD.xsd"/>
+    <xs:element name="Validate">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="interdep:interdepStatement"/>
+                <xs:element ref="requestEGRN:EGRNRequest"/>
+                <xs:element ref="statement:statementForm1"/>
+                <xs:element ref="statement:statementForm2"/>
+                <xs:element ref="statement:statementForm3"/>
+                <xs:element ref="statement:statementFormAppliedDocuments"/>
+                <xs:element ref="statement:statementFormChangeRegisteredStatement"/>
+                <xs:element ref="statement:statementFormMortgage"/>
+                <xs:element ref="statement:statementFormOwnerless"/>
+                <xs:element ref="statement:statementFormTechErr"/>
+                <xs:element ref="kuvd:kuvdBook"/>
+                <xs:element ref="requestDoc:request"/>
+                <xs:element ref="request:request"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+

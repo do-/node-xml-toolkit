@@ -1,0 +1,2580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           xmlns:tns="http://rosreestr.ru/services/v0.26/commons/Documents"
+           xmlns:commons="http://rosreestr.ru/services/v0.26/commons/Commons"
+           xmlns:siml="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types"
+           xmlns:dDocument="http://rosreestr.ru/services/v0.26/commons/directories/document"
+           xmlns:dReD="http://rosreestr.ru/services/v0.26/commons/directories/requestDocument"
+           xmlns:subj="http://rosreestr.ru/services/v0.26/commons/Subjects"
+           xmlns:address="http://rosreestr.ru/services/v0.26/commons/Address"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/Documents">
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons"
+               schemaLocation="Commons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types"
+               schemaLocation="CommonSimpleType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/document"
+               schemaLocation="Dictionary/DDocument.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Subjects"
+               schemaLocation="TSubject.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Address"
+               schemaLocation="TAddress.xsd"/>
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/requestDocument"
+               schemaLocation="Dictionary/DRequestDocument.xsd"/>
+    <xs:complexType name="TDocumentRefer">
+        <xs:annotation>
+            <xs:documentation>Ссылка на документ по его идентификатору</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="documentID" use="required" type="xs:token">
+            <xs:annotation>
+                <xs:documentation>Идентификатор документа</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TBasicSomeDocument">
+        <xs:annotation>
+            <xs:documentation>Базовый класс для групп документов в header у МИВ и ЕГРП</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="document" type="tns:TDocument" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="otherDocument" type="tns:TOtherDocumentRestr">
+                <xs:annotation>
+                    <xs:documentation>Прочий документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentDocument" type="tns:TPaymentDocumentRestr" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Платежный документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="idDocument" type="tns:TIdDocumentRestr" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="powerOfAttorney" type="tns:TPowerOfAttorneyRestr" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Доверенность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="mapPlanDocument" type="tns:TMapPlanDocumentRestr" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Тех. план/межевой план/акт обследования/карта-план</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="interdepDocument" type="tns:TInterdepDocument" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Документ сведений по МИВ (Межведомственному Информационному Взаимодействию):
+                        - карта-план
+                        - описание местоположения
+                        - сведения для внесения в реестр ОН
+                        - сведения для внесения в реестр Прав
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalAct" type="tns:TLegalAct" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Правоустанавливающий документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="confirmPrivilege" type="tns:TConfirmPrivilege" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Документ, подтверждающий льготу</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TSomeDocument">
+        <xs:annotation>
+            <xs:documentation>Набор документов прикладываемых к заявлению</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicSomeDocument">
+                <xs:choice>
+                    <xs:element name="otherDocument" type="tns:TOtherDocumentRestr">
+                        <xs:annotation>
+                            <xs:documentation>Прочий документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="paymentDocument" type="tns:TPaymentDocumentRestr">
+                        <xs:annotation>
+                            <xs:documentation>Платежный документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocument" type="tns:TIdDocumentRestr">
+                        <xs:annotation>
+                            <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="powerOfAttorney" type="tns:TPowerOfAttorneyRestr">
+                        <xs:annotation>
+                            <xs:documentation>Доверенность</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="mapPlanDocument" type="tns:TMapPlanDocumentRestr">
+                        <xs:annotation>
+                            <xs:documentation>Тех. план/межевой план/акт обследования/карта-план</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="legalAct" type="tns:TLegalActRestr">
+                        <xs:annotation>
+                            <xs:documentation>Правоустанавливающий документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="confirmPrivilege" type="tns:TConfirmPrivilege">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий льготу</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TSomeRepresentativeDocument">
+        <xs:annotation>
+            <xs:documentation>Набор документов подтверждающих полномочия</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="document" type="tns:TStrictDocument">
+                <xs:annotation>
+                    <xs:documentation>Прочий документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="powerOfAttorney" type="tns:TPowerOfAttorney">
+                <xs:annotation>
+                    <xs:documentation>Доверенность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalAct" type="tns:TLegalAct">
+                <xs:annotation>
+                    <xs:documentation>Правоустанавливающий документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TSomeInterdepDocument">
+        <xs:annotation>
+            <xs:documentation>Данные о документе по Межведу</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicSomeDocument">
+                <xs:choice>
+                    <xs:element name="document" type="tns:TDocument">
+                        <xs:annotation>
+                            <xs:documentation>Сведения о документе</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="interdepDocument" type="tns:TInterdepDocument">
+                        <xs:annotation>
+                            <xs:documentation>Документ сведений по МИВ (Межведомственному Информационному Взаимодействию):
+                                -карта (план) объекта землеустройства
+                                -описание местоположения границ соответствующих территорий или зон
+                                -сведения для внесения в реестр ОН
+                                -сведения для внесения в реестр Прав
+                                -сведения для внесения в реестр границ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="legalAct" type="tns:TLegalActMIV">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты решений, правовых актов, иных документов, являющихся основанием для внесения сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TSomeAppliedDocuments">
+        <xs:annotation>
+            <xs:documentation>Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicSomeDocument">
+                <xs:choice>
+                    <xs:element name="document" type="tns:TAppliedDocument" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="otherDocument" type="tns:TOtherAppliedDocument">
+                        <xs:annotation>
+                            <xs:documentation>Прочий документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="paymentDocument" type="tns:TPaymentDocumentRestr"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Платежный документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocument" type="tns:TIdAppliedDocument" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="powerOfAttorney" type="tns:TPowerOfAttorneyApplied"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Доверенность</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="mapPlanDocument" type="tns:TMapPlanDocumentApplied"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Тех. план/межевой план/акт обследования/карта-план</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="interdepDocument" type="tns:TInterdepDocumentApplied"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Документ сведений по МИВ (Межведомственному Информационному Взаимодействию):
+                                - карта-план
+                                - описание местоположения
+                                - сведения для внесения в реестр ОН
+                                - сведения для внесения в реестр Прав
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="legalAct" type="tns:TLegalActApplied" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Правоустанавливающий документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="confirmPrivilege" type="tns:TConfirmPrivilegeApplied"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий льготу</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TDocument">
+        <xs:annotation>
+            <xs:documentation>Сведения о документе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="2" name="documentTypes" type="tns:DocumentTypes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Информация по кодам документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="tns:SDocName" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Наименование документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="number" type="tns:SDocNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="attachment" type="tns:TAttachment" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Описание приложенного файла</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="notes" type="commons:TNote">
+                <xs:annotation>
+                    <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор документа</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TAppliedDocument">
+        <xs:annotation>
+            <xs:documentation>Сведения о документе. Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TDocument">
+                <xs:sequence>
+                    <xs:element maxOccurs="2" name="documentTypes" type="tns:DocumentTypes"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Информация по кодам документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="name" type="tns:SDocName" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="number" type="tns:SDocNumber" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Номер документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата выдачи</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="attachment" type="tns:TAttachment" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Описание приложенного файла</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                type="commons:TNote">
+                        <xs:annotation>
+                            <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DocumentTypes">
+        <xs:choice maxOccurs="1">
+            <xs:element name="documentTypeCode" type="dDocument:DDocument" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="representativeDocTypeCode" type="tns:DBaseRepresentativeDocument">
+                <xs:annotation>
+                    <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                        Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedOtherDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="008002\d{6}"/>
+                                <xs:pattern value="5581\d{8}"/>
+                                <xs:pattern value="5582\d{8}"/>
+                                <xs:pattern value="558402\d{6}"/>
+                                <xs:pattern value="558403\d{6}"/>
+                                <xs:pattern value="558404\d{6}"/>
+                                <xs:pattern value="558405\d{6}"/>
+                                <xs:pattern value="5585\d{8}"/>
+                                <xs:pattern value="5586\d{8}"/>
+                                <xs:pattern value="5587\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedPaymentDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="55500\d{7}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedIdDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="008001\d{6}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedPowerOfAttorneyDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" type="tns:DPowerOfAttorneyRepresentativeDocument" minOccurs="1" />
+                    <xs:element name="representativeDocTypeCode" type="tns:DPowerOfAttorneyRepresentativeDocument"/>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedMapPlanDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="558203000000"/>
+                                <xs:pattern value="558211010000"/>
+                                <xs:pattern value="558219000000"/>
+                                <xs:pattern value="558254160000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedLegalActDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" type="tns:DAppliedLegalActDocument" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedLegalActDocumentMIVTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="5582\d{8}"/>
+                                <xs:pattern value="558401\d{6}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedConfirmPrivilegeDocumentTypes">
+        <xs:complexContent>
+            <xs:restriction base="tns:DocumentTypes">
+                <xs:choice maxOccurs="1">
+                    <xs:element name="documentTypeCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dDocument:DDocument">
+                                <xs:pattern value="5588\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="representativeDocTypeCode" type="tns:DRepresentativeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Мнемоника типа документа подтверждающего полномочия представителя справочника ЕС УНСИ "Документы, подтверждающие полномочия представителя"
+                                Заполняется в случае, если документ выступает в качестве подтверждения полномочий представителя.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TBasicStrictDocument">
+        <xs:annotation>
+            <xs:documentation>Документ, который может содержать признаки утверждения нотариусом, серию и др. юридически значимые параметры. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="series" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Серия документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                        <xs:annotation>
+                            <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия C</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия ПО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты о нотариальном заверении документа
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStrictDocument">
+        <xs:annotation>
+            <xs:documentation>Документ, который может содержать признаки утверждения нотариусом, серию и др. юридически значимые параметры. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" minOccurs="1" name="documentTypes"
+                                    type="tns:DocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TDocumentSeries">
+        <xs:annotation>
+            <xs:documentation>Документ, с необязательной серией</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" minOccurs="1" name="documentTypes"
+                                    type="tns:DocumentTypes"/>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TBasicRequestDocument">
+        <xs:annotation>
+            <xs:documentation>Документ, для запроса копии документа. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TRequestDocument">
+        <xs:annotation>
+            <xs:documentation>Документ, для запроса копии документа. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TBasicRequestDocument">
+                <xs:sequence>
+                    <xs:element name="requestDocumentType" type="dReD:DRequestDocument">
+                        <xs:annotation>
+                            <xs:documentation>Тип запрашиваемого документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TDocumentWithNumber">
+        <xs:annotation>
+            <xs:documentation>StrictDocument с обязательным Номером Документа</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:element maxOccurs="2" name="documentTypes" type="tns:DocumentTypes">
+                        <xs:annotation>
+                            <xs:documentation>Информация по кодам документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="name" type="tns:SDocName" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="number" type="tns:SDocNumber">
+                        <xs:annotation>
+                            <xs:documentation>Номер документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата выдачи</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="attachment" type="tns:TAttachment" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Описание приложенного файла</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                type="commons:TNote">
+                        <xs:annotation>
+                            <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="series" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Серия документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                        <xs:annotation>
+                            <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия C</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия ПО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты о нотариальном заверении документа
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPaymentDocument">
+        <xs:annotation>
+            <xs:documentation>Платёжный документ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:element name="supplierBillId" type="tns:SDocNumber" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Универсальный идентификатор начисления (УИН)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="amount" type="xs:long">
+                        <xs:annotation>
+                            <xs:documentation>Сумма в копейках</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="OKTMO" type="commons:SOKTMO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКТМО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="BIC" type="tns:SBIC" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>БИК</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="bankName" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование банка</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="settlementAccount" type="tns:SSettlementAccount" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Расчётный счёт</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="payerFullName" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ФИО плательщика</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idPayers" type="tns:idPayersType">
+                        <xs:annotation>
+                            <xs:documentation>Идентификаторы плательщиков</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="offline" type="tns:TOffline">
+                        <xs:annotation>
+                            <xs:documentation>Признак необходимости импортировать УИН в ГИС ГМП</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TLegalAct">
+        <xs:annotation>
+            <xs:documentation>Реквизиты решений, правовых актов, иных документов, являющихся основанием для внесения сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TDocumentWithNumber">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Источник официальной публикации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TDecisionAuthority">
+        <xs:complexContent>
+            <xs:extension base="tns:TDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="series" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Серия документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="issuer" type="tns:TIssuerInfo">
+                        <xs:annotation>
+                            <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepDocument">
+        <xs:annotation>
+            <xs:documentation>Документ сведений по МИВ (Межведомственному Информационному Взаимодействию):
+                - карта (план) объекта землеустройства
+                - описание местоположения границ соответствующих территорий или зон
+                - сведения для внесения в реестр ОН
+                - сведения для внесения в реестр Прав
+                - сведения для внесения в реестр границ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TLegalAct">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountNumber" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Учетный номер объекта</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepDocumentApplied">
+        <xs:annotation>
+            <xs:documentation>Документ сведений по МИВ (Межведомственному Информационному Взаимодействию):
+                - карта (план) объекта землеустройства
+                - описание местоположения границ соответствующих территорий или зон
+                - сведения для внесения в реестр ОН
+                - сведения для внесения в реестр Прав
+                - сведения для внесения в реестр границ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TInterdepDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:sequence>
+                            <xs:element maxOccurs="2" name="documentTypes" type="tns:DocumentTypes">
+                                <xs:annotation>
+                                    <xs:documentation>Информация по кодам документа</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                                <xs:annotation>
+                                    <xs:documentation>Наименование документа</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="number" type="tns:SDocNumber">
+                                <xs:annotation>
+                                    <xs:documentation>Номер документа</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                                <xs:annotation>
+                                    <xs:documentation>Дата выдачи</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                                <xs:annotation>
+                                    <xs:documentation>Описание приложенного файла</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                        type="commons:TNote">
+                                <xs:annotation>
+                                    <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="series" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Серия документа</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                                <xs:annotation>
+                                    <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                                <xs:annotation>
+                                    <xs:documentation>Срок действия C</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                                <xs:annotation>
+                                    <xs:documentation>Срок действия ПО</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                                <xs:annotation>
+                                    <xs:documentation>Реквизиты о нотариальном заверении документа
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="officialPublicationSource"
+                                        type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Источник официальной публикации</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="accountNumber" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Учетный номер объекта</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOtherDocumentRestr">
+        <xs:annotation>
+            <xs:documentation>Прочий документ типизированный</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedOtherDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOtherAppliedDocument">
+        <xs:annotation>
+            <xs:documentation>Прочий документ. Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TOtherDocumentRestr">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedOtherDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPaymentDocumentRestr">
+        <xs:annotation>
+            <xs:documentation>Документы, подтверждающие оплату, типизированные</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TPaymentDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedPaymentDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="supplierBillId" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Универсальный идентификатор начисления (УИН)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="amount" type="xs:long">
+                            <xs:annotation>
+                                <xs:documentation>Сумма в копейках</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="OKTMO" type="commons:SOKTMO">
+                            <xs:annotation>
+                                <xs:documentation>ОКТМО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="BIC" type="tns:SBIC">
+                            <xs:annotation>
+                                <xs:documentation>БИК</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="bankName" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Наименование банка</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="settlementAccount"
+                                    type="tns:SSettlementAccount">
+                            <xs:annotation>
+                                <xs:documentation>Расчётный счёт</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="payerFullName" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>ФИО плательщика</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idPayers" type="tns:idPayersType">
+                            <xs:annotation>
+                                <xs:documentation>Идентификаторы плательщиков</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="offline" type="tns:TOffline">
+                            <xs:annotation>
+                                <xs:documentation>Признак необходимости импортировать УИН в ГИС ГМП</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TIdDocumentRestr">
+        <xs:annotation>
+            <xs:documentation>Документ удостоверяющий личность типизированный</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TDocumentWithNumber">
+                <xs:sequence>
+                    <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedIdDocumentTypes">
+                        <xs:annotation>
+                            <xs:documentation>Информация по кодам документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="name" type="tns:SDocName" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="number" type="tns:SDocNumber">
+                        <xs:annotation>
+                            <xs:documentation>Номер документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата выдачи</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="attachment" type="tns:TAttachment" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Описание приложенного файла</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                type="commons:TNote">
+                        <xs:annotation>
+                            <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="series" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Серия документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                        <xs:annotation>
+                            <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия C</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия ПО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты о нотариальном заверении документа
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TIdAppliedDocument">
+        <xs:annotation>
+            <xs:documentation>Документ удостоверяющий личность типизированный. Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TIdDocumentRestr">
+                <xs:sequence>
+                    <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedIdDocumentTypes">
+                        <xs:annotation>
+                            <xs:documentation>Информация по кодам документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="name" type="tns:SDocName" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="number" type="tns:SDocNumber">
+                        <xs:annotation>
+                            <xs:documentation>Номер документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата выдачи</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="attachment" type="tns:TAttachment" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Описание приложенного файла</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                type="commons:TNote">
+                        <xs:annotation>
+                            <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="series" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Серия документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                        <xs:annotation>
+                            <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия C</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок действия ПО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты о нотариальном заверении документа
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPowerOfAttorney">
+        <xs:annotation>
+            <xs:documentation>Доверенность</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" minOccurs="1" name="documentTypes"
+                                    type="tns:AppliedPowerOfAttorneyDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPowerOfAttorneyRestr">
+        <xs:annotation>
+            <xs:documentation>Доверенность типизированная</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TPowerOfAttorney">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedPowerOfAttorneyDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPowerOfAttorneyApplied">
+        <xs:annotation>
+            <xs:documentation>Доверенность типизированная. Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TPowerOfAttorneyRestr">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedPowerOfAttorneyDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TMapPlanDocumentRestr">
+        <xs:annotation>
+            <xs:documentation>Тех. план/межевой план/акт обследования/карта-план типизированный</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TLegalAct">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedMapPlanDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа или идентифицирующий номер, если документ помещен на временное хранение в электронное хранилище</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Источник официальной публикации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TMapPlanDocumentApplied">
+        <xs:annotation>
+            <xs:documentation>Тех. план/межевой план/акт обследования/карта-план . Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TMapPlanDocumentRestr">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedMapPlanDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа или идентифицирующий номер, если документ помещен на временное хранение в электронное хранилище</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Источник официальной публикации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TLegalActRestr">
+        <xs:annotation>
+            <xs:documentation>Правоустанавливающий документ типизированный</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TLegalAct">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedLegalActDocumentTypes"/>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Источник официальной публикации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TLegalActApplied">
+        <xs:annotation>
+            <xs:documentation>Правоустанавливающий документ. Приложенные документы, для документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TLegalActRestr">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedLegalActDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Источник официальной публикации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TLegalActMIV">
+        <xs:annotation>
+            <xs:documentation>Правоустанавливающий документ. Приложенные документы, для документов, поступающих по Межведу</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TLegalAct">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedLegalActDocumentMIVTypes"/>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="officialPublicationSource" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Источник официальной публикации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TConfirmPrivilege">
+        <xs:complexContent>
+            <xs:restriction base="tns:TStrictDocument">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedConfirmPrivilegeDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TConfirmPrivilegeApplied">
+        <xs:complexContent>
+            <xs:restriction base="tns:TConfirmPrivilege">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="2" name="documentTypes" type="tns:AppliedConfirmPrivilegeDocumentTypes">
+                            <xs:annotation>
+                                <xs:documentation>Информация по кодам документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="name" type="tns:SDocName">
+                            <xs:annotation>
+                                <xs:documentation>Наименование документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="number" type="tns:SDocNumber">
+                            <xs:annotation>
+                                <xs:documentation>Номер документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата выдачи</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="attachment" type="tns:TAttachment">
+                            <xs:annotation>
+                                <xs:documentation>Описание приложенного файла</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="notes"
+                                    type="commons:TNote">
+                            <xs:annotation>
+                                <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="series" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Серия документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="issuer" type="tns:TIssuerInfo">
+                            <xs:annotation>
+                                <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия C</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Срок действия ПО</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="notaryInfo" type="tns:TNotaryInfo">
+                            <xs:annotation>
+                                <xs:documentation>Реквизиты о нотариальном заверении документа
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TFileDesc">
+        <xs:annotation>
+            <xs:documentation>Описание файла с подписью</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" name="file" type="tns:TAttachmentFile">
+                <xs:annotation>
+                    <xs:documentation>Атрибуты файла прикладываемого документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="signature" type="tns:TAttachmentFile"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Атрибуты файла электронной подписи прикладываемого документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TNotaryInfo">
+        <xs:annotation>
+            <xs:documentation>Реквизиты о нотариальном заверении документа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="register" type="subj:TFIO">
+                <xs:annotation>
+                    <xs:documentation>Кто зарегистрировал (ФИО нотариуса)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryNumber" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер нотариального документа в реестре нотариальных действий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateOfCertification" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TIssuerInfo">
+        <xs:annotation>
+            <xs:documentation>Сведения о организации, выдавшей документ, или авторе документа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код подразделения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAttachment">
+        <xs:annotation>
+            <xs:documentation>Прикладываемый документ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="desc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Описание прилагаемого документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="fileDesc" type="tns:TFileDesc">
+                <xs:annotation>
+                    <xs:documentation>Атрибуты файла</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="receivedInPaper" type="tns:TReceivedInPaper">
+                <xs:annotation>
+                    <xs:documentation>Сведения о количестве экземпляров и листов </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TAttachmentFile">
+        <xs:annotation>
+            <xs:documentation>Описание файла документа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" name="fileURI" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>URI файла. Виды префикса URI:
+                        - embedded://{далее путь к файлу внутри zip-пакета} - для файлов передаваемых в составе архива;
+                        - fileStorage://PROTOCOL/{номер файла (УИН)}/zip -  для файлов, загруженных в файловое хранилище</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="md5sum" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>MD5 сумма для прикладываемого файла. Для файлов, загруженных в файловое хранилище, задавать MD5 в формате fileStorage://PROTOCOL/{номер файла (УИН)}/zip</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="fileSize" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Размер файла в килобайтах</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="fileCreationDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата создания файла</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TQuantity">
+        <xs:annotation>
+            <xs:documentation>Количество листов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="pageCount" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Количество листов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docCount" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Количество экземпляров</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TReceivedInPaper">
+        <xs:annotation>
+            <xs:documentation>Бумажный документ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="original" type="tns:TQuantity" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Оригинал</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="copy" type="tns:TQuantity" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Копия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="idPayersType">
+        <xs:annotation>
+            <xs:documentation>Идентификаторы плательщика</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="idPayer" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор плательщика</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="(\s*[^\s]\s*)+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="SSNILS">
+        <xs:annotation>
+            <xs:documentation>Страховой номер индивидуального лицевого счёта (СНИЛС)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{3}\-?\d{3}\-?\d{3}\s?\d{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SOrgOGRN">
+        <xs:annotation>
+            <xs:documentation>Основной государствкенный регистрационный номер (ОГРН) организации</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="13"/>
+            <xs:pattern value="\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SLegalPersonOGRN">
+        <xs:annotation>
+            <xs:documentation>Основной государствкенный регистрационный номер (ОГРН) индивидуального предпринимателя</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="15"/>
+            <xs:pattern value="\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SOrgINN">
+        <xs:annotation>
+            <xs:documentation>Идентификационный номер налогоплательщика (ИНН) организации</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="10"/>
+            <xs:pattern value="\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SPersonINN">
+        <xs:annotation>
+            <xs:documentation>Идентификационный номер налогоплательщика (ИНН) физического лица</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="12"/>
+            <xs:pattern value="\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SOrgKPP">
+        <xs:annotation>
+            <xs:documentation>Код причины постановки на учет</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{4}[\w\d]{2}\d{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SOrgKIO">
+        <xs:annotation>
+            <xs:documentation>Код иностранной организации</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SDocSeries">
+        <xs:annotation>
+            <xs:documentation>Серия документа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SDocNumber">
+        <xs:annotation>
+            <xs:documentation>Номер документа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="250"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SDocName">
+        <xs:annotation>
+            <xs:documentation>Наименование документа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SDocTypeCode">
+        <xs:annotation>
+            <xs:documentation>Мнемоника типа документа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+    <xs:simpleType name="SBIC">
+        <xs:annotation>
+            <xs:documentation>строка БИК, состоящая из 9 символов</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SSettlementAccount">
+        <xs:annotation>
+            <xs:documentation>Расчётный счёт</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DAppliedLegalActDocument">
+        <xs:annotation>
+            <xs:documentation>Мнемоника типа документа согласно справочника "Документы" ЕС УНСИ</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="dDocument:DDocument">
+            <xs:pattern value="558401\d{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DBaseRepresentativeDocument">
+        <xs:restriction base="dDocument:DDocument">
+            <xs:pattern value="558301\d{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DRepresentativeDocument">
+        <xs:annotation>
+            <xs:documentation>Документы, подтверждающие полномочия представителя</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="tns:DBaseRepresentativeDocument">
+            <xs:pattern value="5583010[2-9]\d{4}|5583011\d{5}|558301990000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DPowerOfAttorneyRepresentativeDocument">
+        <xs:annotation>
+            <xs:documentation>Дооверенность, подтверждающая полномочия представителя</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="tns:DBaseRepresentativeDocument">
+            <xs:pattern value="558301010000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TOffline">
+        <xs:sequence>
+            <xs:element name="offlineUIN" type="xs:boolean" minOccurs="1" fixed="true">
+                <xs:annotation>
+                    <xs:documentation>Признак необходимости импортировать УИН в ГИС ГМП</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:element name="altPayerIdentifier" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор плательщика ФЛ в ГИС ГМП</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="unifiedPayerIdentifier" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор плательщика ЮЛ или ИП в ГИС ГМП</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TIdentificationCodePayment">
+        <xs:annotation>
+            <xs:documentation>Идентификация кода платежа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="number" type="tns:SDocNumber">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="date" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TBankDetails">
+        <xs:annotation>
+            <xs:documentation>Счет и реквизиты банка</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="settlementAccount" type="tns:SSettlementAccount">
+                <xs:annotation>
+                    <xs:documentation>Номер расчетного счета</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="roomOffice" type="siml:s250">
+                <xs:annotation>
+                    <xs:documentation>Номер отделения банка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="bankName" type="siml:s1000">
+                <xs:annotation>
+                    <xs:documentation>Наименование банка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address" type="address:TAddress">
+                <xs:annotation>
+                    <xs:documentation>Местонахождение банка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BIC" type="tns:SBIC">
+                <xs:annotation>
+                    <xs:documentation>БИК банка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="correspondentAccount" type="siml:p20">
+                <xs:annotation>
+                    <xs:documentation>К/с банка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="INN" type="tns:SPersonINN" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ИНН плательщика</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TSizeExcessivelyPaidAmount">
+        <xs:annotation>
+            <xs:documentation>Размер излишне оплаченной суммы за предоставление сведений, содержащихся в ЕГРН, и иной информации</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="amount" type="xs:long">
+                <xs:annotation>
+                    <xs:documentation>Сумма</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="amountWords" type="siml:s250">
+                <xs:annotation>
+                    <xs:documentation>Сумма прописью</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:complexType name="CadNumber">
+		<xsd:annotation>
+			<xsd:documentation>Кадастровый номер</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="cad_number" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровый номер</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

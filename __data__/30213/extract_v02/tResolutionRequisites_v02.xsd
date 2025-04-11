@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDict_v02.xsd"/>
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:complexType name="ResolutionRequisites">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты документа: решения, соглашения, иного правового акта</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="document_code" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/98/items">Вид документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_series" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Серия документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> Номер документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_issuer" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Орган власти, организация, выдавшие документ. Автор документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="source_official_publication" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Источник официального опубликования</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

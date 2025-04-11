@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/benefitCategory" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 165 -->
+    <xs:simpleType name="DBenefitCategory">
+        <xs:annotation>
+            <xs:documentation>Категории льготников</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="358000000001">
+                <xs:annotation>
+                    <xs:documentation>Федеральные органы государственной власти</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000002">
+                <xs:annotation>
+                    <xs:documentation>Ограны государственной власти субъектов Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000003">
+                <xs:annotation>
+                    <xs:documentation>Органы местного самоуправления</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000007">
+                <xs:annotation>
+                    <xs:documentation>Инвалиды Великой Отечественной Войны</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000008">
+                <xs:annotation>
+                    <xs:documentation>Российская Федерация</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000009">
+                <xs:annotation>
+                    <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000010">
+                <xs:annotation>
+                    <xs:documentation>Ветераны Великой Отечественной войны</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000011">
+                <xs:annotation>
+                    <xs:documentation>Бывшие узники фашистских концлагерей, гетто и других мест принудительного содержания, созданных немецкими фашистами и их союзниками в период Второй мировой войны</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000012">
+                <xs:annotation>
+                    <xs:documentation>Бывшие военнопленные во время Великой Отечественной войны</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000013">
+                <xs:annotation>
+                    <xs:documentation>Физические лица, признаваемые малоимущими в соответствии с Жилищным кодексом Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000014">
+                <xs:annotation>
+                    <xs:documentation>Участники программы реновации жилищного фонда в городе Москве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="358000000015">
+                <xs:annotation>
+                    <xs:documentation>Центральный банк Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

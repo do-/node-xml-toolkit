@@ -1,0 +1,1599 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    vc:minVersion="1.1" targetNamespace="http://rosreestr.ru/services/v0.1/TStatementCommons"
+    xmlns:com="http://rosreestr.ru/services/v0.1/commons/Commons"
+    xmlns:dAcC="http://rosreestr.ru/services/v0.1/commons/directories/actionCode"
+    xmlns:dSt="http://rosreestr.ru/services/v0.1/commons/directories/statementType"
+    xmlns:doc="http://rosreestr.ru/services/v0.1/commons/Documents"
+    xmlns:tns="http://rosreestr.ru/services/v0.1/TStatementCommons"
+    xmlns:dReT="http://rosreestr.ru/services/v0.1/commons/directories/egrnrequesttype"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    xmlns:addr="http://rosreestr.ru/services/v0.1/commons/Address"
+    xmlns:obj="http://rosreestr.ru/services/v0.1/commons/TObject"
+    xmlns:dResR="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+    xmlns:dReM="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+    xmlns:dAgr="http://rosreestr.ru/services/v0.1/commons/directories/agreements"
+    xmlns:dKInfo="http://rosreestr.ru/services/v0.1/commons/directories/kindInfo">
+
+    <!--14.10.2016 Новый этап доработки схем -->
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/TObject"
+        schemaLocation="TObject.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/agreements"
+        schemaLocation="Dictionary/DAgreements.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/actionCode"
+        schemaLocation="Dictionary/DActionCode.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/statementType"
+        schemaLocation="Dictionary/DStatementType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Address"
+        schemaLocation="TAddress.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Documents"
+        schemaLocation="TDocument.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Commons"
+        schemaLocation="Commons.xsd"/>
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+        schemaLocation="Dictionary/DRecieveResultType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+        schemaLocation="Dictionary/DReceivingMethod.xsd"/>
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/kindInfo"
+        schemaLocation="Dictionary/DKindInfo.xsd"/>
+
+    <xs:notation name="StatementHeaders" public="StatementHeaders"/>
+    <xs:complexType name="TBasicStatementHeader">
+        <xs:sequence>
+            <xs:element name="actionCode" type="dAcC:DActionCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код УРД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="statementType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="creationDate" type="xs:dateTime" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата создания документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="kind" type="dKInfo:DKindInfo">
+                <xs:annotation>
+                    <xs:documentation>Вид сведений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                type="doc:TBasicSomeDocument">
+                <xs:annotation>
+                    <xs:documentation>Приложенные документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                <xs:annotation>
+                    <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeader">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" type="dAcC:DActionCode" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="statementType" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TBasicSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementFormChangeRegisteredStatementHeader">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" type="tns:DChangeRegisteredStatementActionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="kind" type="dKInfo:DKindInfo">
+                        <xs:annotation>
+                            <xs:documentation>Вид сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TBasicSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepStatementHeader">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" type="dAcC:DActionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД (справоник ЕС УНСИ)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="kind">
+                        <xs:annotation>
+                            <xs:documentation>Вид сведений</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dKInfo:DKindInfo">
+                                <xs:pattern value="03">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о переводе жилого помещения в нежилое помещение,
+                                            нежилого помещения в жилое помещение</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="04">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о результатах проведения государственного земельного
+                                            надзора (о нарушении земельного законодательства Российской
+                                            Федерации)</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="05">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об утверждении результатов государственной
+                                            кадастровой оценки объектов недвижимости</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="06">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о внесении информации в государственный лесной реестр
+                                            либо изменении информации, содержащейся в государственном лесном реестре, в
+                                            отношении лесного участка, которому присвоен кадастровый (условный)
+                                            номер</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="07">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о включении объекта недвижимости в единый
+                                            государственный реестр объектов культурного наследия (памятников истории и
+                                            культуры) народов Российской Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="08">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об отнесении объекта недвижимости к выявленным
+                                            объектам культурного наследия, подлежащим государственной
+                                            охране</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="09">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об отказе включить выявленный объект культурного
+                                            наследия в единый государственный реестр объектов культурного наследия
+                                            (памятников истории и культуры) народов Российской
+                                            Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="10">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об исключении объекта культурного наследия из единого
+                                            государственного реестра объектов культурного наследия (памятников истории и
+                                            культуры) народов Российской Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="11">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об изменении физическим лицом гражданства, адреса
+                                            постоянного места жительства, документа, удостоверяющего
+                                            личность</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="12">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о государственной регистрации
+                                            смерти</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="13">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о проживающих в жилом помещении членах семьи
+                                            собственника данного жилого помещения, находящихся под опекой или
+                                            попечительством, либо несовершеннолетних членах семьи собственника данного
+                                            жилого помещения, оставшихся без попечения родителей</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="14">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о признании гражданина ограниченным в дееспособности
+                                            или признанным недееспособным</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="15">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о бесхозяйном недвижимом имуществе – об объекте
+                                            недвижимого имущества, не имеющего собственника или собственник которого
+                                            неизвестен, или от права собственности на который собственник (собственники)
+                                            отказался</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="16">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении прохождения
+                                            Государственной границы Российской Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="17">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ между субъектами
+                                            Российской Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="18">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ муниципальных
+                                            образований либо о преобразовании муниципальных
+                                            образований</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="19">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ населенного
+                                            пункта</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="20">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об утверждении проекта межевания
+                                            территории</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="21">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о создании особой экономической зоны, об увеличении
+                                            площади особой экономической зоны, о досрочном прекращении существования
+                                            особой экономической зоны</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="22">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ зон
+                                            территориального развития в Российской Федерации</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="23">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ территорий
+                                            опережающего социально-экономического развития</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="24">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ игорной
+                                            зоны</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="25">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об утверждении или изменении границ территории
+                                            объекта культурного наследия и зон охраны объектов культурного
+                                            наследия</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="26">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ зон с особыми
+                                            условиями использования территорий или о прекращении существования зоны с
+                                            особыми условиями использования территорий</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="27">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении, изменении границ территориальных
+                                            зон</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="28">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ особо охраняемой
+                                            природной территории</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="29">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении или изменении границ охотничьих
+                                            угодий</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="30">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения об установлении (изменении) границ лесничеств,
+                                            лесопарков</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="31">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о внесении либо изменении сведений о береговой линии
+                                            (границе водного объекта)</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="32">
+                                    <xs:annotation>
+                                        <xs:documentation>Сведения о наложении ареста, о запрете совершать определенные
+                                            действия с недвижимым имуществом или об избрании в качестве меры пресечения
+                                            залога</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeInterdepDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TBaseEGRNRequestHeader">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления на Предоставление сведений (база)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="6595\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dSt:DStatementType">
+                                <xs:pattern value="558600000000">
+                                    <xs:annotation>
+                                        <xs:documentation>Заявления и запросы ЕГРН</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630000000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запросы, связанные с выдачей сведений из ЕГРН</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630100000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запрос на предоставление копии документа, на основании которого внесены сведения в ЕГРН или копий документов, помещенных в реестрвоое дело</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630200000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запрос на предоставление сведений, содержащихся в ЕГРН, об объектах недвижимости и (или) их правообладателях</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630300000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запрос на предоставление сведений, содержащихся в ЕГРН, посредством обеспечения доступа к ФГИС ЕГРН</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630400000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запрос о предоставлении сведений, содержащихся в ЕГРН, о территории кадастрового квартала, о зоне с особыми условиями использования территорий, территориальной зоне, территории объекта культурного наследия, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, лесопарке, об особо охраняемой природной территории, особой экономической зоне, охотничьих угодьях, об административно-территориальном делении, о береговой линии (границе водного объекта)</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="558630500000">
+                                    <xs:annotation>
+                                        <xs:documentation>Запрос на предоставление общедоступных сведений</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TEGRNRequestServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestHeader">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления на Предоставление сведений </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TBaseEGRNRequestHeader">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="genuinenessOfSignature"
+                        type="tns:TGenuinenessOfSignature">
+                        <xs:annotation>
+                            <xs:documentation>Заверение подлинности подписи заявителя (представителя заявителя)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="accessKey" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Ключ доступа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderForm1">
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="6591\d{8}"/>
+                                <xs:pattern value="6592\d{8}"/>
+                                <xs:pattern value="6593\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderForm2">
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="659411111112">
+                                    <xs:annotation>
+                                        <xs:documentation>Внесение сведений в ЕГРН по инициативе заинтересованного лица</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111113">
+                                    <xs:annotation>
+                                        <xs:documentation>Исправление технических ошибок, содержащихся в ЕГРН</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111121">
+                                    <xs:annotation>
+                                        <xs:documentation>Внесение в ЕГРН сведений о границах по инициативе заинтересованного лица</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111128">
+                                    <xs:annotation>
+                                        <xs:documentation>Исправление технических ошибок, содержащихся в сведениях реестра границ</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>                                                                 
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderForm3">
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="6594\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderFormTechErr">
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="6594\d{8}"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderMortgage">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления
+Заявление о погашении регистрационной записи об ипотеке, о внесении изменений в записи реестра прав, ограничений прав и обременений недвижимого имущества Единого государственного реестра недвижимости, о регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной,о государственной регистрации законного владельца закладной, о выдаче закладной</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="659311111116">
+                                    <xs:annotation>
+                                        <xs:documentation>Прекращение ограничений прав на объект недвижимости и обременений объекта недвижимости</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111112">
+                                    <xs:annotation>
+                                        <xs:documentation>Внесение сведений в ЕГРН по инициативе заинтересованного лица</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111122">
+                                    <xs:annotation>
+                                        <xs:documentation>Государственная регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111123">
+                                    <xs:annotation>
+                                        <xs:documentation>Государственная регистрация законного владельца закладной</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111124">
+                                    <xs:annotation>
+                                        <xs:documentation>Выдача закладной</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TBasicSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderOwnerless">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок заявления
+Заявление о принятии объекта недвижимого имущества вновь во владение, пользование и распоряжение (в собственность)/
+Заявление о том, что собственник ОН не совершал действий, направленные на отказ от права собственности</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="659411111125">
+                                    <xs:annotation>
+                                        <xs:documentation>Принятие объекта недвижимого имущества вновь во владение, пользование и распоряжение</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                                <xs:pattern value="659411111126">
+                                    <xs:annotation>
+                                        <xs:documentation>Обработка заявления о том, что собственник объекта недвижимости не совершал действий, направленные на отказ от права собственности</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TBasicSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementHeaderAppliedDocuments">
+        <xs:annotation>
+            <xs:documentation>Технологический заголовок Документов, поступающих без заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementHeader">
+                <xs:sequence>
+                    <xs:element name="actionCode" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="dAcC:DActionCode">
+                                <xs:pattern value="659411111127">
+                                    <xs:annotation>
+                                        <xs:documentation>Обработка документов, поступающих без заявлений</xs:documentation>
+                                    </xs:annotation>
+                                </xs:pattern>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="statementType" type="dSt:DStatementType">
+                        <xs:annotation>
+                            <xs:documentation>Вид заявления по справочнику "Заявления и запросы ЕГРН"</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="creationDate" type="xs:dateTime" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Дата создания документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="appliedDocument"
+                        type="doc:TBasicSomeDocument">
+                        <xs:annotation>
+                            <xs:documentation>Приложенные документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="serviceInfo" type="tns:TBasicServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Информация межведомственного взаимодействия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="StatementHeadersHelpers" public="StatementHeadersHelpers"/>
+    <xs:complexType name="TGenuinenessOfSignature">
+        <xs:annotation>
+            <xs:documentation>Удостоверение подлинности подписи заявителя (представителя)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="surname" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Фамилия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstname" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateGenuineness" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата заверения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="innNotary" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>ИНН нотариуса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBasicServiceInfo">
+        <xs:sequence>
+            <xs:element name="serviceName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Наименование услуги или базового государственного информационного ресурса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="serviceCode" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер (идентификатор) услуги в реестре государственных услуг или в реестре муниципальных услуг</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestCause" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Основание запроса сведений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="legalActSection" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Положение соответствующего НПА</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="answerDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Срок ожидаемого ответа на межведомственный запрос</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element
+                default="заявитель обладает правом на получение сведений, предусмотренных частями 13 - 16 статьи 62 Федерального закона от 13 июля 1997 г. N 218-ФЗ О государственной регистрации недвижимости, и (или) на безвозмездное предоставление сведений в соответствии со статьей 63 данного Федерального закона, иным федеральным законом"
+                minOccurs="0" name="paymentFree" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Заявитель обладает правом на получение сведений, предусмотренных частями 13 - 16 статьи 62 Федерального закона от 13 июля 2015 г. N 218-ФЗ "О государственной регистрации недвижимости", и (или) на безвозмездное предоставление сведений в соответствии с частью 1 статьи 63 данного Федерального закона</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="legalAct" type="doc:TStrictDocument">
+                <xs:annotation>
+                    <xs:documentation>Реквизиты решения руководителя федерального государственного органа, определенного Президентом Российской Федерации, которым уполномочено должностное лицо такого органа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="post" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Должность, включая полное наименование органа, реквизиты документа, подтверждающего наделение нотариуса полномочиями</xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TServiceInfo">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicServiceInfo">
+                <xs:sequence>
+                    <xs:element name="serviceName" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование услуги или базового государственного информационного ресурса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="serviceCode" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Номер (идентификатор) услуги в реестре государственных услуг или в реестре муниципальных услуг</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestServiceInfo">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicServiceInfo">
+                <xs:sequence>
+                    <xs:element name="serviceName" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование услуги или базового государственного информационного ресурса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="serviceCode" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Номер (идентификатор) услуги в реестре государственных услуг или в реестре муниципальных услуг</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="requestCause" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Основание запроса сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="legalActSection" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Положение соответствующего НПА</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="answerDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Срок ожидаемого ответа на межведомственный запрос</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element
+                        default="заявитель обладает правом на получение сведений, предусмотренных частями 13 - 16 статьи 62 Федерального закона от 13 июля 1997 г. N 218-ФЗ О государственной регистрации недвижимости, и (или) на безвозмездное предоставление сведений в соответствии со статьей 63 данного Федерального закона, иным федеральным законом"
+                        minOccurs="0" name="paymentFree" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Заявитель обладает правом на получение сведений, предусмотренных частями 13 - 16 статьи 62 Федерального закона от 13 июля 2015 г. N 218-ФЗ "О государственной регистрации недвижимости", и (или) на безвозмездное предоставление сведений в соответствии с частью 1 статьи 63 данного Федерального закона</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="legalAct" type="doc:TStrictDocument">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты решения руководителя федерального государственного органа, определенного Президентом Российской Федерации, которым уполномочено должностное лицо такого органа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="post">
+                        <xs:annotation>
+                            <xs:documentation>Должность, включая полное наименование органа, реквизиты документа, подтверждающего наделение нотариуса полномочиями</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="4000"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+
+
+
+    <xs:notation name="DeliveryDetails" public="DeliveryDetails"/>
+    <xs:complexType name="TBasicDeliveryDetails">
+        <xs:annotation>
+            <xs:documentation>Информация о доставке заявлений в ЕГРН и результатов от ЕГРН к заявителям</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="requestDeliveryMethod" type="tns:TBasicRequestDeliveryMethod"
+                minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Информация о приеме заявления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="resultDeliveryMethod" type="tns:TBasicResultDeliveryMethod"
+                minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Информация о способе информирования и доставки результата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TDeliveryDetails">
+        <xs:annotation>
+            <xs:documentation>Информация о доставке заявлений в ЕГРН и результатов от ЕГРН к заявителям в рамках заявлений по Регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicDeliveryDetails">
+                <xs:sequence>
+                    <xs:element name="requestDeliveryMethod" type="tns:TRequestDeliveryMethod">
+                        <xs:annotation>
+                            <xs:documentation>Информация о приеме заявления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="resultDeliveryMethod" type="tns:TResultDeliveryMethod">
+                        <xs:annotation>
+                            <xs:documentation>Информация о способе информирования и доставки результата</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAppliedDocumentsDeliveryDetails">
+        <xs:annotation>
+            <xs:documentation>Информация о доставке заявлений в ЕГРН и результатов от ЕГРН к заявителям в рамках заявления "Документы, поступающие без заявления"</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicDeliveryDetails">
+                <xs:sequence>
+                    <xs:element name="requestDeliveryMethod" type="tns:TBasicRequestDeliveryMethod">
+                        <xs:annotation>
+                            <xs:documentation>Информация о приеме заявления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestDeliveryDetails">
+        <xs:annotation>
+            <xs:documentation>Информация о доставке заявлений в ЕГРН и результатов от ЕГРН к заявителям в рамках заявлений по Предоставлению сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicDeliveryDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="requestDeliveryMethod"
+                        type="tns:TEGRNRequestDeliveryMethod">
+                        <xs:annotation>
+                            <xs:documentation>Информация о приеме запроса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="resultDeliveryMethod"
+                        type="tns:TEGRNRequestResultDeliveryMethod">
+                        <xs:annotation>
+                            <xs:documentation>Информация о способе информирования и доставки результата</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="StatementObjects" public="StatementObjects"/>
+    <xs:complexType name="TBasicStatementObjects">
+        <xs:annotation>
+            <xs:documentation>Объекты заявления</xs:documentation>
+        </xs:annotation>
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="object" type="obj:TBasicObject" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Объект недвижимости (ОН)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="cadastralBlock" type="obj:CadastralBlock" maxOccurs="unbounded"
+                minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый квартал</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TStatementObjects">
+        <xs:annotation>
+            <xs:documentation>Объекты заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementObjects">
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="object" type="obj:TObject">
+                        <xs:annotation>
+                            <xs:documentation>Объект недвижимости (ОН)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="cadastralBlock" type="obj:CadastralBlock"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Кадастровый квартал</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TFormChangeRegisteredStatementObjects">
+        <xs:annotation>
+            <xs:documentation>Объекты заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementObjects">
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="object" type="obj:TBasicObject">
+                        <xs:annotation>
+                            <xs:documentation>Объект недвижимости (ОН)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="cadastralBlock" type="obj:CadastralBlock"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Кадастровый квартал</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementObjectsForm3">
+        <xs:annotation>
+            <xs:documentation>Объекты заявления по форме 3</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStatementObjects">
+                <xs:sequence>
+                    <xs:element name="cadastralBlock" type="obj:CadastralBlock"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Кадастровый квартал</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepStatementObjects">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementObjects">
+                <xs:sequence>
+                    <xs:element name="object" type="obj:TInterdepObject" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Объект недвижимости (ОН)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="DeliveryDetailsHelpers" public="DeliveryDetailsHelpers"/>
+    <xs:complexType name="TBasicRequestDeliveryMethod">
+        <xs:annotation>
+            <xs:documentation>Данные о доставке заявлений в ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="receivingMethodCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Способ представления заявления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regRightAuthority" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Полное наименование органа регистрации прав / МФЦ в винительном падеже</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="code" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>«Код органа регистрации прав / МФЦ. Заполняется из справочника ЕС УНСИ « ЕСТО»»</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="specialistNote" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка специалиста, принявшего заявление и приложенные к нему документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBasicResultDeliveryMethod">
+        <xs:annotation>
+            <xs:documentation>Данные о доставке результатов заявлителю</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="recieveResultTypeCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Способ доставки результата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Детали контактов для получения результата</xs:documentation>
+                </xs:annotation>
+                <xs:element minOccurs="1" name="courierAddress" type="addr:TAddress">
+                    <xs:annotation>
+                        <xs:documentation>Адрес курьерской доставки</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="postAddress" type="addr:TAddress">
+                    <xs:annotation>
+                        <xs:documentation>Адрес почтового отправления</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="1" name="eMail" type="com:SEMail">
+                    <xs:annotation>
+                        <xs:documentation>Адрес электронной почты</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element minOccurs="0" name="acceptActionNotification"
+                type="tns:TAcceptActionNotification">
+                <xs:annotation>
+                    <xs:documentation>Детали отправки уведомления о приеме заявления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="failSuspendEMail" type="com:SEMail">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты для доставки оповещений о приостановке или отказе</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element fixed="true" minOccurs="0" name="receiveDischarge" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Признак согласия на получения выписки в качестве результата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element default="true" minOccurs="0" name="receiveReceiptInPrivate"
+                type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Выдана расписка лично</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dataReceiveForm" type="tns:DDataReceiveForm">
+                <xs:annotation>
+                    <xs:documentation>Форма предоставления сведений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element default="true" minOccurs="0" name="doNotSendRecieveNotification"
+                type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Не направлять уведомление о приеме данного заявления и прилагаемых к нему документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRequestDeliveryMethod">
+        <xs:annotation>
+            <xs:documentation>Данные о доставке заявлений в ЕГРН в рамках заявлений по Регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRequestDeliveryMethod">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="receivingMethodCode"
+                        type="dReM:DReceivingMethod">
+                        <xs:annotation>
+                            <xs:documentation>Способ представления заявления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="regRightAuthority" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование органа регистрации прав / МФЦ в винительном падеже</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="code" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>«Код органа регистрации прав / МФЦ. Заполняется из справочника ЕС УНСИ « ЕСТО»»</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="specialistNote" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Отметка специалиста, принявшего заявление и приложенные к нему документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TResultDeliveryMethod">
+        <xs:annotation>
+            <xs:documentation>Данные о доставке результатов заявлителю в заявлениях по Регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicResultDeliveryMethod">
+                <xs:sequence>
+                    <xs:element name="recieveResultTypeCode" type="dResR:DRecieveResultType">
+                        <xs:annotation>
+                            <xs:documentation>Способ доставки результата</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Детали контактов для получения результата</xs:documentation>
+                        </xs:annotation>
+                        <xs:element minOccurs="1" name="courierAddress" type="addr:TAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес курьерской доставки</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="postAddress"
+                            type="addr:TAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес почтового отправления</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="eMail" type="com:SEMail">
+                            <xs:annotation>
+                                <xs:documentation>Адрес электронной почты</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="acceptActionNotification"
+                        type="tns:TAcceptActionNotification">
+                        <xs:annotation>
+                            <xs:documentation>Детали отправки уведомления о приеме заявления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="failSuspendEMail" type="com:SEMail">
+                        <xs:annotation>
+                            <xs:documentation>Адрес электронной почты для доставки оповещений о приостановке или отказе</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element fixed="true" minOccurs="0" name="receiveDischarge" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Признак согласия на получения выписки в качестве результата</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element default="true" minOccurs="0" name="receiveReceiptInPrivate"
+                        type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Выдана расписка лично</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="dataReceiveForm" type="tns:DDataReceiveForm">
+                        <xs:annotation>
+                            <xs:documentation>Форма предоставления сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element default="true" minOccurs="0" name="doNotSendRecieveNotification"
+                        type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Не направлять уведомление о приеме данного заявления и прилагаемых к нему документов</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestDeliveryMethod">
+        <xs:annotation>
+            <xs:documentation>Информация о доставке заявлений в ЕГРН и результатов от ЕГРН к заявителям в рамках заявлений по предоставлению сведений из ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRequestDeliveryMethod">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" minOccurs="0" name="receivingMethodCode"
+                        type="dReM:DEGRNRequestReceivingMethod">
+                        <xs:annotation>
+                            <xs:documentation>Способ представления запроса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="regRightAuthority" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование органа регистрации прав / МФЦ в винительном падеже</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="code" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>«Код органа регистрации прав / МФЦ. Заполняется из справочника ЕС УНСИ « ЕСТО»»</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="specialistNote" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Отметка специалиста, принявшего заявление и приложенные к нему документы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestResultDeliveryMethod">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicResultDeliveryMethod">
+                <xs:sequence>
+                    <xs:element name="recieveResultTypeCode"
+                        type="dResR:DERGRNRequestReceiveResultType">
+                        <xs:annotation>
+                            <xs:documentation>Способ доставки результата</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Детали контактов для получения результата</xs:documentation>
+                        </xs:annotation>
+                        <xs:element maxOccurs="1" minOccurs="1" name="postAddress"
+                            type="addr:TAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес почтового отправления</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="eMail" type="com:SEMail">
+                            <xs:annotation>
+                                <xs:documentation>Адрес электронной почты</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="dataReceiveForm" type="tns:DDataReceiveForm">
+                        <xs:annotation>
+                            <xs:documentation>Форма предоставления сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAcceptActionNotification">
+        <xs:annotation>
+            <xs:documentation>Детали отправки уведомления о приеме заявления</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element maxOccurs="1" minOccurs="1" name="postAddress" type="addr:TAddress">
+                <xs:annotation>
+                    <xs:documentation>Адрес почтового отправления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="eMail" type="com:SEMail">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:notation name="StatementAgreements" public="StatementAgreements"/>
+    <xs:complexType name="TBasicStatementAgreements">
+        <xs:annotation>
+            <xs:documentation>Базовый тип для пользовательских соглашений в заявлениях</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="persDataProcessingAgreement" type="dAgr:DPersDataAgreements">
+                <xs:annotation>
+                    <xs:documentation>Согласие на обработку персональных данных</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="actualDataAgreement" type="dAgr:DActualDataAgreements">
+                <xs:annotation>
+                    <xs:documentation>Настоящим также подтверждаю</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0">
+                <xs:element name="qualityOfServiceAgreement" type="dAgr:DQualityOfServiceAgreements">
+                    <xs:annotation>
+                        <xs:documentation>Согласие на участие в опросе качества предоставленных услуг</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="qualityOfServiceTelephoneNumber" type="com:SPhoneNumber"
+                    minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Телефон для службы опроса качества представленных услуг</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TStatementAgreements">
+        <xs:annotation>
+            <xs:documentation>Пользовательские соглашения в заявлении по Регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementAgreements">
+                <xs:sequence>
+                    <xs:element name="persDataProcessingAgreement" type="dAgr:DPersDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Согласие на обработку перс данных</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="actualDataAgreement" type="dAgr:DActualDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Подтверждение, что предоставленные данные корректны</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="qualityOfServiceAgreement"
+                            type="dAgr:DQualityOfServiceAgreements">
+                            <xs:annotation>
+                                <xs:documentation>Согласие на участие в опросе качества предоставленных услуг</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="qualityOfServiceTelephoneNumber" type="com:SPhoneNumber">
+                            <xs:annotation>
+                                <xs:documentation>Телефон для службы опроса качества представленных услуг</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestAgreements">
+        <xs:annotation>
+            <xs:documentation>Пользовательские соглашения в заявлении по Предоставлению сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementAgreements">
+                <xs:sequence>
+                    <xs:element name="persDataProcessingAgreement" type="dAgr:DPersDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Согласие на обработку перс данных</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="actualDataAgreement" type="dAgr:DActualDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Подтверждение, что предоставленные данные корректны</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="qualityOfServiceAgreement"
+                            type="dAgr:DQualityOfServiceAgreements">
+                            <xs:annotation>
+                                <xs:documentation>Согласие на участие в опросе качества предоставленных услуг</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="qualityOfServiceTelephoneNumber" type="com:SPhoneNumber">
+                            <xs:annotation>
+                                <xs:documentation>Телефон для службы опроса качества представленных услуг</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepStatementAgreements">
+        <xs:annotation>
+            <xs:documentation>Пользовательские соглашения в заявлении по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementAgreements">
+                <xs:sequence>
+                    <xs:element name="persDataProcessingAgreement" type="dAgr:DPersDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Согласие на обработку персональных данных</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="actualDataAgreement" type="dAgr:DActualDataAgreements">
+                        <xs:annotation>
+                            <xs:documentation>Настоящим также подтверждаю</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="SimpleTypes" public="SimpleTypes"/>
+    <xs:simpleType name="DDataReceiveForm">
+        <xs:annotation>
+            <xs:documentation>Форма предоставления сведений</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="paper">
+                <xs:annotation>
+                    <xs:documentation>В бумажном виде</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electronic">
+                <xs:annotation>
+                    <xs:documentation>В электронном виде</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DChangeRegisteredStatementActionCode">
+        <xs:restriction base="dAcC:DActionCode">
+            <xs:enumeration value="659411111117"/>
+            <xs:enumeration value="659411111118"/>
+            <xs:enumeration value="659411111119"/>
+            <xs:enumeration value="659411111120"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:complexType name="DetailsStatement">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты выписки</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="group_top_requisites" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Группа верхних реквизитов</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="organ_registr_rights" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Полное наименование органа регистрации прав</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="date_formation" type="xsd:date" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Дата формирования выписки</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="registration_number" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Регистрационный номер</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="requested_subject" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Данные о запрашиваемом лице</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="subject_info" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Указываются данные о запрашиваемом лице согласно сведениям, указанным в запросе</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="group_lower_requisites" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Группа нижних реквизитов</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="full_name_position" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Полное наименование должности</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="initials_surname" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Инициалы, фамилия</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="DetailsStatementRealty">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты выписки (по объекту недвижимоти)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="group_top_requisites">
+				<xsd:annotation>
+					<xsd:documentation>Группа верхних реквизитов</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="organ_registr_rights" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Полное наименование органа регистрации прав</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="date_formation" type="xsd:date">
+							<xsd:annotation>
+								<xsd:documentation>Дата формирования выписки</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="registration_number" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Регистрационный номер</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="group_lower_requisites" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Группа нижних реквизитов</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="full_name_position" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Полное наименование должности</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="initials_surname" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Инициалы, фамилия</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="DetailsRequest">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="date_received_request" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_receipt_request_reg_authority_rights" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата получения запроса органом регистрации прав</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="DetailsRequestPeriod">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты поступившего запроса и период, за который запрашивается информация</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="date_received_request" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_receipt_request_reg_authority_rights" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата получения запроса органом регистрации прав</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="period" type="PeriodStartEnd" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Период времени, за который запрашивается информация</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="PeriodStartEndAvailable">
+		<xsd:annotation>
+			<xsd:documentation>Дата, по состоянию на которую или период, за который запрошены сведения</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="date_available_information" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата, по состоянию на которую запрошены сведения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="period_start_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата начала периода</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="period_end_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата окончания периода</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="PeriodStartEnd">
+		<xsd:annotation>
+			<xsd:documentation>Период времени (даты начала, окончания периода)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="period_start_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата начала периода</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="period_end_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата окончания периода</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

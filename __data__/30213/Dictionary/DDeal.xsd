@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/deal" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 36 -->
+    <xs:simpleType name="DDeal">
+        <xs:annotation>
+            <xs:documentation>Сделки (договоры)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="454001001000">
+                <xs:annotation>
+                    <xs:documentation>Договор купли-продажи</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454001002000">
+                <xs:annotation>
+                    <xs:documentation>Договор дарения</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454001003000">
+                <xs:annotation>
+                    <xs:documentation>Договор мены</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454001004000">
+                <xs:annotation>
+                    <xs:documentation>Договор ренты</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454001005000">
+                <xs:annotation>
+                    <xs:documentation>Договор пожизненного содержания с иждивением</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002001000">
+                <xs:annotation>
+                    <xs:documentation>Договор аренды (субаренды)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002002000">
+                <xs:annotation>
+                    <xs:documentation>Договор безвозмездного срочного пользования земельным/лесным участком</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002003000">
+                <xs:annotation>
+                    <xs:documentation>Договор об ипотеке (залоге)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002004000">
+                <xs:annotation>
+                    <xs:documentation>Договор найма жилого помещения</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002005000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение о восстановлении или замене погибшего (уничтоженного) или поврежденного имущества</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454002006000">
+                <xs:annotation>
+                    <xs:documentation>Безвозмездное пользование (ссуда)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454003000000">
+                <xs:annotation>
+                    <xs:documentation>Договор участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454005000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об уступке требований (переводе долга) по договору</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454006000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение о расторжении договора (кроме договора участия в долевом строительстве)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454007000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об изменении содержания закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454008000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об уступке прав требования по договору участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454010000000">
+                <xs:annotation>
+                    <xs:documentation>Передача жилья в собственность граждан (приватизация жилья)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454011000000">
+                <xs:annotation>
+                    <xs:documentation>Договор концессии</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454012000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об уступке прав по договору аренды</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454013000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об изменении условий договора об ипотеке</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454014000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об изменении условий договора участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454015000000">
+                <xs:annotation>
+                    <xs:documentation>Соглашение об изменении условий договора аренды</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454016000000">
+                <xs:annotation>
+                    <xs:documentation>Расторжение договора участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454017000000">
+                <xs:annotation>
+                    <xs:documentation>Отказ от исполнения договора участия в долевом строительстве по инициативе одной из сторон</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="454018000000">
+                <xs:annotation>
+                    <xs:documentation>Прекращение договора участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

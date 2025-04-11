@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/requestEGRNAccessAction" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 107 -->
+    <xs:simpleType name="DRequestEGRNAccessAction">
+        <xs:annotation>
+            <xs:documentation>Виды предоставляемых сведений, содержащихся в Едином государственном реестре недвижимости</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="563010001000">
+                <xs:annotation>
+                    <xs:documentation>Об объекте недвижимости (нескольких или всех в границах одного или нескольких кадастровых кварталов) и зарегистрированных правах на него (них)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010002000">
+                <xs:annotation>
+                    <xs:documentation>О переходе прав на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010003000">
+                <xs:annotation>
+                    <xs:documentation>О правах отдельного лица на имеющиеся (имевшиеся) у него объекты недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010004000">
+                <xs:annotation>
+                    <xs:documentation>О содержании правоустанавливающего документа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010005000">
+                <xs:annotation>
+                    <xs:documentation>О правах отдельного лица на имевшиеся (имеющиеся) у него объекты недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010006000">
+                <xs:annotation>
+                    <xs:documentation>О признании правообладателя недееспособным или ограниченно дееспособным</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010007000">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый паспорт объекта недвижимости (кадастровый паспорт здания, сооружения, объекта незавершенного строительства; кадастровый паспорт помещения (выписка из государственного кадастра недвижимости); кадастровый паспорт земельного участка)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010008000">
+                <xs:annotation>
+                    <xs:documentation>Кадастровая выписка об объекте недвижимости (кадастровая выписка о здании, сооружении, объекте незавершенного строительства; кадастровая выписка о земельном участке)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010009000">
+                <xs:annotation>
+                    <xs:documentation>кадастровый план территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010010000">
+                <xs:annotation>
+                    <xs:documentation>кадастровая справка о кадастровой стоимости объекта недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010011000">
+                <xs:annotation>
+                    <xs:documentation>Об отсутствии сведений (в случае отсутствия запрашиваемых сведений)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010012000">
+                <xs:annotation>
+                    <xs:documentation>О наложенных ограничениях на недвижимое имущество, предоставляемые Федеральной службой судебных приставов России</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="563010013000">
+                <xs:annotation>
+                    <xs:documentation>О наложении ареста/об отмене ареста на имущество организации-налогоплательщика, предоставляемые Федеральной налоговой службой России</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

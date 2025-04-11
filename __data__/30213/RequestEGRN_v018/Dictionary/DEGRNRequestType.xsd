@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:statement="http://rosreestr.ru/services/v0.1/commons/directories/egrnrequesttype" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/egrnrequesttype" elementFormDefault="qualified">
+	<!--Дата создания Tue Aug 04 11:10:12 MSK 2016-->
+	<xs:simpleType name="DEGRNRequestType">
+		<xs:annotation>
+			<xs:documentation>Заявления и запросы ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="558630100000">
+				<xs:annotation>
+					<xs:documentation>Запрос на предоставление копии документа, на основании которого внесены сведения в ЕГРН или копий документов, помещенных в реестрвоое дело</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="558630200000">
+				<xs:annotation>
+					<xs:documentation>Запрос на предоставление сведений, содержащихся в ЕГРН, об объектах недвижимости и (или) их правообладателях</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="558630300000">
+				<xs:annotation>
+					<xs:documentation>Запрос на предоставление сведений, содержащихся в ЕГРН, посредством обеспечения доступа к ФГИС ЕГРН</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="558630400000">
+				<xs:annotation>
+					<xs:documentation>Запрос о предоставлении сведений, содержащихся в ЕГРН, о территории кадастрового квартала, о зоне с особыми условиями использования территорий, территориальной зоне, территории объекта культурного наследия, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, лесопарке, об особо охраняемой природной территории, особой экономической зоне, охотничьих угодьях, об административно-территориальном делении, о береговой линии (границе водного объекта)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="558630500000">
+				<xs:annotation>
+					<xs:documentation>Запрос на предоставление общедоступных сведений</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

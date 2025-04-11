@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:element name="extract_about_property_property_complex" type="ExtractAboutPropertyPropertyComplex">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (предприятие как имущественный комплекс)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractAboutPropertyPropertyComplex">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (предприятии как имущественном комплексе)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatementRealty">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="property_complex_record" type="PropertyComplexRecordParams">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте недвижимости - предприятии как имущественном комплексе</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_records" type="RightRecordsAboutProperty" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правах и правообладателях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="restrict_records" type="RestrictRecordsBaseParams" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ownerless_right_record" type="OwnerlessRightRecordOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о праве (бесхозяйное имущество)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="claim_records" type="ClaimRecordsOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правопритязаниях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="deal_records" type="DealRecordsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о сделках, совершенных без необходимого в силу закона согласия третьего лица, органа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="status" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Статус записи об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="qr" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>Ссылка для визуализации qr-кода</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

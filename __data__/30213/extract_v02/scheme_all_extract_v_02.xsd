@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="extract_cadastral_plan_territory_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_land_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_build_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_construction_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_under_construction_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_room_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_property_complex_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_unified_real_estate_complex_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_boundaries_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_zones_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_land_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_build_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_construction_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_under_construction_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_room_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_property_complex_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_unified_real_estate_complex_v02.xsd"/>
+	<xsd:include schemaLocation="extract_recognition_right_holder_incapacitated_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_contents_documents_title_v02.xsd"/>
+	<xsd:include schemaLocation="extract_cadastral_value_property_v02.xsd"/>
+	<xsd:include schemaLocation="extract_transfer_rights_property_v02.xsd"/>
+	<xsd:include schemaLocation="extract_rights_individ_available_real_estate_objects_v02.xsd"/>
+	<xsd:include schemaLocation="extract_date_statement_docs_v02.xsd"/>
+	<xsd:include schemaLocation="extract_info_persons_who_received_info_about_property_v02.xsd"/>
+	<xsd:include schemaLocation="extract_contract_participation_share_holdings_v02.xsd"/>
+	<xsd:include schemaLocation="extract_about_property_car_parking_space_v02.xsd"/>
+	<xsd:include schemaLocation="extract_base_params_car_parking_space_v02.xsd"/>
+	<xsd:include schemaLocation="extract_restrictions_of_subject.xsd"/>
+	<xsd:element name="scheme_all_extract">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Общая схема со всеми выписками (378 и 975)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="extract_base_params_unified_real_estate_complex" type="ExtractBaseParamsUnifiedRealEstateComplex">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (единый недвижимый комплекс)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_property_complex_record" type="ExtractBaseParamsPropertyComplexRecord">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (предприятие как имущественный комплекс)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_under_construction" type="ExtractBaseParamsUnderConstruction">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (объект незавершенного строительства)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_construction" type="ExtractBaseParamsConstruction">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (сооружение)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_room" type="ExtractBaseParamsRoom">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (помещение)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_car_parking_space" type="ExtractBaseParamsCarParkingSpace">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (машино-место)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_build" type="ExtractBaseParamsBuild">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (здание)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_base_params_land" type="ExtractBaseParamsLand">
+					<xsd:annotation>
+						<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (земельный участок)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_transfer_rights_property" type="ExtractTransferRightsProperty">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости о переходе прав на объект недвижимости</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_rights_individ_available_real_estate_objects" type="ExtractRightsIndividAvailableRealEstateObjects">
+					<xsd:annotation>
+						<xsd:documentation>Выписка о правах отдельного лица на имевшиеся (имеющиеся) у него объекты недвижимости</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_date_statement_docs" type="ExtractDateStatementDocs">
+					<xsd:annotation>
+						<xsd:documentation>Выписка о дате получения органом регистрации прав заявления о государственном кадастровом учете и (или) государственной регистрации прав и прилагаемых к нему документов</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_cadastral_plan_territory" type="ExtractCadastralPlanTerritory">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Кадастровый план территории</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_info_persons_who_received_info_about_property" type="ExtractInfoPersonsWhoReceivedInfoAboutProperty">
+					<xsd:annotation>
+						<xsd:documentation>Справка о лицах, получивших сведения об объекте недвижимости</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_land" type="ExtractAboutPropertyLand">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (земельный участок)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_build" type="ExtractAboutPropertyBuild">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (здание)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_room" type="ExtractAboutPropertyRoom">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (помещение)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_car_parking_space" type="ExtractAboutPropertyCarParkingSpace">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (машино-место)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_construction" type="ExtractAboutPropertyConstruction">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (сооружение)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_under_construction" type="ExtractAboutPropertyUnderConstruction">
+					<xsd:annotation>
+						<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости об объекте недвижимости (объект незавершенного строительства)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_property_complex" type="ExtractAboutPropertyPropertyComplex">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (предприятие как имущественный комплекс)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_property_unified_real_estate_complex" type="ExtractAboutPropertyUnifiedRealEstateComplex">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (единый недвижмый комлекс)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_recognition_right_holder_incapacitated" type="ExtractRecognitionRightHolderIncapacitated">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости о признании правообладателя недееспособным или ограниченно дееспособным</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_cadastral_value_property" type="ExtractCadastralValueProperty">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости о кадастровой стоимости объекта недвижимости</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_contents_documents_title" type="ExtractAboutContentsDocumentsTitle">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости о содержании правоустанавливающих документов</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_contract_participation_share_holdings" type="ExtractContractParticipationShareHoldings">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости о зарегистрированных договорах участия в долевом строительстве</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_boundary" type="ExtractAboutBoundary">
+					<xsd:annotation>
+						<xsd:documentation>Выписка о границе между субъектами Российской Федерации, границе муниципального образования, границе населенного пункта</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_about_zone" type="ExtractAboutZones">
+					<xsd:annotation>
+						<xsd:documentation>Выписка о территории кадастрового квартала, о зоне с особыми условиями использования территорий, территориальной зоне, публичном сервитуте, территории объекта культурного наследия, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, об особо охраняемой природной территории, особой экономической зоне, охотничьем угодье, о Байкальской природной территории и ее экологических зонах, об административно-территориальном делении, о береговой линии (границе водного объекта), проекте межевания территории</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="extract_restrictions_of_subject" type="ExtractRestrictionsOfSubject">
+					<xsd:annotation>
+						<xsd:documentation>Выписка из Единого государственного реестра недвижимости об установленных в пользу отдельного лица ограничениях прав и (или) обременениях объекта недвижимости</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

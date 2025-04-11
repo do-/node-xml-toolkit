@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:element name="extract_about_property_unified_real_estate_complex" type="ExtractAboutPropertyUnifiedRealEstateComplex">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (единый недвижимый комлекс)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractAboutPropertyUnifiedRealEstateComplex">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости об объекте недвижимости (единый недвижимый комлекс)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatementRealty">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="unified_real_estate_complex_record" type="UnifiedRealEstateComplexRecordAboutProperty">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте недвижимости - едином недвижимом комплексе</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="land_records" type="LandRecordsContoursLocation" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения границ земельного участка (земельных участков), в пределах которого (которых) расположен единый недвижимый комплекс</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="build_records" type="BuildRecordsContoursAdditional" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения здания (зданий), входящего (входящих) в состав единого недвижимого комплекса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="construction_records" type="ConstructionRecordsContoursAdditional" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения сооружения (сооружений), входящего (входящих) в состав единого недвижимого комплекса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_records" type="RightRecordsAboutProperty" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правах и правообладателях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="restrict_records" type="RestrictRecordsBaseParams" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ownerless_right_record" type="OwnerlessRightRecordOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о праве (бесхозяйное имущество)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="claim_records" type="ClaimRecordsOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правопритязаниях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="deal_records" type="DealRecordsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о сделках, совершенных без необходимого в силу закона согласия третьего лица, органа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="status" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Статус записи об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="qr" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>Ссылка для визуализации qr-кода</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="UnifiedRealEstateComplexRecordAboutProperty">
+		<xsd:annotation>
+			<xsd:documentation>Сведения об объекте недвижимости - едином недвижимом комплексе</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="record_info" type="RecordInfo">
+				<xsd:annotation>
+					<xsd:documentation>Даты государственной регистрации</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="object" type="ObjectCommonData">
+				<xsd:annotation>
+					<xsd:documentation>Общие сведения об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cad_links" type="CadLinksRealEstateAbout" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объектах (связь с кадастровыми номерами)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="params" type="ParamsComplex">
+				<xsd:annotation>
+					<xsd:documentation>Характеристики единого недвижимого комплекса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address_location" type="AddressLocationConstruction" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cad_works" type="CadWorks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о кадастровом инженере (кадастровых инженерах)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cost" type="Cost" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровая стоимость</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="special_notes" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Особые отметки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

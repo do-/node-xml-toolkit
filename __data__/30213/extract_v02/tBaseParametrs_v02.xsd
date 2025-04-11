@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tDict_v02.xsd"/>
+	<xsd:complexType name="BaseParameters">
+		<xsd:annotation>
+			<xsd:documentation>Основные характеристики</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="base_parameter" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Основная характеристика</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="area" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Площадь в кв. метрах</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="built_up_area" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Площадь застройки в квадратных метрах с округлением до 0,1 квадратного метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="extension" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Протяженность в метрах с округлением до 1 метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="depth" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Глубина в метрах с округлением до 0,1 метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="occurence_depth" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Глубина залегания в метрах с округлением до 0,1 метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="volume" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Объем в кубических метрах с округлением до 1 кубического метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="height" type="xsd:decimal" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Высота в метрах с округлением до 0,1 метра</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

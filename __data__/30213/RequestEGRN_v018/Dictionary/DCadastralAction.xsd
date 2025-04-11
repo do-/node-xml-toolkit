@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dCadastralAction="http://rosreestr.ru/services/v0.1/commons/directories/cadastralAction" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/cadastralAction" elementFormDefault="qualified">
+<!--Дата создания 2017/04/03 Номер справочника 102-->
+	<xs:simpleType name="DCadastralAction">
+<xs:annotation>
+			<xs:documentation>Типы действий по государственному кадастровому учету</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="111200001000">
+		<xs:annotation>
+			<xs:documentation>Постановка на учет</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200002000">
+		<xs:annotation>
+			<xs:documentation>Снятие с учета</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003010">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи c изменением площади земельного участка и (или) изменением описания местоположения его границ</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003020">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с уточнением местоположения объекта недвижимости на земельном участке</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003030">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с изменением основной характеристики объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003040">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с учетом части объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003050">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с исправлением реестровой ошибки</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003060">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с приведением вида объекта недвижимости в соответствие с требованиями действующего законодательства</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200003070">
+		<xs:annotation>
+			<xs:documentation>Учет изменений в связи с изменением характеристики объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111200004000">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений о ранее учтенном объекте</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

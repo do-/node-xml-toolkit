@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dRequestDocument="http://rosreestr.ru/services/v0.1/commons/directories/requestDocument" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/requestDocument" elementFormDefault="qualified">
+<!--Дата создания 2016/10/17 Номер справочника 105-->
+	<xs:simpleType name="DRequestDocument">
+<xs:annotation>
+			<xs:documentation>Типы запрашиваемых документов</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="561010001000">
+		<xs:annotation>
+			<xs:documentation>Заявление о государственном кадастровом учете и (или) государственной регистрации прав</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010002000">
+		<xs:annotation>
+			<xs:documentation>Межевой план</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010003000">
+		<xs:annotation>
+			<xs:documentation>Технический план</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010004000">
+		<xs:annotation>
+			<xs:documentation>Акт обследования,подтверждающий прекращение существования объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010005000">
+		<xs:annotation>
+			<xs:documentation>Разрешение на ввод объекта в эксплуатацию</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010006000">
+		<xs:annotation>
+			<xs:documentation>Документ, подтверждающий в соответствии с федеральным законом принадлежность земельного участка к определенной категории земель</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010007000">
+		<xs:annotation>
+			<xs:documentation>Документ, подтверждающий в соответствии с федеральным законом установленное разрешенное использование земельного участка, здания, сооружения, помещения</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010008000">
+		<xs:annotation>
+			<xs:documentation>Документ, подтверждающий изменение назначения здания или помещения</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010009000">
+		<xs:annotation>
+			<xs:documentation>Документ, содержащий сведения об адресе объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010010000">
+		<xs:annotation>
+			<xs:documentation>Документ, содержащий сведения о кадастровой стоимости объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010011000">
+		<xs:annotation>
+			<xs:documentation>Документ, подтверждающий разрешение земельного спора о согласовании местоположения границ земельного участка в установленном земельным законодательством порядке</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010012000">
+		<xs:annotation>
+			<xs:documentation>Иной документ, на основании которого сведения об объекте недвижимости внесены в Единый государственный реестр недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010013000">
+		<xs:annotation>
+			<xs:documentation>Иной документ, помещенный в реестровое дело</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010014000">
+		<xs:annotation>
+			<xs:documentation>Договор или иной документ, выражающий содержание односторонней сделки, совершенной в простой письменной форме</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010015000">
+		<xs:annotation>
+			<xs:documentation>Иной правоустанавливающий документ</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="561010016000">
+		<xs:annotation>
+			<xs:documentation>Документ, на основании которого сведения о зоне, территории или границах внесены в Единый государственный реестр недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

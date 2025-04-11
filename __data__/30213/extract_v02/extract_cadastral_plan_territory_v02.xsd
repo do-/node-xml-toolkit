@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:element name="extract_cadastral_plan_territory" type="ExtractCadastralPlanTerritory">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Кадастровый план территории</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractCadastralPlanTerritory">
+		<xsd:annotation>
+			<xsd:documentation>Кадастровый план территории</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatement">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты кадастрового плана территории</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cadastral_blocks" type="CadastralBlocks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровые кварталы</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="CadastralBlocks">
+		<xsd:annotation>
+			<xsd:documentation>Кадастровые кварталы</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="cadastral_block" type="CadastralBlock" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровый квартал</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CadastralBlock">
+		<xsd:annotation>
+			<xsd:documentation>Кадастровый квартал</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="cadastral_number" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Номер кадастрового квартала</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="area_quarter" type="AreaQuarter">
+				<xsd:annotation>
+					<xsd:documentation>Площадь кадастрового квартала</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="record_data" type="RecordData" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объектах недвижимости в кадастровом квартале</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spatial_data" type="SpatialDataType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение квартала</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="subject_boundaries" type="SubjectBoundariesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о границе между субъектами Российской Федерации</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="municipal_boundaries" type="MunicipalBoundariesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о границах муниципальных образований</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inhabited_locality_boundaries" type="InhabitedLocalityBoundariesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о границах населённых пунктов</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="coastline_boundaries" type="CoastlineBoundariesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о береговых линиях (границах водных объектов)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="zones_and_territories_boundaries" type="ZonesAndTerritoriesBoundariesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о зонах с особыми условиями использования территорий, территориальных зонах, территориях объектов культурного наследия, территориях опережающего социально-экономического развития, зонах территориального развития в Российской Федерации, игорных зонах, лесничествах, лесопарковых зеленых поясах, особо охраняемых природных территориях, особых экономических зонах, охотничьих угодьях, Байкальской природной территории и ее экологических зонах</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="surveying_project" type="SurveyingProjectType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о земельных участках, подлежащих образованию в соответствии с утвержденным проектом межевания территории</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="territory_reserve" type="TerritoryReserveType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о территориях, в отношении которых принято решение о резервировании земель для государственных или муниципальных нужд</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="public_easement" type="PublicEasementType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о границах публичных сервитутов</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

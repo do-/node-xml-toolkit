@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/requestType" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 108 -->
+    <xs:simpleType name="DRequestType">
+        <xs:annotation>
+            <xs:documentation>Типы поступивших обращений</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="111300001000">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый учет и (или) регистрация права</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300002000">
+                <xs:annotation>
+                    <xs:documentation>Устранение препятствий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300003000">
+                <xs:annotation>
+                    <xs:documentation>Предоставление сведений, содержащихся в Едином государственном реестре недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300004000">
+                <xs:annotation>
+                    <xs:documentation>Межведомственное информационное взаимодействие</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300005000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений в реестр границ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300006000">
+                <xs:annotation>
+                    <xs:documentation>Приостановка / прекращение обработки обращения</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300007000">
+                <xs:annotation>
+                    <xs:documentation>Исправление технической ошибки/ внесение сведений в ЕГРН, по заявлению</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300008000">
+                <xs:annotation>
+                    <xs:documentation>Исправление технической ошибки, содержащейся в сведениях ЕГРН, по решению Регистратора</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300009000">
+                <xs:annotation>
+                    <xs:documentation>Возобновление государственной регистрации, ранее приостановленной по заявлению правообладателя</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300010000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений в реестр границ по инициативе заинтересованного лица</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300011000">
+                <xs:annotation>
+                    <xs:documentation>Предоставление сведений, содержащихся в ЕГРН об объектах реестра границ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300012000">
+                <xs:annotation>
+                    <xs:documentation>Государственная регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300013000">
+                <xs:annotation>
+                    <xs:documentation>Государственная регистрация законного владельца закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300014000">
+                <xs:annotation>
+                    <xs:documentation>Выдача закладной</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300015000">
+                <xs:annotation>
+                    <xs:documentation>Принятие объекта недвижимого имущества вновь во владение, пользование и распоряжение (в собственность)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300016000">
+                <xs:annotation>
+                    <xs:documentation>Обработка документов, поступающих без заявлений</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300017000">
+                <xs:annotation>
+                    <xs:documentation>Обработка заявления о том, что собственник ОН не совершал действий, направленные на отказ от права собственности</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300018000">
+                <xs:annotation>
+                    <xs:documentation>Предоставление сведений, содержащихся в ЕГРН, в виде кадастрового плана территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300019000">
+                <xs:annotation>
+                    <xs:documentation>Исправление технической ошибки в сведениях реестра границ в ЕГРН по заявлению</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300020000">
+                <xs:annotation>
+                    <xs:documentation>Исправление технической ошибки в сведениях реестра границ в ЕГРН по инициативе Регистратора</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300023000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений об отсутствии у застройщика права привлекать денежные средства граждан, являющихся участниками долевого строительства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300024000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений о ранее учтенных объектах без заявления</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300025000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений о приостановлении осуществления застройщиком деятельности, связанной с привлечением денежных средств участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300026000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений о ликвидации лица, привлекающего денежные средства участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300027000">
+                <xs:annotation>
+                    <xs:documentation>Обработка заявления о возврате излишне уплаченных денежных средств</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300028000">
+                <xs:annotation>
+                    <xs:documentation>Исправление реестровой ошибки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300029000">
+                <xs:annotation>
+                    <xs:documentation>Внесение сведений, полученных в результате выполнения комплексных кадастровых работ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300030000">
+                <xs:annotation>
+                    <xs:documentation>Предоставление перечня объектов недвижимости, подлежащих государственной кадастровой оценке</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300031000">
+                <xs:annotation>
+                    <xs:documentation>Определение кадастровой стоимости объектов недвижимости после утверждения результатов государственной кадастровой оценки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111300032000">
+                <xs:annotation>
+                    <xs:documentation>Обработка решения суда о необходимости проведения УРД, по которому ранее было принято решение об отказе в государственном кадастровом учете и (или) государственной регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

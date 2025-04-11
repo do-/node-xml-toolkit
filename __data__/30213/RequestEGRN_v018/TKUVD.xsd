@@ -1,0 +1,1526 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://rosreestr.ru/services/v0.18/KUVD"
+           xmlns:tns="http://rosreestr.ru/services/v0.18/KUVD"
+           xmlns:com="http://rosreestr.ru/services/v0.1/commons/Commons"
+           xmlns:pers="http://rosreestr.ru/services/v0.1/commons/Subjects"
+           xmlns:stCom="http://rosreestr.ru/services/v0.1/TStatementCommons"
+           xmlns:dReM="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+           vc:minVersion="1.1" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:docs="http://rosreestr.ru/services/v0.1/commons/Documents">
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Commons"
+               schemaLocation="Commons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Subjects"
+               schemaLocation="TSubject.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/TStatementCommons"
+               schemaLocation="TStatementCommons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Documents"
+               schemaLocation="TDocument.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+               schemaLocation="Dictionary/DReceivingMethod.xsd"/>
+    <xs:notation name="KUVDBook" public="">
+        <xs:annotation>
+            <xs:documentation>Книга Учета Входящих Документов</xs:documentation>
+        </xs:annotation>
+    </xs:notation>
+    <xs:complexType name="TKUVDBook">
+        <xs:annotation>
+            <xs:documentation>Книга учета входящих документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование книги учета документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="number">
+                <xs:annotation>
+                    <xs:documentation>Порядковый номер книги учета документов, ведущийся органом регистрации прав</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{3}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="year">
+                <xs:annotation>
+                    <xs:documentation>Год, в котором осуществляется ведение книги учета документов</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="regRightAuthorityName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование органа регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regRightAuthorityCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код органа регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="status" type="tns:DBookStatus">
+                <xs:annotation>
+                    <xs:documentation>Статус КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="finalCounter" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Количество записей в КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateOpen" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата и время открытия КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dateClose" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата и время закрытия КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="inheritedParams" type="tns:TKUVDBookInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Параметры КУВД унаследованных систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="note" type="tns:TKUVDNote">
+                <xs:annotation>
+                    <xs:documentation>Комментарии к книге</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="bookNmbrUis" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер КУВД в УИС</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:notation name="KUVDBookHelpers" public=""/>
+    <xs:complexType name="TKUVDBookInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Параметры КУВД унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="expertStrt" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем открыта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="expertStop" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем закрыта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="recordStrt" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер первой записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="recordStop" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер последней записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="forPackets" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Для пакетов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="statusHed" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Статус ХЭД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тер. принадлежность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Принадлежность: Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Последнее обновление: Дата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Последнее обновление: Оператор</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updOwner" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Последнее обновление: Подразделение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="insDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Внесение записи: Дата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="insExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Внесение записи: Оператор</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sourceRec" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Источник поступления записей в книге</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="commentary" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Комментарий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sourceType" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Тип УИС</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:notation name="KUVDRecord" public=""/>
+    <xs:complexType name="TBookRecord">
+        <xs:sequence>
+            <xs:element name="bookNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер книги</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="number" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Порядковый номер записи в книги, начиная с 1 с шагом 1</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="receiveDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата приема заявления с точностью до минуты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="moscowReceiveDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата приема заявления с точностью до минуты по времени Москвы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="author" type="tns:TAuthorSubject">
+                <xs:annotation>
+                    <xs:documentation>Данные автора изменений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regRightAuthorityCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код подразделения по справочнику ЕСТО </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regRightAuthorityName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование подразделения по справочнику ЕСТО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="notes" type="tns:TKUVDNote">
+                <xs:annotation>
+                    <xs:documentation>Дополнительные сведения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id" type="xs:token" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TCloseBookRecord">
+        <xs:complexContent>
+            <xs:extension base="tns:TBookRecord">
+                <xs:sequence>
+                    <xs:element name="closeDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата закрытия книги</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOpenBookRecord">
+        <xs:complexContent>
+            <xs:extension base="tns:TBookRecord">
+                <xs:sequence>
+                    <xs:element name="openDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата открытия книги</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecord">
+        <xs:annotation>
+            <xs:documentation>Запись КУВД</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TBookRecord">
+                <xs:sequence>
+                    <xs:element name="actionCode" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Код УРД (справоник ЕС УНСИ)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="action" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Цель запроса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="1" name="receivingMethodCode"
+                                type="dReM:DReceivingMethod">
+                        <xs:annotation>
+                            <xs:documentation>Способ получения заявления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="details" maxOccurs="unbounded" type="tns:TKUVDStatementDetails"/>
+                    <xs:element default="false" name="hasReceipt" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Признак выдачи расписки</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="resultInfo" minOccurs="0" type="tns:TKUVDRecordResultInfo">
+                        <xs:annotation>
+                            <xs:documentation>Результат</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="editedData"
+                                type="tns:TKUVDRecordEditData">
+                        <xs:annotation>
+                            <xs:documentation>Записи истории изменения записи КУВД</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="inheritedParams"
+                                type="tns:TKUVDRecordInheritedParams">
+                        <xs:annotation>
+                            <xs:documentation>Атрибуты записи КУВД наследуемых систем</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="KUVDRecordDocuments" public=""/>
+    <xs:complexType name="TKUVDDocument">
+        <xs:annotation>
+            <xs:documentation>Документ из записи КУВД</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="documentTypes" type="tns:TKUVDDocTypes">
+                <xs:annotation>
+                    <xs:documentation>Типы документа по справочникам ЕС УНСИ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="name" type="docs:SDocName"/>
+            <xs:element minOccurs="0" name="number" type="docs:SDocNumber">
+                <xs:annotation>
+                    <xs:documentation>Номер документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="issueDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="attachments" type="docs:TAttachment" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Описание приложенного(-ых) файла(-ов)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="notes" type="com:TNote">
+                <xs:annotation>
+                    <xs:documentation>Особые отметки, со спецификацией типа отметки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="series" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Серия документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="issuer" type="docs:TIssuerInfo">
+                <xs:annotation>
+                    <xs:documentation>Организация, выдавшая документ, или автор документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="durationStart" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Срок действия C</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="durationStop" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Срок действия ПО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="notaryInfo" type="docs:TNotaryInfo">
+                <xs:annotation>
+                    <xs:documentation>Реквизиты о нотариальном заверении документа
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="inheritedParams" type="tns:TKUVDDocInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Атрибуты Документа из записи КУВД наследуемых систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDDocTypes">
+        <xs:annotation>
+            <xs:documentation>Тип документа по справочникам ЕС УНСИ с уточнением наименования</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="docs:DocumentTypes">
+                <xs:sequence>
+                    <xs:element name="documentTypeName" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKUVDStatementDetails">
+        <xs:annotation>
+            <xs:documentation>Детали заявления</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="documentsQuantity" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Общее количество принятых документов (включая заявление)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="pageQuantity" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Количество листов в принятых документах</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="subjects" type="pers:TBasicStatementSubject" maxOccurs="unbounded"/>
+            <xs:element name="objects" type="stCom:TStatementObjects"/>
+            <xs:element name="documents" type="tns:TKUVDSomeDocument" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Набор документов прикладываемых к Записи КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="subjectsInheritedParams"
+                        type="tns:TKUVDRecordSubjectsInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Данные по субъектам из унаследованных систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="representativesIneritedParams"
+                        type="tns:TKUVDRecordRepresentativeInheritedParams"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="objectsInheritedParams"
+                        type="tns:TKUVDRecordObjectInheritedParams"/>
+        </xs:sequence>
+        <xs:attribute name="statementID" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Номер заявления</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TKUVDSomeDocument">
+        <xs:annotation>
+            <xs:documentation>Набор документов прикладываемых к Записи КУВД</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="document" type="tns:TKUVDDocument">
+                <xs:annotation>
+                    <xs:documentation>Принятые документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestedDocument" type="tns:TKUVDDocument">
+                <xs:annotation>
+                    <xs:documentation>Запрашиваемые документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="outDocument" type="tns:TKUVDDocument">
+                <xs:annotation>
+                    <xs:documentation>Исходящие документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentDocument" type="tns:TKUVDPaymentDocument">
+                <xs:annotation>
+                    <xs:documentation>Оплата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="_id" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Номер заявления</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TKUVDPaymentDocument">
+        <xs:annotation>
+            <xs:documentation>Оплата</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="docs:TPaymentDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="inheritedParams"
+                                type="tns:TKUVDPaymentDocumentInheritedParams"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKUVDPaymentDocumentInheritedParams">
+        <xs:sequence>
+            <xs:element name="paymentInvoice" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>№ счет-фактуры</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentBack" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сумма возврата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentPurpose" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Назначение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentOkato" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код ОКАТО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ks" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>К\С</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="payerType" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Тип плательщика</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentBase" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Основание платежа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentConfirm" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Подтверждение платежа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="recievePaymentDate" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата поступления сведений об оплате гос.пошлины</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="needConfirmPayment" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Необходимость подтверждения уплаты гос. Пошлины</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="representation" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код представительства, к которому относится запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentDirection" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Направление платежа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentCode" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код платежа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paymentStatus" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Состояние оплаты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="comment" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Примечание</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecordResultInfo">
+        <xs:annotation>
+            <xs:documentation>Данные результата</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="result" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Результат</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="author" type="tns:TAuthorSubject">
+                <xs:annotation>
+                    <xs:documentation>Автор вносимых сведений о результате</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="receiveDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата и время внесения данных о результате с точностью до минуты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="moscowReceiveDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата и время внесения данных о результате с точностью до минуты по Москве</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="decisionDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата вынесения решения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="moscowDecisionDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата вынесения решения по Москве</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="decisionNumber" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Рег. номер решения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="kuaNumber" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Номер в КУА </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element name="notificationType" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Тип оповещения (справочник ЕС УНСИ)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="notificationNumber" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Рег. номер оповещения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="notificationDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата регистрации оповещения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="moscowNotificationDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата регистрации оповещения по Москве</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+            <xs:element minOccurs="0" name="inheritedParams" type="tns:TResultInfoInheritedParams"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecordEditData">
+        <xs:annotation>
+            <xs:documentation>Запись истории изменения записи КУВД</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="authorSubject" type="tns:TAuthorSubject">
+                <xs:annotation>
+                    <xs:documentation>Автор вносимых сведений в КУВД</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="editedData" type="tns:TEditedData">
+                <xs:annotation>
+                    <xs:documentation>Изменяемые данные</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор записи об изменении</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TEditedData">
+        <xs:annotation>
+            <xs:documentation>Изменяемые данные</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="path" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Путь к изменяемому элементу (см. документацию)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="oldValue" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Старое значение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="newValue" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Новое значение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPetition">
+        <xs:annotation>
+            <xs:documentation>Ходатайства</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="secondSidesDesc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства: Краткое описание второй стороны по сделке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fastDay" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства: Сокращенный период: Дней</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fastReason" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства: Сокращенный период: Причина</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="delayDay" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства: Приостановка: Дней</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="delayReason" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства: Приостановка: Причина</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRequestInfo">
+        <xs:annotation>
+            <xs:documentation>Заявка</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="clsDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Заявка/Дата завершения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestUpd" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Заявка/Изменение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestDescr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Заявка/Изменение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestDescrDoc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Заявка/Запись, содержащаяся в документе</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:notation name="KUVDRecordInherited" public=""/>
+    <xs:complexType name="TKUVDRecordObjectInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные объекта из унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="сommentary" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Описание объекта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="purposeName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Назначение объекта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="objectID" type="xs:token">
+            <xs:annotation>
+                <xs:documentation>Идентификатор объекта недвижимости</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TKUVDDocInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Атрибуты Документа из записи КУВД наследуемых систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="receiverName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кому выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regNum" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regOrgan" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Орган регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="descr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Описание документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="methodIssuance" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Способ выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="form" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Форма предоставления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="status" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Статус</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="expert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Сформировал</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="certifying" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Удостоверил</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="mail" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Почтовое отправление</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ordr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Порядковый номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код представительства, к которому относится запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="smevId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>GUID документов, поступивших в систему извне</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecordInheritedParams">
+        <xs:sequence>
+            <xs:element name="docQtty" minOccurs="0" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docFactQtty" minOccurs="0" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Общее количество принятых документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docPages" minOccurs="0" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Листов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docCopyQtty" minOccurs="0" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Копии документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docCopyPages" minOccurs="0" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Листов копий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docText" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Цель обращения в орган регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="authorName" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>ФИО автора</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dprtName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код представительства, к которому относится запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regPeriodName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Срок регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="planDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Планируемая дата выдачи на момент принятия документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="strtDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата подтверждения принятия обязательств (Дата подтвержд.)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="petition" type="tns:TPetition">
+                <xs:annotation>
+                    <xs:documentation>Ходатайства</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sourceName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип поступления записиу</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sourceId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Источник поступления заявления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="deferredPayment" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отложенный платеж</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="requestInfo" type="tns:TRequestInfo">
+                <xs:annotation>
+                    <xs:documentation>Заявка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="docDesc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Описание документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regAmount" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Количество регистрационных действий по заявлению</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="commentary" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Примечание</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="addInfo" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Дополнительная информация</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="guDecisionDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата принятия решения о кадастровом учете ГКН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="guDecisionComment" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Комментарий к принятому решению о кадастровом учете ГКН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="waitDeliveryFin" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Необходимость подтверждения уплаты государственной пошлины</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="payDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата поступления сведений об оплате госпошлины</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sendingReceiptAddress" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Адрес для отправки расписки в получении документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sendingType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип доставки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sendingAddress" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Адрес доставки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="organization" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sendingAddressStop" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип доставки (Информация о доставке копии решения о приостановлении/отказе)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="organizationStop" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Адрес доставки (Информация о доставке копии решения о приостановлении/отказе)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="registered" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Зарегистрировано</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата изменения записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кто изменил</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="insExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кто подтвердил внесение информации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="additionalRecords" type="tns:TKuvdRelatedRecord" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Дополнительно довнесены документы к записям</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="mainRecords" type="tns:TKuvdRelatedRecord" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>К данной записи довнесены документы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="refusalReason" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Причина отказа/приостановления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="refusalReasonDesc" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Описание причины отказа/приостановления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="requestName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип заявления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="insDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="parameters" type="tns:TKuvdRecordParams" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Дополнительные характеристики</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ods" type="tns:TKuvdRecordOds" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Долевое строительство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rightOld" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Ранее возникшее право</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="actionName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сведения для сбора статистики</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="transferName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Тип доставки</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="decisions" minOccurs="0" maxOccurs="unbounded" type="tns:TKUVDRecordResultInfo">
+                <xs:annotation>
+                    <xs:documentation>Принятые решения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKuvdRecordParams">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0"/>
+            <xs:element name="objectId" type="xs:string" minOccurs="0"/>
+            <xs:element name="value" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKuvdRecordOds">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0"/>
+            <xs:element name="objectId" type="xs:string" minOccurs="0"/>
+            <xs:element name="roomName" type="xs:string" minOccurs="0"/>
+            <xs:element name="roomArea" type="xs:string" minOccurs="0"/>
+            <xs:element name="roomNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="floor" type="xs:string" minOccurs="0"/>
+            <xs:element name="locationDescription" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKuvdRelatedRecord">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="bookNmbr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>№ книги</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="regnum" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>№ записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="actionName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Цель обращения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="egrnId" type="xs:string" />
+            <xs:element minOccurs="0" name="bookEgrnId" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TResultInfoInheritedParams">
+        <xs:sequence>
+            <xs:element name="authorName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ФИО автора</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="decAct" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Признак актуальности решения </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="datePlan" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Плановая дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код представительства, к которому относится запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Владелец: Код</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerLink" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Владелец: УНСИ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ownerName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Владелец: Наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="insExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ссылка на оператора, который внес запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата изменения записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="updExpert" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Ссылка на оператора, который изменил запись</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="objId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Id ОН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="active" minOccurs="0" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Флаг активности решения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecordSubjectsInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные по субъектам из унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="personInheritedParams"
+                        type="tns:TKUVDPersonInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Данные Физ Лица из унаследованных систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="organizationInheritedParams"
+                        type="tns:TKUVDOrgInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Данные Юр. Лица из унаследованных систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="ohterSubjectInheritedParams"
+                        type="tns:TKUVDOtherSubjectInheritedParams">
+                <xs:annotation>
+                    <xs:documentation>Данные остальных типов субъектов из унаследованных систем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="crtOut" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка о выдаче документа о регистрации: Д-свидетельство, В-выписка, Н-не выдавать</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="suspendSend" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Признак ходатайства о необходимости почтового уведомления при наличии оснований для приостановления</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="refuseSend" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Признак ходатайства о необходимости почтового уведомления при наличии оснований для отказа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dopEmail" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Продублировать на адрес эл. Почты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="declBadDocs" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка о том, что заявитель предупрежден о несоответствии приложенных к заявлению документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="declNotReceipt" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка об отказе заявителя получить расписку</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="declStop" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка о том, что заявитель предупрежден о возможном приостановлении, отказе в гос. Регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="declHypothec" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отметка о том, что заявитель предупрежден о регистрации ипотеки, возникшей на основании закона</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="transferName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Способ получения документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="phoneNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Телефон</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="subjectID" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор субъекта заявления</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TKUVDRecordRepresentativeInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные по представителям из унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nameShrt" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Краткое наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="okato" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>ОКАТО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="declarantTypeName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип связи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="agentTypeName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Качество представителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dateStart" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Период действия представительства: Начало</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dateEnd" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Период действия представительства: Окончание</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="base" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Основание</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="firstAgent" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Первоначальное представительство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="subjType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип субъекта правоотношений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="opf" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Организационно-правовая форма</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="subjectID" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор представителя </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TKUVDPersonInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные Физ Лица из унаследованных систем
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="married" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>В браке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="position" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Должность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKUVDOrgInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные Юр. Лица из унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TKUVDOtherSubjectInheritedParams">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="okpo" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>ОКПО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="opf" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>ОПФ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="sppType" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Тип субъекта публичного права</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="idDocumentId" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Регистрационный документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKUVDOtherSubjectInheritedParams">
+        <xs:annotation>
+            <xs:documentation>Данные остальных типов субъектов из унаследованных систем</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="nameShrt" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Краткое наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:notation name="KUARecord" public=""/>
+    <xs:complexType name="TKUARecord">
+        <xs:annotation>
+            <xs:documentation>Тут не ясно, кто есть ОН, субъект (их вообще 2)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TBookRecord">
+                <xs:sequence>
+                    <xs:element name="rightRestrictionDocument">
+                        <xs:annotation>
+                            <xs:documentation>Реквизиты документа об ограничении прав</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="name" type="xs:string">
+                                    <xs:annotation>
+                                        <xs:documentation>Наименование документа об ограничении прав (справочник ЕС УНСИ)</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="number" type="xs:string">
+                                    <xs:annotation>
+                                        <xs:documentation>Рег. номер</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="date" type="xs:date">
+                                    <xs:annotation>
+                                        <xs:documentation>Дата документа</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rightRestrictionAuthorityName" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование органа, принявшего акт об ограничении прав, направившего другой документ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="rightRestrictionContent" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Содержание ограничения права, обременения ОН либо при поступлении иного документа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="rightRestrictionPerson" type="pers:TStrictPerson">
+                        <xs:annotation>
+                            <xs:documentation>Сведения о лице, права которого ограничиваются</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <!--xs:element name="Объект или субъект права!!!!!!!"/-->
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKUVDNote">
+        <xs:complexContent>
+            <xs:extension base="com:TNote">
+                <xs:sequence>
+                    <xs:element name="author" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Автор вносимых сведений</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="receiveDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата и время внесения сведений с точностью до минуты</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="moscowReceiveDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Дата и время внесения сведений с точностью до минуты по Москве</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAuthorSubject">
+        <xs:annotation>
+            <xs:documentation>Автор вносимых сведений в КУВД</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="createDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата внесения изменений с точностью до минуты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:element default="PPOZ" name="systemName" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Наименование ситсемы, вносящей запись</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="authorPerson" type="tns:TAuthorPerson">
+                    <xs:annotation>
+                        <xs:documentation>Должностное лицо, создавшее запись</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAuthorPerson">
+        <xs:annotation>
+            <xs:documentation>Должностное лицо, создавшее запись</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="role" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Подразделение автора изменений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="login" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Логин пользователя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="department" type="tns:TDepartament">
+                <xs:annotation>
+                    <xs:documentation>Терр. орган</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TDepartament">
+        <xs:annotation>
+            <xs:documentation>Подразделение автора изменений</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="esto" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Код ЕСТО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="region" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Регион</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shortTitle" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Краткое наименование подразделения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="DBookStatus">
+        <xs:annotation>
+            <xs:documentation>Статус книги</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="active"/>
+            <xs:enumeration value="close"/>
+            <xs:enumeration value="archive"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="kuvdBook" type="tns:TKUVDBook"/>
+    <xs:element name="kuvdRecord" type="tns:TKUVDRecord"/>
+</xs:schema>

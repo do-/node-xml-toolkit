@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dRight="http://rosreestr.ru/services/v0.1/commons/directories/right" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/right" elementFormDefault="qualified">
+<!--Дата создания 2016/12/07 Номер справочника 34-->
+	<xs:simpleType name="DRight">
+<xs:annotation>
+			<xs:documentation>Права</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="001001000000">
+		<xs:annotation>
+			<xs:documentation>Собственность</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001002000000">
+		<xs:annotation>
+			<xs:documentation>Общая долевая собственность</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001003000000">
+		<xs:annotation>
+			<xs:documentation>Общая совместная собственность</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001004000000">
+		<xs:annotation>
+			<xs:documentation>Хозяйственное ведение</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001005000000">
+		<xs:annotation>
+			<xs:documentation>Оперативное управление</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001006000000">
+		<xs:annotation>
+			<xs:documentation>Пожизненное наследуемое владение</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001007000000">
+		<xs:annotation>
+			<xs:documentation>Постоянное (бессрочное) пользование</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001008000000">
+		<xs:annotation>
+			<xs:documentation>Сервитут (право)</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001009000000">
+		<xs:annotation>
+			<xs:documentation>Право владения, пользования и распоряжения имуществом Банка России</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="001099000000">
+		<xs:annotation>
+			<xs:documentation>Иные права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

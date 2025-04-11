@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dKindInfo="http://rosreestr.ru/services/v0.1/commons/directories/kindInfo" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/kindInfo" elementFormDefault="qualified">
+<!--Дата создания 2017/03/21 Номер справочника 132-->
+	<xs:simpleType name="DKindInfo">
+<xs:annotation>
+			<xs:documentation>Справочник видов сведений, передаваемых в порядке межведомственного информационного взаимодействия</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="01">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении разрешенного использования земельного участка</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="02">
+		<xs:annotation>
+			<xs:documentation>Сведения об установленной категории земель</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="03">
+		<xs:annotation>
+			<xs:documentation>Сведения о переводе жилого помещения в нежилое помещение, нежилого помещения в жилое помещение</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="04">
+		<xs:annotation>
+			<xs:documentation>Сведения о результатах проведения государственного земельного надзора (о нарушении земельного законодательства Российской Федерации)</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="05">
+		<xs:annotation>
+			<xs:documentation>Сведения об утверждении результатов государственной кадастровой оценки объектов недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="06">
+		<xs:annotation>
+			<xs:documentation>Сведения о внесении информации в государственный лесной реестр либо изменении информации, содержащейся в государственном лесном реестре, в отношении лесного участка, которому присвоен кадастровый (условный) номер</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="07">
+		<xs:annotation>
+			<xs:documentation>Сведения о включении объекта недвижимости в единый государственный реестр объектов культурного наследия (памятников истории и культуры) народов Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="08">
+		<xs:annotation>
+			<xs:documentation>Сведения об отнесении объекта недвижимости к выявленным объектам культурного наследия, подлежащим государственной охране</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="09">
+		<xs:annotation>
+			<xs:documentation>Сведения об отказе включить выявленный объект культурного наследия в единый государственный реестр объектов культурного наследия (памятников истории и культуры) народов Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="10">
+		<xs:annotation>
+			<xs:documentation>Сведения об исключении объекта культурного наследия из единого государственного реестра объектов культурного наследия (памятников истории и культуры) народов Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="11">
+		<xs:annotation>
+			<xs:documentation>Сведения об изменении физическим лицом гражданства, адреса постоянного места жительства, документа, удостоверяющего личность</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="12">
+		<xs:annotation>
+			<xs:documentation>Сведения о государственной регистрации смерти</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="13">
+		<xs:annotation>
+			<xs:documentation>Сведения о проживающих в жилом помещении членах семьи собственника данного жилого помещения, находящихся под опекой или попечительством, либо несовершеннолетних членах семьи собственника данного жилого помещения, оставшихся без попечения родителей</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="14">
+		<xs:annotation>
+			<xs:documentation>Сведения о признании гражданина ограниченным в дееспособности или признанным недееспособным</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="15">
+		<xs:annotation>
+			<xs:documentation>Сведения о бесхозяйном недвижимом имуществе – об объекте недвижимого имущества, не имеющего собственника или собственник которого неизвестен, или от права собственности на который собственник (собственники) отказался</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="16">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении прохождения Государственной границы Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="17">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ между субъектами Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="18">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ муниципальных образований либо о преобразовании муниципальных образований</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="19">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ населенного пункта</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="20">
+		<xs:annotation>
+			<xs:documentation>Сведения об утверждении проекта межевания территории</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="21">
+		<xs:annotation>
+			<xs:documentation>Сведения о создании особой экономической зоны, об увеличении площади особой экономической зоны, о досрочном прекращении существования особой экономической зоны</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="22">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ зон территориального развития в Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="23">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ территорий опережающего социально-экономического развития</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="24">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ игорной зоны</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="25">
+		<xs:annotation>
+			<xs:documentation>Сведения об утверждении или изменении границ территории объекта культурного наследия и зон охраны объектов культурного наследия</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="26">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ зон с особыми условиями использования территорий или о прекращении существования зоны с особыми условиями использования территорий</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="27">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении, изменении границ территориальных зон</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="28">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ особо охраняемой природной территории</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="29">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении или изменении границ охотничьих угодий</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="30">
+		<xs:annotation>
+			<xs:documentation>Сведения об установлении (изменении) границ лесничеств, лесопарков</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="31">
+		<xs:annotation>
+			<xs:documentation>Сведения о внесении либо изменении сведений о береговой линии (границе водного объекта)</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="32">
+		<xs:annotation>
+			<xs:documentation>Сведения о наложении ареста, о запрете совершать определенные действия с недвижимым имуществом или об избрании в качестве меры пресечения залога</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://rosreestr.ru/services/v0.12/TRequestDocuments"
+	xmlns:docs="http://rosreestr.ru/services/v0.1/commons/Documents"
+	targetNamespace="http://rosreestr.ru/services/v0.12/TRequestDocuments"
+	elementFormDefault="qualified">
+	<xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Documents"
+		schemaLocation="TDocument.xsd"/>
+	<xs:element name="request" type="tns:TRequestDocuments">
+		<xs:annotation>
+			<xs:documentation>Техническое описание пакета документов с образами и с файлами электронных документов</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TRequestDocuments">
+		<xs:annotation>
+			<xs:documentation>Техническое описание пакета электронных документов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="requestType" type="xs:string" fixed="sendDocuments">
+				<xs:annotation>
+					<xs:documentation>Прием пакета документов с образами и с файлами электронных документов.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="statementRef" type="tns:TStatementRef" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Коллекция файлов, относящихся к заявлению с идентификатором</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TFileInfo">
+		<xs:annotation>
+			<xs:documentation>Описание прикладываемых файлов с подписями или подписей отдельно</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="fileDesc" type="docs:TFileDesc">
+				<xs:annotation>
+					<xs:documentation>Описание приложенного файла (с подписями или без)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fileSigDesc" type="tns:TFileSigDesc">
+				<xs:annotation>
+					<xs:documentation>Описание приложенной подписи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TFileSigDesc">
+		<xs:annotation>
+			<xs:documentation>Описание файла</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="signature" type="docs:TAttachmentFile"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TStatementRef">
+		<xs:annotation>
+			<xs:documentation>Коллекция файлов, относящихся к заявлению с идентификатором (Attributes.id)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fileSigDesc" type="tns:TFileSigDesc" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Приложенные описания подписей заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="documentRef" type="tns:TDocumentRef" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Коллекция файлов, относящихся к документу с идентификатором</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор заявления (см. схему TStatement.xsd TStatement.Attributes._id), к которому относятся вложенные файлы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TDocumentRef">
+		<xs:annotation>
+			<xs:documentation>Коллекция файлов, относящихся к документу с идентификатором (Attributes.id)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fileInfo" type="tns:TFileInfo" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Приложенные описания файлов и подписей</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор документа (см. схему TDocument.xsd TDocument.Attributes._id), к которому относятся вложенные файлы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

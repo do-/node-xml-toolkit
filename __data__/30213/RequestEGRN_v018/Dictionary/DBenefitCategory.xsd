@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dBenefitCategory="http://rosreestr.ru/services/v0.1/commons/directories/benefitCategory" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/benefitCategory" elementFormDefault="qualified">
+<!--Дата создания Tue Sep 13 15:06:43 MSK 2016 Номер справочника 165-->
+	<xs:simpleType name="DBenefitCategory">
+<xs:annotation>
+			<xs:documentation>Категории льготников</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="358000000001">
+		<xs:annotation>
+			<xs:documentation>Федеральные органы государственной власти</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000002">
+		<xs:annotation>
+			<xs:documentation>Ограны государственной власти субъектов Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000003">
+		<xs:annotation>
+			<xs:documentation>Органы местного самоуправления</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000004">
+		<xs:annotation>
+			<xs:documentation>Государственные и муниципальные органы и организации, учреждения культуры</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000005">
+		<xs:annotation>
+			<xs:documentation>Герои Советского Союза и РФ</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000006">
+		<xs:annotation>
+			<xs:documentation>Полные кавалеры ордена Славы</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000007">
+		<xs:annotation>
+			<xs:documentation>Инвалиды ВОВ и участники ВОВ (Великой Отечественной Войны)</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000008">
+		<xs:annotation>
+			<xs:documentation>Российская Федерация</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="358000000009">
+		<xs:annotation>
+			<xs:documentation>Субъект Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

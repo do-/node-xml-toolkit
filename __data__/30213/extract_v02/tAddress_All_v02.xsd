@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tDict_v02.xsd"/>
+	<!--===Адрес (ГАР) (Address_main)-->
+	<xsd:complexType name="AddressMain">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (ГАР)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address_gar" type="AddressGAR" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (по справочнику ГАР)           </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address_fias" type="Address" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (по документу)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="note" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Неформализованное описание</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="readable_address" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (текстовая строка)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Address">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (описание местоположения) полный</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="level_settlement" type="AddressCity">
+				<xsd:annotation>
+					<xsd:documentation>Уровень населенного пункта</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="detailed_level" type="DetailedLevel" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Детализированный уровень</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressGAR">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (описание местоположения) полный в формате ГАР</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="gar_id" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Уникальный номер адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address_type" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation>Формат адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="okato" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОКАТО</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="oktmo" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОКТМО</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="postal_code" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Почтовый индекс</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="6"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="region" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/4/items?hierarchy_view=false">Субъект</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="district" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Район</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="settlement" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сельское/городское поселение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="city" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Город</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="locality" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Населенный пункт</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="territory" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Территория</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="street" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Улица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="land" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Земельный участок</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="house" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дом</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="apartment" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Квартира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Комната</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="steads" type="AddressElement" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Машино-место</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressElement">
+		<xsd:annotation>
+			<xsd:documentation>Адресный элемент</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="type" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressCity">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (описание местоположения) до уровня населённого пункта</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="fias" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Код ФИАС</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="okato" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОКАТО</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="kladr" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Код КЛАДР</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="oktmo" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОКТМО</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="postal_code" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Почтовый индекс</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="6"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="region" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/4/items?hierarchy_view=false">Код региона</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="district" type="District" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Район</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="city" type="City" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Муниципальное образование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="urban_district" type="UrbanDistrict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Городской район</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="soviet_village" type="SovietVillage" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сельсовет</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="locality" type="Locality" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Населённый пункт</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="DetailedLevel">
+		<xsd:annotation>
+			<xsd:documentation>Детализированный уровень</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="street" type="Street" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Улица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="level1" type="Level1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дом</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="level2" type="Level2" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Корпус</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="level3" type="Level3" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Строение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="apartment" type="Apartment" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Квартира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="other" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Иное описание местоположения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Apartment">
+		<xsd:annotation>
+			<xsd:documentation>Квартира</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_apartment" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_apartment" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Значение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="City">
+		<xsd:annotation>
+			<xsd:documentation>Муниципальное образование</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_city" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_city" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="District">
+		<xsd:annotation>
+			<xsd:documentation>Район</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_district" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_district" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Level1">
+		<xsd:annotation>
+			<xsd:documentation>Дом</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_level1" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_level1" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Значение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Level2">
+		<xsd:annotation>
+			<xsd:documentation>Корпус</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_level2" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_level2" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Значение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Level3">
+		<xsd:annotation>
+			<xsd:documentation>Строение</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_level3" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_level3" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Значение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Locality">
+		<xsd:annotation>
+			<xsd:documentation>Населённый пункт</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_locality" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_locality" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Note">
+		<xsd:annotation>
+			<xsd:documentation>Неформализованное описание</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="code" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Код дополнительных сведений</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="text" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Дополнительные сведения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="SovietVillage">
+		<xsd:annotation>
+			<xsd:documentation>Сельсовет</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_soviet_village" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name__soviet_village" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Street">
+		<xsd:annotation>
+			<xsd:documentation>Улица</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_street" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_street" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="UrbanDistrict">
+		<xsd:annotation>
+			<xsd:documentation>Городской район</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type_urban_district" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Тип</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name_urban_district" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<!--===Адрес (местоположение)-->
+	<xsd:complexType name="AddressLocationLand">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) земельного участка</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://192.168.14.254:8000/catalogs/134/items">Тип адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address" type="AddressMain" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение) </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rel_position" type="LocationByARefPoint" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение относительно ориентира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationBuild">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) здания</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://192.168.14.254:8000/catalogs/134/items">Тип адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address" type="AddressMain">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение) </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="location" type="LocationOks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationConstruction">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) объекта недвижимости - сооружения, объекта незавершенного строительства, единого недвижимого комплекса</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://192.168.14.254:8000/catalogs/134/items">Тип адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address" type="AddressMain" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="locations" type="LocationsCity" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименования субъектов Российской Федерации, муниципальных образований, населенных пунктов (при наличии)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationPropertyComplex">
+		<xsd:annotation>
+			<xsd:documentation>Местоположение предприятия, как имущественного комплекса (адрес (местонахожение) правообладателя)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address" type="AddressMain">
+				<xsd:annotation>
+					<xsd:documentation>Адрес</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="location" type="LocationOks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressOksLocation">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) помещения, машино-места</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://192.168.14.254:8000/catalogs/134/items">Тип адреса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address" type="AddressMain" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="location" type="LocationOks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationRoom">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) помещения</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address" type="AddressOksLocation">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение) помещения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер комнаты в квартире</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationCarParkingSpace">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) машино-места</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address" type="AddressOksLocation">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение) машино-места</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="LocationOks">
+		<xsd:annotation>
+			<xsd:documentation>Местоположение ОКС</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="okato" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>OKATO</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="oktmo" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>OKTMO</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="region" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/4/items?hierarchy_view=false">Код региона</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="position_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="LocationsCity">
+		<xsd:annotation>
+			<xsd:documentation>Наименования субъектов Российской Федерации, муниципальных образований, населенных пунктов (при наличии)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="location" type="LocationCity" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Наименование субъекта Российской Федерации, муниципального образования, населенного пункта (при наличии)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LocationCity">
+		<xsd:annotation>
+			<xsd:documentation>Местоположение (до уровня населенного пункта)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="level_settlement" type="AddressCity">
+				<xsd:annotation>
+					<xsd:documentation>Уровень населенного пункта</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="position_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Описание местоположения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressLocationRefPoint">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение) земельного участка</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="note" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Неформализованное описание местоположения</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="readable_address" type="MultiLiner" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Адрес в соответствии с ФИАС</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="rel_position" type="LocationByARefPoint" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение относительно ориентира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="LocationByARefPoint">
+		<xsd:annotation>
+			<xsd:documentation>Местоположение земельного участка относительно ориентира</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="in_boundaries_mark" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ориентир расположен в границах участка</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ref_point_name" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование ориентира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="location_description" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Расположение относительно ориентира</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<!--===Адрес (местоположение) текстовое описание-->
+	<xsd:complexType name="AddressLocationText">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address" type="AddressText">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressText">
+		<xsd:annotation>
+			<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Неформализованное описание местоположения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="readable_address" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес в соответствии с ФИАС</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AddressRoom">
+		<xsd:annotation>
+			<xsd:documentation>Адрес помещения</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="address" type="AddressLocationText">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="room_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер комнаты в квартире</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>
