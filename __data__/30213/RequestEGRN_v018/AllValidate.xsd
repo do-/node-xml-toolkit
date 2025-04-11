@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:all="http://rosreestr.ru/services/v0.1/allValidate" xmlns:interdep="http://rosreestr.ru/services/v0.18/TInterdepStatement" xmlns:requestEGRN="http://rosreestr.ru/services/v0.18/TStatementRequestEGRN" xmlns:requestDoc="http://rosreestr.ru/services/v0.12/TRequestDocuments" xmlns:request="http://rosreestr.ru/services/v0.12/TRequest" xmlns:statement="http://rosreestr.ru/services/v0.18/TStatement" xmlns:kuvd="http://rosreestr.ru/services/v0.18/KUVD" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://rosreestr.ru/services/v0.1/allValidate" elementFormDefault="qualified" vc:minVersion="1.1">
+	<xs:import namespace="http://rosreestr.ru/services/v0.18/TStatementRequestEGRN" schemaLocation="RequestEGRN_v01.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.18/TInterdepStatement" schemaLocation="Interdep_v01.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.12/TRequestDocuments" schemaLocation="TRequestDocuments.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.12/TRequest" schemaLocation="TRequest.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.18/TStatement" schemaLocation="Statement_v01.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.18/KUVD" schemaLocation="TKUVD.xsd"/>
+	<xs:element name="Validate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="interdep:interdepStatement"/>
+				<xs:element ref="requestEGRN:EGRNRequest"/>
+				<xs:element ref="statement:statementForm1"/>
+				<xs:element ref="statement:statementForm2"/>
+				<xs:element ref="statement:statementForm3"/>
+				<xs:element ref="statement:statementFormAppliedDocuments"/>
+				<xs:element ref="statement:statementFormChangeRegisteredStatement"/>
+				<xs:element ref="statement:statementFormMortgage"/>
+				<xs:element ref="statement:statementFormOwnerless"/>
+				<xs:element ref="statement:statementFormTechErr"/>
+				<xs:element ref="kuvd:kuvdBook"/>
+				<xs:element ref="requestDoc:request"/>
+				<xs:element ref="request:request"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

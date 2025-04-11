@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:include schemaLocation="tRightHolderOut_v02.xsd"/>
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:element name="extract_rights_individ_available_real_estate_objects" type="ExtractRightsIndividAvailableRealEstateObjects">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка о правах отдельного лица на имевшиеся (имеющиеся) у него объекты недвижимости</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractRightsIndividAvailableRealEstateObjects">
+		<xsd:annotation>
+			<xsd:documentation>Выписка о правах отдельного лица на имевшиеся (имеющиеся) у него объекты недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatement">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequestPeriodHolder">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="base_data" type="BaseDataRightRestrictIndivid">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте (объектах) недвижимости,  правах, ограничениях прав, обременениях объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="DetailsRequestPeriodHolder">
+		<xsd:annotation>
+			<xsd:documentation>Реквизиты поступившего запроса, период, за который запрашивается информация и данные о правообладателе согласно сведениям, указанным в запросе</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="date_received_request" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_receipt_request_reg_authority_rights" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата получения запроса органом регистрации прав</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="period" type="PeriodStartEndAvailable" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата, по состоянию на которую или период, за который запрошены сведения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_holder" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правообладателе согласно сведениям, указанным в запросе</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="objects_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Вид и (или) назначение объектов недвижимости, о зарегистрированных правах на которые запрошены сведения</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="type" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Вид объектов недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="purpose" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Назначение объектов недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="required_territory" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Территории определенного(ых) субъекта(ов) Российской Федерации,  указанные в запросе, на которых расположены объекты</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

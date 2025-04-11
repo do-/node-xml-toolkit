@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/Address"
+           xmlns:address="http://rosreestr.ru/services/v0.26/commons/Address"
+           xmlns:common="http://rosreestr.ru/services/v0.26/commons/Commons"
+           xmlns:dHouse="http://rosreestr.ru/services/v0.26/commons/directories/house"
+           xmlns:Sim1="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types">
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons"
+               schemaLocation="Commons.xsd"/>
+    <!-- 02.08.2016 Создание адреса по ФИАС-->
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/house"
+               schemaLocation="Dictionary/DHouse.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types"
+               schemaLocation="CommonSimpleType.xsd"/>
+    <xs:complexType name="TAddressElement">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="code" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Код</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="type" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование адресного элемента</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAddressElement1">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента (длина кода 1)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressElement">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="code" type="Sim1:l1">
+                        <xs:annotation>
+                            <xs:documentation>Код</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressElement2">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента (длина кода 2)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressElement">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="code" type="Sim1:l2">
+                        <xs:annotation>
+                            <xs:documentation>Код</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressElement3">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента (длина кода 3)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressElement">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="code" type="Sim1:l3">
+                        <xs:annotation>
+                            <xs:documentation>Код</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressElement4">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента (длина кода 4)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressElement">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="code" type="Sim1:l4">
+                        <xs:annotation>
+                            <xs:documentation>Код</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressElement4Street">
+        <xs:annotation>
+            <xs:documentation>Описание адресного элемента (длина кода 4)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressElement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="code" type="Sim1:l4">
+                        <xs:annotation>
+                            <xs:documentation>Код</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Наименование адресного элемента</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressCityBase">
+        <xs:annotation>
+            <xs:documentation>Адрес (описание местоположения) до уровня населённого пункта</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="fias" type="common:sFIAS">
+                <xs:annotation>
+                    <xs:documentation>Код ФИАС (уникальный номер адреса объекта адресации в государственном адресном реестре)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="okato" type="common:SOKATO" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ОКАТО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="oktmo" type="common:SOKTMO" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ОКТМО</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="kladr" minOccurs="0" type="Sim1:s20">
+                <xs:annotation>
+                    <xs:documentation>код КЛАДР</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="postalCode" type="common:SPostalCodeRF" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Почтовый индекс</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="region" type="address:TAddressElement">
+                <xs:annotation>
+                    <xs:documentation>Код региона</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="autonomy" type="address:TAddressElement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Автономия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="district" type="address:TAddressElement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Район</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="city" type="address:TAddressElement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Город</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="urbanDistrict" type="address:TAddressElement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Внутригородской район</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="locality" type="address:TAddressElement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Населённый пункт</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAddressCity">
+        <xs:annotation>
+            <xs:documentation>Адрес (описание местоположения) до уровня населённого пункта</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressCityBase">
+                <xs:sequence>
+                    <xs:element name="fias" type="common:sFIAS">
+                        <xs:annotation>
+                            <xs:documentation>Код ФИАС (уникальный номер адреса объекта адресации в государственном адресном реестре)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="okato" type="common:SOKATO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКАТО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="oktmo" type="common:SOKTMO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКТМО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="kladr" minOccurs="0" type="Sim1:s20">
+                        <xs:annotation>
+                            <xs:documentation>код КЛАДР</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="postalCode" type="common:SPostalCodeRF" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Почтовый индекс</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="address:TAddressElement2">
+                        <xs:annotation>
+                            <xs:documentation>Код региона</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="autonomy" type="address:TAddressElement1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Автономия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="district" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Район</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="city" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Город</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="urbanDistrict" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Внутригородской район</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="locality" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Населённый пункт</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressCityBorder">
+        <xs:annotation>
+            <xs:documentation>
+                Адрес (до уровня муниципального образования)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressCity">
+                <xs:sequence>
+                    <xs:element name="fias" type="common:sFIAS">
+                        <xs:annotation>
+                            <xs:documentation>Код ФИАС (уникальный номер адреса объекта адресации в государственном адресном реестре)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="okato" type="common:SOKATO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКАТО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="oktmo" type="common:SOKTMO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКТМО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="postalCode" type="common:SPostalCodeRF" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Почтовый индекс</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="address:TAddressElement2">
+                        <xs:annotation>
+                            <xs:documentation>Код региона</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="autonomy" type="address:TAddressElement1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Автономия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="district" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Район</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="city" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Город</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressRegion">
+        <xs:annotation>
+            <xs:documentation>
+                Адрес (регион)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressCity">
+                <xs:sequence>
+                    <xs:element name="fias" type="common:sFIAS">
+                        <xs:annotation>
+                            <xs:documentation>Код ФИАС (уникальный номер адреса объекта адресации в государственном адресном реестре)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="okato" type="common:SOKATO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКАТО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="oktmo" type="common:SOKTMO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКТМО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="postalCode" type="common:SPostalCodeRF" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Почтовый индекс</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="address:TAddressElement2">
+                        <xs:annotation>
+                            <xs:documentation>Код региона</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddressLocality">
+        <xs:complexContent>
+            <xs:restriction base="address:TAddressCity">
+                <xs:sequence>
+                    <xs:element name="fias" type="common:sFIAS">
+                        <xs:annotation>
+                            <xs:documentation>Код ФИАС (уникальный номер адреса объекта адресации в государственном адресном реестре)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="okato" type="common:SOKATO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКАТО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="oktmo" type="common:SOKTMO" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>ОКТМО</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="postalCode" type="common:SPostalCodeRF" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Почтовый индекс</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="address:TAddressElement2">
+                        <xs:annotation>
+                            <xs:documentation>Код региона</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="autonomy" type="address:TAddressElement1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Автономия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="district" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Район</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="city" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Город</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="urbanDistrict" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Внутригородской район</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="locality" type="address:TAddressElement3" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Населённый пункт</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAddress">
+        <xs:annotation>
+            <xs:documentation>Адрес (описание местоположения) полный</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="address:TAddressCity">
+                <xs:sequence>
+                    <xs:element name="street" type="address:TAddressElement4Street" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Улица</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="additionalElement" type="address:TAddressElement4"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дополнительный адресообразующий элемент</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subordinateElement" type="address:TAddressElement3"
+                                minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Подчиненный дополнительный адресообразующий элемент</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="house" type="address:THouse" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дом</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="building" type="address:THouse" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Корпус</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="structure" type="address:THouse" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Строение</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="apartment" type="address:TApartment" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Квартира</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="other" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Иное местоположение</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="note" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Неформализованное описание</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TApartment">
+        <xs:annotation>
+            <xs:documentation>Квартира</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="type" type="address:DApartment">
+                <xs:annotation>
+                    <xs:documentation>Сокращенное наименование типа адресного элемента</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Наименование адресного элемента</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="DApartment">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="кв">
+                <xs:annotation>
+                    <xs:documentation>Квартира</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="бокс">
+                <xs:annotation>
+                    <xs:documentation>Бокс</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ком">
+                <xs:annotation>
+                    <xs:documentation>Комната</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="пом">
+                <xs:annotation>
+                    <xs:documentation>Помещение</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="THouse">
+        <xs:sequence>
+            <xs:element name="type" type="dHouse:DHouse">
+                <xs:annotation>
+                    <xs:documentation>Сокращенное наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="value" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Доработки к п. 5.2.6.3 ТЗ -->
+      <xs:complexType name="TAddressNotary">
+        <xs:annotation>
+            <xs:documentation>Адрес места нотариального удостоверения (вне нотариальной конторы)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="address:TAddress">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Наименование юридического лица или места, где было совершено нотариальное действие</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
+

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/house"
+           elementFormDefault="qualified">
+    <!--Дата создания 2017/03/31 Номер справочника -->
+    <xs:simpleType name="DHouse">
+        <xs:annotation>
+            <xs:documentation>Тип адресного элемента</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="д">
+                <xs:annotation>
+                    <xs:documentation>Дом</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="к">
+                <xs:annotation>
+                    <xs:documentation>Корпус</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="стр">
+                <xs:annotation>
+                    <xs:documentation>Строение</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="срж">
+                <xs:annotation>
+                    <xs:documentation>Сооружение</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="влд">
+                <xs:annotation>
+                    <xs:documentation>Владение</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="двлд">
+                <xs:annotation>
+                    <xs:documentation>Домовладение</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ГСК">
+                <xs:annotation>
+                    <xs:documentation>Гаражно-строительный кооператив</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="гараж">
+                <xs:annotation>
+                    <xs:documentation>Гараж</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="казарма">
+                <xs:annotation>
+                    <xs:documentation>Казарма</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="уч-к">
+                <xs:annotation>
+                    <xs:documentation>Участок</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="бокс">
+                <xs:annotation>
+                    <xs:documentation>Бокс</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="в/ч">
+                <xs:annotation>
+                    <xs:documentation>Военная часть</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="блок">
+                <xs:annotation>
+                    <xs:documentation>Блок</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="литера">
+                <xs:annotation>
+                    <xs:documentation>Литера</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+

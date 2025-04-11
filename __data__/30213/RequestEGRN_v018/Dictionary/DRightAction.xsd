@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dRightAction="http://rosreestr.ru/services/v0.1/commons/directories/rightAction" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/rightAction" elementFormDefault="qualified">
+<!--Дата создания Thu Aug 04 11:07:19 MSK 2016 Номер справочника 101-->
+	<xs:simpleType name="DRightAction">
+<xs:annotation>
+			<xs:documentation>Типы действий по регистрации права</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="111100001000">
+		<xs:annotation>
+			<xs:documentation>Регистрация ранее возникшего (до 31.01.1998) права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100002000">
+		<xs:annotation>
+			<xs:documentation>Регистрация права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100003000">
+		<xs:annotation>
+			<xs:documentation>Регистрация перехода права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100004000">
+		<xs:annotation>
+			<xs:documentation>Регистрация прекращения права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100005000">
+		<xs:annotation>
+			<xs:documentation>Регистрация ограничения права и (или) обременения объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100006000">
+		<xs:annotation>
+			<xs:documentation>Регистрация сделки об отчуждении объекта недвижимости или ограничении (обременении) права</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100007000">
+		<xs:annotation>
+			<xs:documentation>Регистрация сделки об изменении или расторжении ранее совершенной сделки;соглашение об уступке права требования или перевода долга по ранее совершенной сделке</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="111100008000">
+		<xs:annotation>
+			<xs:documentation>Регистрация прекращения ограничения права и (или) обременения объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

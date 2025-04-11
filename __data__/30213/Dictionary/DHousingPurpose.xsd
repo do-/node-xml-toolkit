@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/housingPurpose" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 68 -->
+    <xs:simpleType name="DHousingPurpose">
+        <xs:annotation>
+            <xs:documentation>Вид жилого помещения</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="205001000000">
+                <xs:annotation>
+                    <xs:documentation>Квартира</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="205002000000">
+                <xs:annotation>
+                    <xs:documentation>Комната</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

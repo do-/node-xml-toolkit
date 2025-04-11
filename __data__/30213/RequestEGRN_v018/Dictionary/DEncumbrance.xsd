@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dEncumbrance="http://rosreestr.ru/services/v0.1/commons/directories/encumbrance" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/encumbrance" elementFormDefault="qualified">
+<!--Дата создания 2017/04/02 Номер справочника 35-->
+	<xs:simpleType name="DEncumbrance">
+<xs:annotation>
+			<xs:documentation>Обременения (ограничения) прав</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="022010000000">
+		<xs:annotation>
+			<xs:documentation>Доверительное управление</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022011000000">
+		<xs:annotation>
+			<xs:documentation>Рента</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022001001000">
+		<xs:annotation>
+			<xs:documentation>Публичный сервитут</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022012000000">
+		<xs:annotation>
+			<xs:documentation>Запрет на совершение действий в сфере ГКУ в отношении ОН</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022001002000">
+		<xs:annotation>
+			<xs:documentation>Частный сервитут</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022013000000">
+		<xs:annotation>
+			<xs:documentation>Наем жилого помещения</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022014000000">
+		<xs:annotation>
+			<xs:documentation>Безвозмездное пользование (ссуда)</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022015000000">
+		<xs:annotation>
+			<xs:documentation>Объект культурного наследия</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022016000000">
+		<xs:annotation>
+			<xs:documentation>Концессия</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022017000000">
+		<xs:annotation>
+			<xs:documentation>Ограничение оборотоспособности земельных участков, предусмотренное статьей 11 Федерального закона 119-ФЗ</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022018000000">
+		<xs:annotation>
+			<xs:documentation>Залог в качестве меры пресечения</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022002000000">
+		<xs:annotation>
+			<xs:documentation>Арест</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022003000000">
+		<xs:annotation>
+			<xs:documentation>Запрещение регистрации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022004000000">
+		<xs:annotation>
+			<xs:documentation>Ограничения прав на земельный участок, предусмотренные статьями 56, 56.1 Земельного кодекса Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022005000000">
+		<xs:annotation>
+			<xs:documentation>Решение об изъятии земельного участка, жилого помещения</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022006000000">
+		<xs:annotation>
+			<xs:documentation>Аренда</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022007000000">
+		<xs:annotation>
+			<xs:documentation>Ипотека</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022008000000">
+		<xs:annotation>
+			<xs:documentation>Ипотека в силу закона</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022009000000">
+		<xs:annotation>
+			<xs:documentation>Безвозмездное (срочное) пользование земельным/лесным участком</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="022099000000">
+		<xs:annotation>
+			<xs:documentation>Прочие ограничения прав и обременения объекта недвижимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

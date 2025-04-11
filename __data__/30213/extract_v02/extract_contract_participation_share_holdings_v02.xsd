@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:element name="extract_contract_participation_share_holdings" type="ExtractContractParticipationShareHoldings">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка из Единого государственного реестра недвижимости о зарегистрированных договорах участия в долевом строительстве</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractContractParticipationShareHoldings">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости о зарегистрированных договорах участия в долевом строительстве (выдается в отношении земельного участка, на котором создается объект недвижимого имущества, в состав которого входят жилые и нежилые помещения, являющиеся предметами договоров участия в долевом строительстве)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatement">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="land_record" type="LandRecordApartmentBuilding">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о характеристиках земельного участка (и сведения о создании (эксплуатации) на земельном участке наемного дома)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_records" type="RightRecordsLitigationsObjections" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правах и правообладателях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="restrict_records" type="RestrictRecordsMain" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="claim_records" type="ClaimRecordsOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правопритязаниях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="deal_records" type="DealRecordsShareHoldings">
+				<xsd:annotation>
+					<xsd:documentation>Договоры участия в долевом строительстве</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="qr" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>Ссылка для визуализации qr-кода</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

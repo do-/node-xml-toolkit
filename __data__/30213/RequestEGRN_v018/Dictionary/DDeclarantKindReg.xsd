@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dDeclarantKindReg="http://rosreestr.ru/services/v0.1/commons/directories/declarantKindReg" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/declarantKindReg" elementFormDefault="qualified">
+<!--Дата создания 2017/04/11 Номер справочника 56-->
+	<xs:simpleType name="DDeclarantKindReg">
+<xs:annotation>
+			<xs:documentation>Категории подателей запроса</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="357010000000">
+		<xs:annotation>
+			<xs:documentation>Федеральный антимонопольный орган и его территориальные органы на территории, находящейся в их юрисдикции</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357011000000">
+		<xs:annotation>
+			<xs:documentation>Председатель Счетной палаты Российской Федерации, его заместители и аудиторы Счетной палаты Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357001001000">
+		<xs:annotation>
+			<xs:documentation>Плательщик земельного налога при предоставлении сведений о кадастровой стоимости</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357012000000">
+		<xs:annotation>
+			<xs:documentation>Органы по учету государственного и муниципального имущества</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357013000000">
+		<xs:annotation>
+			<xs:documentation>Органы государственной власти субъектов Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357014000000">
+		<xs:annotation>
+			<xs:documentation>Органы местного самоуправления</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357015000000">
+		<xs:annotation>
+			<xs:documentation>Избирательные комиссии и комиссии по проведению референдумов</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357016000000">
+		<xs:annotation>
+			<xs:documentation>Государственная корпорация по строительству олимпийских объектов при запросе сведений в отношении участков, предназначенных для размещения олимпийских объектов</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357017000000">
+		<xs:annotation>
+			<xs:documentation>Генеральный директор, заместитель генерального директора, руководители филиалов и представительств Фонда содействия развитию жилищного строительства при запросе сведений о земельных участках, предназначенных для жилищного строительства и иных объектов недвижимого имущества, предназначенных для обеспечения деятельности Фонда</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357018000000">
+		<xs:annotation>
+			<xs:documentation>Федеральные органы исполнительной власти и их территориальные органы</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357019000000">
+		<xs:annotation>
+			<xs:documentation>Многофункциональные центры предоставления государственных и муниципальных услуг</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357002000000">
+		<xs:annotation>
+			<xs:documentation>Лицо, имеющее право на наследование имущества правообладателя по завещанию или по закону</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357020000000">
+		<xs:annotation>
+			<xs:documentation>Руководители (должностные лица) федеральных государственных органов, перечень которых определяется Президентом Российской Федерации, и высшие должностные лица субъектов Российской Федерации (руководителям высших исполнительных органов государственной власти субъектов Российской Федерации) в целях исполнения ими обязанностей по противодействию коррупции</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357021000000">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный при Президенте Российской Федерации по правам ребенка</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357022000000">
+		<xs:annotation>
+			<xs:documentation>Государственные внебюджетные фонды и их территориальные органы</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357023000000">
+		<xs:annotation>
+			<xs:documentation>Иные определенные федеральным законом органы и организации, имеющие право на бесплатное получение информации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357024000000">
+		<xs:annotation>
+			<xs:documentation>Конкурсный управляющий в деле о банкротстве в отношении объектов недвижимости,</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357025000000">
+		<xs:annotation>
+			<xs:documentation>Председатель, заместитель Председателя Центрального банка Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357026000000">
+		<xs:annotation>
+			<xs:documentation>Руководитель, заместитель руководителя государственной корпорации "Агентство по страхованию вкладов"</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357027000000">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный по защите прав предпринимателей в субъекте Российской Федерации;</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357028000000">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный по правам человека в Российской Федерации;</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357029000000">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный по правам человека в субъекте Российской Федерации;</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357003000000">
+		<xs:annotation>
+			<xs:documentation>Нотариус в связи с совершаемыми нотариальными действиями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357030000000">
+		<xs:annotation>
+			<xs:documentation>Акционерное общество "Федеральная корпорация по развитию малого и среднего предпринимательства" для осуществления функций указанного общества, предусмотренных Федеральным законом от 24 июля 2007 года N 209-ФЗ "О развитии малого и среднего предпринимательства в Российской Федерации</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357031000000">
+		<xs:annotation>
+			<xs:documentation>Органы, осуществляющие в установленном федеральным законом порядке оперативно-разыскную деятельность по основаниям, установленным статьей 7 Федерального закона от 12 августа 1995 года N 144-ФЗ "Об оперативно-розыскной деятельности"</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357032000000">
+		<xs:annotation>
+			<xs:documentation>Банк России</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357033000000">
+		<xs:annotation>
+			<xs:documentation>Лица, входящие в состав органов управления должника, контролирующие должника лица</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357034000000">
+		<xs:annotation>
+			<xs:documentation>Временная администрация финансовой организации в отношении объектов недвижимости, принадлежащих соответствующему должнику, если соответствующие сведения необходимы для осуществления полномочий арбитражного управляющего, конкурсного управляющего в деле о банкротстве</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357035000000">
+		<xs:annotation>
+			<xs:documentation>Временная администрация финансовой организации в соответствии с Федеральным законом от 26 октября 2002 года N 127-ФЗ "О несостоятельности (банкротстве)"</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357036000000">
+		<xs:annotation>
+			<xs:documentation>Уполномоченный при Президенте Российской Федерации по правам предпринимателей</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357037000000">
+		<xs:annotation>
+			<xs:documentation>Пенсионный фонд Российской Федерации и его территориальных органов</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357038000000">
+		<xs:annotation>
+			<xs:documentation>Генеральный директор единого института развития в жилищной сфере, его заместители</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357039000000">
+		<xs:annotation>
+			<xs:documentation>Правообладатель или его законный представитель</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357004000000">
+		<xs:annotation>
+			<xs:documentation>Залогодержатель, запрашивающий сведения об объектах недвижимого имущества, находящихся у него в залоге</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357005000000">
+		<xs:annotation>
+			<xs:documentation>Арбитражный управляющий в деле о банкротстве, запрашивающий сведения о принадлежащих соответствующему должнику объектах недвижимого имущества</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006001000">
+		<xs:annotation>
+			<xs:documentation>Суды и правоохранительные органы, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателе</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006002000">
+		<xs:annotation>
+			<xs:documentation>Судебные приставы-исполнители, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006003000">
+		<xs:annotation>
+			<xs:documentation>Органы прокуратуры, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006004000">
+		<xs:annotation>
+			<xs:documentation>Органы внутренних дел, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006005000">
+		<xs:annotation>
+			<xs:documentation>Органы Федеральной службы безопасности Российской Федерации, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006006000">
+		<xs:annotation>
+			<xs:documentation>Органы Следственного комитета Российской Федерации, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357006099000">
+		<xs:annotation>
+			<xs:documentation>Иные правоохранительные органы, имеющие в производстве дела, связанные с объектами недвижимого имущества и (или) их правообладателями</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357007000000">
+		<xs:annotation>
+			<xs:documentation>Налоговые органы на территории, находящейся в их юрисдикции</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357008000000">
+		<xs:annotation>
+			<xs:documentation>Государственные органы по контролю за использованием и охраной земель и других природных ресурсов</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357009000000">
+		<xs:annotation>
+			<xs:documentation>Органы государственной статистики</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357099000000">
+		<xs:annotation>
+			<xs:documentation>Иное лицо</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

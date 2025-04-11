@@ -1,0 +1,2329 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:docs="http://rosreestr.ru/services/v0.1/commons/Documents"
+    xmlns:commons="http://rosreestr.ru/services/v0.1/commons/Commons"
+    xmlns:tns="http://rosreestr.ru/services/v0.1/commons/Subjects" elementFormDefault="qualified"
+    xmlns:address="http://rosreestr.ru/services/v0.1/commons/Address" version="0.1"
+    targetNamespace="http://rosreestr.ru/services/v0.1/commons/Subjects"
+    xmlns:dCou="http://rosreestr.ru/services/v0.1/commons/directories/country"
+    xmlns:bCat="http://rosreestr.ru/services/v0.1/commons/directories/benefitCategory"
+    xmlns:dDeK="http://rosreestr.ru/services/v0.1/commons/directories/declarantKind"
+    xmlns:dRF="http://rosreestr.ru/services/v0.1/commons/directories/regionrf"
+    xmlns:dDeKR="http://rosreestr.ru/services/v0.1/commons/directories/declarantKindReg"
+    xmlns:dCon="http://rosreestr.ru/services/v0.1/commons/directories/contractor">
+
+    <xs:import schemaLocation="TDocument.xsd"
+        namespace="http://rosreestr.ru/services/v0.1/commons/Documents"/>
+    <xs:import schemaLocation="Commons.xsd"
+        namespace="http://rosreestr.ru/services/v0.1/commons/Commons"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Address"
+        schemaLocation="TAddress.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/contractor"
+        schemaLocation="Dictionary/DContractor.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/country"
+        schemaLocation="Dictionary/DCountry.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/regionrf"
+        schemaLocation="Dictionary/DRegionsRF.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/benefitCategory"
+        schemaLocation="Dictionary/DBenefitCategory.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/declarantKind"
+        schemaLocation="Dictionary/DDeclarantKind.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/declarantKindReg"
+        schemaLocation="Dictionary/DDeclarantKindReg.xsd"/>
+    <xs:notation name="SimpleSubjects" public="SimpleSubjects"/>
+    <xs:notation name="SimpleSubjectsPersons" public="SimpleSubjectsPersons"/>
+    <xs:complexType name="TSubject">
+        <xs:annotation>
+            <xs:documentation>
+                Сведения о субъекте
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contactInfo" type="tns:TContactInfo" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Контактная информация</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBasicPerson">
+        <xs:annotation>
+            <xs:documentation>Базовый субъект со всеми необязательными атрибутам для задания обязательности в потомках</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="surname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Фамилия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="firstname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Имя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="patronymic" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthDate" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthPlace" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Место рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                        <xs:annotation>
+                            <xs:documentation>Пол</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" type="tns:TPersonAddress" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Гражданство</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="snils" type="docs:SSNILS" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Номер СНИЛС</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="inn" type="docs:SPersonINN" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Идентификационный номер налогоплательщика (ИНН)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="previousData"
+                        type="tns:TBasicPersonPreviousData">
+                        <xs:annotation>
+                            <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPreviligedPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления которые имеют привелегии в подаче заявлений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="birthPlace" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                            <xs:annotation>
+                                <xs:documentation>Пол</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="address" type="tns:TPersonAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или преимущественного пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="inn" type="docs:SPersonINN">
+                            <xs:annotation>
+                                <xs:documentation>ИНН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPreviligedPersonForm2">
+        <xs:annotation>
+            <xs:documentation>Субъекты заявления по форме 2, которые имеют привелегии в подаче заявлений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="birthDate" type="xs:date" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="birthPlace" type="xs:string" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                            <xs:annotation>
+                                <xs:documentation>Пол</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="address" type="tns:TPersonAddress" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="inn" type="docs:SPersonINN">
+                            <xs:annotation>
+                                <xs:documentation>ИНН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления на предоставления сведений из ЕГРН и МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthPlace" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                            <xs:annotation>
+                                <xs:documentation>Пол</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="address" type="tns:TPersonAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData" type="tns:TPersonPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPersonForm2">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления по форме 2</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                        <xs:annotation>
+                            <xs:documentation>Контактная информация</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="surname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Фамилия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="firstname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Имя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthDate" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthPlace" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Место рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                        <xs:annotation>
+                            <xs:documentation>Пол</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" type="tns:TPersonAddress" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Гражданство</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                        <xs:annotation>
+                            <xs:documentation>Номер СНИЛС</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStrictPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления на регистрацию права</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                        <xs:annotation>
+                            <xs:documentation>Контактная информация</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="surname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Фамилия</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="firstname" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Имя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthDate" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>Дата рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="birthPlace" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Место рождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                        <xs:annotation>
+                            <xs:documentation>Пол</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" type="tns:TPersonAddress">
+                        <xs:annotation>
+                            <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="citizenship" type="tns:TCitizenship" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Гражданство</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                        <xs:annotation>
+                            <xs:documentation>Номер СНИЛС</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления на предоставление сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthPlace" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="address" type="tns:TPersonAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="citizenship" type="tns:TCitizenship">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData" type="tns:TPersonPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestOwner">
+        <xs:annotation>
+            <xs:documentation>Правообладатель ФЛ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="address" type="tns:TPersonAddress" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData" type="tns:TPersonPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestPreviligedPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления на предоставление сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthPlace" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="address" type="tns:TPersonAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="citizenship" type="tns:TCitizenship">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData" type="tns:TPersonPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepPreviligedPerson">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления для межведа</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="birthPlace" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Место рождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="gender" type="commons:SGender">
+                            <xs:annotation>
+                                <xs:documentation>Пол</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="idDocumentRef" type="docs:TDocumentRefer">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="address" type="tns:TPersonAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="citizenship" type="tns:TCitizenship">
+                            <xs:annotation>
+                                <xs:documentation>Гражданство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="inn" type="docs:SPersonINN">
+                            <xs:annotation>
+                                <xs:documentation>Идентификационный номер налогоплательщика (ИНН)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData"
+                            type="tns:TInterdepPersonPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные гражданина</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="SimpleSubjectsPersonsHelpers" public="SimpleSubjectsPersonsHelpers"/>
+    <xs:complexType name="TCitizenship">
+        <xs:annotation>
+            <xs:documentation>Гражданство</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="country" type="dCou:DCountry">
+                <xs:annotation>
+                    <xs:documentation>Код страны</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="withoutCitizenship" type="xs:boolean" fixed="true">
+                <xs:annotation>
+                    <xs:documentation>Лицо без гражданства</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TContactInfo">
+        <xs:annotation>
+            <xs:documentation>
+                Контактная информация
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="phoneNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер телефона</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="commons:SPhoneNumber"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="postalAddress" type="address:TAddress" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Почтовый адрес</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="commons:SEMail"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPersonAddress">
+        <xs:annotation>
+            <xs:documentation>Адрес субъекта</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="address:TAddress">
+                <xs:sequence>
+                    <xs:element name="livingAddress" fixed="true" minOccurs="0" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Указанный адрес является адресом преимущественного пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TBasicPersonPreviousData">
+        <xs:annotation>
+            <xs:documentation>Предыдущие сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element name="FIO" maxOccurs="unbounded" minOccurs="0" type="tns:TFIO">
+                <xs:annotation>
+                    <xs:documentation>Предыдущие фамилия и/или имя, и/или отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="address" type="address:TAddress" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0"
+                maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Данные удостоверения личности</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPersonPreviousData">
+        <xs:annotation>
+            <xs:documentation>Предыдущие сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPersonPreviousData">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element name="FIO" maxOccurs="unbounded" minOccurs="0" type="tns:TFIO">
+                        <xs:annotation>
+                            <xs:documentation>Предыдущие фамилия и/или имя, и/или отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="address" type="address:TAddress"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepPersonPreviousData">
+        <xs:annotation>
+            <xs:documentation>Предыдущие сведения о субъекте</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPersonPreviousData">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element name="FIO" maxOccurs="unbounded" minOccurs="0" type="tns:TFIO">
+                        <xs:annotation>
+                            <xs:documentation>Предыдущие фамилия и/или имя, и/или отчество</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="address" type="address:TAddress"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Адрес места жительства или пребывания</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="idDocumentRef" type="docs:TDocumentRefer" minOccurs="0"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Данные удостоверения личности</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="Registrar" public="Registrar"/>
+    <xs:complexType name="TBasicRegistrar">
+        <xs:annotation>
+            <xs:documentation>Регистратор/Сотрудник кадастровой палаты</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicPerson">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="surname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Фамилия</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="firstname" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Имя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Отчество</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="idDocumentRef" type="docs:TDocumentRefer">
+                            <xs:annotation>
+                                <xs:documentation>Данные удостоверения личности</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                            <xs:annotation>
+                                <xs:documentation>Номер СНИЛС</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStructRegistrar">
+        <xs:complexContent>
+            <xs:extension base="tns:TBasicRegistrar">
+                <xs:sequence>
+                    <xs:element name="login" type="xs:string" maxOccurs="1" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Логин</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="appointment" type="xs:string" maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Должность</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="department" type="xs:string" maxOccurs="1" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Подразделение (код из справочника ЕСТО)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="role" maxOccurs="1" minOccurs="1" type="tns:DRole">
+                        <xs:annotation>
+                            <xs:documentation>Роль (регистратор/сотрудник кадастровой палаты)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TRegistrar">
+        <xs:annotation>
+            <xs:documentation>Регистратор/Сотрудник кадастровой палаты</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TStructRegistrar">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                                <xs:annotation>
+                                    <xs:documentation>Контактная информация</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:sequence>
+                            <xs:element name="surname" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Фамилия</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="firstname" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Имя</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Отчество</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="idDocumentRef"
+                                type="docs:TDocumentRefer">
+                                <xs:annotation>
+                                    <xs:documentation>Данные удостоверения личности</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="snils" type="docs:SSNILS">
+                                <xs:annotation>
+                                    <xs:documentation>Номер СНИЛС</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="1" minOccurs="1" name="login" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Логин</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="0" name="appointment" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Должность</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="department" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Подразделение (код из справочника ЕСТО)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="1" minOccurs="1" name="role" type="tns:DRole">
+                            <xs:annotation>
+                                <xs:documentation>Роль (регистратор/сотрудник кадастровой палаты)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="SimpleSubjectsOrganizations" public="SimpleSubjectsOrganizations"/>
+    <xs:complexType name="TBasicOrganization">
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="kpp" type="docs:SOrgKPP" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Код причины постановки на учет</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="nativeForeignParams"
+                        type="tns:TBaseNativeForeignParams">
+                        <xs:annotation>
+                            <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="regDocument" type="docs:TDocument">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий регистрацию юридического лица</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="address" minOccurs="0" type="address:TAddress">
+                        <xs:annotation>
+                            <xs:documentation>Адрес местонахождения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="previousData" minOccurs="0"
+                        type="tns:TOrganizationPreviousData">
+                        <xs:annotation>
+                            <xs:documentation>Предыдущие данные организации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOrganization">
+        <xs:annotation>
+            <xs:documentation>Юридическое лицо</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicOrganization">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Полное наименование</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="kpp" type="docs:SOrgKPP">
+                            <xs:annotation>
+                                <xs:documentation>Код причины постановки на учет</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="nativeForeignParams"
+                            type="tns:TNativeForeignParams">
+                            <xs:annotation>
+                                <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="SimpleSubjectsOrganizationsHelpers"
+        public="SimpleSubjectsOrganizationsHelpers"/>
+    <xs:complexType name="TOrganizationPreviousData">
+        <xs:annotation>
+            <xs:documentation>Описание предыдущего наименования юридического лица</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Полное наименование организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBaseNativeForeignParams">
+        <xs:choice>
+            <xs:element name="nativeOrgParams" type="tns:TNativeOrgParams">
+                <xs:annotation>
+                    <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="foreignOrgParams" type="tns:TBaseForeignOrgParams">
+                <xs:annotation>
+                    <xs:documentation>Данные по иностранным юридическим лицам</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TNativeForeignParams">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBaseNativeForeignParams">
+                <xs:choice>
+                    <xs:element name="nativeOrgParams" type="tns:TNativeOrgParams">
+                        <xs:annotation>
+                            <xs:documentation>Данные по российским юридическим лицам</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="foreignOrgParams" type="tns:TForeignOrgParams">
+                        <xs:annotation>
+                            <xs:documentation>Данные по иностранным юридическим лицам</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TNativeOrgParams">
+        <xs:sequence>
+            <xs:annotation>
+                <xs:documentation/>
+            </xs:annotation>
+            <xs:element name="ogrn" type="docs:SOrgOGRN">
+                <xs:annotation>
+                    <xs:documentation>Основной государствкенный регистрационный номер (ОГРН) организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inn" type="docs:SOrgINN">
+                <xs:annotation>
+                    <xs:documentation>Идентификационный номер налогоплательщика (ИНН) организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBaseForeignOrgParams">
+        <xs:sequence>
+            <xs:annotation>
+                <xs:documentation/>
+            </xs:annotation>
+            <xs:element name="countryCode" type="dCou:DCountry">
+                <xs:annotation>
+                    <xs:documentation>Код страны</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regNumber" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="kio" type="docs:SOrgKIO">
+                <xs:annotation>
+                    <xs:documentation>Код иностранной организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TForeignOrgParams">
+        <xs:complexContent>
+            <xs:restriction base="tns:TBaseForeignOrgParams">
+                <xs:sequence>
+                    <xs:annotation>
+                        <xs:documentation/>
+                    </xs:annotation>
+                    <xs:element name="countryCode" type="dCou:DCountry">
+                        <xs:annotation>
+                            <xs:documentation>Код страны</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="regDate" type="xs:date" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Дата регистрации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="regNumber" minOccurs="1" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Номер регистрации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="kio" type="docs:SOrgKIO">
+                        <xs:annotation>
+                            <xs:documentation>Код иностранной организации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepOrganization">
+        <xs:annotation>
+            <xs:documentation>Юр лицо для межведа</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicOrganization">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Полное наименование</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="kpp" type="docs:SOrgKPP">
+                            <xs:annotation>
+                                <xs:documentation>Код причины постановки на учет</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="nativeForeignParams"
+                            type="tns:TNativeForeignParams">
+                            <xs:annotation>
+                                <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="regDocument" type="docs:TDocument">
+                            <xs:annotation>
+                                <xs:documentation>Документ, подтверждающий регистрацию юридического лица</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="address" type="address:TAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес местонахождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData"
+                            type="tns:TOrganizationPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные организации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestOrganization">
+        <xs:annotation>
+            <xs:documentation>Описание предыдущего наименования юридического лица в рамках заявления по Предоставленю сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicOrganization">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Полное наименование</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="kpp" type="docs:SOrgKPP">
+                            <xs:annotation>
+                                <xs:documentation>Код причины постановки на учет</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="1" name="nativeForeignParams"
+                            type="tns:TBaseNativeForeignParams">
+                            <xs:annotation>
+                                <xs:documentation>Российское ЮЛ или иностранное ЮЛ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+
+                        <xs:element minOccurs="0" name="regDocument" type="docs:TDocument">
+                            <xs:annotation>
+                                <xs:documentation>Документ, подтверждающий регистрацию юридического лица</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="address" type="address:TAddress">
+                            <xs:annotation>
+                                <xs:documentation>Адрес местонахождения</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="previousData"
+                            type="tns:TOrganizationPreviousData">
+                            <xs:annotation>
+                                <xs:documentation>Предыдущие данные организации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="SimpleSubjectsOthers" public="SimpleSubjectsOthers"/>
+    <xs:complexType name="TCountry">
+        <xs:annotation>
+            <xs:documentation>Государство как субъект</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="countryCode" type="dCou:DCountry">
+                        <xs:annotation>
+                            <xs:documentation>Код страны</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TRFSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект РФ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="subjectCode" type="dRF:dRegionsRF">
+                        <xs:annotation>
+                            <xs:documentation>Код субъекта Российской Федерации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TCity">
+        <xs:annotation>
+            <xs:documentation>Муниципальное образование</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="Name" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование муниципального образования</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+
+
+    </xs:complexType>
+    <xs:complexType name="TBasicOtherSubject">
+        <xs:annotation>
+            <xs:documentation>ФОИВ, РОИВ, ОМСУ, ППО</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TSubject">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Полное наименование</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="inn" type="docs:SOrgINN"/>
+                    <xs:element minOccurs="0" name="ogrn" type="docs:SOrgOGRN"/>
+                    <xs:element name="kpp" type="docs:SOrgKPP" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Код причины постановки на учет</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="regDate" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Дата государственной регистрации</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TOtherSubject">
+        <xs:annotation>
+            <xs:documentation>ФОИВ, РОИВ, ОМСУ, ППО</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicOtherSubject">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Полное наименование</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="inn" type="docs:SOrgINN">
+                            <xs:annotation>
+                                <xs:documentation>ИНН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="ogrn" type="docs:SOrgOGRN">
+                            <xs:annotation>
+                                <xs:documentation>ОГРН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestOtherSubject">
+        <xs:annotation>
+            <xs:documentation>ФОИВ, РОИВ, ОМСУ, ППО в рамках заявления на предоставление сведений по ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicOtherSubject">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="contactInfo" type="tns:TContactInfo">
+                            <xs:annotation>
+                                <xs:documentation>Контактная информация</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Полное наименование</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="inn" type="docs:SOrgINN">
+                            <xs:annotation>
+                                <xs:documentation>ИНН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="ogrn" type="docs:SOrgOGRN">
+                            <xs:annotation>
+                                <xs:documentation>ОГРН</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="kpp" type="docs:SOrgKPP">
+                            <xs:annotation>
+                                <xs:documentation>Код причины постановки на учет</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="regDate" type="xs:date">
+                            <xs:annotation>
+                                <xs:documentation>Дата государственной регистрации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TContractor">
+        <xs:annotation>
+            <xs:documentation>Иное описание правообладателя</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contractorType" type="dCon:DContractor">
+                <xs:annotation>
+                    <xs:documentation>Тип</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Название (индивидуальное обозначение), идентифицирующее паевой инвестиционный фонд либо идентифицирующее ипотечные сертификаты участия, в интересах владельцев которых осуществляется доверительное управление таким ипотечным покрытием</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TNotary">
+        <xs:annotation>
+            <xs:documentation>Сведения о нотариусе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="surname" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Фамилия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstname" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="inn" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ИНН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="incomingDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата подписания нотариусом</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:notation name="StatementSubjects" public="StatementSubjects"/>
+    <xs:complexType name="TBasicStatementSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект по заявлению</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element minOccurs="0" name="person" type="tns:TBasicPerson">
+                    <xs:annotation>
+                        <xs:documentation>Физическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="previligedPerson" type="tns:TBasicPerson">
+                    <xs:annotation>
+                        <xs:documentation>Уполномоченное лицо: нотариус, судебный пристав-исполнитель, кадастровый инженер и прочие
+</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="organization" type="tns:TBasicOrganization">
+                    <xs:annotation>
+                        <xs:documentation>Юридическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="country" type="tns:TCountry">
+                    <xs:annotation>
+                        <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="rfSubject" type="tns:TRFSubject">
+                    <xs:annotation>
+                        <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="registrar" type="tns:TRegistrar">
+                    <xs:annotation>
+                        <xs:documentation>Регистратор / Сотрудник кадастровой палаты</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="other" type="tns:TBasicOtherSubject">
+                    <xs:annotation>
+                        <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="contractor" type="tns:TContractor">
+                    <xs:annotation>
+                        <xs:documentation>Иное описание правообладателя</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                <xs:annotation>
+                    <xs:documentation>Категория льготника</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="declarantKind" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Тип заявителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="representative" type="tns:TBasicRepresentative">
+                <xs:annotation>
+                    <xs:documentation>Данные представителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                <xs:annotation>
+                    <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id" use="required">
+            <xs:annotation>
+                <xs:documentation>Идентификатор субъекта</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TStatementSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект по заявлению на Регистрацию права</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TStrictPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="previligedPerson" type="tns:TPreviligedPerson">
+                            <xs:annotation>
+                                <xs:documentation>Уполномоченное лицо: нотариус, судебный пристав-исполнитель, кадастровый инженер и прочие
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country" type="tns:TCountry">
+                            <xs:annotation>
+                                <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="rfSubject" type="tns:TRFSubject">
+                            <xs:annotation>
+                                <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="contractor" type="tns:TContractor">
+                            <xs:annotation>
+                                <xs:documentation>Иное описание правообладателя</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="dDeK:DDeclarantKind">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementSubjectForm3">
+        <xs:annotation>
+            <xs:documentation>Субъект по заявлению на Регистрацию права по форме 3</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representative" type="tns:TStatementForm3Representative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementSubjectAppliedDocuments">
+        <xs:annotation>
+            <xs:documentation>Субъект по Заявлению "Документы, поступающие без заявления"</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TBasicPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TBasicOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country" type="tns:TCountry">
+                            <xs:annotation>
+                                <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="rfSubject" type="tns:TRFSubject">
+                            <xs:annotation>
+                                <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TBasicOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="xs:string" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative" type="tns:TBasicRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementSubjectTechErr">
+        <xs:annotation>
+            <xs:documentation>Субъект по заявлению на исправление технической ошибки</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:element minOccurs="1" name="registrar" type="tns:TRegistrar">
+                        <xs:annotation>
+                            <xs:documentation>Регистратор / Сотрудник кадастровой палаты</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepStatementSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TStrictPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="previligedPerson" type="tns:TInterdepPreviligedPerson">
+                            <xs:annotation>
+                                <xs:documentation>Уполномоченное лицо: нотариус, судебный пристав-исполнитель, кадастровый инженер и прочие
+</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TInterdepOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country" type="tns:TCountry">
+                            <xs:annotation>
+                                <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="rfSubject" type="tns:TRFSubject">
+                            <xs:annotation>
+                                <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepOwnerlessStatementSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект заявления по бесхозяйному имуществу по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:element name="other" type="tns:TOtherSubject">
+                        <xs:annotation>
+                            <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative"
+                        type="tns:TOrganizationRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepOnwerlessStatementOwner">
+        <xs:annotation>
+            <xs:documentation>Заявитель по бесхозяйному имуществу по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TStrictPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestDeclarant">
+        <xs:annotation>
+            <xs:documentation>Описание заявителя, представителя заявителя</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TEGRNRequestPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="previligedPerson" type="tns:TEGRNRequestPreviligedPerson">
+                            <xs:annotation>
+                                <xs:documentation>Уполномоченное лицо: нотариус, судебный пристав-исполнитель, кадастровый инженер и прочие
+								</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TEGRNRequestOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TEGRNRequestOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="dDeKR:DDeclarantKindReg">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative"
+                        type="tns:TEGRNRequestRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementSubjectForm2">
+        <xs:annotation>
+            <xs:documentation>Субъект по заявлению на Регистрацию права по форме 2</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TPersonForm2">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="previligedPerson" type="tns:TPreviligedPersonForm2">
+                            <xs:annotation>
+                                <xs:documentation>Уполномоченное лицо: нотариус, судебный пристав-исполнитель, кадастровый инженер и прочие
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country" type="tns:TCountry">
+                            <xs:annotation>
+                                <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="rfSubject" type="tns:TRFSubject">
+                            <xs:annotation>
+                                <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="dDeK:DDeclarantKind">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:element minOccurs="0" name="representative" type="tns:TRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notary" type="tns:TNotary">
+                        <xs:annotation>
+                            <xs:documentation>Подлинность подписи заявителя (представителя заявителя) свидетельствую</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="StatmentRepresentatives" public="StatmentRepresentatives"/>
+    <xs:complexType name="TBasicRepresentative">
+        <xs:annotation>
+            <xs:documentation>Базовый представитель заявителя</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="subject" type="tns:TBasicStatementSubject">
+                <xs:annotation>
+                    <xs:documentation>Представитель заявителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                <xs:annotation>
+                    <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRepresentative">
+        <xs:annotation>
+            <xs:documentation>Представитель заявителя</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRepresentative">
+                <xs:sequence>
+                    <xs:element name="subject" type="tns:TStatementSubject">
+                        <xs:annotation>
+                            <xs:documentation>Представитель заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOrganizationRepresentative">
+        <xs:annotation>
+            <xs:documentation>Представитель организации</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRepresentative">
+                <xs:sequence>
+                    <xs:element name="subject" type="tns:TOrgRepresentativeSubject">
+                        <xs:annotation>
+                            <xs:documentation>Представитель заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementForm3Representative">
+        <xs:annotation>
+            <xs:documentation>Представитель по Форме 3 заявления о регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRepresentative">
+                <xs:sequence>
+                    <xs:element name="subject" type="tns:TStatementForm3RepresentativeSubject">
+                        <xs:annotation>
+                            <xs:documentation>Представитель заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepRepresentative">
+        <xs:annotation>
+            <xs:documentation>Представитель в заявлениях по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRepresentative">
+                <xs:sequence>
+                    <xs:element name="subject" type="tns:TInterdepRepresentativeSubject">
+                        <xs:annotation>
+                            <xs:documentation>Представитель заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestRepresentative">
+        <xs:annotation>
+            <xs:documentation>Представитель заявителя в заявлении предоставления сведений</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicRepresentative">
+                <xs:sequence>
+                    <xs:element name="subject" type="tns:TEGRNRequestDeclarant">
+                        <xs:annotation>
+                            <xs:documentation>Представитель заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="representativeDocumentRef" type="docs:TDocumentRefer">
+                        <xs:annotation>
+                            <xs:documentation>Документ, подтверждающий полномочия представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:notation name="StatementRepresentativeSubjects" public="StatementRepresentativeSubjects"/>
+    <xs:complexType name="TOrgRepresentativeSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект представитель организации в заявлении по бесхозяйному имуществу по МИВ, который может быть только физическим лицом</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:element name="person" type="tns:TStrictPerson">
+                        <xs:annotation>
+                            <xs:documentation>Физическое лицо</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TStatementForm3RepresentativeSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект представитель по Форме 3 заявления о регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice minOccurs="0">
+                        <xs:element name="person" type="tns:TStrictPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="benefitCategory" type="bCat:DBenefitCategory">
+                        <xs:annotation>
+                            <xs:documentation>Категория льготника</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="declarantKind" type="dDeK:DDeclarantKind" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative"
+                        type="tns:TOrganizationRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterdepRepresentativeSubject">
+        <xs:annotation>
+            <xs:documentation>Субъект, который выступает в роли представителя по МИВ</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasicStatementSubject">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="person" type="tns:TPerson">
+                            <xs:annotation>
+                                <xs:documentation>Физическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="organization" type="tns:TBasicOrganization">
+                            <xs:annotation>
+                                <xs:documentation>Юридическое лицо</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="country" type="tns:TCountry">
+                            <xs:annotation>
+                                <xs:documentation>Российская Федерация или иностранное государство</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="rfSubject" type="tns:TRFSubject">
+                            <xs:annotation>
+                                <xs:documentation>Субъект Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="other" type="tns:TBasicOtherSubject">
+                            <xs:annotation>
+                                <xs:documentation>ФОИВ, РОИВ, ОМСУ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="declarantKind" type="dDeK:DDeclarantKind" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Тип заявителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="representative" type="tns:TBasicRepresentative">
+                        <xs:annotation>
+                            <xs:documentation>Данные представителя</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="DRole">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="01">
+                <xs:annotation>
+                    <xs:documentation>Регистратор</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="02">
+                <xs:annotation>
+                    <xs:documentation>Сотрудник кадастровой палаты</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TFIO">
+        <xs:sequence>
+            <xs:element name="surname" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Фамилия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstname" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+   
+</xs:schema>

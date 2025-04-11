@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dDeclarantKind="http://rosreestr.ru/services/v0.1/commons/directories/declarantKind" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/declarantKind" elementFormDefault="qualified">
+<!--Дата создания Fri Sep 23 13:26:21 MSK 2016 Номер справочника 166-->
+	<xs:simpleType name="DDeclarantKind">
+<xs:annotation>
+			<xs:documentation>Категория подателей заявления</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="357100000001">
+		<xs:annotation>
+			<xs:documentation>Правообладатель или его законный представитель</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357100000002">
+		<xs:annotation>
+			<xs:documentation>Нотариус</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357100000003">
+		<xs:annotation>
+			<xs:documentation>Судебный пристав-исполнитель</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="357100000004">
+		<xs:annotation>
+			<xs:documentation>Кадастровый инженер</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

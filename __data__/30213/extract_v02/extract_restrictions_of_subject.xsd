@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2022 rel. 2 (x64) (http://www.altova.com) by  (FGBU «FKP Rosreestra») -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:element name="extract_restrictions_of_subject" type="ExtractRestrictionsOfSubject">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости об установленных в пользу отдельного лица ограничениях прав и (или) обременениях объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractRestrictionsOfSubject">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости об установленных в пользу отдельного лица ограничениях прав и (или) обременениях объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatement">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="object_records" type="ObjectRecords">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="object_territory">
+				<xsd:annotation>
+					<xsd:documentation>Выписка содержит сведения ЕГРН об установленных в пользу отдельного лица ограничениях прав и (или) обременениях объектов недвижимости, расположенных на территории</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="territory_russia" type="xsd:boolean" fixed="1">
+							<xsd:annotation>
+								<xsd:documentation>Российская Федерация</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="regions">
+							<xsd:annotation>
+								<xsd:documentation>Регионы</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="region" type="Dict" maxOccurs="unbounded">
+										<xsd:annotation>
+											<xsd:documentation source="http://192.168.14.254:8000/catalogs/124/items">Регион</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="RestrictRecords">
+		<xsd:annotation>
+			<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="restrict_record" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Ограничение права и обременение объекта	недвижимости</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="restriction_encumbrance_type" type="Dict">
+							<xsd:annotation>
+								<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/35/items">Вид зарегистрированного ограничения права или обременения объекта недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="restriction_subject" type="MultiLiner" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Предмет ограничения/обременения</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="restricting_rights" type="RestrictingRightsAllNumber" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Ограничиваемые права</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="registration_date" type="xsd:date">
+							<xsd:annotation>
+								<xsd:documentation>Дата регистрации</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="restriction_encumbrance_number" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Номер регистрации ограничения права или обременения объекта недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="underlying_documents" type="UnderlyingDocumentsOutAll" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Документы-основания</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ObjectRecords">
+		<xsd:annotation>
+			<xsd:documentation>Сведения об объектах недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="object_record" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объектe недвижимости</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="type" type="Dict">
+							<xsd:annotation>
+								<xsd:documentation source="http://192.168.14.254:8000/catalogs/124/items">Вид объекта недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="room_type" type="Dict" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/68/items?hierarchy_view=false">Вид жилого помещения
+                </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="cad_number" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Кадастровый номер</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="purpose" type="Dict" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/66/items?hierarchy_view=false">Назначение объекта недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="permitted_uses" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Вид(ы) разрешенного использования</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="permitted_use" type="Dict" minOccurs="0" maxOccurs="unbounded">
+										<xsd:annotation>
+											<xsd:documentation>Вид разрешенного использования</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="address_location" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Адрес (местоположение)</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="address_type" type="Dict" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation source="http://192.168.14.254:8000/catalogs/134/items">Тип адреса</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="address" type="AddressMain" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Адрес (местоположение) </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="locations" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Местоположение</xsd:documentation>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="location" maxOccurs="unbounded">
+													<xsd:annotation>
+														<xsd:documentation>Наименования субъектов Российской Федерации, муниципальных образований, населенных пунктов (при наличии)</xsd:documentation>
+													</xsd:annotation>
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="level_settlement" type="AddressCity" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Уровень населенного пункта</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+															<xsd:element name="location_description" type="MultiLiner" minOccurs="0">
+																<xsd:annotation>
+																	<xsd:documentation>Описание местоположения</xsd:documentation>
+																</xsd:annotation>
+															</xsd:element>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:choice minOccurs="0">
+							<xsd:element name="area" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Площадь</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" type="xsd:decimal" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Значение в кв. метрах</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+										<xsd:element name="inaccuracy" type="xsd:decimal" minOccurs="0">
+											<xsd:annotation>
+												<xsd:documentation>Погрешность</xsd:documentation>
+											</xsd:annotation>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="base_parameters" type="BaseParameters" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Основные характеристики сооружения, объекта незавершенного строительства</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:choice>
+						<xsd:element name="restrict_records" type="RestrictRecords">
+							<xsd:annotation>
+								<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

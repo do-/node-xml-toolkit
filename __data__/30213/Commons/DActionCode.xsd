@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/actionCode/1.0.0">
+  <!-- Дата создания: 2018-02-12 Номер справочника: 99 -->
+  <xs:simpleType name="DActionCode">
+    <xs:annotation>
+      <xs:documentation>Государственные услуги ЕГРН</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="659111111111">
+        <xs:annotation>
+          <xs:documentation>Постановка на государственный кадастровый учет и государственная регистрация прав в связи с созданием (образованием) объекта недвижимости (за исключением случаев ввода объекта капитального строительства в эксплуатацию, изъятия земельного участка на государственные нужды)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659111111112">
+        <xs:annotation>
+          <xs:documentation>Снятие с государственного кадастрового учета объекта недвижимости, права на который зарегистрированы в ЕГРН</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659111111113">
+        <xs:annotation>
+          <xs:documentation>Постановка на государственный кадастровый учет части объекта недвижимости при регистрации ограничений и обременений права</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659111111114">
+        <xs:annotation>
+          <xs:documentation>Снятие с государственного кадастрового учета части объекта недвижимости при регистрации ограничений и обременений права</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111111">
+        <xs:annotation>
+          <xs:documentation>Постановка на государственный кадастровый учет объекта недвижимости без одновременной государственной регистрации прав (по разрешению на ввод в эксплуатацию ОКС, в результате изъятия ЗУ или ОН на государственные нужды, при регистрации ЗУ, госсобственность на которые не разграничена, при регистрации мест общего пользования или ЗУ, занятых, объектами незавершенного строительства, при постановке на учет квартир, помещений одновременно с постановкой на КУ здания, если право на здание зарегистрировано в ЕГРН)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111112">
+        <xs:annotation>
+          <xs:documentation>Снятие с государственного кадастрового учета объекта недвижимости, права на который не зарегистрированы в ЕГРН</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111113">
+        <xs:annotation>
+          <xs:documentation>Постановка на государственный кадастровый учет части объекта недвижимости, ограничения и обременения на которую не регистрируются в ЕГРН в соответствии с федеральным законом</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111114">
+        <xs:annotation>
+          <xs:documentation>Снятие с государственного кадастрового учета части объекта недвижимости, ограничения и обременения на которую не регистрируются в ЕГРН в соответствии с федеральным законом</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111115">
+        <xs:annotation>
+          <xs:documentation>Изменение основных характеристик объекта недвижимости без одновременной государственной регистрации прав</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111116">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений о ранее учтённом объекте недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659211111117">
+        <xs:annotation>
+          <xs:documentation>Изменение вида объекта недвижимости в рамках учета изменений основных характеристик объекта недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111111">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация прав без одновременного государственного кадастрового учета (при наличии в ЕГРН сведений об объекте недвижимого имущества)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111112">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация прекращения права на объект недвижимости без одновременного государственного кадастрового учета (при наличии в ЕГРН сведений об объекте недвижимого имущества)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111113">
+        <xs:annotation>
+          <xs:documentation>Регистрация перехода права на объект недвижимости без одновременного государственного кадастрового учета (при наличии в ЕГРН сведений об объекте недвижимого имущества)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111114">
+        <xs:annotation>
+          <xs:documentation>Регистрация и погашение сделки об ограничении (обременении) права</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111115">
+        <xs:annotation>
+          <xs:documentation>Регистрация ограничений прав на объект недвижимости и обременений объекта недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111116">
+        <xs:annotation>
+          <xs:documentation>Прекращение ограничений прав на объект недвижимости и обременений объекта недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659311111117">
+        <xs:annotation>
+          <xs:documentation>Регистрация обременения на часть объекта недвижимости без заявления о кадастровом учете</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111111">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений в ЕГРН в порядке межведомственного информационного взаимодействия</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111112">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений в ЕГРН по инициативе заинтересованного лица</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111113">
+        <xs:annotation>
+          <xs:documentation>Исправление технических ошибок, содержащихся в ЕГРН</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111114">
+        <xs:annotation>
+          <xs:documentation>Внесение в ЕГРН сведений о границах в порядке межведомственного информационного взаимодействия</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111115">
+        <xs:annotation>
+          <xs:documentation>Изменение в ЕГРН сведений о границах в порядке межведомственного информационного взаимодействия</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111116">
+        <xs:annotation>
+          <xs:documentation>Исключение из ЕГРН сведений о границах в порядке межведомственного информационного взаимодействия</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111117">
+        <xs:annotation>
+          <xs:documentation>Приостановление осуществления государственного кадастрового учета и (или) государственной регистрации прав в заявительном порядке</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111118">
+        <xs:annotation>
+          <xs:documentation>Прекращение осуществления государственного кадастрового учета и (или) государственной регистрации прав в заявительном порядке</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111119">
+        <xs:annotation>
+          <xs:documentation>Возобновление государственной регистрации, ранее приостановленной по заявлению правообладателя</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111120">
+        <xs:annotation>
+          <xs:documentation>Обработка дополнительных документов, представляемых заявителем, в том числе с целью устранения причин, приведших к приостановлению государственного кадастрового учета и (или) государственной регистрации прав</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111121">
+        <xs:annotation>
+          <xs:documentation>Внесение в ЕГРН сведений о границах по инициативе заинтересованного лица</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111122">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111123">
+        <xs:annotation>
+          <xs:documentation>Государственная регистрация законного владельца закладной</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111124">
+        <xs:annotation>
+          <xs:documentation>Выдача закладной</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111125">
+        <xs:annotation>
+          <xs:documentation>Принятие объекта недвижимого имущества вновь во владение, пользование и распоряжение</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111126">
+        <xs:annotation>
+          <xs:documentation>Обработка заявления о том, что собственник объекта недвижимости не совершал действий, направленные на отказ от права собственности</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111127">
+        <xs:annotation>
+          <xs:documentation>Обработка документов, поступающих без заявлений</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111128">
+        <xs:annotation>
+          <xs:documentation>Исправление технических ошибок, содержащихся в сведениях реестра границ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111129">
+        <xs:annotation>
+          <xs:documentation>Обработка судебного акта или акта уполномоченного органа о наложении ареста на недвижимое имущество и прочее</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111130">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений о КС ОН, установленной решением комиссии/суда</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111131">
+        <xs:annotation>
+          <xs:documentation>Внесение изменений в записи реестра прав, ограничений прав и обременений недвижимого имущества Единого государственного реестра недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111132">
+        <xs:annotation>
+          <xs:documentation>Корректировка сведений</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111133">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений об отсутствии у застройщика права привлекать денежные средства граждан, являющихся участниками долевого строительства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111134">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений о ранее учтенных объектах без заявления</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111135">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений о приостановлении осуществления застройщиком деятельности, связанной с привлечением денежных средств участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111136">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений о ликвидации лица, привлекающего денежные средства участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111137">
+        <xs:annotation>
+          <xs:documentation>Выявление и исправление реестровой ошибки в описании местоположения границ земельных участков</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111138">
+        <xs:annotation>
+          <xs:documentation>Изменение вида объекта недвижимости при исправлении технической ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111139">
+        <xs:annotation>
+          <xs:documentation>Изменение вида объекта недвижимости при исправлении реестровой ошибки</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111140">
+        <xs:annotation>
+          <xs:documentation>Внесение сведений, полученных в результате выполнения комплексных кадастровых работ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111141">
+        <xs:annotation>
+          <xs:documentation>Определение кадастровой стоимости объектов недвижимости после утверждения результатов государственной кадастровой оценки</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111142">
+        <xs:annotation>
+          <xs:documentation>Обработка решения суда о необходимости проведения УРД, по которому ранее было принято решение об отказе в государственном кадастровом учете и (или) государственной регистрации прав</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111143">
+        <xs:annotation>
+          <xs:documentation>Обработка заявления о возврате излишне уплаченных денежных средств</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659411111144">
+        <xs:annotation>
+          <xs:documentation>Внесение нового участка границы объекта землеустройства</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111111">
+        <xs:annotation>
+          <xs:documentation>Предоставление сведений, содержащихся в ЕГРН, в виде копии документа</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111112">
+        <xs:annotation>
+          <xs:documentation>Предоставление сведений, содержащихся в ЕГРН, об объектах недвижимости и (или) их правообладателях</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111113">
+        <xs:annotation>
+          <xs:documentation>Предоставление сведений, содержащихся в Едином государственном реестре недвижимости, посредством обеспечения доступа к федеральной государственной информационной системе ведения Единого государственного реестра недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111114">
+        <xs:annotation>
+          <!-- Предыдущее значение
+          <xs:documentation>Предоставление сведений, содержащихся в Едином государственном реестре недвижимости, о зоне с особыми условиями использования территорий, территориальной зоне, территории объекта культурного наследия, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, лесопарке, об особо охраняемой природной территории, особой экономической зоне, охотничьих угодьях, об административно-территориальном делении, о береговой линии (границе водного объекта)</xs:documentation>
+          -->
+          <!-- Новое значение -->
+          <xs:documentation>Предоставление сведений о зоне с особыми условиями использования территорий, территориальной зоне, публичном сервитуте,  территории объекта культурного наследия, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, об особо охраняемой природной территории, особой экономической зоне, охотничьих угодьях, об административно-территориальном делении, о береговой линии (границе водного объекта), проекте межевания территории</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111115">
+        <xs:annotation>
+          <xs:documentation>Обеспечение доступа к федеральной государственной информационной системе ведения Единого государственного реестра недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111116">
+        <xs:annotation>
+          <xs:documentation>Предоставление сведений, содержащихся в Едином государственном реестре недвижимости, в виде кадастрового плана территории</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111117">
+        <xs:annotation>
+          <!-- Предыдущее значение
+          <xs:documentation>Предоставление сведений о зоне, территории или границе, содержащихся в ЕГРН, в виде копии документа</xs:documentation>
+          -->
+          <!-- Новое значение -->
+          <xs:documentation>Предоставление сведений о зоне, публичном сервитуте, территории или границе, содержащихся в ЕГРН, в виде копии документа</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111118">
+        <xs:annotation>
+          <!-- Предыдущее значение
+          <xs:documentation>"Предоставление сведений в отношении зон, территорий и границ, посредством обеспечения доступа к федеральной государственной информационной системе ведения Единого государственного реестра недвижимости "</xs:documentation>
+          -->
+          <!-- Новое значение -->
+          <xs:documentation>Предоставление сведений в отношении зон, публичных сервитутов, территорий и границ, посредством обеспечения доступа к федеральной государственной информационной системе ведения Единого государственного реестра недвижимости</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="659511111119">
+        <xs:annotation>
+          <xs:documentation>Предоставление перечня объектов недвижимости, подлежащих государственной кадастровой оценке</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <!-- Значение изменено в рамках доработок 5.2.6.3 ТЗ развития ФГИС ЕГРН 2019-2020 -->
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

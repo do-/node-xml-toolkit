@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:complexType name="RightRecordNumber">
+		<xsd:annotation>
+			<xsd:documentation>Номер реестровой записи о вещном праве</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="number" type="RecordNumber">
+				<xsd:annotation>
+					<xsd:documentation>Номер реестровой записи</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_number" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Номер регистрации вещного права</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="RestrictRecordNumber">
+		<xsd:annotation>
+			<xsd:documentation>Номер регистрации/реестровой записи об ограничении/обременении</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="number" type="RecordNumber" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер реестровой записи</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_number" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Номер регистрации ограничения права или обременения ОН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="DealRecordNumber">
+		<xsd:annotation>
+			<xsd:documentation>Номер реестровой записи о сделке</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="number" type="RecordNumber" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер реестровой записи</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Номер регистрации сделки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

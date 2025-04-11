@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<!--===Выписка из ЕГРН о кадастровой стоимости-->
+	<xsd:element name="extract_cadastral_value_property" type="ExtractCadastralValueProperty">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости о кадастровой стоимости объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractCadastralValueProperty">
+		<xsd:annotation>
+			<xsd:documentation>Выписка из Единого государственного реестра недвижимости о кадастровой стоимости объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatement">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="base_data" type="BaseData">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_available_information" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата, по состоянию на которую предоставляются сведения ЕГРН о кадастровой стоимости (дата, указанная в запросе или дата такого запроса)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cost" type="CostAllType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о кадастровой стоимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="special_marks" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Особые отметки </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

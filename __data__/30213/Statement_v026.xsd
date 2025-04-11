@@ -1,0 +1,2105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rosreestr.ru/services/v0.26/TStatement" xmlns:obj="http://rosreestr.ru/services/v0.26/commons/TObject" xmlns:subj="http://rosreestr.ru/services/v0.26/commons/Subjects" xmlns:doc="http://rosreestr.ru/services/v0.26/commons/Documents" xmlns:com="http://rosreestr.ru/services/v0.26/commons/Commons" xmlns:siml="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:dObT="http://rosreestr.ru/services/v0.26/commons/directories/objectType" xmlns:dCaA="http://rosreestr.ru/services/v0.26/commons/directories/cadastralAction" xmlns:dDea="http://rosreestr.ru/services/v0.26/commons/directories/deal" xmlns:dEnc="http://rosreestr.ru/services/v0.26/commons/directories/encumbrance" xmlns:dReA="http://rosreestr.ru/services/v0.26/commons/directories/registryAction" xmlns:dReD="http://rosreestr.ru/services/v0.26/commons/directories/requestDocument" xmlns:dReE="http://rosreestr.ru/services/v0.26/commons/directories/requestEGRNAccessAction" xmlns:dRes="http://rosreestr.ru/services/v0.26/commons/directories/result" xmlns:dRig="http://rosreestr.ru/services/v0.26/commons/directories/right" xmlns:dRiA="http://rosreestr.ru/services/v0.26/commons/directories/rightAction" xmlns:stCom="http://rosreestr.ru/services/v0.26/TStatementCommons" xmlns:address="http://rosreestr.ru/services/v0.26/commons/Address" targetNamespace="http://rosreestr.ru/services/v0.26/TStatement" elementFormDefault="qualified" vc:minVersion="1.1">
+	<!-- 30.11.2017 v025 -->
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/TObject" schemaLocation="TObject.xsd" id="obj"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Subjects" schemaLocation="TSubject.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Documents" schemaLocation="TDocument.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Address" schemaLocation="TAddress.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons" schemaLocation="Commons.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types" schemaLocation="CommonSimpleType.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/objectType" schemaLocation="Dictionary/DObjectType.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/cadastralAction" schemaLocation="Dictionary/DCadastralAction.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/deal" schemaLocation="Dictionary/DDeal.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/encumbrance" schemaLocation="Dictionary/DEncumbrance.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/registryAction" schemaLocation="Dictionary/DRegistryAction.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/requestDocument" schemaLocation="Dictionary/DRequestDocument.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/requestEGRNAccessAction" schemaLocation="Dictionary/DRequestEGRNAccessAction.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/result" schemaLocation="Dictionary/DResult.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/right" schemaLocation="Dictionary/DRight.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/rightAction" schemaLocation="Dictionary/DRightAction.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/TStatementCommons" schemaLocation="TStatementCommons.xsd"/>
+	<xs:complexType name="TBasicStatement">
+		<xs:annotation>
+			<xs:documentation>Базовый вид заявления</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="header" type="stCom:TBasicStatementHeader">
+				<xs:annotation>
+					<xs:documentation>Заголовок заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="objects" type="stCom:TBasicStatementObjects" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Описание объектов недвижимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subjects" type="tns:TStatementSubjects" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="statementDetails" type="tns:TBasicStatementDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Детали заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deliveryDetails" type="stCom:TBasicDeliveryDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="statementAgreements" type="stCom:TStatementAgreements" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Согласие заявителя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="_id" type="xs:token" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор заявления. Идентификаторы заявлений должны принимать уникальные значения в рамках одного пакета</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="build" type="xs:string" use="optional" fixed="26.001">
+			<xs:annotation>
+				<xs:documentation>Версия схемы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeader">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjects">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetails">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementForm1">
+		<xs:annotation>
+			<xs:documentation>Заявление по форме 1</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderForm1">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsForm1">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsForm1">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementForm2">
+		<xs:annotation>
+			<xs:documentation>Заявление по форме 2</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderForm2">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsForm2">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsForm2">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementForm3">
+		<xs:annotation>
+			<xs:documentation>Заявление по форме 3</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderForm3">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjectsForm3" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsForm3">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsForm3">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormMortgage">
+		<xs:annotation>
+			<xs:documentation>Заявление о погашении регистрационной записи об ипотеке, о внесении изменений в записи реестра прав, ограничений прав и обременений недвижимого имущества Единого государственного реестра недвижимости, о регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной,о государственной регистрации законного владельца закладной, о выдаче закладной</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderMortgage">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsMortgage">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsMortgage" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormChangeRegisteredStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление о приостановлении государственного кадастрового учета недвижимого имущества и (или) государственной регистрации прав на недвижимое имущество, о прекращении государственного кадастрового учета и (или) государственной регистрации прав и возврате документов без их проведения, о представлении дополнительных документов, о возобновлении государственного кадастрового учета и (или) государственной регистрации, ранее приостановленных в заявительном порядке</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementFormChangeRegisteredStatementHeader">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TFormChangeRegisteredStatementObjects" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsForm1">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsChangeRegisteredStatement">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormOwnerless">
+		<xs:annotation>
+			<xs:documentation>Заявление о принятии объекта недвижимого имущества вновь во владение, пользование и распоряжение (в собственность)/
+                Заявление о том, что собственник ОН не совершал действий, направленные на отказ от права собственности</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderOwnerless">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsForm2">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsOwnerless" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormAppliedDocuments">
+		<xs:annotation>
+			<xs:documentation>Документы, поступающие без заявления; Обработка судебного акта или акта уполномоченного органа о наложении ареста на недвижимое имущество и прочее; Внесение сведений о КС ОН, установленной решением комиссии/суда; Внесение сведений об отсутствии у застройщика права привлекать денежные средства граждан, являющихся участниками долевого строительства; Внесение сведений о ранее учтенных объектах без заявления; Внесение сведений о приостановлении осуществления застройщиком деятельности, связанной с привлечением денежных средств участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости; Внесение сведений о ликвидации лица, привлекающего денежные средства участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости. Прием и обработка решения суда о необходимости проведения УРД, по которому ранее было принято решение об отказе в государственном кадастровом учете и (или) государственной регистрации прав.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderAppliedDocuments">
+						<xs:annotation>
+							<xs:documentation>Заголовок обращения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TAppliedDocumentsStatementObjects" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsAppliedDocuments">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsAppliedDocuments" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TAppliedDocumentsDeliveryDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormTechErr">
+		<xs:annotation>
+			<xs:documentation>Форма заявления об исправлении технической ошибки в записях ЕГРН без заявления заинтересованного лица. Выявление и исправление реестровой ошибки в описании местоположения границ земельных участков. Изменение вида объекта недвижимости при исправлении технической ошибки. Изменение вида объекта недвижимости при исправлении реестровой ошибки. Определение кадастровой стоимости объектов недвижимости после утверждения результатов государственной кадастровой оценки.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderFormTechErr">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjects" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsTechErr">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsTechErr" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementFormReturnOfFunds">
+		<xs:annotation>
+			<xs:documentation>Заявление о возврате платы за предоставление сведений, содержащихся в ЕГРН, иной информации</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TStatementHeaderReturnOfFunds">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TStatementObjectsReturnOfFunds" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TStatementSubjectsReturnOfFunds">
+						<xs:annotation>
+							<xs:documentation>Описание субъектов (заявителей, правообладателей и их представителей)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TStatementDetailsReturnOfFunds">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="deliveryDetails" type="stCom:TDeliveryDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Описание способа получения заявления и доставки результата</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementAgreements" type="stCom:TStatementAgreements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Согласие заявителя</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjects">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="declarant" type="subj:TBasicStatementSubject" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Заявитель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="owners" type="tns:TStatementOwner" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Описание правообладателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsForm1">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления по форме 1</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="owners" type="tns:TStatementOwner" minOccurs="1" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание правообладателя
+                            </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsForm2">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления по форме 2</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectForm2" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsMortgage">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления по форме 2</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectForm2" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsForm3">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления по форме 3</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectForm3" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsAppliedDocuments">
+		<xs:annotation>
+			<xs:documentation>Субъекты по заявлению "Документы, поступающие без заявления"</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectAppliedDocuments" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsTechErr">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления по исправлению технической ошибки</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectTechErr" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementSubjectsReturnOfFunds">
+		<xs:annotation>
+			<xs:documentation>Сведения о заявителе</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TStatementSubjectReturnOfFunds">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementOwner">
+		<xs:annotation>
+			<xs:documentation>Правообладатель по заявлению</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="owner" type="subj:TStatementSubject" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Данные правообладателя, стороны сделки, лица, в пользу которого устанавливается ограничение права или обременение объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="representative" type="subj:TRepresentative" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Данные представителя правообладателя, стороны сделки, лица, в пользу которого устанавливается ограничение права или обременение объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TAppliedDocumentsOwnerParams">
+		<xs:annotation>
+			<xs:documentation>Параметры правообладателя в документах без заявлений</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="person" type="subj:TAppliedDocumentOwner">
+				<xs:annotation>
+					<xs:documentation>Физическое лицо. Правообладатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="organization" type="subj:TAppliedDocumentOrganization">
+				<xs:annotation>
+					<xs:documentation>Юридическое лицо. Правообладатель</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="country" type="subj:TCountry">
+				<xs:annotation>
+					<xs:documentation>Государство</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rfSubject" type="subj:TRFSubject">
+				<xs:annotation>
+					<xs:documentation>Субъект РФ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="city" type="subj:TCity">
+				<xs:annotation>
+					<xs:documentation>Муниципальное образование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TBasicStatementDetails">
+		<xs:annotation>
+			<xs:documentation>Базовые Детали заявлений</xs:documentation>
+		</xs:annotation>
+		<xs:sequence maxOccurs="1">
+			<xs:choice minOccurs="1">
+				<xs:element name="rightsAction" type="tns:TRightAction" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Регистрация права</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cadastralActions" type="tns:TCadastralActions" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Кадастровый учет</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="combinedAction" type="tns:TCombinedAction" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Регистрация права и кадастровый учёт одновременно</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="registryAction" type="tns:TRegistryAction" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="mortgageAction" type="tns:TMortgageAction" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Регистраця ипотеки</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="changeRegisteredStatementAction" type="tns:TChangeRegisteredStatementAction" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Управление ранее поданными заявлениями</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="owner" type="tns:TAppliedDocumentsOwnerParams" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Правообладатель</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="returnOfFunds" type="tns:TReturnOfFunds" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Возврат платы за предоставление сведений, содержащихся в ЕГРН, иной информации </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appliedDocumentsAction" type="tns:TAppliedDocumentsAction" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Документы, поступающие без заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetails">
+		<xs:annotation>
+			<xs:documentation>Детали заявления (суть заявления)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice minOccurs="1">
+						<xs:element name="rightsAction" type="tns:TRightAction">
+							<xs:annotation>
+								<xs:documentation>Регистрация права</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cadastralActions" type="tns:TCadastralActions">
+							<xs:annotation>
+								<xs:documentation>Кадастровый учет</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="combinedAction" type="tns:TCombinedAction">
+							<xs:annotation>
+								<xs:documentation>Регистрация права и кадастровый учёт одновременно</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="registryAction" type="tns:TRegistryAction">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="returnOfFunds" type="tns:TReturnOfFunds">
+							<xs:annotation>
+								<xs:documentation>Возврат платы за предоставление сведений, содержащихся в ЕГРН, иной информации </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsForm1">
+		<xs:annotation>
+			<xs:documentation>Детали заявления по форме 1</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice minOccurs="1">
+						<xs:element name="rightsAction" type="tns:TRightAction">
+							<xs:annotation>
+								<xs:documentation>Регистрация права</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cadastralActions" type="tns:TCadastralActions">
+							<xs:annotation>
+								<xs:documentation>Кадастровый учет</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="combinedAction" type="tns:TCombinedAction">
+							<xs:annotation>
+								<xs:documentation>Регистрация права и кадастровый учёт одновременно</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsForm2">
+		<xs:annotation>
+			<xs:documentation>Детали заявление по формe 2
+            </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice minOccurs="1">
+						<xs:element name="registryAction" type="tns:TRegistryActionForm2">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsForm3">
+		<xs:annotation>
+			<xs:documentation>Детали заявление по формe 3</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice minOccurs="1">
+						<xs:element name="registryAction" type="tns:TRegistryActionForm3">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsMortgage">
+		<xs:annotation>
+			<xs:documentation>Детали заявлений по Ипотеке</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice>
+						<xs:element name="mortgageAction" type="tns:TMortgageAction" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Регистрация ипотеки</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsChangeRegisteredStatement">
+		<xs:annotation>
+			<xs:documentation>Детали заявления по Заявлению о приостановлении государственного кадастрового учета недвижимого имущества и (или) государственной регистрации прав на недвижимое имущество, о прекращении государственного кадастрового учета и (или) государственной регистрации прав и возврате документов без их проведения, о представлении дополнительных документов, о возобновлении государственного кадастрового учета и (или) государственной регистрации, ранее приостановленных в заявительном порядке</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:element name="changeRegisteredStatementAction">
+						<xs:annotation>
+							<xs:documentation>Управление ранее поданными заявлениями</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:restriction base="tns:TChangeRegisteredStatementAction">
+									<xs:sequence>
+										<xs:element name="statementRegDate" type="xs:date" minOccurs="1">
+											<xs:annotation>
+												<xs:documentation>Дата предоставления документов по ранее зарегистрированному Заявлению</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="previousStatementKUVDNumber" type="com:SKUVDNumber">
+											<xs:annotation>
+												<xs:documentation>Номер книги учета входящих документов, в которой документы были зарегистрированы, и номер записи в этой книге, под которым были зарегистрированы заявление и документы</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="time" type="xs:date" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Cрок приостановления осуществления государственного кадастрового учета и (или) государственной регистрации прав </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="cause" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Причина(ы) приостановленияосуществления государственного кадастрового учета и (или) государственной регистрации прав
+                                                </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:restriction>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsAppliedDocuments">
+		<xs:annotation>
+			<xs:documentation>Детали заявления "Документы, поступающие без заявления"</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:element name="owner" type="tns:TAppliedDocumentsOwnerParams" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Правообладатель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="appliedDocumentsAction" type="tns:TAppliedDocumentsAction" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Документы, поступающие без заявления, к ранее поданному обращению</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsOwnerless">
+		<xs:annotation>
+			<xs:documentation>Детали заявления по регистрации бесхозяйных ОН</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:element name="note" type="com:TNote" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsTechErr">
+		<xs:annotation>
+			<xs:documentation>Детали заявление исправление технической ошибки
+            </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:element name="registryAction" type="tns:TRegistryActionTechErr" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="note" type="com:TNote" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TStatementDetailsReturnOfFunds">
+		<xs:annotation>
+			<xs:documentation>Детали заявление о возврате платы за предоставление сведений, содержащихся в ЕГРН, иной информации</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TStatementDetails">
+				<xs:sequence maxOccurs="1">
+					<xs:choice minOccurs="1">
+						<xs:element name="returnOfFunds" type="tns:TReturnOfFunds">
+							<xs:annotation>
+								<xs:documentation>Возврат платы за предоставление сведений, содержащихся в ЕГРН, иной информации</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Дополнительная информация</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRightAction">
+		<xs:annotation>
+			<xs:documentation>Описание заявления по регистрации права</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="1">
+			<xs:element name="rightActionType" type="dRiA:DRightAction">
+				<xs:annotation>
+					<xs:documentation>Код типа действия по регистрации права</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="sharePart">
+					<xs:annotation>
+						<xs:documentation>Доля</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="numerator" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>Числитель</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="denominator" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>Знаменатель</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="builderShareWithObject" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>Доля в праве общей долевой собственности пропорциональна размеру общей площади</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="shareOfAppartmentBuilding" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак того, что в заявлении регистрируется доля в праве общей собственности на общее имущество в многоквартирном доме</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shareNoRights" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак того, что в заявлении содержится ходатайство о регистрации доли в праве общей долевой собственности, возникновение которой не связано с государственной регистрацией права (например, наследование, полная выплата паевого взноса членом жилищного, жилищно-строительного, дачного, гаражного или иного потребительского кооператива) (за исключением доли в праве общей собственности на земельные участки из земель сельскохозяйственного назначения)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="governmentOwnership" type="xs:boolean" fixed="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак того, что в заявлении содержится ходатайство о регистрации права на объект, который находится в государственной или муниципальной собственности</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="rightKind" type="dRig:DRight">
+					<xs:annotation>
+						<xs:documentation>Код вида права</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="rightRestrictionsKind" type="dEnc:DEncumbrance">
+					<xs:annotation>
+						<xs:documentation>Код вида ограничения права, обременения объекта недвижимости</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dealCode" type="dDea:DDeal">
+					<xs:annotation>
+						<xs:documentation>Код сделки</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="withoutTransferring" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Без перехода права к новому правообладателю</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="firstRight" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Первоначальное право</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dealNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер сделки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dealDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата сделки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TCadastralActions">
+		<xs:sequence>
+			<xs:element name="cadastralAction" type="tns:TCadastralAction" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Кадастровый учет</xs:documentation>
+				</xs:annotation>
+				<!--                <xs:alternative test="@cadastralActionType = '111200003020'"
+                    type="tns:TCadastralActionCadastralNumber"/>
+                <xs:alternative test="@cadastralActionType = '111200003070'"
+                    type="tns:TCadastralActionChangingCharacteristics"/>-->
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TCadastralActionCadastralNumber">
+		<xs:complexContent>
+			<xs:restriction base="tns:TCadastralAction">
+				<xs:sequence minOccurs="1">
+					<xs:element name="enclosingObjectCadastralNumbers" type="tns:TEnclosingObjectCadastralNumbers" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Кадастровые номера земельного участка</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TCadastralActionChangingCharacteristics">
+		<xs:complexContent>
+			<xs:restriction base="tns:TCadastralAction">
+				<xs:sequence minOccurs="1">
+					<xs:element name="changingCharacteristics" type="xs:string" minOccurs="1" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Характеристика ОН подлежащая изменению</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TEnclosingObjectCadastralNumbers">
+		<xs:sequence>
+			<xs:element name="enclosingObjectCadastralNumber" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Кадастровый номер земельного участка (указывается в случае уточнения местоположения ОН на участке)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="objectTypeCode" type="dObT:DObjectType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Вид объекта недвижимости</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cadastralNumber" type="com:SCadastralNumber">
+							<xs:annotation>
+								<xs:documentation>Кадастровый номер</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TCadastralAction">
+		<xs:sequence minOccurs="1">
+			<xs:element name="enclosingObjectCadastralNumbers" type="tns:TEnclosingObjectCadastralNumbers" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Кадастровые номера земельного участка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="changingCharacteristics" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Характеристика ОН подлежащая изменению</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="cadastralActionType" type="dCaA:DCadastralAction" use="required">
+			<xs:annotation>
+				<xs:documentation>Код типа действия по кадастровому учету</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TCombinedAction">
+		<xs:sequence minOccurs="0">
+			<xs:element name="cadastralActions" type="tns:TCadastralActions">
+				<xs:annotation>
+					<xs:documentation>Кадастровый учет</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rightsAction" type="tns:TRightAction">
+				<xs:annotation>
+					<xs:documentation>Регистрация права</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRegistryAction">
+		<xs:choice>
+			<xs:element name="registryChangeAction" type="tns:TBasicRegistryChangeAction" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="registryChangeObjectAction" type="tns:TBasicRegistryChangeAction" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Внесение сведений в ЕГРН в отношении объекта недвижимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="borderErrorAction" type="tns:TBorderErrorAction" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Внесение сведений при исправлении технических ошибок в реестре границ</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="borderErrorActionTechErr" type="tns:TBorderErrorActionTechErr">
+					<xs:annotation>
+						<xs:documentation>Внесение сведений при исправлении технических ошибок в реестре границ (расширенный)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="registryErrorAction" type="tns:TRegistryErrorAction" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="registryErrorActionTechErr" type="tns:TRegistryErrorActionTechErr" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН (расширенный)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TRegistryActionForm2">
+		<xs:complexContent>
+			<xs:restriction base="tns:TRegistryAction">
+				<xs:choice>
+					<xs:element name="registryChangeAction" type="tns:TRegistryChangeAction" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="registryChangeObjectAction" type="tns:TRegistryChangeObjectAction2" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Внесение сведений в ЕГРН в отношении объекта недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:choice>
+						<xs:element name="borderErrorAction" type="tns:TBorderErrorAction" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений при исправлении технических ошибок в реестре границ</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:choice>
+						<xs:element name="registryErrorAction" type="tns:TRegistryErrorAction" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryActionForm3">
+		<xs:complexContent>
+			<xs:restriction base="tns:TRegistryAction">
+				<xs:choice>
+					<xs:element name="registryChangeObjectAction" type="tns:TRegistryChangeObjectAction3" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Внесение сведений в ЕГРН в отношении объекта недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryActionTechErr">
+		<xs:complexContent>
+			<xs:restriction base="tns:TRegistryAction">
+				<xs:choice>
+					<xs:choice>
+						<xs:element name="borderErrorActionTechErr" type="tns:TBorderErrorActionTechErr">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений при исправлении технических ошибок в реестре границ (расширенный)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:choice>
+						<xs:element name="registryErrorActionTechErr" type="tns:TRegistryErrorActionTechErr" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН (расширенный)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRequestCopyAction">
+		<xs:sequence>
+			<xs:element name="requestDocumentType" type="dReD:DRequestDocument">
+				<xs:annotation>
+					<xs:documentation>Тип запрашиваемого документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание запрашиваемого документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRequestEGRNDataAction">
+		<xs:sequence>
+			<xs:element name="resultType" type="dRes:DResult">
+				<xs:annotation>
+					<xs:documentation>Тип предоставления результата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRequestEGRNAccessAction">
+		<xs:sequence>
+			<xs:element name="actionTypeCode" type="dReE:DRequestEGRNAccessAction">
+				<xs:annotation>
+					<xs:documentation>Вид предоставляемых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Описание запрашеваемых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TActionDetails">
+		<xs:choice>
+			<xs:element name="details" type="com:TNote" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Детальная формулировка вносимых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regRecordInfo" type="tns:TRegRecordInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о реестровой записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kuvd" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о ранее поданном заявлении</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence minOccurs="0">
+						<xs:element name="kuvd_number" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Номер заявления</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="kuvd_date" type="xs:date" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Дата приема заявления</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="pep" type="xs:string" fixed="Документ подписан простой электронной подписью заявителя" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Признак подписания ПЭП при подаче заявления кредитной организацией</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TActionDetailsMortgage">
+		<xs:sequence>
+			<xs:element name="details" type="com:TNote" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Детальная формулировка вносимых сведений</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regRecordInfo" type="tns:TRegRecordInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Сведения о реестровой записи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TBasicRegistryChangeAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений в ЕГРН (базовая)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="1">
+			<xs:element name="registryActionType" type="dReA:DRegistryAction" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код действия по внесению сведений в ЕГРН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="actionDetailMortgage" type="tns:TActionDetailsMortgage" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="actionDetail" type="tns:TActionDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRegistryChangeAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicRegistryChangeAction">
+				<xs:sequence minOccurs="1">
+					<xs:element name="registryActionType" type="tns:DStatementRegistryActionType">
+						<xs:annotation>
+							<xs:documentation>Документы, сведения для внесения сведений в ЕГРН</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="actionDetail" type="tns:TActionDetails" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryChangeMortgageAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений по Ипотеке в записи ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicRegistryChangeAction">
+				<xs:sequence>
+					<xs:element name="actionDetailMortgage" type="tns:TActionDetailsMortgage" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryChangeObjectAction2">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений в ЕГРН в отношении объекта недвижимости</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicRegistryChangeAction">
+				<xs:sequence minOccurs="1">
+					<xs:element name="registryActionType">
+						<xs:annotation>
+							<xs:documentation>Документы, сведения для внесения сведений в ЕГРН</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="dReA:DRegistryAction">
+								<xs:pattern value="5590101\d{5}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="actionDetail" type="tns:TActionDetails" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryChangeObjectAction3">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений в ЕГРН в отношении объекта недвижимости</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicRegistryChangeAction">
+				<xs:sequence minOccurs="1">
+					<xs:element name="registryActionType">
+						<xs:annotation>
+							<xs:documentation>Код действия по внесению сведений в ЕГРН</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="dReA:DRegistryAction">
+								<xs:pattern value="5590103\d{5}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="actionDetail" type="tns:TActionDetails" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryErrorActionBase" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="regRecordInfo" type="tns:TRegRecordInfo">
+					<xs:annotation>
+						<xs:documentation>Сведения о технической ошибке, допущенной в сведениях реестра прав на недвижимость</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cadastralNumber" type="com:SCadastralNumber" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Кадастровый номер ОН, в сведениях ЕГРН о котором допущена ошибка</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="errRecord" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ошибочная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="corrRecord" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Корректная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRegistryErrorAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:TRegistryErrorActionBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TRegistryErrorActionTechErr">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений при исправлении технических ошибок в ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tns:TRegistryErrorActionBase">
+				<xs:sequence>
+					<xs:element name="xPath" type="xs:string" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TChangeRegisteredStatementAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений по «управлению» ранее поданными заявлениями</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="statementRegDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата предоставления документов по ранее зарегистрированному Заявлению</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="previousStatementKUVDNumber" type="com:SKUVDNumber">
+				<xs:annotation>
+					<xs:documentation>Номер книги учета входящих документов, в которой документы были зарегистрированы, и номер записи в этой книге, под которым были зарегистрированы заявление и документы</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="time" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cрок приостановления осуществления государственного кадастрового учета и (или) государственной регистрации прав </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cause" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Причина(ы) приостановленияосуществления государственного кадастрового учета и (или) государственной регистрации прав
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TOriginalRequest">
+		<xs:annotation>
+			<xs:documentation>Данные исходного обращения</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TChangeRegisteredStatementAction">
+				<xs:sequence>
+					<xs:element name="statementRegDate" type="xs:date" minOccurs="0" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Дата предоставления документов</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="previousStatementKUVDNumber" type="com:SKUVDNumber" minOccurs="1" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Номер исходного обращения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TAppliedDocumentsAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений по заявлению "Документы, поступающие без заявления"</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TChangeRegisteredStatementAction">
+				<xs:sequence>
+					<xs:element name="previousStatementKUVDNumber" type="com:SKUVDNumber">
+						<xs:annotation>
+							<xs:documentation>Номер исходного обращения</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TMortgageAction">
+		<xs:annotation>
+			<xs:documentation>Внесение сведений по Ипотеке</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="registryChangeAction" type="tns:TRegistryChangeMortgageAction">
+				<xs:annotation>
+					<xs:documentation>Внесение сведений в ЕГРН</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mortgageBondIssueAction" type="tns:TMortgageBondIssueAction">
+				<xs:annotation>
+					<xs:documentation>Выдача закладной / погашение записи об ипотеке</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TMortgageBondIssueAction">
+		<xs:annotation>
+			<xs:documentation>Выдача закладной / погашение записи об ипотеке</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mortgageRegDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата регистрации Ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mortgageRegNumber" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Номер регистарции Ипотеки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TReturnOfFunds">
+		<xs:annotation>
+			<xs:documentation>Детали заявления о возврате платы за предоставление сведений, содержащихся в ЕГРН, иной информации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sizeExcessivelyPaidAmount" type="doc:TSizeExcessivelyPaidAmount">
+				<xs:annotation>
+					<xs:documentation>Размер излишне оплаченной суммы за предоставление сведений, содержащихся в ЕГРН, и иной информации</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reasonReturn" type="siml:s1000">
+				<xs:annotation>
+					<xs:documentation>Причина возврата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bankDetails" type="doc:TBankDetails">
+				<xs:annotation>
+					<xs:documentation>Счет и реквизиты банка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="originalRequest" type="tns:TOriginalRequest" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Данные исходного обращения</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="identificationCodePayment" type="doc:TIdentificationCodePayment" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Идентификация кода платежа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TRegRecordInfo">
+		<xs:annotation>
+			<xs:documentation>Сведения о записи в Реестре Прав </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Дата внесения данны в запись реестра</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="regNumber" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Номер записи реестра </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DStatementRegistryActionType">
+		<xs:annotation>
+			<xs:documentation>Документы, сведения для внесения сведений в ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="dReA:DRegistryAction">
+			<xs:pattern value="5590102\d{5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="statementForm1" type="tns:TStatementForm1">
+		<xs:annotation>
+			<xs:documentation>Приложение 1. Форма заявления о государственном кадастровом учете недвижимого имущества и (или) государственной регистрации прав на недвижимое имущество</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsForm1">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsForm1">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsForm1">
+			<xs:selector xpath="tns:subjects/tns:owners/tns:owner | .//tns:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefForm1" refer="tns:docsForm1">
+            <xs:selector xpath="tns:subjects/tns:owners/tns:owner/subj:person/subj:idDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="form1IdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form1RepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form1SubjectKey">
+			<xs:selector xpath="tns:subjects/tns:owners/tns:owner | .//tns:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="form1PersonIdDocumentKeyRef" refer="tns:form1IdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form1RepresentativeDocumentKeyRef" refer="tns:form1RepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form1PaymentDocumentPayerKeyRef" refer="tns:form1SubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementForm2" type="tns:TStatementForm2">
+		<xs:annotation>
+			<xs:documentation>Приложение 2. Форма заявления об исправлении технической ошибки в записях единого государственного реестра недвижимости, о внесении сведений в единый государственный реестр недвижимости заинтересованным лицом, о внесении в единый государственный реестр недвижимости записей о наличии возражения в отношении зарегистрированного права на объект недвижимости, записей о невозможности государственной регистрации права без личного участия правообладателя, записей о наличии прав требований в отношении зарегистрированного права, отдельных записей о правообладателе, отдельных дополнительных сведений об объекте недвижимости</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsForm2">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsForm2">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsForm2">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefForm2" refer="tns:docsForm2">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="form2IdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form2ReperesentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form2SubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="form2PersonIdDocumentKeyRef" refer="tns:form2IdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form2RepresentativeDocumentKeyRef" refer="tns:form2ReperesentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form2PaymentDocumentPayerKeyRef" refer="tns:form2SubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementForm3" type="tns:TStatementForm3">
+		<xs:annotation>
+			<xs:documentation>Приложение 3. Форма заявления о внесении в единый государственный реестр недвижимости сведений о земельных участках и о местоположении на них зданий, сооружений, объектов незавершенного строительства, полученных в результате выполнения комплексных кадастровых работ</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsForm3">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsForm3">
+			<xs:selector xpath="tns:objects/stCom:cadastralBlock | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsForm3">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefForm3" refer="tns:docsForm3">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="form3IdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form3RepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="form3SubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="form3PersonIdDocumentKeyRef" refer="tns:form3IdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form3RepresentativeDocumentKeyRef" refer="tns:form3RepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="form3PaymentDocumentPayerKeyRef" refer="tns:form3SubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormMortgage" type="tns:TStatementFormMortgage">
+		<xs:annotation>
+			<xs:documentation>Заявление о погашении регистрационной записи об ипотеке, о внесении изменений в записи реестра прав, ограничений прав и обременений недвижимого имущества Единого государственного реестра недвижимости, о регистрация передачи права по закладной в случае, если права залогодержателя удостоверяются закладной,о государственной регистрации законного владельца закладной, о выдаче закладной</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormMortgage">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormMortgage">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsFormMortgage">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject  | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormMortgage" refer="tns:docsForm2">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formMortgageIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formMortgageRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formMortgageSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject  | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formMortgagePersonIdDocumentKeyRef" refer="tns:formMortgageIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formMortgageRepresentativeDocumentKeyRef" refer="tns:formMortgageRepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formMortgagePaymentDocumentPayerKeyRef" refer="tns:formMortgageSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormChangeRegisteredStatement" type="tns:TStatementFormChangeRegisteredStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление о приостановлении государственного кадастрового учета недвижимого имущества и (или) государственной регистрации прав на недвижимое имущество, о прекращении государственного кадастрового учета и (или) государственной регистрации прав и возврате документов без их проведения, о представлении дополнительных документов, о возобновлении государственного кадастрового учета и (или) государственной регистрации, ранее приостановленных в заявительном порядке</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormChangeRegisteredStatement">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormChangeRegisteredStatement">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormChangeRegisteredStatement" refer="tns:docsForm2">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formChangeRegisteredStatementIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formChangeRegisteredStatementReperesentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formChangeRegisteredStatementSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:owners/tns:owner | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formChangeRegisteredStatementPersonIdDocumentKeyRef" refer="tns:formChangeRegisteredStatementIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formChangeRegisteredStatementRepresentativeDocumentKeyRef" refer="tns:formChangeRegisteredStatementReperesentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formChangeRegisteredStatementPaymentDocumentPayerKeyRef" refer="tns:formChangeRegisteredStatementSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormOwnerless" type="tns:TStatementFormOwnerless">
+		<xs:annotation>
+			<xs:documentation>Заявление о принятии объекта недвижимого имущества вновь во владение, пользование и распоряжение (в собственность)/
+                Заявление о том, что собственник ОН не совершал действий, направленные на отказ от права собственности</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormOwnerless">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormOwnerless">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsFormOwnerless">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormOwnerless" refer="tns:docsFormOwnerless">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formOwnerlessIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formOwnerlessRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formOwnerlessSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formOwnerlessPersonIdDocumentKeyRef" refer="tns:formOwnerlessIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formOwnerlessRepresentativeDocumentKeyRef" refer="tns:formOwnerlessRepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formOwnerlessPaymentDocumentPayerKeyRef" refer="tns:formOwnerlessSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormAppliedDocuments" type="tns:TStatementFormAppliedDocuments">
+		<xs:annotation>
+			<xs:documentation>Документы, поступающие без заявления; Обработка судебного акта или акта уполномоченного органа о наложении ареста на недвижимое имущество и прочее; Внесение сведений о КС ОН, установленной решением комиссии/суда; Внесение сведений об отсутствии у застройщика права привлекать денежные средства граждан, являющихся участниками долевого строительства; Внесение сведений о ранее учтенных объектах без заявления; Внесение сведений о приостановлении осуществления застройщиком деятельности, связанной с привлечением денежных средств участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости; Внесение сведений о ликвидации лица, привлекающего денежные средства участников долевого строительства для строительства (создания) многоквартирных домов и (или) иных объектов недвижимости. Прием и обработка решения суда о необходимости проведения УРД, по которому ранее было принято решение об отказе в государственном кадастровом учете и (или) государственной регистрации прав.</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormAppliedDocuments">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormAppliedDocuments">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsFormAppliedDocuments">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormAppliedDocuments" refer="tns:docsFormAppliedDocuments">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formAppliedDocumentsIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formAppliedDocumentsRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formAppliedDocumentsSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/tns:subject | .//subj:representative/tns:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formAppliedDocumentsPersonIdDocumentKeyRef" refer="tns:formAppliedDocumentsIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formAppliedDocumentsRepresentativeDocumentKeyRef" refer="tns:formAppliedDocumentsRepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formAppliedDocumentsPaymentDocumentPayerKeyRef" refer="tns:formAppliedDocumentsSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormTechErr" type="tns:TStatementFormTechErr">
+		<xs:annotation>
+			<xs:documentation>Форма заявления об исправлении технической ошибки в записях ЕГРН без заявления заинтересованного лица. Выявление и исправление реестровой ошибки в описании местоположения границ земельных участков. Изменение вида объекта недвижимости при исправлении технической ошибки. Изменение вида объекта недвижимости при исправлении реестровой ошибки. Определение кадастровой стоимости объектов недвижимости после утверждения результатов государственной кадастровой оценки.</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormTechErr">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormTechErr">
+			<xs:selector xpath="tns:objects/tns:object | tns:objects/tns:cadastralBlock"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsFormTechErr">
+			<xs:selector xpath="tns:subjects/tns:declarant"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormTechErr" refer="tns:docsFormTechErr">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formTechErrIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formTechErrRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formTechErrSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formTechErrPersonIdDocumentKeyRef" refer="tns:formTechErrIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formTechErrPaymentDocumentPayerKeyRef" refer="tns:formTechErrSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:element name="statementFormReturnOfFunds" type="tns:TStatementFormReturnOfFunds">
+		<xs:annotation>
+			<xs:documentation>Заявление о возврате платы за предоставление сведений, содержащихся в ЕГРН, иной информации</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="docsFormReturnOfFunds">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/*"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="objectsFormReturnOfFunds">
+			<xs:selector xpath="tns:objects/tns:object"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<xs:unique name="subjectsFormReturnOfFunds">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:unique>
+		<!--xs:keyref name="docsRefFormReturnOfFunds" refer="tns:docsFormReturnOfFunds">
+            <xs:selector
+                xpath="tns:subjects/tns:declarant/subj:person/subj:idDocumentRef | tns:subjects/tns:declarant/subj:representative/subj:representativeDocumentRef"/>
+            <xs:field xpath="@documentID"/>
+        </xs:keyref-->
+		<xs:key name="formReturnOfFundsIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formReturnOfFundsRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:idDocument | tns:header/stCom:appliedDocument/doc:otherDocument | tns:header/stCom:appliedDocument/doc:powerOfAttorney | tns:header/stCom:appliedDocument/doc:legalAct | tns:header/stCom:appliedDocument/doc:confirmPrivilege"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="formReturnOfFundsSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//tns:representative/subj:subject | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="formReturnOfFundsPersonIdDocumentKeyRef" refer="tns:formReturnOfFundsIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formTechErrRepresentativeDocumentKeyRef" refer="tns:formReturnOfFundsRepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="formReturnOfFundsPaymentDocumentPayerKeyRef" refer="tns:formReturnOfFundsSubjectKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:paymentDocument/doc:idPayers"/>
+			<xs:field xpath="doc:idPayer"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:complexType name="TBorderErrorActionBase" abstract="true">
+		<xs:sequence>
+			<xs:element name="borderRecordNumber" type="obj:DBorderRecordNumber" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Реестровый номер границы, в сведениях ЕГРН о которой допущена ошибка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="errRecord" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Ошибочная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="corrRecord" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Корректная запись</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TBorderErrorAction">
+		<xs:complexContent>
+			<xs:extension base="tns:TBorderErrorActionBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBorderErrorActionTechErr">
+		<xs:complexContent>
+			<xs:extension base="tns:TBorderErrorActionBase">
+				<xs:sequence>
+					<xs:element name="xPath" type="xs:string" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

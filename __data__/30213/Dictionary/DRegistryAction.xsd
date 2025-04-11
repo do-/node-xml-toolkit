@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/registryAction" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 104 -->
+    <xs:simpleType name="DRegistryAction">
+        <xs:annotation>
+            <xs:documentation>Документы, сведения для внесения сведений в ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="559010101000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) разрешенного использования земельного участка</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010102000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) о переводе жилого помещения в нежилое помещение, нежилого помещения в жилое помещение (об утверждении акта приемочной комиссии)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010103000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об отнесении к определенной категории земель (о переводе земельного участка из одной категории земель в другую)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010104000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) о результатах проведения государственного земельного надзора</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010105000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об утверждении результатов государственной кадастровой оценки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010106000">
+                <xs:annotation>
+                    <xs:documentation>об адресе</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010107000">
+                <xs:annotation>
+                    <xs:documentation>о назначении единого недвижимого комплекса или предприятия как имущественного комплекса</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010108000">
+                <xs:annotation>
+                    <xs:documentation>иные предусмотренные законодательством Российской Федерации сведения в отношении объекта недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010201000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в утвержденных (измененных) правилах землепользования и застройки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010202000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в утвержденной (измененной) документации по планировке территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010203000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) прохождения Государственной границы Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010204000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ между субъектами Российской Федерации, границ муниципального образования</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010205000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ населенного пункта</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010206000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении, изменении границ территориальной зоны</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010207000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении, изменении или о прекращении существования зоны с особыми условиями использования территорий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010208000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ особо охраняемой природной территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010209000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ охотничьих угодий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010210000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в утвержденном (измененном) проекте межевания территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010211000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ территорий опережающего социально-экономического развития</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010212000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ зон территориального развития в Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010213000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ игорных зон</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010214000">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) об установлении (изменении) границ лесничеств, лесопарков</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010214600">
+                <xs:annotation>
+                    <xs:documentation>об изменении границ Байкальской природной территории и ее экологических зон</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010214200">
+                <xs:annotation>
+                    <xs:documentation>содержащиеся в решении (акте) о резервировании земель для государственных или муниципальных нужд, об отмене решения о резервировании земель для государственных или муниципальных нужд</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010214400">
+                <xs:annotation>
+                    <xs:documentation>об установлении, изменении границ лесопаркового зеленого пояса или о его упразднении</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010214500">
+                <xs:annotation>
+                    <xs:documentation>о создании, объединении, изменении границ территории опережающего развития или о прекращении существования территории опережающего развития</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010215000">
+                <xs:annotation>
+                    <xs:documentation>о физическом лице (правообладателе, лице, права которого ограничиваются и обременяются объекты недвижимости, лице, в пользу которого права ограничиваются и обременяются объекты недвижимости, стороне сделки в записях реестра прав на недвижимость) в связи с изменением сведений о нем, находящихся в распоряжении федерального органа исполнительной власти, уполномоченного на осуществление функций по контролю и надзору в сфере миграции</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010216000">
+                <xs:annotation>
+                    <xs:documentation>о проживающих в жилом помещении членах семьи собственника данного жилого помещения, находящихся под опекой или попечительством, либо несовершеннолетних членах семьи собственника данного жилого помещения, оставшихся без попечения родителей</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010217000">
+                <xs:annotation>
+                    <xs:documentation>о юридическом лице (правообладателе, лице, права которого ограничиваются и обременяются объекты недвижимости, лице, в пользу которого права ограничиваются и обременяются объекты недвижимости, стороне сделки в записях реестра прав на недвижимость) в связи с изменением сведений о нем, содержащихся в едином государственном реестре юридических лиц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010218000">
+                <xs:annotation>
+                    <xs:documentation>о признании гражданина ограниченным в дееспособности или признанным недееспособным</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010219000">
+                <xs:annotation>
+                    <xs:documentation>о наложении (снятии) ареста или запрета совершать определенные действия с недвижимым имуществом или об избрании в качестве меры пресечения залога, о возврате залога залогодателю или об обращении залога в доход государства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010220000">
+                <xs:annotation>
+                    <xs:documentation>внести запись о наличии возражения, заявленном в судебном порядке праве требования в отношении зарегистрированного права на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010221000">
+                <xs:annotation>
+                    <xs:documentation>погасить запись о наличии возражения в отношении зарегистрированного права на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010222000">
+                <xs:annotation>
+                    <xs:documentation>внести запись о невозможности государственной регистрации перехода, прекращения, ограничения права и обременения объекта недвижимости без личного участия собственника (его законного представителя)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010223000">
+                <xs:annotation>
+                    <xs:documentation>погасить запись о невозможности государственной регистрации перехода, прекращения, ограничения права и обременения объекта недвижимости без личного участия собственника (его законного представителя)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010224000">
+                <xs:annotation>
+                    <xs:documentation>об адресе электронной почты и (или) о почтовом адресе лица, чье право на объект недвижимости зарегистрировано, а также лица, в пользу которого зарегистрировано ограничение права и обременение объекта недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010225000">
+                <xs:annotation>
+                    <xs:documentation>иные предусмотренные законодательством Российской Федерации сведения</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010226000">
+                <xs:annotation>
+                    <xs:documentation>внести запись о невозможности государственной регистрации перехода, прекращения, ограничения права на земельный участок из земель сельскохозяйственного назначения или обременения такого земельного участка до завершения рассмотрения судом дела о его изъятии в связи с неиспользованием по целевому назначению или использованием с нарушением законодательства Российской Федерации</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010227000">
+                <xs:annotation>
+                    <xs:documentation>внести запись о возможности предоставления третьим лицам персональных данных правообладателя (лица, в пользу которого зарегистрированы ограничения права или обременения объекта недвижимости) в составе выписки из Единого государственного реестра недвижимости в отношении указанного(ых) в заявлении объекта(ов) недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010228000">
+                <xs:annotation>
+                    <xs:documentation>внести запись о возможности предоставления третьим лицам персональных данных правообладателя (лица, в пользу которого зарегистрированы ограничения права или обременения объекта недвижимости) в составе выписки из Единого государственного реестра недвижимости в отношении всех объектов недвижимости, права на которые будут зарегистрированы правообладателем (ограничения права или обременения объекта недвижимости будут зарегистрированы за лицом, в пользу которого они будут установлены) в будущем (в случае осуществления такой регистрации без заявления правообладателя или лица, в пользу которого установлены ограничения права или обременения объекта недвижимости)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010229000">
+                <xs:annotation>
+                    <xs:documentation>погасить запись о возможности предоставления третьим лицам персональных данных правообладателя (лица, в пользу которого зарегистрированы ограничения права или обременения объекта недвижимости) в составе выписки из Единого государственного реестра недвижимости в отношении указанного(ых) в заявлении объекта(ов) недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+			<xs:enumeration value="559010230000">
+                <xs:annotation>
+                    <xs:documentation>прекратить действие ранее представленного заявления о внесении записи о возможности предоставления третьим лицам персональных данных правообладателя (лица, в пользу которого зарегистрированы ограничения права или обременения объекта недвижимости) в составе выписки из Единого государственного реестра недвижимости в отношении всех объектов недвижимости, права на которые будут зарегистрированы правообладателем (ограничения права или обременения объекта недвижимости будут зарегистрированы за лицом, в пользу которого они будут установлены) в будущем</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="559010300000">
+                <xs:annotation>
+                    <xs:documentation>Сведения, полученные в результате выполнения комплексных кадастровых работ, сведения о земельных участках и местоположении на них зданий, сооружений, объектов незавершенного строительства, расположенных в кадастровом квартале (нескольких смежных кадастровых кварталах)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:dRecieveResultType="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+	targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+	elementFormDefault="qualified">
+	<xs:simpleType name="DRecieveResultType">
+		<xs:annotation>
+			<xs:documentation>Способ получения результата в заявлениях по Регистрации прав</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="regRightAuthority">
+				<xs:annotation>
+					<xs:documentation>Орган регистрации прав</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mfc">
+				<xs:annotation>
+					<xs:documentation>МФЦ</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="courier">
+				<xs:annotation>
+					<xs:documentation>Курьерская доставка</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="postMail">
+				<xs:annotation>
+					<xs:documentation>Почтовое отправление</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="webService">
+				<xs:annotation>
+					<xs:documentation>Отправка эл. документа с использованием веб сервиса</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="eMail">
+				<xs:annotation>
+					<xs:documentation>Электронная почта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DERGRNRequestReceiveResultType">
+		<xs:annotation>
+			<xs:documentation>Способ получения результата в заявлениях по Предоставлению сведений из ЕГРН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="regRightAuthority">
+				<xs:annotation>
+					<xs:documentation>Орган регистрации прав</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mfc">
+				<xs:annotation>
+					<xs:documentation>МФЦ</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="postMail">
+				<xs:annotation>
+					<xs:documentation>Почтовое отправление</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="webService">
+				<xs:annotation>
+					<xs:documentation>Отправка эл. документа с использованием веб сервиса</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="eMail">
+				<xs:annotation>
+					<xs:documentation>Электронная почта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/result"
+           elementFormDefault="qualified">
+    <!--Дата создания Thu Aug 04 11:07:16 MSK 2016 Номер справочника 106-->
+    <xs:simpleType name="DResult">
+        <xs:annotation>
+            <xs:documentation>Типы предоставления результата</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="562010001000">
+                <xs:annotation>
+                    <xs:documentation>Документ, на основании которого сведения внесены в Единый государственный реестр недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="562010002000">
+                <xs:annotation>
+                    <xs:documentation>Выписка из Единого государственного реестра недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+
+

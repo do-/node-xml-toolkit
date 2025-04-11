@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/declarantKind" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 166 -->
+    <xs:simpleType name="DDeclarantKind">
+        <xs:annotation>
+            <xs:documentation>Категория подателей заявления</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="357100000001">
+                <xs:annotation>
+                    <xs:documentation>Правообладатель, сторона сделки, лицо, в пользу которого устанавливается ограничение права или обременение объекта или законный представитель указанных лиц</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="357100000002">
+                <xs:annotation>
+                    <xs:documentation>Нотариус</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="357100000003">
+                <xs:annotation>
+                    <xs:documentation>Судебный пристав-исполнитель</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="357100000004">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый инженер</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="357100000005">
+                <xs:annotation>
+                    <xs:documentation>Иное лицо</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="357100000006">
+                <xs:annotation>
+                    <xs:documentation>Заявитель, представивший разрешение на ввод ОКС в эксплуатацию - орган государственной власти, орган местного самоуправления, «Росатом» или «Роскосмос»</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

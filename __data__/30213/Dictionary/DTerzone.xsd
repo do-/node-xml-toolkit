@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/terzone" elementFormDefault="qualified">
+    <!-- Дата создания: 2018-02-12 Номер справочника: 61 -->
+    <xs:simpleType name="DTerzone">
+        <xs:annotation>
+            <xs:documentation>Территориальные зоны и зоны с особыми условиями использования территорий</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:enumeration value="218010000000">
+				<xs:annotation>
+					<xs:documentation>Территориальные зоны</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010010000">
+				<xs:annotation>
+					<xs:documentation>Жилая зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010020000">
+				<xs:annotation>
+					<xs:documentation>Общественно-деловая зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010030000">
+				<xs:annotation>
+					<xs:documentation>Производственная зона, зона инженерной и транспортной инфраструктур</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010040000">
+				<xs:annotation>
+					<xs:documentation>Зона сельскохозяйственного использования</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010050000">
+				<xs:annotation>
+					<xs:documentation>Зона рекреационного назначения</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010060000">
+				<xs:annotation>
+					<xs:documentation>Зона особо охраняемых территорий</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010070000">
+				<xs:annotation>
+					<xs:documentation>Зона специального назначения</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010080000">
+				<xs:annotation>
+					<xs:documentation>Зона размещения военных объектов</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218010090000">
+				<xs:annotation>
+					<xs:documentation>Иная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020000000">
+				<xs:annotation>
+					<xs:documentation>Зоны с особыми условиями использования территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!-- Архивные значения	
+			<xs:enumeration value="218020010000">
+				<xs:annotation>
+					<xs:documentation>Зоны охраны природных объектов</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010001">
+				<xs:annotation>
+					<xs:documentation>Территория особо охраняемого природного объекта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010002">
+				<xs:annotation>
+					<xs:documentation>Охранная зона особо охраняемого природного объекта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+			<xs:enumeration value="218020010003">
+				<xs:annotation>
+					<xs:documentation>Водоохранная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010004">
+				<xs:annotation>
+					<xs:documentation>Прибрежная защитная полоса</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010005">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Зона санитарной охраны источников водоснабжения и водопроводов питьевого назначения</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Зона санитарной охраны источников питьевого и хозяйственно-бытового водоснабжения, а также устанавливаемые в случаях, предусмотренных Водным кодексом Российской Федерации, в отношении подземных водных объектов зоны специальной охраны</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!-- Архивное значение			
+			<xs:enumeration value="218020010006">
+				<xs:annotation>
+					<xs:documentation>Особо ценные земли</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+<xs:enumeration value="218020020000">
+				<xs:annotation>
+					<xs:documentation>Зоны охраны искусственных объектов</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020001">
+				<xs:annotation>
+					<xs:documentation>Территория объекта культурного наследия</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020201">
+				<xs:annotation>
+					<xs:documentation>Охранная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020203">
+				<xs:annotation>
+					<xs:documentation>Зона охраняемого природного ландшафта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020003">
+				<xs:annotation>
+					<xs:documentation>Охранная зона геодезического пункта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020005">
+				<xs:annotation>
+					<xs:documentation>Охранная зона транспорта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020006">
+				<xs:annotation>
+					<xs:documentation>Охранная зона инженерных коммуникаций</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020008">
+				<xs:annotation>
+					<xs:documentation>Придорожная полоса</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020202">
+				<xs:annotation>
+					<xs:documentation>Зона регулирования застройки и хозяйственной деятельности</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+			<xs:enumeration value="218020010007">
+				<xs:annotation>
+					<xs:documentation>Центральная экологическая зона Байкальской природной территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010008">
+				<xs:annotation>
+					<xs:documentation>Буферная экологическая зона Байкальской природной территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020010009">
+				<xs:annotation>
+					<xs:documentation>Экологическая зона атмосферного влияния Байкальской природной территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020002">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Зона охраны объекта культурного наследия</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Зоны охраны объектов культурного наследия</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020004">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Охранная зона стационарного пункта наблюдений за состоянием окружающей природной среды</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Охранная зона стационарных пунктов наблюдений за состоянием окружающей среды, ее загрязнением</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020020007">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Охранная зона линий и сооружений связи и линий и сооружений радиофикации</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Охранная зона линий и сооружений связи</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>		
+			<!-- Архивное значение			
+			<xs:enumeration value="218020030000">
+				<xs:annotation>
+					<xs:documentation>Зоны защиты населения</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020030001">
+				<xs:annotation>
+					<xs:documentation>Запретная зона при военном складе</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020030002">
+				<xs:annotation>
+					<xs:documentation>Запретный район при военном складе</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020030003">
+				<xs:annotation>
+					<xs:documentation>Загрязненные земли</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020030004">
+				<xs:annotation>
+					<xs:documentation>Охранная зона загрязненных земель</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+			<xs:enumeration value="218020030005">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Санитарно-защитная зона предприятий, сооружений и иных объектов</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Санитарно-защитная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+<!-- Архивное значение			
+			<xs:enumeration value="218020030006">
+				<xs:annotation>
+					<xs:documentation>Санитарный разрыв (санитарная полоса отчуждения)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->			
+			<xs:enumeration value="218020030007">
+				<xs:annotation>
+				<!-- Предыдущее значение
+          <xs:documentation>Зона ограничения от передающего радиотехнического объекта</xs:documentation> -->
+					<!-- Новое значение -->
+					<xs:documentation>Зона ограничений передающего радиотехнического объекта, являющегося объектом капитального строительства</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!-- Архивное значение			
+			<xs:enumeration value="218020030008">
+				<xs:annotation>
+					<xs:documentation>Район падения отделяющихся частей ракет</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+<xs:enumeration value="218020040000">
+				<xs:annotation>
+					<xs:documentation>Прочие зоны с особыми условиями использования территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040001">
+				<xs:annotation>
+					<xs:documentation>Зона публичного сервитута</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040002">
+				<xs:annotation>
+					<xs:documentation>Зона резервирования земель</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040003">
+				<xs:annotation>
+					<xs:documentation>Горный отвод</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040004">
+				<xs:annotation>
+					<xs:documentation>Пригородная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040005">
+				<xs:annotation>
+					<xs:documentation>Зеленая зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040006">
+				<xs:annotation>
+					<xs:documentation>Особая экономическая зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040007">
+				<xs:annotation>
+					<xs:documentation>Пограничная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020040008">
+				<xs:annotation>
+					<xs:documentation>Территория традиционного природопользования</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020050000">
+				<xs:annotation>
+					<xs:documentation>Иные зоны с особыми условиями использования территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020050001">
+				<xs:annotation>
+					<xs:documentation>Иная зона с особыми условиями использования территории</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+			<!-- Новые значения: 218020060000; 218020070000; 218020080000; 218020090000; 218020100000; 218020110000; 218020120000; 218020130000; 218020140000; 218020150000; 218020160000; 218020170000; 218020180000; 218020190000; 218020200000; 218020210000; 218020220000; 218020230000; 218020240000; 218020250000 -->	
+			<xs:enumeration value="218020060000">
+				<xs:annotation>
+					<xs:documentation>Защитная зона объекта культурного наследия</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020070000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона объектов электроэнергетики (объектов электросетевого хозяйства и объектов по производству электрической энергии)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020080000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона железных дорог</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020090000">
+				<xs:annotation>
+					<xs:documentation>Придорожные полосы автомобильных дорог</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020100000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона трубопроводов (газопроводов, нефтепроводов и нефтепродуктопроводов, аммиакопроводов)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020110000">
+				<xs:annotation>
+					<xs:documentation>Приаэродромная территория</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020120000">
+				<xs:annotation>
+					<xs:documentation>Зона охраняемого объекта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020130000">
+				<xs:annotation>
+					<xs:documentation>Зона охраняемого военного объекта, охранная зона военного объекта, запретные и специальные зоны, устанавливаемые в связи с размещением указанных объектов</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020140000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона особо охраняемой природной территории (государственного природного заповедника, национального парка, природного парка, памятника природы)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020150000">
+				<xs:annotation>
+					<xs:documentation>Округ санитарной (горно-санитарной) охраны лечебно-оздоровительных местностей, курортов и природных лечебных ресурсов</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020160000">
+				<xs:annotation>
+					<xs:documentation>Зоны затопления и подтопления</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020170000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона пунктов государственной геодезической сети, государственной нивелирной сети и государственной гравиметрической сети</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020180000">
+				<xs:annotation>
+					<xs:documentation>Зона наблюдения</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020190000">
+				<xs:annotation>
+					<xs:documentation>Зона безопасности с особым правовым режимом</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020200000">
+				<xs:annotation>
+					<xs:documentation>Рыбохозяйственная заповедная зона озера Байкал</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020210000">
+				<xs:annotation>
+					<xs:documentation>Рыбохозяйственная заповедная зона</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020220000">
+				<xs:annotation>
+					<xs:documentation>Зона минимальных расстояний до магистральных или промышленных трубопроводов (газопроводов, нефтепроводов и нефтепродуктопроводов, аммиакопроводов)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020230000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона гидроэнергетического объекта</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020240000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона объектов инфраструктуры метрополитена</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="218020250000">
+				<xs:annotation>
+					<xs:documentation>Охранная зона тепловых сетей</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+    </xs:simpleType>
+</xs:schema>

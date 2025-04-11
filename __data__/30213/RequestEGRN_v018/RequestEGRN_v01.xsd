@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://rosreestr.ru/services/v0.18/TStatementRequestEGRN"
+    xmlns:tns="http://rosreestr.ru/services/v0.18/TStatementRequestEGRN"
+    xmlns:obj="http://rosreestr.ru/services/v0.1/commons/TObject"
+    xmlns:subj="http://rosreestr.ru/services/v0.1/commons/Subjects"
+    xmlns:doc="http://rosreestr.ru/services/v0.1/commons/Documents"
+    xmlns:com="http://rosreestr.ru/services/v0.1/commons/Commons" vc:minVersion="1.1"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    xmlns:address="http://rosreestr.ru/services/v0.1/commons/Address"
+    xmlns:dObT="http://rosreestr.ru/services/v0.1/commons/directories/objectType"
+    xmlns:dReRF="http://rosreestr.ru/services/v0.1/commons/directories/regionrf"
+    xmlns:stCom="http://rosreestr.ru/services/v0.1/TStatementCommons"
+    xmlns:dObP="http://rosreestr.ru/services/v0.1/commons/directories/objectPurpose"
+    xmlns:dUsT="http://rosreestr.ru/services/v0.1/commons/directories/usageType"
+    xmlns:dResR="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+    xmlns:dReM="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+    xmlns:dLaC="http://rosreestr.ru/services/v0.1/commons/directories/LandCategory"
+    xmlns:dTeZ="http://rosreestr.ru/services/v0.1/commons/directories/terzone"
+    xmlns:dBoO="http://rosreestr.ru/services/v0.1/commons/directories/borderObjectType">
+
+    <!-- 20.03.2017 Новый этап доработки схем -->
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Commons"
+        schemaLocation="Commons.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/TStatementCommons"
+        schemaLocation="TStatementCommons.xsd"/>
+    <xs:import id="obj" namespace="http://rosreestr.ru/services/v0.1/commons/TObject"
+        schemaLocation="TObject.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Documents"
+        schemaLocation="TDocument.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Address"
+        schemaLocation="TAddress.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/objectType"
+        schemaLocation="Dictionary/DObjectType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/regionrf"
+        schemaLocation="Dictionary/DRegionsRF.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/objectPurpose"
+        schemaLocation="Dictionary/DObjectPurpose.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/usageType"
+        schemaLocation="Dictionary/DUsageType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/recieveResultType"
+        schemaLocation="Dictionary/DRecieveResultType.xsd"/>
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/receivingMethod"
+        schemaLocation="Dictionary/DReceivingMethod.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/Subjects"
+        schemaLocation="TSubject.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/terzone"
+        schemaLocation="Dictionary/DTerzone.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/borderObjectType"
+        schemaLocation="Dictionary/DBorderObjectType.xsd"/>
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/LandCategory"
+        schemaLocation="Dictionary/DLandCategory.xsd"/>
+    <xs:complexType name="TEGRNRequest">
+        <xs:sequence>
+            <xs:element name="header" type="stCom:TEGRNRequestHeader">
+                <xs:annotation>
+                    <xs:documentation>Заголовок запроса на предоставление сведений из ЕГРН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="declarant" type="subj:TEGRNRequestDeclarant">
+                <xs:annotation>
+                    <xs:documentation>Описание заявителя, представителя заявителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestDetails" type="tns:TEGRNRequestDetails">
+                <xs:annotation>
+                    <xs:documentation>Детали запроса на предоставление сведений из ЕГРН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="deliveryDetails" type="stCom:TEGRNRequestDeliveryDetails">
+                <xs:annotation>
+                    <xs:documentation>Описание способа получения запроса и доставки результата</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="statementAgreements" type="stCom:TEGRNRequestAgreements">
+                <xs:annotation>
+                    <xs:documentation>Соглашения с заявителем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="_id">
+            <xs:annotation>
+                <xs:documentation>Идентификатор запроса в системе источнике запроса</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestDetails">
+
+        <xs:annotation>
+            <xs:documentation>Детали заявления на предоставление сведений</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="requestCopyAction" type="tns:TEGRNRequestCopyAction">
+                    <xs:annotation>
+                        <xs:documentation>Запрос копии документа</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="requestEGRNDataAction" type="tns:TRequestDataAction">
+                    <xs:annotation>
+                        <xs:documentation>Запрос на предоставление сведений об объектах недвижимости и (или) правообладателях, о зонах и территориях</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="requestEGRNAccessAction" type="tns:TRequestEGRNAccessAct">
+                    <xs:annotation>
+                        <xs:documentation>Запрос на предоставление доступа в ФГИС ЕГРН</xs:documentation>
+                    </xs:annotation>
+                    <xs:unique name="newUnique">
+                        <xs:selector xpath="tns:requiredDataType"/>
+                        <xs:field xpath="@dataType"/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="requestEGRNNotification" type="tns:TRequestEGRNNotification">
+                    <xs:annotation>
+                        <xs:documentation>Запрос на получение уведомлений об изменении содержащихся в ЕГРН сведений</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="note" type="com:TNote">
+                <xs:annotation>
+                    <xs:documentation>Дополнительная информация</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestCopyAction">
+        <xs:annotation>
+            <xs:documentation>Запрос на предоставление сведений в виде копии документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="document" type="doc:TRequestDocument">
+                <xs:annotation>
+                    <xs:documentation>Запрашиваемый документ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="object" type="tns:TCopyActionObject">
+                <xs:annotation>
+                    <xs:documentation>Описание объекта для запроса копий документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TCopyActionObject">
+        <xs:annotation>
+            <xs:documentation>Описание объекта для запроса копий документов</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="boundaryObjectRecordNumber" type="obj:DBorderRecordNumber">
+                <xs:annotation>
+                    <xs:documentation>Реестровый номер зоны, территории или границы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="objectCadastralNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый номер ОН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TRequestDataAction">
+        <xs:annotation>
+            <xs:documentation>Запрос на предоставление сведений</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="extractDataAction" type="tns:TExtractDataAction">
+                    <xs:annotation>
+                        <xs:documentation>Запрос на предоставление различных данных по ОН</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="extractIncapacity" type="tns:TExtractIncapacityAction">
+                    <xs:annotation>
+                        <xs:documentation>Запрос на предоставление выписки из ЕГРН о признании правообладателя недееспособным или ограниченно дееспособным</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="extractDocument" type="tns:TExtractDocumentAction">
+                    <xs:annotation>
+                        <xs:documentation>Выписка о содержании правоустанавливающих документов</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="extractSubject" type="tns:TExtractSubjectAction">
+                    <xs:annotation>
+                        <xs:documentation>Выписка из ЕГРН о правах отдельного лица на имевшиеся/имеющиеся у него объекты недвижимости</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="cadastralPlanTerritory"
+                    type="tns:TExtractCadastralPlanTerritoryAction">
+                    <xs:annotation>
+                        <xs:documentation>Кадастровый план территории</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="area" type="tns:TExtractAreaAction">
+                    <xs:annotation>
+                        <xs:documentation>Выписка о территориальной зоне, зоне с особыми условиями использования территории, территории объекта культурного наследия, включенного в единый государственный реестр объектов культурного наследия (памятников истории и культуры) народов Российской Федерации, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, лесопарке, об особо охраняемой природной территории, особой экономической зоне, охотничьем угодье, береговой линии (границе водного объекта), проекте межевания территории</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="border" type="tns:TExtractBorderAction">
+                    <xs:annotation>
+                        <xs:documentation>Выписка о границах между субъектами Российской Федерации, границах муниципальных образований и границах населенных пунктов</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="aboutPersons" type="tns:TAboutPersons">
+                    <xs:annotation>
+                        <xs:documentation>Справка о лицах, получивших сведения об объекте недвижимого имущества за период</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="extractKSObject" type="tns:TExtractKSObject">
+
+                    <xs:annotation>
+                        <xs:documentation>Выписка о кадастровой стоимости объекта недвижимости</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="signature" type="xs:boolean" minOccurs="0" default="true">
+                <xs:annotation>
+                    <xs:documentation>Необходимость заверения, сформированного документа УКЭП</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractDataAction">
+        <xs:annotation>
+            <xs:documentation>Запрос на предоставление различных данных по ОН</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="object" type="obj:TEGRNRequestObject" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestType" type="tns:DRequestDataType">
+                <xs:annotation>
+                    <xs:documentation>Тип запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractIncapacityAction">
+        <xs:annotation>
+            <xs:documentation>Запрос на предоставление выписки из ЕГРН о признании правообладателя недееспособным или ограниченно дееспособным</xs:documentation>
+        </xs:annotation>
+        <xs:sequence maxOccurs="1">
+            <xs:element name="incapacityOwner" type="subj:TEGRNRequestOwner" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Правообладатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractDocumentAction">
+        <xs:annotation>
+            <xs:documentation>Выписка о содержании правоустанавливающих документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="document" type="doc:TDocumentSeries">
+                <xs:annotation>
+                    <xs:documentation>Реквизиты правоустанавливающего документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="object" type="obj:TEGRNRequestObject" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Сведения об объекте недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="describeContract" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Положения правоустанавливающего документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="informationTitle">
+                <xs:annotation>
+                    <xs:documentation>Сведения о правоустанавливающих документах</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="basisTransferRight" fixed="true" type="xs:boolean"
+                            minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Сведения о правоустанавливающем документе, на основании которого был зарегистрирован переход права на указанный в запросе объект недвижимости от одного лица к другому</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="basisPurchased" fixed="true" type="xs:boolean"
+                            minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Сведения о правоустанавливающем документе, на основании которого конкретное лицо, указанное в запросе, приобрело объект недвижимости</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="person" type="subj:TEGRNRequestPerson">
+                <xs:annotation>
+                    <xs:documentation>Физическое лицо</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractSubjectAction">
+        <xs:annotation>
+            <xs:documentation>Выписка из ЕГРН о правах отдельного лица на имевшиеся/имеющиеся у него ОН</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="owner" type="tns:TEGRNRequestOwnerParams">
+                <xs:annotation>
+                    <xs:documentation>Правообладатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="period" type="tns:TPeriod">
+                <xs:annotation>
+                    <xs:documentation>За период</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="1" name="realtyTypes" type="tns:TRealtyTypes">
+                <xs:annotation>
+                    <xs:documentation>Вид (ы) объекта (ов) недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="territory" type="tns:TTerritory">
+                <xs:annotation>
+                    <xs:documentation>Территория РФ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element fixed="true" minOccurs="0" name="uptodateData" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Предоставление только актуальных данных на дату запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TEGRNRequestOwnerParams">
+        <xs:annotation>
+            <xs:documentation>Параметры правообладателя в запросе на предоставление сведений о правах отдельного лица</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="person" type="subj:TEGRNRequestOwner">
+                <xs:annotation>
+                    <xs:documentation>Физическое лицо. Правообладатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="organization" type="subj:TEGRNRequestOrganization">
+                <xs:annotation>
+                    <xs:documentation>Юридическое лицо. Правообладатель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="country" type="subj:TCountry">
+                <xs:annotation>
+                    <xs:documentation>Государство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rfSubject" type="subj:TRFSubject">
+                <xs:annotation>
+                    <xs:documentation>Субъект РФ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="city" type="subj:TCity">
+                <xs:annotation>
+                    <xs:documentation>Муниципальное образование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TBasePeriod">
+        <xs:annotation>
+            <xs:documentation>Параметры временного интервала</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="Date" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>На указанную дату</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateStart" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>С указанной даты по текущий момент</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateEnd" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>До указанной даты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="interval" minOccurs="0" type="tns:TInterval">
+                <xs:annotation>
+                    <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TPeriod">
+        <xs:annotation>
+            <xs:documentation>Параметры временного интервала в запросе на предоставление сведений о правах отдельного лица</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasePeriod">
+                <xs:choice>
+                    <xs:element name="Date" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>На указанную дату</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="dateStart" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>С указанной даты по текущий момент</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="dateEnd" type="xs:date">
+                        <xs:annotation>
+                            <xs:documentation>До указанной даты</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="interval" type="tns:TInterval">
+                        <xs:annotation>
+                            <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAboutPersonPeriod">
+        <xs:annotation>
+            <xs:documentation>Параметры временного интервала в запросе на предоставление сведений в виде справки о лицах, получивших сведения об ОН</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TBasePeriod">
+                <xs:choice>
+                    <xs:element name="dateStart" type="xs:date" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>С указанной даты по текущий момент</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="interval" minOccurs="1" type="tns:TInterval">
+                        <xs:annotation>
+                            <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TInterval">
+        <xs:annotation>
+            <xs:documentation>Период времени, за который необходимо предоставить сведения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dateStart" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Начало периода</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateEnd" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Конец периода</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRealtyTypes">
+        <xs:annotation>
+            <xs:documentation>Виды объектов недвижимости в запросе о предоставлении сведений о правах отдельного лица</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element fixed="true" name="realtyTypeAll" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>По всем видам объектов недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="realtyType" type="tns:TRealtyType">
+                <xs:annotation>
+                    <xs:documentation>Виды объектов недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TExtractCadastralPlanTerritoryAction">
+        <xs:annotation>
+            <xs:documentation>Кадастровый план территории</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="cadastralBlock" type="obj:TEGRNRequestCadastralBlock">
+                <xs:annotation>
+                    <xs:documentation>Параметры кадастрового квартала</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractAreaAction">
+        <xs:annotation>
+            <xs:documentation>Кадастровая выписка о территориальной зоне, зоне с особыми условиями использования территории, территории объекта культурного наследия, включенного в единый государственный реестр объектов культурного наследия (памятников истории и культуры) народов Российской Федерации, территории опережающего социально-экономического развития, зоне территориального развития в Российской Федерации, об игорной зоне, о лесничестве, лесопарке, об особо охраняемой природной территории, особой экономической зоне, охотничьих угодьях</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="area" type="tns:TArea">
+                <xs:annotation>
+                    <xs:documentation>Территориальная зона, зона с особыми условиями использования территории, территория объекта культурного наследия, включенного в единый государственный реестр объектов культурного наследия (памятников истории и культуры) народов Российской Федерации, территория опережающего социально-экономического развития, зона территориального развития в Российской Федерации, игорная зона, лесничество, лесопарк, особо охраняемая природная территория, особая экономическая зона, охотничьем угодье, береговой линии (границе водного объекта), проекте межевания территории</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TArea">
+        <xs:annotation>
+            <xs:documentation>Территориальная зона</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="number" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Реестровый номер границы зоны, территории, границы лесничества, лесопарка, охотничьего угодья, береговой линии (границы водного объекта) или учетный номер утвержденного проекта межевания территории</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="borderType">
+                <xs:annotation>
+                    <xs:documentation>Вид объекта из реестра границ</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="dBoO:DBorderObjectType">
+                        <xs:pattern value="5">
+                            <xs:annotation>
+                                <xs:documentation>Береговая линия (граница водного объекта)</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="6">
+                            <xs:annotation>
+                                <xs:documentation>Зона с особыми условиями использования территории</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="7">
+                            <xs:annotation>
+                                <xs:documentation>Территориальная зона</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="8">
+                            <xs:annotation>
+                                <xs:documentation>Территория объекта культурного наследия</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="9">
+                            <xs:annotation>
+                                <xs:documentation>Особо охраняемая природная территория</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="10">
+                            <xs:annotation>
+                                <xs:documentation>Особая экономическая зона</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="11">
+                            <xs:annotation>
+                                <xs:documentation>Охотничьи угодья</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="12">
+                            <xs:annotation>
+                                <xs:documentation>Территория опережающего социально-экономического развития</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="13">
+                            <xs:annotation>
+                                <xs:documentation>Зона территориального развития в Российской Федерации</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="14">
+                            <xs:annotation>
+                                <xs:documentation>Игорная зона</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="15">
+                            <xs:annotation>
+                                <xs:documentation>Лесничество</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="16">
+                            <xs:annotation>
+                                <xs:documentation>Лесопарк</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="17">
+                            <xs:annotation>
+                                <xs:documentation>Утвержденный проект межевания территории</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="individualDesignation" type="tns:TIndividualDesignation">
+                <xs:annotation>
+                    <xs:documentation>Индивидуальное обозначение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalAct" type="doc:TDecisionAuthority">
+                <xs:annotation>
+                    <xs:documentation>Наименование ОГВ или ОМСУ, принявшего решение об установлении зоны, границы территории, границы лесничества, лесопарка, охотничьего угодья, береговой линии (границы водного объекта), утверждении проекта межевания территории, и реквизиты решения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractBorderAction">
+        <xs:annotation>
+            <xs:documentation>Кадастровая выписка о границах между субъектами Российской Федерации, границах муниципальных образований и границах населенных пунктов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="border" type="tns:TBorder">
+                <xs:annotation>
+                    <xs:documentation>Параметры объекта границ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBorder">
+        <xs:annotation>
+            <xs:documentation>Объект границ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice>
+                <xs:element maxOccurs="2" name="region" type="address:TAddressRegion" minOccurs="2">
+                    <xs:annotation>
+                        <xs:documentation>Субъекты Российской Федерации</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="1" name="city" type="address:TAddressCityBorder">
+                    <xs:annotation>
+                        <xs:documentation>Муниципальное образование субъекта Российской Федерации</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="1" name="locality" type="address:TAddressLocality">
+                    <xs:annotation>
+                        <xs:documentation>Населенный пункт субъекта Российской Федерации</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element minOccurs="0" name="boundaryObjectRecordNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Реестровый номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="document" type="doc:TDocumentSeries" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Реквизиты правового акта об утверждении, изменении границы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRequestEGRNAccessAct">
+        <xs:annotation>
+            <xs:documentation>Запрос на предоставление доступа к ФГИС ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="requiredDataType" type="tns:TRequiredData">
+                    <xs:annotation>
+                        <xs:documentation>Запрашиваемые данные</xs:documentation>
+                    </xs:annotation>
+
+                    <xs:alternative test="@dataType = 'requiredDataSubject'"
+                        type="tns:TRequiredSubjectData"/>
+                    <xs:alternative
+                        test="empty(index-of((&quot;requiredDataRealty&quot;, &quot;requiredArea&quot;, &quot;requiredBorder&quot;, &quot;requiredRealtyList&quot;), @dataType))"
+                        type="tns:TRequiredData"/>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRequiredData">
+        <xs:annotation>
+            <xs:documentation>Запрашиваемые данные</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+
+            <xs:element minOccurs="0" name="subjectData" type="tns:TEGRNRequestOwnerParams">
+                <xs:annotation>
+                    <xs:documentation>Данные субъекта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element default="false" minOccurs="0" name="limitedAccess" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Запрос о предоставлении сведений ограниченного доступа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="dataType" type="tns:DRequestEGRNAccessAction" use="required">
+            <xs:annotation>
+                <xs:documentation>Тип запрашиваемой информации</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TRequiredSubjectData">
+        <xs:annotation>
+            <xs:documentation>Данные субъекта</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="tns:TRequiredData">
+                <xs:sequence>
+                    <xs:element name="subjectData" type="tns:TEGRNRequestOwnerParams">
+                        <xs:annotation>
+                            <xs:documentation>Данные субъекта</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element default="false" minOccurs="0" name="limitedAccess" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Запрос о предоставлении сведений ограниченного доступа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="DRequestEGRNAccessAction">
+        <xs:annotation>
+            <xs:documentation>Тип запрашиваемой информации</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="requiredDataRealty">
+                <xs:annotation>
+                    <xs:documentation>об объекте недвижимости (нескольких объектах недвижимости) и зарегистрированных правах на него (них)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="requiredArea">
+                <xs:annotation>
+                    <xs:documentation>о зоне или территории</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="requiredBorder">
+                <xs:annotation>
+                    <xs:documentation>о границах</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="requiredRealtyList">
+                <xs:annotation>
+                    <xs:documentation>о переходе прав на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="requiredDataIncapacity">
+                <xs:annotation>
+                    <xs:documentation>о признании правообладателя недееспособным или ограниченно дееспособным</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="requiredDataSubject">
+                <xs:annotation>
+                    <xs:documentation>о правах отдельного лица на имеющиеся (имевшиеся) у него объекты недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DRequestEGRNReceivingMethod">
+        <xs:annotation>
+            <xs:documentation>Способ получения запроса</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="dReM:DReceivingMethod">
+            <xs:enumeration value="regRightAuthority">
+                <xs:annotation>
+                    <xs:documentation>в органе регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mfc">
+                <xs:annotation>
+                    <xs:documentation>в МФЦ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="postalDelivery">
+                <xs:annotation>
+                    <xs:documentation>Почтовым отправлением</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electronically">
+                <xs:annotation>
+                    <xs:documentation>В форме электронных документов (электронных образов документов)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DRequestEGRNRecieveResultType">
+        <xs:annotation>
+            <xs:documentation>Вид результата</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="dResR:DRecieveResultType">
+            <xs:enumeration value="regRightAuthority">
+                <xs:annotation>
+                    <xs:documentation>Орган регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mfc">
+                <xs:annotation>
+                    <xs:documentation>МФЦ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="postMail">
+                <xs:annotation>
+                    <xs:documentation>Почтовое отправление</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="webService">
+                <xs:annotation>
+                    <xs:documentation>Отправка эл. документа с использованием веб сервиса</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="eMail">
+                <xs:annotation>
+                    <xs:documentation>Электронная почта</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DRequestDataType">
+        <xs:annotation>
+            <xs:documentation>Виды запросов данных по ОН</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="extractRealty">
+                <xs:annotation>
+                    <xs:documentation>Выписка из Единого государственного реестра объектов недвижимости об объекте недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extractRealtyList">
+                <xs:annotation>
+                    <xs:documentation>Выписка из Единого государственного реестра объектов недвижимости о переходе прав на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extractEquityConstructionContract">
+                <xs:annotation>
+                    <xs:documentation>Выписка из Единого государственного реестра объектов недвижимости о зарегистрированных договорах участия в долевом строительстве</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extractObjectMainFeaturesRights">
+                <xs:annotation>
+                    <xs:documentation>Выписка из Единого государственного реестра объектов недвижимости об основных характеристиках и зарегистрированных правах на объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extractStatementReceiptDate">
+                <xs:annotation>
+                    <xs:documentation>Выписка о дате получения органом регистрации прав заявления о государственном кадастровом учете и (или) государственной регистрации прав и прилагаемых к нему документов</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="TAboutPersons">
+        <xs:annotation>
+            <xs:documentation>Справка о лицах, получивших сведения об объекте недвижимого имущества за период</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="object" type="obj:TEGRNRequestObject" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="period" type="tns:TAboutPersonPeriod">
+                <xs:annotation>
+                    <xs:documentation>За период</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TTerritory">
+        <xs:annotation>
+            <xs:documentation>Территория РФ</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element fixed="true" name="territoryRussia" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>По всей территории РФ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regions">
+                <xs:annotation>
+                    <xs:documentation>Список регионов РФ</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="region" type="dReRF:dRegionsRF">
+                            <xs:annotation>
+                                <xs:documentation>Регион РФ</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TRealtyType">
+        <xs:annotation>
+            <xs:documentation>Объекты недвижимости</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="parcel" type="tns:TRealtyParcel">
+                <xs:annotation>
+                    <xs:documentation>Земельный участок</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="building" type="tns:TRealtyBuilding">
+                <xs:annotation>
+                    <xs:documentation>Здание</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="room" type="tns:TRealtyRoom">
+                <xs:annotation>
+                    <xs:documentation>Помещение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="other" type="tns:TRealtyOther">
+                <xs:annotation>
+                    <xs:documentation>Другие виды объектов недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TRealtyRoom">
+        <xs:annotation>
+            <xs:documentation>Объект недвижимости помещение</xs:documentation>
+        </xs:annotation>
+        <xs:choice maxOccurs="1" minOccurs="1">
+            <xs:element fixed="true" minOccurs="0" name="isNondomestic" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>нежилое</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element fixed="true" minOccurs="0" name="isFlat" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>квартира</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element fixed="true" minOccurs="0" name="isRoom" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>комната</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TRealtyParcel">
+        <xs:annotation>
+            <xs:documentation>Объект недвижимости участок</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="category"
+                type="dLaC:DLandCategory">
+                <xs:annotation>
+                    <xs:documentation>Категория земель</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="usageType" type="dUsT:DUsageType">
+                <xs:annotation>
+                    <xs:documentation>Вид разрешенного использования</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRealtyBuilding">
+        <xs:annotation>
+            <xs:documentation>Объект недвижимости здание</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="purpose"
+                type="dObP:DObjectPurpose">
+                <xs:annotation>
+                    <xs:documentation>Назначение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRealtyOther">
+        <xs:annotation>
+            <xs:documentation>Объект недвижимости прочие</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="objectType">
+                <xs:annotation>
+                    <xs:documentation>Тип объекта</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="dObT:DObjectType">
+                        <xs:pattern value="002001004000">
+                            <xs:annotation>
+                                <xs:documentation>Сооружение</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="002001005000">
+                            <xs:annotation>
+                                <xs:documentation>Объект незавершенного строительства</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="002001006000">
+                            <xs:annotation>
+                                <xs:documentation>Предприятие как имущественный комплекс</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="002001008000">
+                            <xs:annotation>
+                                <xs:documentation>Единый недвижимый комплекс</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="002001009000">
+                            <xs:annotation>
+                                <xs:documentation>Машино-место</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                        <xs:pattern value="002001010000">
+                            <xs:annotation>
+                                <xs:documentation>Иной объект недвижимости</xs:documentation>
+                            </xs:annotation>
+                        </xs:pattern>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="notes" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Назначение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="EGRNRequest" type="tns:TEGRNRequest">
+        <xs:annotation>
+            <xs:documentation>Запрос о предоставлении сведений</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="TRequestEGRNNotification">
+        <xs:annotation>
+            <xs:documentation>Запрос на получение уведомлений об изменении содержащихся в ЕГРН сведений</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="objectCadastralNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кадастровый номер ОН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TIndividualDesignation">
+        <xs:annotation>
+            <xs:documentation>Индивидуальное обозначение</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="codeZone" type="dTeZ:DTerzone" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Вид зоны</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="codeZoneDoc" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Вид зоны по документу</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="index" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Индекс</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="numberZone" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="other" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Иные идентифицирующие сведения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TExtractKSObject">
+        <xs:annotation>
+            <xs:documentation>Выписка о кадастровой стоимости объекта недвижимости</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="object" type="obj:TEGRNRequestObject" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Объект недвижимости</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="data" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>На указанную дату</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

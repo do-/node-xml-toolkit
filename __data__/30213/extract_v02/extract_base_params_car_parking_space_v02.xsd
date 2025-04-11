@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2022 rel. 2 (x64) (http://www.altova.com) by  (FGBU «FKP Rosreestra») -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="tDetailsStatement_v02.xsd"/>
+	<xsd:include schemaLocation="tCommonTypesObjects_v02.xsd"/>
+	<xsd:element name="extract_base_params_car_parking_space" type="ExtractBaseParamsCarParkingSpace">
+		<xsd:annotation>
+			<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/159/items">Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (машино-место)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ExtractBaseParamsCarParkingSpace">
+		<xsd:annotation>
+			<xsd:documentation>Выписка об основных характеристиках и зарегистрированных правах на объект недвижимости (машино-место)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="details_statement" type="DetailsStatementRealty">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="details_request" type="DetailsRequest" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Реквизиты поступившего запроса</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="car_parking_space_record" type="CarParkingSpaceRecordBaseParams">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объекте недвижимости - машино-месте</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="right_records" type="RightRecordsBaseParams" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правах и правообладателях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="restrict_records" type="RestrictRecordsBaseParams" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ограничения прав и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ownerless_right_record" type="OwnerlessRightRecordOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о праве (бесхозяйное имущество)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="deal_records" type="DealRecordsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о сделках, совершенных без необходимого в силу закона согласия третьего лица, органа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="claim_records" type="ClaimRecordsOut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правопритязаниях</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="recipient_statement" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Получатель выписки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="status" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Статус записи об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="guid" type="sGUID">
+			<xsd:annotation>
+				<xsd:documentation>Глобальный уникальный идентификатор документа</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="qr" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>Ссылка для визуализации qr-кода</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="CarParkingSpaceRecordBaseParams">
+		<xsd:annotation>
+			<xsd:documentation>Сведения об объекте недвижимости - машино-месте</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="record_info" type="RecordInfo">
+				<xsd:annotation>
+					<xsd:documentation>Даты государственной регистрации</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="object" type="ObjectCommonData">
+				<xsd:annotation>
+					<xsd:documentation>Общие сведения об объекте недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cad_links" type="CadLinksCarParkingSpaceBase" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Сведения об объектах (связь с кадастровыми номерами)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="params" type="Area" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Характеристики машино-места</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address_room" type="AddressLocationCarParkingSpace" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местоположение) машино-места</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="location_in_build" type="LocationInBuild" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Местоположение машино-места в объекте недвижимости (планы)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cost" type="Cost" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Кадастровая стоимость</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="special_notes" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Особые отметки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

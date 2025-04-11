@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dInterdepObjectType="http://rosreestr.ru/services/v0.1/commons/directories/interdepobjecttype" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/interdepobjecttype" elementFormDefault="qualified">
+	<xs:simpleType name="DInterdepObjectType">
+		<xs:annotation>
+			<xs:documentation>Виды объектов недвижимости</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="002001002000">
+				<xs:annotation>
+					<xs:documentation>Здание</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="002001003000">
+				<xs:annotation>
+					<xs:documentation>Помещение</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="002001004000">
+				<xs:annotation>
+					<xs:documentation>Сооружение</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -121,6 +121,72 @@ test ('30442-2', async () => {
 
 })
 
+test ('30213', async () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', '30213', 'RequestEGRN_v018', 'RequestEGRN_v01.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const data = {
+	
+		"EGRNRequest": {
+			"_id": "3bfc06ce-08b2-11f0-a65d-005056a50a67",
+			"header": {
+			  "actionCode": "659511111112",
+			  "statementType": "558630200000",
+			  "creationDate": "2025-04-08T11:16:03.185874+03:00"
+			},
+			"declarant": {
+			  "_id": "c543c4c1-6dd4-e8a7-7441-e66f394ae716",
+			  "other": {
+				"contactInfo": {
+				  "phoneNumber": "+78121111111",
+				  "email": "subsidii@gcjs.gk.gov.spb.ru"
+				},
+				"name": "СПб ГКУ \"Городской центр жилищных субсидий\"",
+				"inn": "7842111111",
+				"ogrn": "1177811111111",
+				"kpp": "784201001",
+				"regDate": "2017-11-01"
+			  },
+			  "declarantKind": "357013000000"
+			},
+			"requestDetails": {
+			  "requestEGRNDataAction": {
+				"extractDataAction": {
+				  "object": {
+					"objectTypeCode": "002001003000",
+					"cadastralNumber": {
+					  "cadastralNumber": "78:06:0002000:2000"
+					},
+					"address": null
+				  },
+				  "requestType": "extractRealty"
+				}
+			  }
+			},
+			"deliveryDetails": {
+			  "requestDeliveryMethod": {
+				"receivingMethodCode": "electronically",
+				"regRightAuthority": "ФГБУ ФКП Росреестра по Санкт-Петербургу",
+				"code": "78.038"
+			  },
+			  "resultDeliveryMethod": {
+				"recieveResultTypeCode": "webService"
+			  }
+			},
+			"statementAgreements": {
+			  "persDataProcessingAgreement": "01",
+			  "actualDataAgreement": "03"
+			}
+		  }
+
+	  }
+
+	  expect (xs.stringify (data)).toMatch ('cadastralNumber>78:06:0002000:2000<')
+
+})
+
 test ('20040', async () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', '20040.wsdl')

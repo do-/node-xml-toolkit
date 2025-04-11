@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/contractor"
+           elementFormDefault="qualified">
+	<!--Дата создания 2017/03/20 Номер справочника-->
+	<xs:simpleType name="DContractor">
+	<xs:annotation><xs:documentation>Вид иного описания правообладателя</xs:documentation></xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Владельцы ипотечных сертификатов участия</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Владельцы инвестиционных паев</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Участники договора инвестиционного товарищества</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+

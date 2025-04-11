@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:DRoomPurpose="http://rosreestr.ru/services/v0.1/commons/directories/roomPurpose" targetNamespace="http://rosreestr.ru/services/v0.1/commons/directories/roomPurpose" elementFormDefault="qualified">
+<!--Дата создания Thu Aug 04 10:59:28 MSK 2016 Номер справочника 67-->
+	<xs:simpleType name="DRoomPurpose">
+<xs:annotation>
+			<xs:documentation>Назначение помещений</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+	<xs:enumeration value="206001000000">
+		<xs:annotation>
+			<xs:documentation>Нежилое помещение</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+	<xs:enumeration value="206002000000">
+		<xs:annotation>
+			<xs:documentation>Жилое помещение</xs:documentation>
+		</xs:annotation>
+	</xs:enumeration>
+</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

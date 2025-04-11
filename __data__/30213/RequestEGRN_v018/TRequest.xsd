@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:tns="http://rosreestr.ru/services/v0.12/TRequest"
+    xmlns:reqT="http://rosreestr.ru/services/v0.1/commons/directories/requestType"
+    targetNamespace="http://rosreestr.ru/services/v0.12/TRequest">
+    
+    <!--07.12.2016 Подключен справочник типов рег действий-->
+
+    <xs:import namespace="http://rosreestr.ru/services/v0.1/commons/directories/requestType"
+        schemaLocation="Dictionary/DRequestType.xsd"/>
+    <xs:element name="request" type="tns:TRequest">
+        <xs:annotation>
+            <xs:documentation>Техническое описание пакета электронных документов</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="TRequest">
+        <xs:annotation>
+            <xs:documentation>Техническое описание пакета электронных документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="statementFile" type="tns:TStatementFile" minOccurs="1"
+                maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Файлы заявлений</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="file" type="tns:TFile" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Прочие приложенные файлы</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requestType" type="reqT:DRequestType">
+                <xs:annotation>
+                    <xs:documentation>Тип регистрационных действий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element fixed="true" minOccurs="0" name="paperDocuments" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Наличие пакета бумажных документов</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TFile">
+        <xs:annotation>
+            <xs:documentation>Описание файла</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="fileName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Путь до файла относительно корня архива</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TStatementFile">
+        <xs:annotation>
+            <xs:documentation>Описание файла заявления</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="tns:TFile"> </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

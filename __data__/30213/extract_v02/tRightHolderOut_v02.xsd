@@ -1,0 +1,908 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="commonSimpleTypes.xsd"/>
+	<xsd:include schemaLocation="tContacts_v02.xsd"/>
+	<xsd:include schemaLocation="tPublic_formations_v02.xsd"/>
+	<xsd:include schemaLocation="tOtherSubject_v02.xsd"/>
+	<xsd:include schemaLocation="tDocument_requisites_v02.xsd"/>
+	<!--===Описание правообладателя-->
+	<xsd:complexType name="RightHoldersOut">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о правообладателях</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="right_holder" type="RightHolderOut" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о правообладателе</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RightHolderOut">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о правообладателе</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="public_formation" type="PublicFormations">
+				<xsd:annotation>
+					<xsd:documentation>Публично-правовое образование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="individual" type="IndividualOut">
+				<xsd:annotation>
+					<xsd:documentation>Физическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="legal_entity" type="LegalEntityOut">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="public_servitude" type="PublicServitude">
+				<xsd:annotation>
+					<xsd:documentation>Публичный сервитут</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="another" type="AnotherRight">
+				<xsd:annotation>
+					<xsd:documentation>Иной субъект права</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="undefined">
+				<xsd:annotation>
+					<xsd:documentation>Не определено</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="undefined" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Не определено</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherRight">
+		<xsd:annotation>
+			<xsd:documentation>Иной субъект права</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="another_type" type="AnotherTypeRight">
+				<xsd:annotation>
+					<xsd:documentation>Тип иного субъекта права</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherTypeRight">
+		<xsd:annotation>
+			<xsd:documentation>Тип иного субъекта права</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="investment_unit_owner" type="InvestmentUnitOwnerOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы инвестиционных паев</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="certificates_holders" type="CertificatesHoldersOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы ипотечных сертификатов участия</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bonds_holders" type="BondsHoldersOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы облигаций</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="partnership" type="Partnership">
+				<xsd:annotation>
+					<xsd:documentation>Инвестиционное товарищество</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="aparthouse_owners" type="AparthouseOwners">
+				<xsd:annotation>
+					<xsd:documentation>Собственники помещений в многоквартирном доме</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="other" type="OtherSubject">
+				<xsd:annotation>
+					<xsd:documentation>Иной субъект</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="equity_participants_info">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="equity_participants" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="not_equity_participants_info">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве, которым не переданы объекты долевого строительства</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="_not_equity_participants" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве, которым не переданы объекты долевого строительства</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="PersonDocument">
+		<xsd:annotation>
+			<xsd:documentation>Документ, удостоверяющий личность</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="document_code" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/98/items">Код документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_series" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Серия документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> Номер документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_date" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="document_issuer" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Кем выдан (Организация, выдавшая документ)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="special_marks" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Особые отметки</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="doc_notarized" type="DocNotarized" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Нотариальное удостоверение документа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<!--===Сведения о незарегистрированных ограничениях-->
+	<xsd:complexType name="RestrictionEncumbranceParty">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лице, в пользу которого установлены незарегистрированные ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="public_formation" type="PublicFormations">
+				<xsd:annotation>
+					<xsd:documentation>Публично-правовое образование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="individual" type="IndividualOut">
+				<xsd:annotation>
+					<xsd:documentation>Физическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="legal_entity" type="LegalEntityOut">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="another" type="AnotherRestricted">
+				<xsd:annotation>
+					<xsd:documentation>Иное лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--===Сведения об ограничениях-->
+	<xsd:complexType name="RestrictParties">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лицах, в пользу которых установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="restricted_rights_parties" type="RestrictedRightsPartiesOut">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о лицах, в пользу которых установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="RestrictedRightsPartiesOut">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лицах, в пользу которых установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="restricted_rights_party" type="RestrictedRightsPartyOut" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о лице, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RestrictedRightsPartyOut">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лице, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/116/items">Тип лица, в пользу которых установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="subject" type="SubjectRestricted">
+				<xsd:annotation>
+					<xsd:documentation>Лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="SubjectRestricted">
+		<xsd:annotation>
+			<xsd:documentation>Лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="public_formation" type="PublicFormations">
+				<xsd:annotation>
+					<xsd:documentation>Публично-правовое образование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="individual" type="IndividualOut">
+				<xsd:annotation>
+					<xsd:documentation>Физическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="legal_entity" type="LegalEntityOut">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="another" type="AnotherRestricted">
+				<xsd:annotation>
+					<xsd:documentation>Иное лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="public_servitude" type="PublicServitude">
+				<xsd:annotation>
+					<xsd:documentation>Публичный сервитут</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="undefined" type="Undefined">
+				<xsd:annotation>
+					<xsd:documentation>Не определено</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherRestricted">
+		<xsd:annotation>
+			<xsd:documentation>Иное лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="another_type" type="AnotherTypeRestricted">
+				<xsd:annotation>
+					<xsd:documentation>Тип иного субъекта</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AnotherTypeRestricted">
+		<xsd:annotation>
+			<xsd:documentation>Тип иного субъекта</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="investment_unit_owner" type="InvestmentUnitOwnerOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы инвестиционных паев</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="certificates_holders" type="CertificatesHoldersOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы ипотечных сертификатов участия</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bonds_holders" type="BondsHoldersOut">
+				<xsd:annotation>
+					<xsd:documentation>Владельцы облигаций</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="partnership" type="Partnership">
+				<xsd:annotation>
+					<xsd:documentation>Инвестиционное товарищество</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="aparthouse_owners" type="AparthouseOwners">
+				<xsd:annotation>
+					<xsd:documentation>Собственники помещений в многоквартирном доме</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="equity_participants_info" type="EquityParticipantsInfo">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="not_equity_participants_info" type="NotEquityParticipantsInfo">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве, которым не переданы объекты долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="other" type="OtherSubject">
+				<xsd:annotation>
+					<xsd:documentation>Иной субъект</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--===Лица, участвующие в сделке-->
+	<xsd:complexType name="DealParties">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лицах, участвующих в сделке</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="deal_party" type="DealParty" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Сведения о лице, участвующем в сделке</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DealParty">
+		<xsd:annotation>
+			<xsd:documentation>Сведения о лице, участвующем в сделке</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="concession_mark" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Совершена уступка прав требования в пользу лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="party_type" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/116/items">Тип лица, участвующего в сделке</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="party_info" type="RightHolderOut">
+				<xsd:annotation>
+					<xsd:documentation>Лицо, участвующее в сделке</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="infant" type="Infant" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Представитель несовершеннолетнего, не достигшего четырнадцати лет (малолетнего), или признанного недееспособным лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Infant">
+		<xsd:annotation>
+			<xsd:documentation>Представитель несовершеннолетнего, не достигшего четырнадцати лет (малолетнего), или признанного недееспособным лица</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="representative" type="Representative">
+				<xsd:annotation>
+					<xsd:documentation>Представитель лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Representative">
+		<xsd:annotation>
+			<xsd:documentation>Представитель лица</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="representative_type" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/45/items">Тип представителя</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="representative_kind" type="RepresentativeKind">
+				<xsd:annotation>
+					<xsd:documentation>Представитель</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="RepresentativeKind">
+		<xsd:annotation>
+			<xsd:documentation>Представитель</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="individual" type="IndividualOut">
+				<xsd:annotation>
+					<xsd:documentation>Физическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="legal_entity" type="LegalEntityOut">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--===Общие типы-->
+	<xsd:complexType name="IndividualOut">
+		<xsd:annotation>
+			<xsd:documentation>Полные сведения о физическом лице</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="individual_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/58/items?hierarchy_view=true&amp;hierarchy_parent_id=3414665">Тип физического лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="surname" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Фамилия</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Имя</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="patronymic" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Отчество</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="birth_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата рождения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="birth_place" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Место рождения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="citizenship" type="Citizenship" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/62/items">Гражданство</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="snils" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>СНИЛС</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identity_doc" type="PersonDocument" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Документ, удостоверяющий личность</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contacts" type="Contacts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Контактная информация</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualFull">
+		<xsd:annotation>
+			<xsd:documentation>Полные сведения о физическом лице</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="individual_type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/58/items?hierarchy_view=true&amp;hierarchy_parent_id=3414665">Тип физического лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="surname" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Фамилия</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Имя</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="patronymic" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Отчество</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="birth_date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата рождения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="birth_place" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Место рождения</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="citizenship" type="Citizenship">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/62/items">Гражданство</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="snils" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>СНИЛС</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identity_doc" type="PersonDocument">
+				<xsd:annotation>
+					<xsd:documentation>Документ, удостоверяющий личность</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contacts" type="Contacts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Контактная информация</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Citizenship">
+		<xsd:annotation>
+			<xsd:documentation>Гражданство</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="person_citizenship_country" type="PersonCitizenshipCountry">
+				<xsd:annotation>
+					<xsd:documentation>Страна гражданства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="no_citizenship_person" type="NoCitizenshipPerson">
+				<xsd:annotation>
+					<xsd:documentation>Лицо без гражданства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="PersonCitizenshipCountry">
+		<xsd:annotation>
+			<xsd:documentation>Страна гражданства</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="citizenship_country" type="Dict">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/62/items">Страна гражданства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="NoCitizenshipPerson">
+		<xsd:annotation>
+			<xsd:documentation>Лицо без гражданства</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="no_citizenship" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Без гражданства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="LegalEntityOut">
+		<xsd:annotation>
+			<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="type" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/58/items">Тип юридического лица</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="entity" type="EntityOut">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contacts" type="Contacts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Контактная информация</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="EntityOut">
+		<xsd:annotation>
+			<xsd:documentation>Юридическое лицо, орган власти</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="resident" type="ResidentOut">
+				<xsd:annotation>
+					<xsd:documentation>Российское юридическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="government_entity" type="GovementEntity">
+				<xsd:annotation>
+					<xsd:documentation>Орган государственной власти, орган местного самоуправления, иной государственный орган</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="not_resident" type="NotResidentOut">
+				<xsd:annotation>
+					<xsd:documentation>Иностранное юридическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="LegalEntityUL">
+		<xsd:annotation>
+			<xsd:documentation>Юридическое лицо (российское, иностранное  юридическое лицо)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="entity" type="EntityUL">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо (российское, иностранное  юридическое лицо)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="EntityUL">
+		<xsd:annotation>
+			<xsd:documentation>Юридическое лицо (российское, иностранное  юридическое лицо)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="resident" type="ResidentOut">
+				<xsd:annotation>
+					<xsd:documentation>Российское юридическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="not_resident" type="NotResidentOut">
+				<xsd:annotation>
+					<xsd:documentation>Иностранное юридическое лицо</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ResidentOut">
+		<xsd:annotation>
+			<xsd:documentation>Российское юридическое лицо</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="incorporation_form" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/55/items">Организационно-правовая форма</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ИНН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ogrn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОГРН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="NotResidentOut">
+		<xsd:annotation>
+			<xsd:documentation>Иностранное юридическое лицо</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="incorporation_form" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/55/items">Организационно-правовая форма</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="incorporate_country" type="Dict" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="http://esunsi.at-consulting.ru:8000/catalogs/62/items">Страна регистрации (инкорпорации)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="registration_number" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Регистрационный номер</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="date_state_reg" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Дата государственной регистрации</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="registration_organ" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Наименование регистрирующего органа</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="reg_address_subject" type="MultiLiner" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Адрес (местонахождение) в стране регистрации (инкорпорации)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ИНН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="GovementEntity">
+		<xsd:annotation>
+			<xsd:documentation>Орган государственной власти, орган местного самоуправления, иной государственный орган</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="full_name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Полное наименование</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ИНН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ogrn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ОГРН</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="InvestmentUnitOwnerOut">
+		<xsd:annotation>
+			<xsd:documentation>Владельцы инвестиционных паев</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="investment_unit_name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Название (индивидуальное обозначение), идентифицирующее паевой инвестиционный фонд</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="BondsHoldersOut">
+		<xsd:annotation>
+			<xsd:documentation>Владельцы облигаций</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="bonds_number" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Государственный регистрационный номер выпуска облигаций</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issue_date" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Дата государственной регистрации номера выпуска облигаций</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="CertificatesHoldersOut">
+		<xsd:annotation>
+			<xsd:documentation>Владельцы ипотечных сертификатов участия</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="certificate_name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Индивидуальное обозначение, идентифицирующее ипотечные сертификаты участия, в интересах владельцев которых осуществляется доверительное управление таким ипотечным покрытием</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Partnership">
+		<xsd:annotation>
+			<xsd:documentation>Инвестиционное товарищество</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="partnership_participants">
+				<xsd:annotation>
+					<xsd:documentation>Участники договора инвестиционного товарищества</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="partnership_participant" type="PartnershipParticipant" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Участник договора инвестиционного товарищества</xsd:documentation>
+								<xsd:documentation source="http://esunsi.at-consulting.ru/catalogs/58/items">Тип иного субъекта права</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PartnershipParticipant">
+		<xsd:annotation>
+			<xsd:documentation>Участник договора инвестиционного товарищества</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="legal_entity" type="LegalEntityUL">
+				<xsd:annotation>
+					<xsd:documentation>Юридическое лицо (российское, иностранное  юридическое лицо)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contacts" type="Contacts" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Контактная информация</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="EquityParticipantsInfo">
+		<xsd:annotation>
+			<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="equity_participants" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="NotEquityParticipantsInfo">
+		<xsd:annotation>
+			<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве, которым не переданы объекты долевого строительства</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="not_equity_participants" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Участники долевого строительства по договорам участия в долевом строительстве, которым не переданы объекты долевого строительства</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="AparthouseOwners">
+		<xsd:annotation>
+			<xsd:documentation>Собственники помещений в многоквартирном доме</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="aparthouse_owners_name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Собственники помещений в многоквартирном доме</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="PublicServitude">
+		<xsd:annotation>
+			<xsd:documentation>Публичный сервитут</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="public" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Публичный сервитут</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="Undefined">
+		<xsd:annotation>
+			<xsd:documentation>Не определено (Лицо, в пользу которого установлены ограничения права и обременения объекта недвижимости)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="undefined" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Не определено</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

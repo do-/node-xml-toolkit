@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://rosreestr.ru/services/v0.26/commons/directories/receivingMethod"
+           elementFormDefault="qualified">
+    <xs:simpleType name="DReceivingMethod">
+        <xs:annotation>
+            <xs:documentation>Способ получения заявления в рамках заявлений по Регистрации прав</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="regRightAuthority">
+                <xs:annotation>
+                    <xs:documentation>в органе регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mfc">
+                <xs:annotation>
+                    <xs:documentation>в МФЦ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extReceipt">
+                <xs:annotation>
+                    <xs:documentation>выездной прием</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="postalDelivery">
+                <xs:annotation>
+                    <xs:documentation>Почтовым отправлением</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electronically">
+                <xs:annotation>
+                    <xs:documentation>В форме электронных документов (электронных образов документов)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DEGRNRequestReceivingMethod">
+        <xs:annotation>
+            <xs:documentation>Способ получения заявления в рамках заявлений по Предоставлению сведений из ЕГРН</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="regRightAuthority">
+                <xs:annotation>
+                    <xs:documentation>в органе регистрации прав</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mfc">
+                <xs:annotation>
+                    <xs:documentation>в МФЦ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="postalDelivery">
+                <xs:annotation>
+                    <xs:documentation>почтовым отправлением</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electronically">
+                <xs:annotation>
+                    <xs:documentation>в форме электронных документов (электронных образов документов)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+

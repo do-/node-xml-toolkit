@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2022 rel. 2 (x64) (http://www.altova.com) by  (FGBU «FKP Rosreestra») -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rosreestr.ru/services/v0.26/TInterdepStatement" xmlns:com="http://rosreestr.ru/services/v0.26/commons/Commons" xmlns:doc="http://rosreestr.ru/services/v0.26/commons/Documents" xmlns:stCom="http://rosreestr.ru/services/v0.26/TStatementCommons" xmlns:subj="http://rosreestr.ru/services/v0.26/commons/Subjects" xmlns:obj="http://rosreestr.ru/services/v0.26/commons/TObject" xmlns:dAcC="http://rosreestr.ru/services/v0.26/commons/directories/actionCode" xmlns:dKInfo="http://rosreestr.ru/services/v0.26/commons/directories/kindInfo" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://rosreestr.ru/services/v0.26/TInterdepStatement" elementFormDefault="qualified" vc:minVersion="1.1">
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Documents" schemaLocation="TDocument.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Commons" schemaLocation="Commons.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/TStatementCommons" schemaLocation="TStatementCommons.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/TObject" schemaLocation="TObject.xsd" id="obj"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/actionCode" schemaLocation="Dictionary/DActionCode.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/directories/kindInfo" schemaLocation="Dictionary/DKindInfo.xsd"/>
+	<xs:import namespace="http://rosreestr.ru/services/v0.26/commons/Subjects" schemaLocation="TSubject.xsd"/>
+	<!-- 30.11.2017 v025 -->
+	<xs:complexType name="TBasicInterdepStatement">
+		<xs:sequence>
+			<xs:element name="header" type="stCom:TInterdepStatementHeader" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Заголовок заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="subjects" type="tns:TBasicInterdepStatementSubjects" minOccurs="0"/>
+			<xs:element name="statementAgreements" type="stCom:TInterdepStatementAgreements" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Согласие на обработку персональных данных</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="objects" type="stCom:TInterdepStatementObjects" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Описание объектов недвижимости</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="statementDetails" type="tns:TInterdepStatementDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Детали заявления</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="_id" type="xs:token" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор заявления</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="build" type="xs:string" use="optional" fixed="26.001">
+			<xs:annotation>
+				<xs:documentation>Версия схемы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TInterdepStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление по МИВ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicInterdepStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TInterdepStatementHeader">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TInterdepStatementSubjects">
+						<xs:annotation>
+							<xs:documentation>Субъекты</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TInterdepStatementDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TInterdepOwnerlessStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление по бесхозяйному имуществу по МИВ</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicInterdepStatement">
+				<xs:sequence>
+					<xs:element name="header" type="stCom:TInterdepOwnerlessStatementHeader">
+						<xs:annotation>
+							<xs:documentation>Заголовок заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="subjects" type="tns:TInterdepOwnerlessStatementSubjects"/>
+					<xs:element name="statementAgreements" type="stCom:TInterdepStatementAgreements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Согласие на обработку персональных данных</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="objects" type="stCom:TInterdepStatementObjects" maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation>Описание объектов недвижимости</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="statementDetails" type="tns:TInterdepStatementDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Детали заявления</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TBasicInterdepStatementSubjects">
+		<xs:sequence>
+			<xs:element name="declarant" type="subj:TBasicStatementSubject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="owner" type="subj:TInterdepOnwerlessStatementOwner" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TInterdepStatementSubjects">
+		<xs:annotation>
+			<xs:documentation>Субъекты заявления</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicInterdepStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TInterdepStatementSubject" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TInterdepOwnerlessStatementSubjects">
+		<xs:complexContent>
+			<xs:restriction base="tns:TBasicInterdepStatementSubjects">
+				<xs:sequence>
+					<xs:element name="declarant" type="subj:TInterdepOwnerlessStatementSubject" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Заявитель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="owner" type="subj:TInterdepOnwerlessStatementOwner" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Правообладатель</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="interdepStatement" type="tns:TInterdepStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление о внесении сведений в Единый государственный реестр недвижимости в порядке межведомственного информационного взаимодействия</xs:documentation>
+		</xs:annotation>
+		<xs:key name="idDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:document"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="representativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:document | tns:header/stCom:appliedDocument/doc:legalAct"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="personIdDocumentKeyRef" refer="tns:idDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="representativeDocumentKeyRef" refer="tns:representativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:key name="subjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="interdepOwnerlessStatement" type="tns:TInterdepOwnerlessStatement">
+		<xs:annotation>
+			<xs:documentation>Заявление о постановке на учет бесхозяйных недвижимых вещей</xs:documentation>
+		</xs:annotation>
+		<xs:key name="ownerlessIdDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:document"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:key name="ownerlessRepresentativeDocumentKey">
+			<xs:selector xpath="tns:header/stCom:appliedDocument/doc:document | tns:header/stCom:appliedDocument/doc:legalAct"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+		<xs:keyref name="ownerlessPersonIdDocumentKeyRef" refer="tns:ownerlessIdDocumentKey">
+			<xs:selector xpath=".//subj:idDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:keyref name="ownerlessRepresentativeDocumentKeyRef" refer="tns:ownerlessRepresentativeDocumentKey">
+			<xs:selector xpath=".//subj:representativeDocumentRef"/>
+			<xs:field xpath="@documentID"/>
+		</xs:keyref>
+		<xs:key name="ownerlessSubjectKey">
+			<xs:selector xpath="tns:subjects/tns:declarant | tns:subjects/tns:owner | .//subj:representative/subj:subject"/>
+			<xs:field xpath="@_id"/>
+		</xs:key>
+	</xs:element>
+	<xs:complexType name="TInterdepStatementDetails">
+		<xs:annotation>
+			<xs:documentation>Детали заявления</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="note" type="com:TNote" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Дополнительная информация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
