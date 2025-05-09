@@ -1,6 +1,6 @@
 {
   "name": "xml-toolkit",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "XML parser, marshaller, SOAP adapter",
   "main": "index.js",
   "files": [

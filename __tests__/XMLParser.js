@@ -15,11 +15,23 @@ test ('innerText', () => {
 
 	const p = new XMLParser ()
 
-	const d = p.process ('<root>Before<si>a<t/>n<![CDATA[d]]></si>after</root>')
+	{
 
-	delete d.children [0].children
+		const d = p.process ('<root>Before<si>a<t/>n<![CDATA[d]]></si>after</root>')
 
-	expect (d.innerText).toBe ('Beforeandafter')
+		delete d.children [0].children
+
+		expect (d.innerText).toBe ('Beforeandafter')
+
+	}
+
+	{
+
+		const d = p.process ('<c r="E2" s="3" t="inlineStr"></c>')
+
+		expect (d.innerText).toBe ('')
+
+	}
 
 })
 
