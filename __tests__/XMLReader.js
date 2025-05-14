@@ -160,3 +160,30 @@ test ('leak', async () => {
 	})
 
 })
+
+test ('bad entity', async () => {
+
+	const a = []
+
+	await expect (
+		
+		new Promise ((ok, fail) => {
+
+			const is = fs.createReadStream (Path.join (__dirname, '..', '__data__', 'amp2.xml'))
+
+			const reader = new XMLReader ({ filter: i => i.type === 'StartElement'})
+
+			reader.on ('error', fail)
+			reader.on ('end', ok)
+
+			reader.process (is)
+
+			reader.on ('data', n => a.push (n.name))
+
+		})
+	
+	).rejects.toBeDefined ()
+
+	expect (a).toStrictEqual (['sst', 'si', 't'])
+	
+})
