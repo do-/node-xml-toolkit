@@ -1,0 +1,709 @@
+<wsdl:definitions name="MOService" targetNamespace="http://iac.spb.ru/toris/management_organizations/service" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://iac.spb.ru/toris/management_organizations/service">
+   <wsdl:types>
+      <xs:schema targetNamespace="http://www.w3.org/2004/08/xop/include" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.w3.org/2004/08/xop/include">
+         <xs:element name="Include" type="tns:Include"/>
+         <xs:complexType name="Include">
+            <xs:sequence>
+               <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+            </xs:sequence>
+            <xs:attribute name="href" type="xs:anyURI" use="required"/>
+            <xs:anyAttribute namespace="##other" processContents="skip"/>
+         </xs:complexType>
+      </xs:schema>
+      <xs:schema elementFormDefault="qualified" targetNamespace="http://smev.gosuslugi.ru/rev120315" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://smev.gosuslugi.ru/rev120315" xmlns:ns2="http://www.w3.org/2004/08/xop/include" xmlns:ns1="http://iac.spb.ru/toris/common/service">
+
+         <xs:element name="AppData" type="tns:AppDataType"/>
+         <xs:element name="AppDocument" type="tns:AppDocumentType"/>
+         <xs:element name="BaseMessage" type="tns:BaseMessageType"/>
+         <xs:element name="BinaryData" type="xs:base64Binary"/>
+         <xs:element name="CaseNumber" type="xs:string"/>
+         <xs:element name="Date" type="xs:anySimpleType"/>
+         <xs:element name="DigestValue" type="xs:base64Binary"/>
+         <xs:element name="ExchangeType" type="xs:string"/>
+         <xs:element name="Header" type="tns:HeaderType"/>
+         <xs:element name="Id" type="tns:PacketIdType"/>
+         <xs:element name="Message" type="tns:MessageType"/>
+         <xs:element name="MessageClass" type="tns:MessageClassType"/>
+         <xs:element name="MessageData" type="tns:MessageDataType"/>
+         <xs:element name="MessageId" type="xs:string"/>
+         <xs:element name="NodeId" type="xs:string"/>
+         <xs:element name="OKTMO" type="xs:string"/>
+         <xs:element name="OriginRequestIdRef" type="xs:string"/>
+         <xs:element name="Originator" type="tns:orgExternalType"/>
+         <xs:element name="PacketIds" type="tns:PacketIdsType"/>
+         <xs:element name="Recipient" type="tns:orgExternalType"/>
+         <xs:element name="Reference" type="tns:ReferenceType"/>
+         <xs:element name="RequestCode" type="xs:string"/>
+         <xs:element name="RequestIdRef" type="xs:string"/>
+         <xs:element name="Sender" type="tns:orgExternalType"/>
+         <xs:element name="Service" type="tns:ServiceType"/>
+         <xs:element name="ServiceCode" type="xs:string"/>
+         <xs:element name="ServiceName" type="xs:string"/>
+         <xs:element name="Status" type="tns:StatusType"/>
+         <xs:element name="SubMessage" type="tns:SubMessageType"/>
+         <xs:element name="SubMessages" type="tns:SubMessagesType"/>
+         <xs:element name="SubRequestNumber" type="xs:string"/>
+         <xs:element name="TestMsg" type="xs:string"/>
+         <xs:element name="TimeStamp" type="xs:anySimpleType"/>
+         <xs:element name="TypeCode" type="tns:TypeCodeType"/>
+         <xs:complexType name="BaseMessageType">
+            <xs:sequence>
+               <xs:element name="Message" type="tns:MessageType"/>
+               <xs:element name="MessageData" type="tns:MessageDataType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="MessageType">
+            <xs:sequence>
+               <xs:element name="Sender" type="tns:orgExternalType"/>
+               <xs:element name="Recipient" type="tns:orgExternalType"/>
+               <xs:element minOccurs="0" name="Originator" type="tns:orgExternalType"/>
+               <xs:element minOccurs="0" name="ServiceName" type="xs:string"/>
+               <xs:element minOccurs="0" name="Service" type="tns:ServiceType"/>
+               <xs:element name="TypeCode" type="tns:TypeCodeType"/>
+               <xs:element name="Status" type="tns:StatusType"/>
+               <xs:element name="Date" type="xs:dateTime"/>
+               <xs:element name="ExchangeType" type="xs:string"/>
+               <xs:element minOccurs="0" name="RequestIdRef" type="xs:string"/>
+               <xs:element minOccurs="0" name="OriginRequestIdRef" type="xs:string"/>
+               <xs:element minOccurs="0" name="ServiceCode" type="xs:string"/>
+               <xs:element minOccurs="0" name="CaseNumber" type="xs:string"/>
+               <xs:element minOccurs="0" name="SubMessages" type="tns:SubMessagesType"/>
+               <xs:element minOccurs="0" name="TestMsg" type="xs:string"/>
+               <xs:element minOccurs="0" name="OKTMO" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="orgExternalType">
+            <xs:sequence>
+               <xs:element name="Code" type="xs:string"/>
+               <xs:element name="Name" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ServiceType">
+            <xs:sequence>
+               <xs:element name="Mnemonic" type="xs:string"/>
+               <xs:element name="Version" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="SubMessagesType">
+            <xs:sequence>
+               <xs:element maxOccurs="unbounded" name="SubMessage" type="tns:SubMessageType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="SubMessageType">
+            <xs:sequence>
+               <xs:element name="SubRequestNumber" type="xs:string"/>
+               <xs:element name="Status" type="tns:StatusType"/>
+               <xs:element minOccurs="0" name="Originator" type="tns:orgExternalType"/>
+               <xs:element name="Date" type="xs:dateTime"/>
+               <xs:element minOccurs="0" name="RequestIdRef" type="xs:string"/>
+               <xs:element minOccurs="0" name="OriginRequestIdRef" type="xs:string"/>
+               <xs:element minOccurs="0" name="ServiceCode" type="xs:string"/>
+               <xs:element minOccurs="0" name="CaseNumber" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="MessageDataType">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="AppData" type="tns:AppDataType"/>
+               <xs:element minOccurs="0" name="AppDocument" type="tns:AppDocumentType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="AppDataType">
+            <xs:sequence>
+               <xs:element name="data" type="ns1:DataType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="AppDocumentType">
+            <xs:sequence>
+               <xs:element name="RequestCode" type="xs:string"/>
+               <xs:element minOccurs="0" name="BinaryData" type="xs:base64Binary"/>
+               <xs:element minOccurs="0" name="Reference" type="tns:ReferenceType"/>
+               <xs:element minOccurs="0" name="DigestValue" type="xs:base64Binary"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType mixed="true" name="ReferenceType">
+            <xs:sequence>
+               <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns2:Include"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="HeaderType">
+            <xs:sequence>
+               <xs:element name="NodeId" type="xs:string"/>
+               <xs:element name="MessageId" type="xs:string"/>
+               <xs:element name="TimeStamp" type="xs:dateTime"/>
+               <xs:element name="MessageClass" type="tns:MessageClassType"/>
+               <xs:element minOccurs="0" name="PacketIds" type="tns:PacketIdsType"/>
+            </xs:sequence>
+            <xs:attribute name="actor" type="xs:string"/>
+            <xs:anyAttribute namespace="##other" processContents="skip"/>
+         </xs:complexType>
+         <xs:complexType name="PacketIdsType">
+            <xs:sequence>
+               <xs:element maxOccurs="unbounded" name="Id" type="tns:PacketIdType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="PacketIdType">
+            <xs:sequence>
+               <xs:element name="MessageId" type="xs:string"/>
+               <xs:element name="SubRequestNumber" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:simpleType name="TypeCodeType">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="GSRV"/>
+               <xs:enumeration value="GFNC"/>
+               <xs:enumeration value="OTHR"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="StatusType">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="REQUEST"/>
+               <xs:enumeration value="RESULT"/>
+               <xs:enumeration value="REJECT"/>
+               <xs:enumeration value="INVALID"/>
+               <xs:enumeration value="ACCEPT"/>
+               <xs:enumeration value="PING"/>
+               <xs:enumeration value="PROCESS"/>
+               <xs:enumeration value="NOTIFY"/>
+               <xs:enumeration value="FAILURE"/>
+               <xs:enumeration value="CANCEL"/>
+               <xs:enumeration value="STATE"/>
+               <xs:enumeration value="PACKET"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="MessageClassType">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="REQUEST"/>
+               <xs:enumeration value="RESPONSE"/>
+            </xs:restriction>
+         </xs:simpleType>
+      </xs:schema>
+      <xs:schema targetNamespace="http://iac.spb.ru/toris/management_organizations/service" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iac.spb.ru/toris/management_organizations/service" xmlns:ns2="http://smev.gosuslugi.ru/rev120315" xmlns:ns1="http://iac.spb.ru/toris/common/service">
+
+         <xs:element name="getBuildingsRequest" type="tns:GetBuildingsRequest"/>
+         <xs:element name="getBuildingsRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getBuildingsResponse" type="tns:GetBuildingsResponse"/>
+         <xs:element name="getBuildingsResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsByEasRequest" type="tns:GetOrganizationsByEasRequest"/>
+         <xs:element name="getOrganizationsByEasRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsByEasResponse" type="tns:GetOrganizationsByEasResponse"/>
+         <xs:element name="getOrganizationsByEasResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsByTypeRequest" type="tns:GetOrganizationsByTypeRequest"/>
+         <xs:element name="getOrganizationsByTypeRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsByTypeResponse" type="tns:GetOrganizationsByTypeResponse"/>
+         <xs:element name="getOrganizationsByTypeResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsRequest" type="tns:GetOrganizationsRequest"/>
+         <xs:element name="getOrganizationsRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrganizationsResponse" type="tns:GetOrganizationsResponse"/>
+         <xs:element name="getOrganizationsResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getPremiseByIdAndTypeOrgRequest" type="tns:GetPremiseByIdAndTypeOrgRequest"/>
+         <xs:element name="getPremiseByIdAndTypeOrgRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getPremiseByIdAndTypeOrgResponse" type="tns:GetPremiseByIdAndTypeOrgResponse"/>
+         <xs:element name="getPremiseByIdAndTypeOrgResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:complexType name="GetOrganizationsRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="itemsPerPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="currentPage" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="idOrgs" nillable="true" type="tns:IdOrg"/>
+                     <xs:element minOccurs="0" name="inn" type="xs:string"/>
+                     <xs:element minOccurs="0" name="kpp" type="xs:string"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="IdOrg">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="idOrg" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetPremiseByIdAndTypeOrgRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="typeOrg" type="xs:int"/>
+                     <xs:element minOccurs="0" name="organizationId" type="xs:string"/>
+                     <xs:element minOccurs="0" name="countRecord" type="xs:int"/>
+                     <xs:element minOccurs="0" name="page" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="GetOrganizationsByEasRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="eas" type="xs:int"/>
+                     <xs:element minOccurs="0" name="countRecord" type="xs:int"/>
+                     <xs:element minOccurs="0" name="page" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="GetBuildingsRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="itemsPerPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="currentPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="searchData" type="tns:SearchData"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="SearchData">
+            <xs:sequence>
+               <xs:element name="INN" type="xs:string"/>
+               <xs:element name="KPP" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrganizationsByTypeResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="organizations" nillable="true" type="tns:OrganizationByType"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="OrganizationByType">
+            <xs:sequence>
+               <xs:element name="id" type="xs:string"/>
+               <xs:element minOccurs="0" name="legalForm" type="xs:string"/>
+               <xs:element name="shortName" type="xs:string"/>
+               <xs:element minOccurs="0" name="name" type="xs:string"/>
+               <xs:element minOccurs="0" name="headFIO" type="xs:string"/>
+               <xs:element minOccurs="0" name="dolgnHead" type="xs:string"/>
+               <xs:element minOccurs="0" name="juridicalAddress" type="xs:string"/>
+               <xs:element name="buildingEas" type="xs:int"/>
+               <xs:element minOccurs="0" name="postAddress" type="xs:string"/>
+               <xs:element name="inn" type="xs:string"/>
+               <xs:element name="kpp" type="xs:string"/>
+               <xs:element minOccurs="0" name="ogrn" type="xs:string"/>
+               <xs:element minOccurs="0" name="okpo" type="xs:string"/>
+               <xs:element minOccurs="0" name="settlementAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="bank" type="xs:string"/>
+               <xs:element minOccurs="0" name="bik" type="xs:string"/>
+               <xs:element minOccurs="0" name="correspondentAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactPhone" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactEmail" type="xs:string"/>
+               <xs:element minOccurs="0" name="site" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrganizationsResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="organizations" nillable="true" type="tns:Organization"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="Organization">
+            <xs:sequence>
+               <xs:element name="id" type="xs:string"/>
+               <xs:element minOccurs="0" name="legalForm" type="xs:string"/>
+               <xs:element minOccurs="0" name="shortName" type="xs:string"/>
+               <xs:element minOccurs="0" name="name" type="xs:string"/>
+               <xs:element minOccurs="0" name="headFIO" type="xs:string"/>
+               <xs:element minOccurs="0" name="dolgnHead" type="xs:string"/>
+               <xs:element minOccurs="0" name="juridicalAddress" type="xs:string"/>
+               <xs:element name="buildingEas" type="xs:int"/>
+               <xs:element minOccurs="0" name="postAddress" type="xs:string"/>
+               <xs:element minOccurs="0" name="inn" type="xs:string"/>
+               <xs:element minOccurs="0" name="kpp" type="xs:string"/>
+               <xs:element minOccurs="0" name="ogrn" type="xs:string"/>
+               <xs:element minOccurs="0" name="okpo" type="xs:string"/>
+               <xs:element minOccurs="0" name="settlementAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="bank" type="xs:string"/>
+               <xs:element minOccurs="0" name="bik" type="xs:string"/>
+               <xs:element minOccurs="0" name="correspondentAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactPhone" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactEmail" type="xs:string"/>
+               <xs:element minOccurs="0" name="site" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetPremiseByIdAndTypeOrgResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="organizations" nillable="true" type="tns:PremiseByIdAndTypeOrg"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="PremiseByIdAndTypeOrg">
+            <xs:sequence>
+               <xs:element name="utilityName" type="xs:string"/>
+               <xs:element minOccurs="0" name="premiseId" type="xs:int"/>
+               <xs:element minOccurs="0" name="premiseName" type="xs:string"/>
+               <xs:element minOccurs="0" name="startDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="endDate" type="xs:date"/>
+               <xs:element name="buildingEasPremise" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrganizationsByEasResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="organizations" nillable="true" type="tns:OrganizationByEas"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="OrganizationByEas">
+            <xs:sequence>
+               <xs:element name="id" type="xs:string"/>
+               <xs:element minOccurs="0" name="legalForm" type="xs:string"/>
+               <xs:element name="shortName" type="xs:string"/>
+               <xs:element minOccurs="0" name="name" type="xs:string"/>
+               <xs:element minOccurs="0" name="headFIO" type="xs:string"/>
+               <xs:element minOccurs="0" name="dolgnHead" type="xs:string"/>
+               <xs:element minOccurs="0" name="juridicalAddress" type="xs:string"/>
+               <xs:element name="buildingEas" type="xs:int"/>
+               <xs:element minOccurs="0" name="postAddress" type="xs:string"/>
+               <xs:element name="INN" type="xs:string"/>
+               <xs:element name="KPP" type="xs:string"/>
+               <xs:element minOccurs="0" name="OGRN" type="xs:string"/>
+               <xs:element minOccurs="0" name="OKPO" type="xs:string"/>
+               <xs:element minOccurs="0" name="settlementAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="bank" type="xs:string"/>
+               <xs:element minOccurs="0" name="BIK" type="xs:string"/>
+               <xs:element minOccurs="0" name="correspondentAccount" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactPhone" type="xs:string"/>
+               <xs:element minOccurs="0" name="contactEmail" type="xs:string"/>
+               <xs:element minOccurs="0" name="site" type="xs:string"/>
+               <xs:element maxOccurs="unbounded" name="arr" type="tns:OrgHistType"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="OrgHistType">
+            <xs:sequence>
+               <xs:element name="obj_utilityName" type="xs:string"/>
+               <xs:element minOccurs="0" name="startDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="endDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="premiseId" type="xs:int"/>
+               <xs:element minOccurs="0" name="premiseName" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetBuildingsResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="buildings" nillable="true" type="tns:Building"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="Building">
+            <xs:sequence>
+               <xs:element name="id" type="xs:int"/>
+               <xs:element minOccurs="0" name="locality" type="xs:string"/>
+               <xs:element minOccurs="0" name="index" type="xs:string"/>
+               <xs:element minOccurs="0" name="district" type="xs:string"/>
+               <xs:element minOccurs="0" name="streetType" type="xs:string"/>
+               <xs:element minOccurs="0" name="streetName" type="xs:string"/>
+               <xs:element minOccurs="0" name="houseNumber" type="xs:string"/>
+               <xs:element minOccurs="0" name="building" type="xs:string"/>
+               <xs:element name="buildingEas" type="xs:int"/>
+               <xs:element minOccurs="0" name="litera" type="xs:string"/>
+               <xs:element minOccurs="0" name="type" type="xs:string"/>
+               <xs:element minOccurs="0" name="accessory" type="xs:string"/>
+               <xs:element minOccurs="0" name="ownershipType" type="xs:string"/>
+               <xs:element minOccurs="0" name="serviceType" type="xs:string"/>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="managementOrgHistory" nillable="true" type="tns:OrganizationHistory"/>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="servingOrgHistory" nillable="true" type="tns:OrganizationHistory"/>
+               <xs:element name="supplyingOrganizations" type="tns:SupplyingOrganizations"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="OrganizationHistory">
+            <xs:sequence>
+               <xs:element name="orgId" type="xs:int"/>
+               <xs:element minOccurs="0" name="orgName" type="xs:string"/>
+               <xs:element name="startDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="endDate" type="xs:date"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="SupplyingOrganizations">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="energySupplying" type="xs:string"/>
+               <xs:element minOccurs="0" name="waterSupplying" type="xs:string"/>
+               <xs:element minOccurs="0" name="gasSupplying" type="xs:string"/>
+               <xs:element minOccurs="0" name="heatSupplying" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrganizationsByTypeRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="typeOrg" type="xs:int"/>
+                     <xs:element minOccurs="0" name="countRecord" type="xs:int"/>
+                     <xs:element minOccurs="0" name="page" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+      </xs:schema>
+      <xs:schema targetNamespace="http://iac.spb.ru/toris/common/service" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:complexType name="DataType">
+            <xs:sequence/>
+         </xs:complexType>
+      </xs:schema>
+      <xs:schema targetNamespace="http://iac.spb.ru/toris/address_programs/service" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://iac.spb.ru/toris/address_programs/service" xmlns:ns2="http://smev.gosuslugi.ru/rev120315" xmlns:ns1="http://iac.spb.ru/toris/common/service">
+
+         <xs:element name="getOrdersRequest" type="tns:GetOrdersRequest"/>
+         <xs:element name="getOrdersRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getOrdersResponse" type="tns:GetOrdersResponse"/>
+         <xs:element name="getOrdersResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getRegionalProgramRequest" type="tns:GetRegionalProgramRequest"/>
+         <xs:element name="getRegionalProgramRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getRegionalProgramResponse" type="tns:GetRegionalProgramResponse"/>
+         <xs:element name="getRegionalProgramResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTargetProgramsRequest" type="tns:GetTargetProgramsRequest"/>
+         <xs:element name="getTargetProgramsRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTargetProgramsResponse" type="tns:GetTargetProgramsResponse"/>
+         <xs:element name="getTargetProgramsResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTaskDetailsRequest" type="tns:GetTaskDetailsRequest"/>
+         <xs:element name="getTaskDetailsRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTaskDetailsResponse" type="tns:GetTaskDetailsResponse"/>
+         <xs:element name="getTaskDetailsResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTaskTypesRequest" type="tns:GetTaskTypesRequest"/>
+         <xs:element name="getTaskTypesRequestWrap" type="ns2:BaseMessageType"/>
+         <xs:element name="getTaskTypesResponse" type="tns:GetTaskTypesResponse"/>
+         <xs:element name="getTaskTypesResponseWrap" type="ns2:BaseMessageType"/>
+         <xs:complexType name="GetTaskDetailsResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="details" nillable="true" type="tns:TaskDetail"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="TaskDetail">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="idTP" type="xs:int"/>
+               <xs:element minOccurs="0" name="year" type="xs:int"/>
+               <xs:element minOccurs="0" name="idBuildingEAS" type="xs:int"/>
+               <xs:element minOccurs="0" name="type" type="xs:int"/>
+               <xs:element minOccurs="0" name="status" type="xs:int"/>
+               <xs:element minOccurs="0" name="idOrder" type="xs:int"/>
+               <xs:element minOccurs="0" name="estCost" type="xs:float"/>
+               <xs:element minOccurs="0" name="estVolume" type="xs:float"/>
+               <xs:element minOccurs="0" name="tenderDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="tenderCost" type="xs:float"/>
+               <xs:element minOccurs="0" name="contractNum" type="xs:string"/>
+               <xs:element minOccurs="0" name="contractDate" type="xs:date"/>
+               <xs:element minOccurs="0" name="contractCost" type="xs:float"/>
+               <xs:element minOccurs="0" name="contractStart" type="xs:date"/>
+               <xs:element minOccurs="0" name="contractEnd" type="xs:date"/>
+               <xs:element minOccurs="0" name="customer" type="xs:string"/>
+               <xs:element minOccurs="0" name="contractOrg" type="xs:string"/>
+               <xs:element minOccurs="0" name="isClosed" type="xs:int"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetTaskTypesRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence/>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="GetTargetProgramsResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="targetPrograms" nillable="true" type="tns:TargetProgram"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="TargetProgram">
+            <xs:sequence>
+               <xs:element name="idTP" type="xs:int"/>
+               <xs:element name="name" type="xs:string"/>
+               <xs:element minOccurs="0" name="shortName" type="xs:string"/>
+               <xs:element name="year" type="xs:int"/>
+               <xs:element name="district" type="xs:int"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrdersRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="itemsPerPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="currentPage" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="GetRegionalProgramRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="itemsPerPage" type="xs:int"/>
+                     <xs:element name="currentPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="idDistrcit" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="GetTaskDetailsRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="itemsPerPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="currentPage" type="xs:int"/>
+                     <xs:element minOccurs="0" name="searchData" type="tns:SearchData"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="SearchData">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="idTP" type="xs:int"/>
+               <xs:element minOccurs="0" name="year" type="xs:int"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetOrdersResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element name="pagesCount" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="orders" nillable="true" type="tns:Order"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="Order">
+            <xs:sequence>
+               <xs:element name="idOrder" type="xs:int"/>
+               <xs:element minOccurs="0" name="number" type="xs:int"/>
+               <xs:element minOccurs="0" name="applicant" type="xs:string"/>
+               <xs:element minOccurs="0" name="description" type="xs:string"/>
+               <xs:element minOccurs="0" name="appDate" type="xs:date"/>
+               <xs:element name="idBuildingEAS" type="xs:int"/>
+               <xs:element minOccurs="0" name="orderYear" type="xs:int"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetRegionalProgramResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="RPBuildingsList" type="tns:RPBuilding"/>
+                     <xs:element minOccurs="0" name="pagesCount" type="xs:int"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="RPBuilding">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="idBuildingEAS" type="xs:int"/>
+                     <xs:element minOccurs="0" name="idDistrict" type="xs:int"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="rpTaskList" nillable="true" type="tns:TaskList"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="TaskList">
+            <xs:sequence>
+               <xs:element name="idType" type="xs:int"/>
+               <xs:element name="startYear" type="xs:int"/>
+               <xs:element name="endYear" type="xs:int"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetTaskTypesResponse">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="taskStatus" nillable="true" type="tns:TaskStatus"/>
+                     <xs:element maxOccurs="unbounded" minOccurs="0" name="taskType" nillable="true" type="tns:TaskType"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+         <xs:complexType name="TaskStatus">
+            <xs:sequence>
+               <xs:element name="idStatus" type="xs:int"/>
+               <xs:element name="nameStatus" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="TaskType">
+            <xs:sequence>
+               <xs:element name="idType" type="xs:int"/>
+               <xs:element name="nameType" type="xs:string"/>
+               <xs:element minOccurs="0" name="typeUnits" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="GetTargetProgramsRequest">
+            <xs:complexContent>
+               <xs:extension base="ns1:DataType">
+                  <xs:sequence>
+                     <xs:element minOccurs="0" name="year" type="xs:int"/>
+                     <xs:element minOccurs="0" name="name" type="xs:string"/>
+                  </xs:sequence>
+               </xs:extension>
+            </xs:complexContent>
+         </xs:complexType>
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="getOrganizationsByTypeResponse">
+      <wsdl:part element="ns1:getOrganizationsByTypeResponseWrap" name="response"/>
+   </wsdl:message>
+   <wsdl:message name="getOrganizationsByEas">
+      <wsdl:part element="ns1:getOrganizationsByEasRequestWrap" name="request"/>
+   </wsdl:message>
+   <wsdl:message name="getOrganizationsResponse">
+      <wsdl:part element="ns1:getOrganizationsResponseWrap" name="response"/>
+   </wsdl:message>
+   <wsdl:message name="getOrganizations">
+      <wsdl:part element="ns1:getOrganizationsRequestWrap" name="request"/>
+   </wsdl:message>
+   <wsdl:message name="getOrganizationsByType">
+      <wsdl:part element="ns1:getOrganizationsByTypeRequestWrap" name="request"/>
+   </wsdl:message>
+   <wsdl:message name="getPremiseByIdAndTypeOrg">
+      <wsdl:part element="ns1:getPremiseByIdAndTypeOrgRequestWrap" name="request"/>
+   </wsdl:message>
+   <wsdl:message name="getPremiseByIdAndTypeOrgResponse">
+      <wsdl:part element="ns1:getPremiseByIdAndTypeOrgResponseWrap" name="response"/>
+   </wsdl:message>
+   <wsdl:message name="getOrganizationsByEasResponse">
+      <wsdl:part element="ns1:getOrganizationsByEasResponseWrap" name="response"/>
+   </wsdl:message>
+   <wsdl:message name="getBuildingsResponse">
+      <wsdl:part element="ns1:getBuildingsResponseWrap" name="response"/>
+   </wsdl:message>
+   <wsdl:message name="getBuildings">
+      <wsdl:part element="ns1:getBuildingsRequestWrap" name="request"/>
+   </wsdl:message>
+   <wsdl:portType name="MOService">
+      <wsdl:operation name="getOrganizationsByEas">
+         <wsdl:input message="ns1:getOrganizationsByEas" name="getOrganizationsByEas"/>
+         <wsdl:output message="ns1:getOrganizationsByEasResponse" name="getOrganizationsByEasResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getOrganizationsByType">
+         <wsdl:input message="ns1:getOrganizationsByType" name="getOrganizationsByType"/>
+         <wsdl:output message="ns1:getOrganizationsByTypeResponse" name="getOrganizationsByTypeResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getOrganizations">
+         <wsdl:input message="ns1:getOrganizations" name="getOrganizations"/>
+         <wsdl:output message="ns1:getOrganizationsResponse" name="getOrganizationsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getBuildings">
+         <wsdl:input message="ns1:getBuildings" name="getBuildings"/>
+         <wsdl:output message="ns1:getBuildingsResponse" name="getBuildingsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPremiseByIdAndTypeOrg">
+         <wsdl:input message="ns1:getPremiseByIdAndTypeOrg" name="getPremiseByIdAndTypeOrg"/>
+         <wsdl:output message="ns1:getPremiseByIdAndTypeOrgResponse" name="getPremiseByIdAndTypeOrgResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>
