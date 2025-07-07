@@ -245,6 +245,47 @@ test ('20040', async () => {
 
 })
 
+test ('20319', async () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', '20319.wsdl')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const data = {
+		getOrganizationsByEasRequestWrap: {
+			Message: {
+				TestMsg: "Тестовый запроc",
+				Sender: {
+					Code: "001801781",
+					Name: "КИС СПб",
+				},
+				Recipient: {
+					Code: "ESZHKU001",
+					Name: "АС ЕС ЖКУ",
+				},
+				ServiceName:  "MOService",
+				TypeCode:     "GFNC",
+				Status:       "REQUEST",
+				Date:         "2025-07-07",
+				ExchangeType: "2"
+			},
+			MessageData: {
+				AppData: {
+					data: {
+						[Symbol.for ('type')]: 'getOrganizationsByEasRequest',
+						eas:         123456,
+						countRecord: 1,
+						page:        1
+					}
+				}
+			}
+		}
+	}
+
+	expect (xs.stringify (data)).toMatch ('eas>123456<')
+
+})
+
 test ('nillable', () => {
 
 	const xs = getXSSync (Path.join (__dirname, '..', '__data__', 'F9ASyncService_1.xsd'))
