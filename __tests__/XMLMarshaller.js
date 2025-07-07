@@ -272,7 +272,7 @@ test ('20319', async () => {
 			MessageData: {
 				AppData: {
 					data: {
-						[Symbol.for ('type')]: 'GetOrganizationsByEasRequest',
+						[Symbol.for ('type')]: 'getOrganizationsByEasRequest',
 						eas:         123456,
 						countRecord: 1,
 						page:        1
