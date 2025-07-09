@@ -272,7 +272,7 @@ test ('20319', async () => {
 			MessageData: {
 				AppData: {
 					data: {
-						[Symbol.for ('type')]: 'getOrganizationsByEasRequest',
+						[Symbol.for ('type')]: 'GetOrganizationsByEasRequest',
 						eas:         123456,
 						countRecord: 1,
 						page:        1
@@ -281,6 +281,8 @@ test ('20319', async () => {
 			}
 		}
 	}
+
+	expect (xs.stringify (data)).toMatch (/xsi:type="ns\d*:GetOrganizationsByEasRequest"/)
 
 	expect (xs.stringify (data)).toMatch ('eas>123456<')
 
