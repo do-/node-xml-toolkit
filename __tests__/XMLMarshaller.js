@@ -286,6 +286,16 @@ test ('20319', async () => {
 
 })
 
+test ('null', () => {
+
+	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'smev-message-exchange-types-1.1.xsd'))
+
+	const xml = xs.stringify ({AckResponse: null})
+
+	expect (xml).toMatch ('ns2:AckResponse')
+
+})
+
 test ('nillable', () => {
 
 	const xs = getXSSync (Path.join (__dirname, '..', '__data__', 'F9ASyncService_1.xsd'))
