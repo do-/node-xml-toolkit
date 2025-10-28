@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://eiim.service112.iskratel.si/"
+           targetNamespace="http://eiim.service112.iskratel.si/"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+    >
+    <xs:element name="Code" type="xs:string"/>
+    <xs:element name="CodeDescr" type="xs:string"/>
+    <xs:element name="UpdateCardResponse" type="tns:UpdateCardResponse"/>
+
+    <xs:complexType name="UpdateCardResponse">
+        <xs:sequence>
+            <xs:element form="unqualified" name="Code" type="xs:string"/>
+            <xs:element form="unqualified" name="CodeDescr" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

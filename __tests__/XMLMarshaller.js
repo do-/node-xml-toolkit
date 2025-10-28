@@ -315,6 +315,31 @@ test ('nillable', () => {
 
 })
 
+test ('form="unqualified"', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', '202510', 'wsdl_112.xsd')
+
+	const xs = getXSSync (xsdPath)
+
+	function stringify (data, options) {
+
+		const xml = xs.createMarshaller ('UpdateCardResponse', 'http://eiim.service112.iskratel.si/').stringify (data, options)
+
+		execSync (`xmllint --schema ${xsdPath} -`, {input: xml, stdio: 'pipe'})
+
+		return xml
+
+	}
+
+	let xml = stringify ({
+		"Code": 200,
+		"CodeDescr": "Descr"
+	})
+
+	expect (xml).toMatch ('<ns2:UpdateCardResponse xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:ns2=\"http://eiim.service112.iskratel.si/\"><Code>200</Code><CodeDescr>Descr</CodeDescr></ns2:UpdateCardResponse>')
+
+})
+
 test ('att simple type', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
