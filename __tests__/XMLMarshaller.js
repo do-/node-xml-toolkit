@@ -315,6 +315,22 @@ test ('nillable', () => {
 
 })
 
+test ('form="unqualified"', () => {
+
+	const xs = getXSSync (Path.join (__dirname, '..', '__data__', '202510', 'wsdl_112.wsdl'))
+
+	const m = xs.createMarshaller ('UpdateCardResponse', 'http://eiim.service112.iskratel.si/')
+
+	const xml = m.stringify ({
+			"Code": 200,
+			"CodeDescr": "Descr"
+		}
+	)
+
+	expect (xml).toMatch ('<ns2:UpdateCardResponse xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:ns2=\"http://eiim.service112.iskratel.si/\"><Code>200</Code><CodeDescr>Descr</CodeDescr></ns2:UpdateCardResponse>')
+
+})
+
 test ('att simple type', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
