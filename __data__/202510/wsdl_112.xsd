@@ -3,9 +3,10 @@
            xmlns:tns="http://eiim.service112.iskratel.si/"
            targetNamespace="http://eiim.service112.iskratel.si/"
            elementFormDefault="qualified"
-           attributeFormDefault="unqualified">
-    <xs:element form="unqualified" name="Code" type="xs:string"/>
-    <xs:element form="unqualified" name="CodeDescr" type="xs:string"/>
+           attributeFormDefault="unqualified"
+    >
+    <xs:element name="Code" type="xs:string"/>
+    <xs:element name="CodeDescr" type="xs:string"/>
     <xs:element name="UpdateCardResponse" type="tns:UpdateCardResponse"/>
 
     <xs:complexType name="UpdateCardResponse">
