@@ -317,7 +317,7 @@ test ('nillable', () => {
 
 test ('form="unqualified"', () => {
 
-	const xs = getXSSync (Path.join (__dirname, '..', '__data__', '202510', 'wsdl_112.wsdl'))
+	const xs = getXSSync (Path.join (__dirname, '..', '__data__', '202510', 'wsdl_112.xsd'))
 
 	const m = xs.createMarshaller ('UpdateCardResponse', 'http://eiim.service112.iskratel.si/')
 
