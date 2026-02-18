@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	attributeFormDefault="unqualified" 
+	elementFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://msp.gcjs.spb/QA/1.0.4"
+	targetNamespace="http://msp.gcjs.spb/QA/1.0.4" >
+  <xs:element name="QA" type="tns:QAType"/>
+  <xs:simpleType name="decimal-2">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2"/>
+	  <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="decimal-4">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="4"/>
+	  <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  <xs:simpleType name="inn">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+    <xs:simpleType name="UUID">
+        <xs:annotation>
+            <xs:documentation>Универсальный уникальный идентификатор (UUID - Universally Unique Identifier) RFC 4122
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+<xs:simpleType name="ELSType">
+        <xs:annotation>
+            <xs:documentation>Единый лицевой счет ГИС ЖКХ–  буквенно-цифровой код помещения лица,
+								которое пользуется на праве собственности или ином законном
+								основании помещением и за которое данное лицо в соответствии с
+								жилищным законодательством обязано вносить плату. Формируется
+								системой автоматически при размещении информации о лицевом
+								счете на основании следующих сведений:
+									* информация о помещении (помещениях) указанных исполнителем;
+									* информация о разделении лицевых счетов на помещении;
+									* информация о лице, которое в соответствии с законодательством
+									  обязано вносить плату за жилое помещение и коммунальные
+									  (только в случае разделения лицевых счетов).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9]){2}([a-яА-Я]){2}([0-9]){6}(-[0-9]{1,3})?"/>
+        </xs:restriction>
+    </xs:simpleType>	
+ <xs:simpleType name="SRV_CODEType">
+     <xs:restriction base="xs:string">
+		<xs:enumeration value="AQ"/>    <!-- Холодное водоснабжение -->
+		<xs:enumeration value="HOT"/>   <!-- Горячее водоснабжение -->
+		<xs:enumeration value="OAQ"/>   <!-- Отведение сточных вод -->
+		<xs:enumeration value="EL"/>    <!-- Электроснабжение -->
+		<xs:enumeration value="HEAT"/>  <!-- Отопление -->
+		<xs:enumeration value="TKO"/>   <!-- Обращение с твердыми коммунальными отходами  -->
+		<xs:enumeration value="GAZ"/>   <!-- Газоснабжение -->
+     </xs:restriction>
+  </xs:simpleType>
+    <xs:simpleType name="RES_CODEType">
+     <xs:restriction base="xs:string">
+		<xs:enumeration value="0"/> <!-- выполнено успешно, сведения предоставлены -->
+		<xs:enumeration value="1"/> <!-- абонентский номер /лицевой счет найден, но по нему нет сведений о размере платы за месяц, указанный в PERIOD_ACC (на дату формирования сведений не выставлены платежные документы) -->
+		<xs:enumeration value="3"/> <!-- адрес найден, лицевой счет идентифицировать не удалось (дом по указанному адресу находится в зоне обслуживания организации, но не удалось определить абонентский номер /лицевой счет) -->
+		<xs:enumeration value="4"/> <!-- адрес не найден (Сторона 2 не обслуживает дом по указанному адресу) -->	
+     </xs:restriction>
+  </xs:simpleType>
+	<xs:simpleType name="ls_type">
+		<xs:restriction base="xs:byte">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="account">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value = "30" />
+			<xs:minLength value = "0"/>
+		</xs:restriction>
+	</xs:simpleType>
+  <xs:complexType name="SRVType">
+<!--  
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+-->
+        <xs:attribute name="SRV_CODE" type="tns:SRV_CODEType">
+			<xs:annotation>
+				<xs:documentation>Код предоставляемой услуги. Может принимать следующие значения:
+					AQ - Холодное водоснабжение
+					HOT - Горячее водоснабжение
+					OAQ - Отведение сточных вод 
+					HEAT - Отопление 
+					GAZ - Газоснабжение
+					TKO - Обращение с твердыми коммунальными отходами 
+					EL – Электроснабжение					
+				</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+        <xs:attribute name="SRV_SUM" type="tns:decimal-2">
+			<xs:annotation>
+				<xs:documentation>Размер начисленной платы, начисленной за месяц, указанный в поле PERIOD_ACC по услуге указанной в поле "SRV_CODE"</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+        <xs:attribute name="SRV_NORM" type="tns:decimal-4">
+			<xs:annotation>
+				<xs:documentation>Норматив потребления по услуге, указанной в поле "SRV_CODE"
+				</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+		<xs:attribute name="SRV_TRF" type="tns:decimal-2">
+			<xs:annotation>
+				<xs:documentation>Тариф по услуге, указанной в поле "SRV_CODE" 
+				</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>	
+		<xs:attribute name="TRF_OKEI" type="xs:short">
+			<xs:annotation>
+				<xs:documentation>Код единицы измерения для тарифа, берется из ОКЕИ: https://rosstat.gov.ru/opendata/7708234640-okei 			
+				</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>			
+<!--		
+      </xs:extension>
+    </xs:simpleContent>
+-->    
+  </xs:complexType>
+  <xs:complexType name="ACCOUNTType">
+    <xs:sequence>
+      <xs:element name="SRV" type="tns:SRVType" maxOccurs="unbounded" minOccurs="0"/>  
+    </xs:sequence>
+		<xs:attribute name="PERIOD_ACC" type="xs:gYearMonth" use="required">
+			<xs:annotation>
+				<xs:documentation>Месяц начисления в формате YYYY-MM </xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>
+		<xs:attribute name="RSO_ACC" type="tns:account" use="required">
+			<xs:annotation>
+				<xs:documentation>Номер лицевого счета на оплату </xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>
+		<xs:attribute name="ELS" type="tns:ELSType">
+			<xs:annotation>
+				<xs:documentation>Единый лицевой счет присвоенный в ГИС ЖКХ</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+        <xs:attribute name="N_ACC" type="xs:short" use="required">
+			<xs:annotation>
+				<xs:documentation>Количество проживающих лиц по лицевому счету</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+        <xs:attribute name="SQ_PAY" type="tns:decimal-2" use="required">
+			<xs:annotation>
+				<xs:documentation>Площадь по лицевому счету</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>
+		<xs:attribute name="PREMISE_GUID" type="tns:UUID" >
+			<xs:annotation>
+				<xs:documentation> Код помещения (квартиры) (обязательно, если это не индивидуальное жилое строение) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>	
+		<xs:attribute name="FLAT" type="xs:string">
+			<xs:annotation>
+				<xs:documentation> Номер квартиры</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>	
+		<xs:attribute name="ROOM_GUID" type="tns:UUID" >
+			<xs:annotation>
+				<xs:documentation> Код ГИС ЖКХ комнаты (либо  в коммунальной квартире, либо в жилом доме) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>	
+		<xs:attribute name="ROOM" type="xs:string">
+			<xs:annotation>
+				<xs:documentation> Номер комнаты </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>			
+		<xs:attribute name="OBJECT_ADDRESS" type="xs:string"  use="required">
+			<xs:annotation>
+				<xs:documentation> Полный адрес дома </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>	
+		<xs:attribute name="OBJECT_GUID" type="tns:UUID"  use="required" >
+			<xs:annotation>
+				<xs:documentation> Код ФИАС дома</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>		
+		<xs:attribute name="LS_TYPE" type="tns:ls_type" use="required">
+			<xs:annotation>
+				<xs:documentation> Тип жилого помещения: 
+				1	- Отдельная квартира
+				2	- Коммунальная квартира
+				3	- Комната в общежитии
+				4	- Индивидуальный жилой дом
+				5   - Несколько комнат с разными лицевыми счетами в одной коммунальной квартире
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>		
+		<xs:attribute name="LS_ID" type="xs:int">
+			<xs:annotation>
+				<xs:documentation> Идентификатор помещения (заполняется в ГЦЖС)
+				</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>
+        <xs:attribute name="REGN" type="xs:string">
+			<xs:annotation>
+				<xs:documentation> Регистрационный номер (заполняется в ГЦЖС)</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>	
+        <xs:attribute name="SUM_T" type="tns:decimal-2">
+			<xs:annotation>
+				<xs:documentation>Стоимость коммунальных услуг (сумма начислений по полному тарифу без перерасчетов)за месяц, указанный в поле PERIOD_ACC (указывается если указан REGN) </xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>		
+        <xs:attribute name="SUM_LGT" type="tns:decimal-2">
+			<xs:annotation>
+				<xs:documentation>Размер мер социальной поддержки по оплате коммунальных услуг, предоставленных в виде скидки в оплате КУ за месяц, указанный в поле PERIOD_ACC (указывается если указан REGN)</xs:documentation>
+			</xs:annotation>		
+		</xs:attribute>	
+		<xs:attribute name="RES_CODE" type="tns:RES_CODEType" use="required">
+			<xs:annotation>
+				<xs:documentation> Результат обработки строки (заполняется в РСО)
+				может иметь следующие значения:
+					0 – выполнено успешно (предоставлены сведения о размере платы и абонентский номер /лицевой счет);
+					1 – абонентский номер /лицевой счет найден, но по нему нет сведений о размере платы за месяц, указанный в PERIOD_ACC (на дату формирования сведений не выставлены платежные документы);
+					3 – абонентский номер /лицевой счет не найден (дом по указанному адресу находится в зоне обслуживания организации, но не удалось определить абонентский номер /лицевой счет);
+					4 – адрес не найден (дом по указанному адресу не находится в зоне обслуживания организации). 
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>			
+  </xs:complexType>
+  <xs:complexType name="QAType">
+    <xs:sequence>
+      <xs:element name="ACCOUNT" type="tns:ACCOUNTType" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="PERIOD" type="xs:gYearMonth" use="required">
+		<xs:annotation>
+			<xs:documentation> Расчетный период в формате ГГГГ-ММ (Период, когда предоставляется информация) </xs:documentation>
+		</xs:annotation>
+	</xs:attribute>	
+    <xs:attribute name="RSO_CODE" type="xs:string" use="required">
+		<xs:annotation>
+			<xs:documentation> Код органиазции - РСО (должно соотвесвовать коду организации указанному в названии файла) </xs:documentation>
+		</xs:annotation>
+	</xs:attribute>		
+  </xs:complexType>
+</xs:schema>
+

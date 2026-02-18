@@ -1,6 +1,7 @@
 const Path = require ('path')
 const {execSync} = require ('child_process')
 const {XMLSchemata, XMLParser, XMLNode} = require ('../')
+const {Readable, Writable} = require ('node:stream')
 
 const dump = XMLNode.toObject ({wrap: true})
 
@@ -413,5 +414,85 @@ test ('att simple type', () => {
 
 	expect (xs.ns.QName ('any', 'http://www.w3.org/2001/XMLSchema')).toBe ('xs:any')
 	expect (() => xs.ns.QName ('any', 'https://www.w3.org/2001/XMLSchema')).toThrow ()
+
+})
+
+test ('stream', async () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'qa_104_response.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const ACCOUNT = [
+		{
+			"PERIOD_ACC": "2023-06",
+			"RSO_ACC": "123114561",
+			"N_ACC": "1",
+			"SQ_PAY": "33.00",
+			"PREMISE_GUID": "052d06fd-05db-41a0-8436-70ff27ad1a63",
+			"FLAT": "15",
+			"OBJECT_ADDRESS": "Address 1",
+			"OBJECT_GUID": "8ff34cba-d277-48e2-daa5-6c94e8e26552",
+			"LS_TYPE": "1",
+			"LS_ID": "47497585",
+			"RES_CODE": "0",
+			"SRV": {
+				"SRV_CODE": "HOT",
+				"SRV_SUM": "116.68",
+				"SRV_NORM": "3.48",
+				"SRV_TRF": "116.68",
+				"TRF_OKEI": "113"
+			}
+		},
+		{
+			"PERIOD_ACC": "2023-06",
+			"RSO_ACC": "123112590",
+			"N_ACC": "1",
+			"SQ_PAY": "52.60",
+			"PREMISE_GUID": "8443ad15-8be2-4740-a1a5-a04510f556b5",
+			"FLAT": "2",
+			"OBJECT_ADDRESS": "Address 2",
+			"OBJECT_GUID": "12458473-be5d-4dd5-9a9d-3d6b4783b7db",
+			"LS_TYPE": "1",
+			"LS_ID": "47126247",
+			"RES_CODE": "0",
+			"SRV": {
+				"SRV_CODE": "HOT",
+				"SRV_SUM": "750.10",
+				"SRV_NORM": "3.43",
+				"SRV_TRF": "26.68",
+				"TRF_OKEI": "113"
+			}
+		},
+	]
+
+	const data = { 
+		"PERIOD": "2023-06",
+		"RSO_CODE": "142087",
+		ACCOUNT
+	}
+
+	const m0 = xs.createMarshaller ('QA', 'http://msp.gcjs.spb/QA/1.0.4', {space: '  '})
+
+	const sample = m0.stringify (data)
+
+	data.ACCOUNT = Readable.from (data.ACCOUNT)
+
+	let xml = ''
+
+	const out = new Writable ({
+		write (chunk, encoding, callback) {
+			xml += chunk.toString ()
+			callback ()
+		}		
+	})
+
+	const m = xs.createMarshaller ('QA', 'http://msp.gcjs.spb/QA/1.0.4', {space: '  ', out})
+
+	m.stringify (data)
+
+	await new Promise ((ok, fail) => out.on ('error', fail).on ('finish', ok))
+
+	expect (xml).toBe (sample)
 
 })

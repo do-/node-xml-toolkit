@@ -19,6 +19,7 @@ test ('constructor', () => {
 
 test ('bad', () => {
 
+	expect (() => new XMLPrinter ().destroy (Error ('OK'))).toThrow ()
 	expect (() => new XMLPrinter ().writeCharacters (' ')).toThrow ()
 	expect (() => new XMLPrinter ().writeAttribute ('id', '1')).toThrow ()
 
