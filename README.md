@@ -1,5 +1,6 @@
 ![workflow](https://github.com/do-/node-xml-toolkit/actions/workflows/main.yml/badge.svg)
 ![Jest coverage](./badges/coverage-jest%20coverage.svg)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/do-/node-xml-toolkit)
 
 `node-xml-toolkit` is a pure node.js library for solving diverse XML related application tasks, e. g.:
 * scanning through multi gigabyte long XML files with a limited memory buffer;
