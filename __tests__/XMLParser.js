@@ -3,6 +3,9 @@ const {XMLParser, XMLNode} = require ('../')
 
 test ('bad', () => {
 
+	expect (() => new XMLParser ({stripSpace: 0})).toThrow ('ool')
+	expect (() => new XMLParser ({xs: 0})).toThrow ('chema')
+
 	const p = new XMLParser ()
 
 	expect (() => p.process ('<broken')).toThrow ('Unfinished')
