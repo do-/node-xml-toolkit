@@ -13,6 +13,34 @@ function messUp (xs, xml, asIs, toBe, err, debug = false) {
 
 }
 
+describe ('any', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'schemas.xmlsoap.org.xml')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	test ('basic', () => {
+		
+		const p = new XMLParser ({xs, stripSpace: false})		
+
+		const doc = p.process (`
+			<SOAP-ENV:Envelope
+				xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+				SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			>
+			<SOAP-ENV:Body>
+				<m:GetLastTradePrice xmlns:m="Some-URI">
+					<symbol>DIS</symbol>
+				</m:GetLastTradePrice>
+			</SOAP-ENV:Body>
+			</SOAP-ENV:Envelope>			
+		`)
+
+	})
+
+
+})
+
 describe ('30213', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', '30213', 'RequestEGRN_v026.xsd')
@@ -134,43 +162,51 @@ describe ('30213', () => {
 
 	})
 
-// 	test ('basic', () => {
-		
-// // console.log (xml)
-
-// 		const p = new XMLParser ({xs, stripSpace: false})
-
-// 		const doc = p.process (xml)
-
-// 	})
-
 })
 
+describe ('30213', () => {
 
-describe ('any', () => {
-
-	const xsdPath = Path.join (__dirname, '..', '__data__', 'schemas.xmlsoap.org.xml')
+	const xsdPath = Path.join (__dirname, '..', '__data__', '30681.xsd')
 
 	const xs = new XMLSchemata (xsdPath)
 
-	test ('basic', () => {
+		const data = {
 		
-		const p = new XMLParser ({xs, stripSpace: false})		
+			"livingPlaceRegistrationResponse": {
+				"personInfo": {
+					"lastName": "Ппппп",
+					"firstName": "Жжжжж",
+					"middleName": "Иаиаиаиа",
+					"birthDate": "1970-01-01"
+				},
+				"document": {
+					"russianPassport": {
+						"series": "5555",
+						"number": "000000",
+						"issueDate": "2000-01-11"
+					}
+				},
+				"regAddressType": "2417603178217346987",
+				// "notFoundRegistration": true
+				"regAddressItem": {
+					"fromDt": "2022-03-31",
+					"adressGUID": "b0d84e8b-9821-6647-41af-663fa7b52b20",
+					"fullAddress": "СССР"
+				}
+			}
 
-		const doc = p.process (`
-			<SOAP-ENV:Envelope
-				xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
-				SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
-			>
-			<SOAP-ENV:Body>
-				<m:GetLastTradePrice xmlns:m="Some-URI">
-					<symbol>DIS</symbol>
-				</m:GetLastTradePrice>
-			</SOAP-ENV:Body>
-			</SOAP-ENV:Envelope>			
-		`)
+		}
+
+	const m = xs.createMarshaller ('livingPlaceRegistrationResponse', 'urn://mvd/gismu/export-living-place-registration/1.2.0', {space: 2})
+
+	const xml = m.stringify (data.livingPlaceRegistrationResponse)
+
+	test ('attributeGroup', () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		const doc = p.process (xml)
 
 	})
-
 
 })
