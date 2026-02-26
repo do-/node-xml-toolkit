@@ -130,8 +130,8 @@ test ('restrict pattern', () => {
 
 	const t = new (new XSSimpleType ().restrict (d.children [6].children [0].children [0].children.map (({localName, attributes}) => ({name: localName, value: attributes.get ('value')})))) ()
 
-	expect (t.test ('1')).toBe (true)
-	expect (t.test ('true')).toBe (false)
+	expect (t.test ('1')).toBe (null)
+	expect (t.test ('true')).toMatch ("n't")
 	
 })
 
