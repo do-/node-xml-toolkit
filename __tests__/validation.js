@@ -15,13 +15,14 @@ function messUp (xs, xml, asIs, toBe, err, debug = false) {
 
 describe ('30213', () => {
 
-	const xsdPath = Path.join (__dirname, '..', '__data__', '30213', 'RequestEGRN_v018', 'RequestEGRN_v01.xsd')
+	const xsdPath = Path.join (__dirname, '..', '__data__', '30213', 'RequestEGRN_v026.xsd')
 
 	const xs = new XMLSchemata (xsdPath)
 
 		const data = {
 		
 			"EGRNRequest": {
+				"build": "26.001",
 				"_id": "3bfc06ce-08b2-11f0-a65d-005056a50a67",
 				"header": {
 				"actionCode": "659511111112",
@@ -75,7 +76,7 @@ describe ('30213', () => {
 
 		}
 
-	const m = xs.createMarshaller ('EGRNRequest', 'http://rosreestr.ru/services/v0.18/TStatementRequestEGRN', {space: 2})
+	const m = xs.createMarshaller ('EGRNRequest', 'http://rosreestr.ru/services/v0.26/TStatementRequestEGRN', {space: 2})
 
 	const xml = m.stringify (data.EGRNRequest)
 
@@ -87,13 +88,13 @@ describe ('30213', () => {
 
 	test ('unknown ns', () => {
 
-		messUp (xs, xml, '"http://rosreestr.ru/services/v0.18/TStatementRequestEGRN"', '"http://tempuri.org"', 'Unknown namespace: http://tempuri.org')
+		messUp (xs, xml, '"http://rosreestr.ru/services/v0.26/TStatementRequestEGRN"', '"http://tempuri.org"', 'Unknown namespace: http://tempuri.org')
 
 	})
 
 	test ('unknown root element', () => {
 
-		messUp (xs, xml, ':EGRNRequest', ':OGRNRequest', 'OGRNRequest is not found in http://rosreestr.ru/services/v0.18/TStatementRequestEGRN')
+		messUp (xs, xml, ':EGRNRequest', ':OGRNRequest', 'OGRNRequest is not found in http://rosreestr.ru/services/v0.26/TStatementRequestEGRN')
 
 	})
 
@@ -127,12 +128,20 @@ describe ('30213', () => {
 
 	})
 
-	// test ('XMLParser basic', () => {
+	test ('Fixed attribute', () => {
 
-	// 	const p = new XMLParser ({xs, stripSpace: false})
+		messUp (xs, xml, '26.001', '26.002', 'must have')
 
-	// 	const doc = p.process (xml)
+	})
 
-	// })
+	test ('XMLParser basic', () => {
+		
+// console.log (xml)
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		const doc = p.process (xml)
+
+	})
 
 })
