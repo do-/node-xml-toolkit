@@ -134,14 +134,43 @@ describe ('30213', () => {
 
 	})
 
-	test ('XMLParser basic', () => {
+// 	test ('basic', () => {
 		
-// console.log (xml)
+// // console.log (xml)
 
-		const p = new XMLParser ({xs, stripSpace: false})
+// 		const p = new XMLParser ({xs, stripSpace: false})
 
-		const doc = p.process (xml)
+// 		const doc = p.process (xml)
+
+// 	})
+
+})
+
+
+describe ('any', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'schemas.xmlsoap.org.xml')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	test ('basic', () => {
+		
+		const p = new XMLParser ({xs, stripSpace: false})		
+
+		const doc = p.process (`
+			<SOAP-ENV:Envelope
+				xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+				SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			>
+			<SOAP-ENV:Body>
+				<m:GetLastTradePrice xmlns:m="Some-URI">
+					<symbol>DIS</symbol>
+				</m:GetLastTradePrice>
+			</SOAP-ENV:Body>
+			</SOAP-ENV:Envelope>			
+		`)
 
 	})
+
 
 })
