@@ -10,6 +10,12 @@ test('cyclic import', async () => {
             .catch(e => reject(e))
     })
 
-    expect(schemata).toBeDefined()
-    expect(schemata.size).toBeGreaterThan(0)
+    expect (schemata).toBeDefined ()
+    expect (schemata.size).toBeGreaterThan (0)
+
+    expect (schemata.getDebugQName ('order')).toBe ('order')
+    expect (schemata.getDebugQName ('order', null)).toBe ('order')
+    expect (schemata.getDebugQName ('order', undefined)).toBe ('order')
+    expect (schemata.getDebugQName ('order', 'http://tempuri.org/')).toBe ('{http://tempuri.org/}order')
+
 })
