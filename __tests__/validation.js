@@ -162,10 +162,16 @@ describe ('30213', () => {
 
 	})
 
+	test ('Enumeration', () => {
+
+		messUp (xs, xml, '>electronically<', '>protonically<', "not in list")
+		
+	})
+
 	test ('Pattern mismatch', () => {
 
-		messUp (xs, xml, '>558630200000<', '>558630200001<', "doesn't match any of")
-//		messUp (xs, xml, '>002001003000<', '>002001003001<', "doesn't match any of")
+		messUp (xs, xml, '>558630200000<', '>558630201000<', "doesn't match any")
+		messUp (xs, xml, '>659511111112<', '>659511111119<', "doesn't match any")
 
 	})
 
