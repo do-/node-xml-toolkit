@@ -128,7 +128,7 @@ test ('restrict pattern', () => {
 	const p = new XMLParser ()
 	const d = p.process (fs.readFileSync ('__data__/schemas.xmlsoap.org.xml', 'utf-8'))
 
-	const t = new (new XSSimpleType ().restrict (d.children [6].children [0].children [0].children.map (({localName, attributes}) => ({name: localName, value: attributes.get ('value')})))) ()
+	const t = new (new XSSimpleType ().restrict (d.children [6].children [0].children [0].children.map (({localName, attributes}) => ({localName, attributes: {value: attributes.get ('value')}})))) ()
 
 	expect (t.test ('1')).toBe (null)
 	expect (t.test ('true')).toMatch ("n't")
@@ -141,7 +141,7 @@ test ('restrict fractionDigits', () => {
 	const d = p.process (fs.readFileSync ('__data__/att.xsd', 'utf-8'))
 
 	const t = new (new XSSimpleType ().restrict (
-		d.children [0].children [0].children [0].children.at (-1).children [0].children [0].children.map (({localName, attributes}) => ({name: localName, value: attributes.get ('value')})))
+		d.children [0].children [0].children [0].children.at (-1).children [0].children [0].children.map (({localName, attributes}) => ({localName, attributes: {value: attributes.get ('value')}})))
 	) ()
 
 	expect (t.fractionDigits).toBe (2)
