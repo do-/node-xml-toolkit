@@ -1,6 +1,6 @@
 const fs = require ('fs')
 const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
-const { XSSimpleTypeInteger } = require('../lib/XSSimpleType')
+const { XSSimpleTypeInteger, XSSimpleTypeDecimal } = require('../lib/XSSimpleType')
 
 test ('stringify', () => {
 
@@ -140,11 +140,12 @@ test ('restrict fractionDigits', () => {
 	const p = new XMLParser ()
 	const d = p.process (fs.readFileSync ('__data__/att.xsd', 'utf-8'))
 
-	const t = new (new XSSimpleType ().restrict (
-		d.children [0].children [0].children [0].children.at (-1).children [0].children [0].children.map (({localName, attributes}) => ({localName, attributes: {value: attributes.get ('value')}})))
-	) ()
+	const nodes = d.children [0].children [0].children [0].children.at (-1).children [0].children [0].children.map (({localName, attributes}) => ({localName, attributes: {value: attributes.get ('value')}}))
 
-	expect (t.fractionDigits).toBe (2)
+	expect (new (new XSSimpleTypeDecimal ().restrict (nodes)) ().fractionDigits).toBe (2)
+	expect (() => new (new XSSimpleType ().restrict (nodes))()).toThrow ('not supported')
+	expect (() => new (new XSSimpleTypeInteger ().restrict (nodes))()).toThrow ('fractionDigits must be 0')
+	expect (new (new XSSimpleTypeInteger ().restrict ([{localName: 'fractionDigits', attributes: {value: '0'}}])) ().fractionDigits).toBe (0)
 
 })
 
