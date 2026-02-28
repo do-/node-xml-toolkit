@@ -197,6 +197,24 @@ describe ('sign', () => {
 
 })
 
+describe ('att', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const xml = `<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`
+
+	test ('basic', () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+	})
+
+})
+
 describe ('qa_104_response', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'qa_104_response.xsd')
@@ -214,11 +232,9 @@ describe ('qa_104_response', () => {
       </ns2:QA>	
 	`
 
-	test.only ('basic', () => {
+	test ('enum', () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
-		p.process (xml)
+		messUp (xs, xml, 'SRV_CODE="HOT"', 'SRV_CODE="COLD"', "not in list")
 
 	})
 
