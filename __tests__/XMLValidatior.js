@@ -244,6 +244,17 @@ describe ('qa_104_response', () => {
 
 	})
 
+	test ('decimal', () => {
+
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=""', "empty")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="+"', "no digits")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0+"', "begin")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0..1"', "2nd period")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="3.76!"', "occured")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=".111111111"', "only 2")
+
+	})
+
 })
 
 describe ('30681', () => {
