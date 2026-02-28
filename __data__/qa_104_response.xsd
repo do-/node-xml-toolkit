@@ -79,7 +79,7 @@
 	<xs:simpleType name="account">
 		<xs:restriction base="xs:string">
 			<xs:maxLength value = "30" />
-			<xs:minLength value = "0"/>
+			<xs:minLength value = "1"/>
 		</xs:restriction>
 	</xs:simpleType>
   <xs:complexType name="SRVType">

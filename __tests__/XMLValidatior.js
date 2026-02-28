@@ -238,9 +238,15 @@ describe ('qa_104_response', () => {
 
 	})
 
+	test ('minLength', () => {
+
+		messUp (xs, xml, 'RSO_ACC="123114561"', 'RSO_ACC=""', "which is less than the allowed minimum")
+
+	})
+
 })
 
-describe ('30213', () => {
+describe ('30681', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', '30681.xsd')
 
