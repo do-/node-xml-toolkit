@@ -232,9 +232,9 @@ describe ('qa_104_response', () => {
       </ns2:QA>	
 	`
 
-	test ('enum', () => {
+	test ('maxLength', () => {
 
-		messUp (xs, xml, 'SRV_CODE="HOT"', 'SRV_CODE="COLD"', "not in list")
+		messUp (xs, xml, 'RSO_ACC="', 'RSO_ACC="00000000000000000000000000000000000000000000000000', "long, which exceeds the allowed maximum of")
 
 	})
 
