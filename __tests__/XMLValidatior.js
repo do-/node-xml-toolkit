@@ -197,6 +197,32 @@ describe ('sign', () => {
 
 })
 
+describe ('qa_104_response', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'qa_104_response.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	const xml = `
+      <ns2:QA xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://msp.gcjs.spb/QA/1.0.4" PERIOD="2023-06" RSO_CODE="142087">
+        <ACCOUNT PERIOD_ACC="2023-06" RSO_ACC="123114561" N_ACC="1" SQ_PAY="33.00" PREMISE_GUID="052d06fd-05db-41a0-8436-70ff27ad1a63" FLAT="15" OBJECT_ADDRESS="Address 1" OBJECT_GUID="8ff34cba-d277-48e2-daa5-6c94e8e26552" LS_TYPE="1" LS_ID="47497585" RES_CODE="0">
+          <SRV SRV_CODE="HOT" SRV_SUM="116.68" SRV_NORM="3.4800" SRV_TRF="116.68" TRF_OKEI="113" />
+        </ACCOUNT>
+        <ACCOUNT PERIOD_ACC="2023-06" RSO_ACC="123112590" N_ACC="1" SQ_PAY="52.60" PREMISE_GUID="8443ad15-8be2-4740-a1a5-a04510f556b5" FLAT="2" OBJECT_ADDRESS="Address 2" OBJECT_GUID="12458473-be5d-4dd5-9a9d-3d6b4783b7db" LS_TYPE="1" LS_ID="47126247" RES_CODE="0">
+          <SRV SRV_CODE="HOT" SRV_SUM="750.10" SRV_NORM="3.4300" SRV_TRF="26.68" TRF_OKEI="113" />
+        </ACCOUNT>
+      </ns2:QA>	
+	`
+
+	test.only ('basic', () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		p.process (xml)
+
+	})
+
+})
 
 describe ('30213', () => {
 
