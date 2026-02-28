@@ -283,11 +283,9 @@ describe ('30681', () => {
 
 	const xml = m.stringify (data.livingPlaceRegistrationResponse)
 
-	test ('attributeGroup', () => {
+	test ('length', () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
-		const doc = p.process (xml)
+		messUp (xs, xml, '5555', '555', "must be exaclty")
 
 	})
 
