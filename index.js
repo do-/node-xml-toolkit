@@ -5,7 +5,7 @@ const {
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
 	XSSimpleTypeQName,
-} = require ('./lib/XSSimpleType')
+} = require ('./lib/simple/XSSimpleType')
 
 module.exports = {
 	AttributesMap:       require ('./lib/AttributesMap'),	
