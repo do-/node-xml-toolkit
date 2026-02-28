@@ -244,6 +244,15 @@ describe ('qa_104_response', () => {
 
 	})
 
+	test ('minmax', () => {
+
+		messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="0"', "less")
+		messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="9"', "greater")
+		messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="-', "less")
+		messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="10000000000', "greater")
+
+	})
+
 	test ('decimal', () => {
 
 		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=""', "empty")

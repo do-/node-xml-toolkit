@@ -17,6 +17,7 @@
     <xs:restriction base="xs:decimal">
       <xs:fractionDigits value="4"/>
 	  <xs:minInclusive value="0"/>
+	  <xs:maxInclusive value="1000000"/>
     </xs:restriction>
   </xs:simpleType> 
   <xs:simpleType name="inn">
@@ -73,8 +74,8 @@
   </xs:simpleType>
 	<xs:simpleType name="ls_type">
 		<xs:restriction base="xs:byte">
-			<xs:minInclusive value="1"/>
-			<xs:maxInclusive value="5"/>
+			<xs:minExclusive value="0"/>
+			<xs:maxExclusive value="6"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="account">

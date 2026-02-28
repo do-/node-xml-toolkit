@@ -149,6 +149,7 @@ test ('restrict fractionDigits', () => {
 	expect (new (new XSSimpleTypeInteger ().restrict ([{localName: 'fractionDigits', attributes: {value: '0'}}])) ().fractionDigits).toBe (0)
 
 	expect (() => new (new XSSimpleType ().restrict ([{localName: 'totalDigits', attributes: {value: '0'}}]))()).toThrow ('not supported')
+	expect (() => new (new XSSimpleType ().toOrdered (''))()).toThrow ('not supported')
 
 })
 
