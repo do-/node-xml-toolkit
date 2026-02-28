@@ -251,6 +251,7 @@ describe ('qa_104_response', () => {
 		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0+"', "begin")
 		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0..1"', "2nd period")
 		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="3.76!"', "occured")
+		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="1111111111111111111111111"', "only 10")
 		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=".111111111"', "only 2")
 
 	})

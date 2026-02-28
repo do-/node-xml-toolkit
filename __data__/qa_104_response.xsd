@@ -8,6 +8,7 @@
   <xs:element name="QA" type="tns:QAType"/>
   <xs:simpleType name="decimal-2">
     <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="10"/>
       <xs:fractionDigits value="2"/>
 	  <xs:minInclusive value="0"/>
     </xs:restriction>
