@@ -1,8 +1,11 @@
 const {
 	XSSimpleType,
+} = require ('./lib/simple/XSSimpleType')
+
+const {
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
-} = require ('./lib/simple/XSSimpleType')
+} = require ('./lib/simple/XSSimpleTypeDT')
 
 const {
 	XSSimpleTypeFloat,
