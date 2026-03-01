@@ -1,6 +1,6 @@
 const Path = require ('path')
 const {execSync} = require ('child_process')
-const {SOAP12, SOAPFault, XMLSchemata} = require ('../')
+const {SOAP12, SOAPFault} = require ('../')
 
 const xsdPath = Path.join (__dirname, '..', 'lib', 'soap-1.2.xsd')
 const validate = input => execSync (`xmllint --schema ${xsdPath} -`, {input, stdio: 'pipe'})

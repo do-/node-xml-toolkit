@@ -65,12 +65,32 @@
     </xs:complexType>
   </xs:element>
   
+  <xs:element name="YetStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id">
+		<xs:simpleType>
+		      <xs:union>
+			<xs:simpleType>
+			  <xs:restriction base='xs:integer'/>
+			</xs:simpleType>
+			<xs:simpleType>
+			  <xs:restriction base='xs:float'/>
+			</xs:simpleType>
+		      </xs:union>        
+		</xs:simpleType>
+        </xs:element>
+      </xs:sequence>           
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="BetStatus">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="id" type="xs:long"/>
       </xs:sequence>   
       <xs:attribute name="a">
+      	<xs:annotation />
         <xs:simpleType>
 		      <xs:union>
 			<xs:simpleType>

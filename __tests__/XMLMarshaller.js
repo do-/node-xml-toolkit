@@ -387,7 +387,7 @@ test ('att simple type', () => {
 
 	expect (xs.createMarshaller ('SetStatus').stringify ({id: 1})).toMatch ('>1<')
 	expect (xs.createMarshaller ('BetStatus').stringify ({id: 1, a: 0})).toMatch (' a="0"')
-
+	expect (() => xs.createMarshaller ('YetStatus').stringify ({id: '?'})).toThrow (/integer.*float/)
 	expect (() => m.stringify ({q: '1970-01-01T'})).toThrow ()
 
 	expect (() => m.stringify ({decimal: NaN})).toThrow ()

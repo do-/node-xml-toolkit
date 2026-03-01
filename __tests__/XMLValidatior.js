@@ -211,13 +211,21 @@ describe ('att', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-	const xml = `<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`
-
 	test ('basic', () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
-		const doc = XMLNode.toObject () (p.process (xml))
+		const doc = XMLNode.toObject () (p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
+
+	})
+
+	test ('union', () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		const doc = XMLNode.toObject () (p.process (`<ns2:BetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
+
+		expect (() => p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>?</ns2:id><YetStatus>`)).toThrow ()
 
 	})
 
