@@ -4,6 +4,11 @@ const {
 	XSSimpleTypeDateTime,
 } = require ('./lib/simple/XSSimpleType')
 
+const {
+	XSSimpleTypeFloat,
+	XSSimpleTypeDouble,
+} = require ('./lib/simple/XSSimpleTypeFloatingPoint')
+
 module.exports = {
 	AttributesMap:       require ('./lib/AttributesMap'),	
 	EntityResolver:      require ('./lib/EntityResolver'),	
@@ -24,7 +29,8 @@ module.exports = {
 	XMLSchemaBuiltIn:    require ('./lib/XMLSchemaBuiltIn'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
 	XSSimpleType,
-	XSSimpleTypeFloat:   require ('./lib/simple/XSSimpleTypeFloat'),
+	XSSimpleTypeFloat,
+	XSSimpleTypeDouble,
 	XSSimpleTypeBoolean: require ('./lib/simple/XSSimpleTypeBoolean'),
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,

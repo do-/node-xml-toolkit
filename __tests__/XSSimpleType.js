@@ -30,6 +30,9 @@ test ('stringify float', () => {
 	expect (t.stringify (-0.7)).toBe ('-0.7')
 	expect (t.stringify (Number.POSITIVE_INFINITY)).toBe ('INF')
 	expect (t.stringify (Number.NEGATIVE_INFINITY)).toBe ('-INF')
+
+	expect (() => t.validateScalar ('')).toThrow ()
+	expect (() => t.validateScalar ('z')).toThrow ()
 	
 })
 
