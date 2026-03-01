@@ -2,7 +2,6 @@ const {
 	XSSimpleType,
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
-	XSSimpleTypeQName,
 } = require ('./lib/simple/XSSimpleType')
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
 	XSSimpleTypeBoolean: require ('./lib/simple/XSSimpleTypeBoolean'),
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
-	XSSimpleTypeQName,
+	XSSimpleTypeQName:   require ('./lib/simple/XSSimpleTypeQName'),
 }
 
 module.exports.SOAP = v => {switch (String (v)) {
