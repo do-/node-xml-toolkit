@@ -1,6 +1,5 @@
 const {
 	XSSimpleType,
-	XSSimpleTypeBoolean,
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
 	XSSimpleTypeQName,
@@ -27,7 +26,7 @@ module.exports = {
 	XMLSchemata:         require ('./lib/XMLSchemata'),
 	XSSimpleType,
 	XSSimpleTypeFloat:   require ('./lib/simple/XSSimpleTypeFloat'),
-	XSSimpleTypeBoolean,
+	XSSimpleTypeBoolean: require ('./lib/simple/XSSimpleTypeBoolean'),
 	XSSimpleTypeDate,
 	XSSimpleTypeDateTime,
 	XSSimpleTypeQName,

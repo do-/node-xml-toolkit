@@ -75,14 +75,15 @@ describe ('30213', () => {
 				"requestDetails": {
 				"requestEGRNDataAction": {
 					"extractDataAction": {
-					"object": {
-						"objectTypeCode": "002001003000",
-						"cadastralNumber": {
-						"cadastralNumber": "78:06:0002000:2000"
+						"object": {
+							"objectTypeCode": "002001003000",
+							"cadastralNumber": {
+							"cadastralNumber": "78:06:0002000:2000"
+							},
+							"address": null
 						},
-						"address": null
-					},
-					"requestType": "extractRealty"
+						"requestType": "extractRealty",
+						"isDepositary": true,
 					}
 				}
 				},
@@ -172,6 +173,13 @@ describe ('30213', () => {
 
 		messUp (xs, xml, '>558630200000<', '>558630201000<', "doesn't match any")
 		messUp (xs, xml, '>659511111112<', '>659511111119<', "doesn't match any")
+
+	})
+
+	test ('bool', () => {
+
+		messUp (xs, xml, 'isDepositary>true<', 'isDepositary><', "bool")
+		messUp (xs, xml, 'isDepositary>true<', 'isDepositary>True<', "not a bool")
 
 	})
 

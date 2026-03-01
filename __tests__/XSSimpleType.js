@@ -1,7 +1,8 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeBoolean, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
 const {XSSimpleTypeInteger} = require ('../lib/simple/XSSimpleTypeInteger')
 const XSSimpleTypeDecimal = require ('../lib/simple/XSSimpleTypeDecimal')
+const XSSimpleTypeBoolean = require ('../lib/simple/XSSimpleTypeBoolean')
 
 test ('stringify', () => {
 
