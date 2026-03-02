@@ -183,6 +183,18 @@ describe ('30213', () => {
 
 	})
 
+	test ('date', () => {
+
+		messUp (xs, xml, 'regDate>2017-11-01<', 'regDate>2017-11-01T00:00:00<', "time part cannot be present")
+
+	})
+
+	test ('dateTime', () => {
+
+		messUp (xs, xml, 'creationDate>2025-04-08T11:16:03.185874+03:00<', 'creationDate>2025-04-08Z<', "time part is mandatory")
+
+	})
+
 })
 
 describe ('sign', () => {
