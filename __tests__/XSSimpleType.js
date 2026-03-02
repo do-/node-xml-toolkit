@@ -1,6 +1,7 @@
 const fs = require ('fs')
-const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
+const {XSSimpleType, XMLParser, XSSimpleTypeFloat, XSSimpleTypeQName, XMLSchemata, XMLSchema} = require ('../')
 const {XSSimpleTypeInteger} = require ('../lib/simple/XSSimpleTypeInteger')
+const {XSSimpleTypeDate, XSSimpleTypeDateTime, XSSimpleTypeDateTimeStamp} = require ('../lib/simple/XSSimpleTypeDT')
 const XSSimpleTypeDecimal = require ('../lib/simple/XSSimpleTypeDecimal')
 const XSSimpleTypeBoolean = require ('../lib/simple/XSSimpleTypeBoolean')
 
@@ -93,6 +94,15 @@ test ('stringify datetime', () => {
 
 	expect ([...dt.strings ('1970-01-01T00:00:00')]).toStrictEqual (['1970-01-01T00:00:00'])
 	expect ([...dt.strings ('1970-01-01T00:00:00Z00:00')]).toStrictEqual (['1970-01-01T00:00:00Z00:00', '1970-01-01T00:00:00'])
+
+})
+
+test ('ts', () => {
+
+	const ts = new XSSimpleTypeDateTimeStamp ()
+
+	expect (ts.test ('1970-01-01T00:00:00')).toMatch ('both')
+	expect (ts.test ('1970-01-01T00:00:00Z')).toBeNull ()
 
 })
 
