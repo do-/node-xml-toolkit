@@ -14,16 +14,19 @@ It features both (fast and simple, but greedy) [synchronous](https://github.com/
 npm install xml-toolkit
 ```
 
-# Using
-
-* [Parsing a small file completely](XMLParser)
+# Usage
+* [Parsing a small file completely](XMLParser) (optionally validating)
 
 ```js
 const fs = require ('fs')
-const {XMLParser} = require ('xml-toolkit')
+const {XMLParser, XMLSchemata} = require ('xml-toolkit')
 
 const xml    = fs.readFileSync ('doc.xml')
-const parser = new XMLParser  ({...options})
+// const xs  = new XMLSchemata ('schema.xsd')
+
+const parser = new XMLParser  ({
+// xs,
+})
 
 const document = parser.process (xml)
 
@@ -32,12 +35,15 @@ for (const element of document.detach ().children) {
 }
 ```
 
-* [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List), streaming mode
+* [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List) (optionally validating)
 
 ```js
-const {XMLReader, XMLNode} = require ('xml-toolkit')
+const {XMLReader, XMLNode, XMLSchemata} = require ('xml-toolkit')
+
+// const xs  = new XMLSchemata ('schema.xsd')
 
 const records = new XMLReader ({
+//xs,
   filterElements : 'Record', 
   map            : XMLNode.toObject ({})
 }).process (xmlSource)
@@ -57,7 +63,7 @@ const records = new XMLReader ({
 // records.on ('data', record => doSomethingWith (record))
 ```
 
-* [Getting a Single Element](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Getting-a-Single-Element), streaming mode
+* [Getting a Single Element](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Getting-a-Single-Element)
 
 ```js
 const {XMLReader, XMLNode} = require ('xml-toolkit')
@@ -66,6 +72,21 @@ const data = await new XMLReader ({
   filterElements : 'MyElementName', 
   map            : XMLNode.toObject ({})
 }).process (xmlSource).findFirst ()
+```
+
+* [Formatting XML](https://github.com/do-/node-xml-toolkit/wiki/XMLPrinter)
+```js
+const {XMLParser} = require ('xml-toolkit')
+xml = new XMLParser ()
+  .process (fs.readFileSync ('doc.xml'))
+  .toString ({
+//  decl: {encoding: 'UTF-8', standalone: 1},
+    space: '\t', 
+//  attrSpace: 2, 
+//  EOL: '\n',
+//  level: 0, 
+//  encodeLineBreaks: false,
+   })
 ```
 
 * [Patching XML](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Patching-XML)
@@ -81,8 +102,6 @@ let xmlResult = ''; for await (const node of new XMLReader ().process (xmlSource
 * [Serializing an Object According to an XML Schema](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Serializing-an-Object-According-to-an-XML-Schema)
 
 ```js
-const {XMLSchemata} = require ('xml-toolkit')
-
 const data = {ExportDebtRequestsResponse: {	
   "request-data": {
    // ...
@@ -99,45 +118,18 @@ const xml = xs.stringify (data)
     <!-- ... and so on ... -->
 */
 ```
-
-* Invoking a [SOAP 1.1](https://github.com/do-/node-xml-toolkit/wiki/SOAP11) or [SOAP 1.2](https://github.com/do-/node-xml-toolkit/wiki/SOAP12) Web Service
+* Invoking a [SOAP 1.1](SOAP11) Web Service
 
 ```js
 const http = require ('http')
-const {SOAP11, SOAP12} = require ('xml-toolkit')
+const {SOAP11} = require ('xml-toolkit')
 
-const soap = new SOAP11 ('their.wsdl') // or SOAP12
+const soap = new SOAP11 ('their.wsdl')
 
 const {method, headers, body} = soap.http ({RequestElementNameOfTheirs: {amount: '0.01'}})
 
 const rq = http.request (endpointURL, {method, headers})
 rq.write (body)
-```
-
-* [Implementing](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Implement-a-SOAP-Web-Service) a SOAP service
-
-```js
-const {XMLSchemata, SOAP11, SOAP12, SOAPFault} = require ('xml-toolkit')
-
-const SOAP = SOAP11 // or SOAP12
-
-const xs = new XMLSchemata (`myService.wsdl`)
-
-let body, statusCode; try {  
-  body = xs.stringify (myMethod (/*...*/))
-  statusCode = 200
-}
-catch (x) {
-  body = new SOAPFault (x)
-  statusCode = 500
-}
-
-rp.writeHead (statusCode, {
-  'Content-Type': SOAP.contentType,
-})
-
-const xml = SOAP.message (body)
-rp.end (xml)
 ```
 
 # Motivation
@@ -155,9 +147,6 @@ Pure js 3rd party modules are abundant, but after some real tasks based research
 
 No W3C specification is 100% implemented here. For instance, DTDs are not supported, so, in theory, any rogue XML file using such bizarre deprecated feature as [Entity Declarations](https://www.w3.org/TR/xml/#sec-entity-decl) may crash the local XML parser.
 
-Though `node-xml-toolkit` has some support for [XMLSchema](https://github.com/do-/node-xml-toolkit/wiki/XMLSchema), it cannot be used for validation. Here, XML Schema is used only as a template for outputting valid XML provided a correct set of input data. That means, each `decimal` will be formatted with proper `fractionDigits`, but no CPU cycle will be spent on checking whether the incoming 10 char string fully conforms to the [`date`](https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html#date) lexical representation or not.
+The [XMLSchema](https://github.com/do-/node-xml-toolkit/wiki/XMLSchemata) is fairly usable for most real world cases, still some features (like `xs:unique`) are ignored completely, some others may require more test coverage. In general, XML Schema support in `xml-toolkit` should be considered _forever beta_.
 
-In short, `node-xml-toolkit` may produce incorrect results for some input data, especially for deliberately broken ones.
-
-There are perfectly reliable external tools for XML validation: for instance, 
-[xmllint](https://linux.die.net/man/1/xmllint) (used in the test suite here) do just fine.
+There are perfectly reliable external tools for XML validation: for instance, [xmllint](https://linux.die.net/man/1/xmllint) (used in the test suite here) do just fine.
