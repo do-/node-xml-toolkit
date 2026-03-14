@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+
+        <xs:complexType name="ClientType">
+            <xs:choice>
+                <xs:element name="left" type="xs:string" minOccurs="2" maxOccurs="2" />
+                <xs:element name="right" type="xs:string" minOccurs="2" maxOccurs="2" />
+            </xs:choice>
+        </xs:complexType>
+
+        <xs:complexType name="ClientTypeEx">
+		<xs:complexContent>
+		    <xs:extension base="tns:ClientType">
+            <xs:choice>
+	                <xs:element name="middle" type="xs:string" minOccurs="0" />
+            </xs:choice>
+		    </xs:extension>
+		</xs:complexContent>
+        </xs:complexType>
+               
+    <xs:element name="client" type="tns:ClientTypeEx" />
+    
+    
+        <xs:complexType name="ClientType10">
+            <xs:choice minOccurs="10" maxOccurs="10">
+                <xs:element name="left" type="xs:string" />
+                <xs:element name="right" type="xs:string" />
+            </xs:choice>
+        </xs:complexType>
+   
+    <xs:element name="client10" type="tns:ClientType10" />
+
+</xs:schema>

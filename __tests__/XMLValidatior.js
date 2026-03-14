@@ -407,4 +407,124 @@ describe ('all', () => {
 
 	})
 
+	test ('miss', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_middlename>C.</ns:cl_middlename></ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow ('expected: (')
+
+	})
+
+})
+
+describe ('choice', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'choice.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	test ('basic1', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:left>1</ns:left>
+			<ns:left>2</ns:left>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc).toEqual ({left: ['1', '2']})
+
+	})
+
+	test ('basic2', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:right>1</ns:right>
+			<ns:right>2</ns:right>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc).toEqual ({right: ['1', '2']})
+
+	})
+
+	test ('miss', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:left>1</ns:left>
+			<ns:right>2</ns:right>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow (/expected.*left/)
+
+	})
+
+	test ('too few', () => {
+
+		const xml = `<ns:client10 xmlns:ns="http://tempuri.org/">
+			<ns:left>1</ns:left>
+			<ns:left>2</ns:left>
+		</ns:client10>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow (/expected.*left/)
+
+	})
+
+
+})
+
+describe ('sequence', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'sequence.xsd')
+
+	const xs = new XMLSchemata (xsdPath)	
+
+	test ('miss', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:cl_firstname>John</ns:cl_firstname>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow (/expected.*?lastname.*?middlename>/)
+
+	})
+
+	test ('miss', () => {
+
+		const xml = `<ns:dummy xmlns:ns="http://tempuri.org/">
+			<ns:dummy></ns:dummy>
+		</ns:dummy>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow (/No nested/)
+
+	})
+
+	test ('empty', () => {
+
+		const xml = `<ns:dummy xmlns:ns="http://tempuri.org/"></ns:dummy>`
+
+		const p = new XMLParser ({xs})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc).toBeNull ()
+
+	})
+
+
 })
