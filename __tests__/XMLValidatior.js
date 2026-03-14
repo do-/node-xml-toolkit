@@ -47,67 +47,56 @@ describe ('30213', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-		const data = {
-		
-			"EGRNRequest": {
-				"build": "26.001",
-				"_id": "3bfc06ce-08b2-11f0-a65d-005056a50a67",
-				"header": {
-				"actionCode": "659511111112",
-				"statementType": "558630200000",
-				"creationDate": "2025-04-08T11:16:03.185874+03:00"
-				},
-				"declarant": {
-				"_id": "c543c4c1-6dd4-e8a7-7441-e66f394ae716",
-				"other": {
-					"contactInfo": {
-					"phoneNumber": "+78121111111",
-					"email": "subsidii@gcjs.gk.gov.spb.ru"
-					},
-					"name": "СПб ГКУ \"Городской центр жилищных субсидий\"",
-					"inn": "7842111111",
-					"ogrn": "1177811111111",
-					"kpp": "784201001",
-					"regDate": "2017-11-01"
-				},
-				"declarantKind": "357013000000"
-				},
-				"requestDetails": {
-				"requestEGRNDataAction": {
-					"extractDataAction": {
-						"object": {
-							"objectTypeCode": "002001003000",
-							"cadastralNumber": {
-							"cadastralNumber": "78:06:0002000:2000"
-							},
-							"address": null
-						},
-						"requestType": "extractRealty",
-						"isDepositary": true,
-					}
-				}
-				},
-				"deliveryDetails": {
-				"requestDeliveryMethod": {
-					"receivingMethodCode": "electronically",
-					"regRightAuthority": "ФГБУ ФКП Росреестра по Санкт-Петербургу",
-					"code": "78.038"
-				},
-				"resultDeliveryMethod": {
-					"recieveResultTypeCode": "webService"
-				}
-				},
-				"statementAgreements": {
-				"persDataProcessingAgreement": "01",
-				"actualDataAgreement": "03"
-				}
-			}
+	const xml = `<ns2:EGRNRequest xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://rosreestr.ru/services/v0.26/TStatementRequestEGRN" xmlns:ns3="http://rosreestr.ru/services/v0.26/commons/Commons" xmlns:ns4="http://rosreestr.ru/services/v0.26/TStatementCommons" xmlns:ns5="http://rosreestr.ru/services/v0.26/commons/TObject" xmlns:ns6="http://rosreestr.ru/services/v0.26/commons/Address" xmlns:ns7="http://rosreestr.ru/services/v0.26/commons/directories/house" xmlns:ns8="http://rosreestr.ru/services/v0.26/commons/Commons/simple-types" xmlns:ns9="http://rosreestr.ru/services/v0.26/commons/directories/roomPurpose" xmlns:ns10="http://rosreestr.ru/services/v0.26/commons/directories/objectPurpose" xmlns:ns11="http://rosreestr.ru/services/v0.26/commons/directories/housingPurpose" xmlns:ns12="http://rosreestr.ru/services/v0.26/commons/directories/objectType" xmlns:ns13="http://rosreestr.ru/services/v0.26/commons/directories/unitType" xmlns:ns14="http://rosreestr.ru/services/v0.26/commons/directories/usageType" xmlns:ns15="http://rosreestr.ru/services/v0.26/commons/directories/interdepobjecttype" xmlns:ns16="http://rosreestr.ru/services/v0.26/commons/Subjects" xmlns:ns17="http://rosreestr.ru/services/v0.26/commons/Documents" xmlns:ns18="http://rosreestr.ru/services/v0.26/commons/directories/document" xmlns:ns19="http://rosreestr.ru/services/v0.26/commons/directories/requestDocument" xmlns:ns20="http://rosreestr.ru/services/v0.26/commons/directories/contractor" xmlns:ns21="http://rosreestr.ru/services/v0.26/commons/directories/country" xmlns:ns22="http://rosreestr.ru/services/v0.26/commons/directories/regionrf" xmlns:ns23="http://rosreestr.ru/services/v0.26/commons/directories/benefitCategory" xmlns:ns24="http://rosreestr.ru/services/v0.26/commons/directories/declarantKind" xmlns:ns25="http://rosreestr.ru/services/v0.26/commons/directories/declarantKindReg" xmlns:ns26="http://rosreestr.ru/services/v0.26/commons/directories/encumbrance" xmlns:ns27="http://rosreestr.ru/services/v0.26/commons/directories/agreements" xmlns:ns28="http://rosreestr.ru/services/v0.26/commons/directories/actionCode" xmlns:ns29="http://rosreestr.ru/services/v0.26/commons/directories/statementType" xmlns:ns30="http://rosreestr.ru/services/v0.26/commons/directories/recieveResultType" xmlns:ns31="http://rosreestr.ru/services/v0.26/commons/directories/receivingMethod" xmlns:ns32="http://rosreestr.ru/services/v0.26/commons/directories/kindInfo" xmlns:ns33="http://rosreestr.ru/services/v0.26/commons/directories/terzone" xmlns:ns34="http://rosreestr.ru/services/v0.26/commons/directories/borderObjectType" xmlns:ns35="http://rosreestr.ru/services/v0.26/commons/directories/LandCategory" _id="3bfc06ce-08b2-11f0-a65d-005056a50a67" build="26.001">
+        <ns2:header>
+          <ns4:actionCode>659511111112</ns4:actionCode>
+          <ns4:statementType>558630200000</ns4:statementType>
+          <ns4:creationDate>2025-04-08T11:16:03.185874+03:00</ns4:creationDate>
+        </ns2:header>
+        <ns2:declarant _id="c543c4c1-6dd4-e8a7-7441-e66f394ae716">
+          <ns16:other>
+            <ns16:contactInfo>
+              <ns16:phoneNumber>+78121111111</ns16:phoneNumber>
+              <ns16:email>subsidii@gcjs.gk.gov.spb.ru</ns16:email>
+            </ns16:contactInfo>
+            <ns16:name>СПб ГКУ "Городской центр жилищных субсидий"</ns16:name>
+            <ns16:inn>7842111111</ns16:inn>
+            <ns16:ogrn>1177811111111</ns16:ogrn>
+            <ns16:kpp>784201001</ns16:kpp>
+            <ns16:regDate>2017-11-01</ns16:regDate>
+          </ns16:other>
+          <ns16:declarantKind>357013000000</ns16:declarantKind>
+        </ns2:declarant>
+        <ns2:requestDetails>
+          <ns2:requestEGRNDataAction>
+            <ns2:extractDataAction>
+              <ns2:object>
+                <ns5:objectTypeCode>002001003000</ns5:objectTypeCode>
+                <ns5:cadastralNumber>
+                  <ns5:cadastralNumber>78:06:0002000:2000</ns5:cadastralNumber>
+                </ns5:cadastralNumber>
+              </ns2:object>
+              <ns2:requestType>extractRealty</ns2:requestType>
+              <ns2:isDepositary>true</ns2:isDepositary>
+            </ns2:extractDataAction>
+          </ns2:requestEGRNDataAction>
+        </ns2:requestDetails>
+        <ns2:deliveryDetails>
+          <ns4:requestDeliveryMethod>
+            <ns4:receivingMethodCode>electronically</ns4:receivingMethodCode>
+            <ns4:regRightAuthority>ФГБУ ФКП Росреестра по Санкт-Петербургу</ns4:regRightAuthority>
+            <ns4:code>78.038</ns4:code>
+          </ns4:requestDeliveryMethod>
+          <ns4:resultDeliveryMethod>
+            <ns4:recieveResultTypeCode>webService</ns4:recieveResultTypeCode>
+          </ns4:resultDeliveryMethod>
+        </ns2:deliveryDetails>
+        <ns2:statementAgreements>
+          <ns4:persDataProcessingAgreement>01</ns4:persDataProcessingAgreement>
+          <ns4:actualDataAgreement>03</ns4:actualDataAgreement>
+        </ns2:statementAgreements>
+      </ns2:EGRNRequest>`
 
-		}
-
-	const m = xs.createMarshaller ('EGRNRequest', 'http://rosreestr.ru/services/v0.26/TStatementRequestEGRN', {space: 2})
-
-	const xml = m.stringify (data.EGRNRequest)
 
 	test ('bad options', () => {
 
