@@ -29,11 +29,9 @@ describe ('any', () => {
 				SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
 			>
 			<SOAP-ENV:Body>
-<!--			
 				<m:GetLastTradePrice xmlns:m="Some-URI">
 					<symbol>DIS</symbol>
 				</m:GetLastTradePrice>
--->				
 			</SOAP-ENV:Body>
 			</SOAP-ENV:Envelope>			
 		`)
