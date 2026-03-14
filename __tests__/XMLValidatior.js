@@ -349,7 +349,7 @@ describe ('30681', () => {
 
 })
 
-describe.only ('all', () => {
+describe ('all', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'all.xsd')
 
@@ -391,15 +391,13 @@ describe.only ('all', () => {
 
 	})
 
-	test ('miss', () => {
+	test.only ('miss', () => {
 
-		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
-			<ns:cl_firstname>John</ns:cl_firstname>
-		</ns:client>`
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_firstname>John</ns:cl_firstname></ns:client>`
 
 		const p = new XMLParser ({xs})
 
-		expect (() => p.process (xml)).toThrow ('Unexpected closing')
+		expect (() => p.process (xml)).toThrow ('expected: <ns:cl_lastname>')
 
 	})
 
