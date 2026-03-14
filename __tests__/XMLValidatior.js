@@ -124,7 +124,7 @@ describe ('30213', () => {
 
 	test ('Unexpected element', () => {
 
-		messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'Unexpected element')
+		messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'Unexpected <')
 
 	})
 
@@ -391,7 +391,7 @@ describe ('all', () => {
 
 	})
 
-	test.only ('miss', () => {
+	test ('miss', () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_firstname>John</ns:cl_firstname></ns:client>`
 
