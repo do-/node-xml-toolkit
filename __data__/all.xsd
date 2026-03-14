@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+    <xs:element name="client">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="cl_firstname" type="xs:string" />
+                <xs:element name="cl_lastname" type="xs:string" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>  
+</xs:schema>

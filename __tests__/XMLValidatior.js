@@ -348,3 +348,59 @@ describe ('30681', () => {
 	})
 
 })
+
+describe.only ('all', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'all.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	test ('basic1', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:cl_lastname>Doe</ns:cl_lastname>
+			<ns:cl_firstname>John</ns:cl_firstname>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc).toEqual ({
+			cl_firstname: "John",
+			cl_lastname: "Doe",
+		})
+
+	})
+
+	test ('basic2', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:cl_firstname>John</ns:cl_firstname>
+			<ns:cl_lastname>Doe</ns:cl_lastname>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc).toEqual ({
+			cl_lastname: "Doe",
+			cl_firstname: "John",
+		})
+
+	})
+
+	test ('miss', () => {
+
+		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
+			<ns:cl_firstname>John</ns:cl_firstname>
+		</ns:client>`
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (xml)).toThrow ('Unexpected closing')
+
+	})
+
+})
