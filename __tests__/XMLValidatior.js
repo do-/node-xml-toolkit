@@ -130,6 +130,12 @@ describe ('30213', () => {
 
 	test ('Unexpected element', () => {
 
+		messUp (xs, xml, 'ns16:other>', 'ns16:kpp>', 'Unexpected <')
+
+	})
+
+	test ('Unexpected element', () => {
+
 		messUp (xs, xml, '<ns4:actionCode>659511111112</ns4:actionCode>', '<ns4:actionCode><ns4:actionCode>659511111112</ns4:actionCode></ns4:actionCode>', 'No nested')
 
 	})
