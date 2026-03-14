@@ -1,7 +1,7 @@
 const Path = require ('path')
-const {XMLSchemata, XMLParser, XMLNode} = require ('..')
+const {XMLSchemata, XMLReader, XMLParser, XMLNode} = require ('..')
 
-function messUp (xs, xml, asIs, toBe, err, debug = false) {
+async function messUp (xs, xml, asIs, toBe, err, debug = false) {
 
 	if (debug) console.log (xml)	
 
@@ -11,6 +11,20 @@ function messUp (xs, xml, asIs, toBe, err, debug = false) {
 
 	expect (() => new XMLParser ({xs}).process (brokenXml)).toThrow (err)
 
+	expect (new Promise ((ok, fail) => {
+
+		const a = []; new XMLReader ({
+			filterElements : e => e.level === 1, 
+			map: XMLNode.toObject ({}),
+			xs,
+		})
+			.on ('error', fail)
+			.on ('close', () => ok (a))
+			.on ('data', r => a.push (r))
+				.process (brokenXml)
+
+	})).rejects.toThrow (err)
+
 }
 
 describe ('any', () => {
@@ -19,7 +33,7 @@ describe ('any', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-	test ('basic', () => {
+	test ('basic', async () => {
 		
 		const p = new XMLParser ({xs, stripSpace: false})		
 
@@ -97,96 +111,95 @@ describe ('30213', () => {
         </ns2:statementAgreements>
       </ns2:EGRNRequest>`
 
-
-	test ('bad options', () => {
+	test ('bad options', async () => {
 
 		expect (() => new XMLParser ({xs, useNamespaces: false})).toThrow ('prov')
 
 	})
 
-	test ('unknown ns', () => {
+	test ('unknown ns', async () => {
 
-		messUp (xs, xml, '"http://rosreestr.ru/services/v0.26/TStatementRequestEGRN"', '"http://tempuri.org"', 'Unknown namespace: http://tempuri.org')
-
-	})
-
-	test ('unknown root element', () => {
-
-		messUp (xs, xml, ':EGRNRequest', ':OGRNRequest', 'OGRNRequest is not found in http://rosreestr.ru/services/v0.26/TStatementRequestEGRN')
+		await messUp (xs, xml, '"http://rosreestr.ru/services/v0.26/TStatementRequestEGRN"', '"http://tempuri.org"', 'Unknown namespace: http://tempuri.org')
 
 	})
 
-	test ('root not element', () => {
+	test ('unknown root element', async () => {
 
-		messUp (xs, xml, ':EGRNRequest', ':TEGRNRequest', 'is not found')
-
-	})
-
-	test ('Unexpected element', () => {
-
-		messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'Unexpected <')
+		await messUp (xs, xml, ':EGRNRequest', ':OGRNRequest', 'OGRNRequest is not found in http://rosreestr.ru/services/v0.26/TStatementRequestEGRN')
 
 	})
 
-	test ('Unexpected element', () => {
+	test ('root not element', async () => {
 
-		messUp (xs, xml, 'ns16:other>', 'ns16:kpp>', 'Unexpected <')
-
-	})
-
-	test ('Unexpected element', () => {
-
-		messUp (xs, xml, '<ns4:actionCode>659511111112</ns4:actionCode>', '<ns4:actionCode><ns4:actionCode>659511111112</ns4:actionCode></ns4:actionCode>', 'No nested')
+		await messUp (xs, xml, ':EGRNRequest', ':TEGRNRequest', 'is not found')
 
 	})
 
-	test ('Unknown attribute', () => {
+	test ('Unexpected element', async () => {
 
-		messUp (xs, xml, '_id=', '_iddqd=', 'Unknown attribute')
-
-	})
-
-	test ('Missing required attribute', () => {
-
-		messUp (xs, xml, '_id="c543c4c1-6dd4-e8a7-7441-e66f394ae716"', '', 'Missing required attribute')
+		await messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'Unexpected <')
 
 	})
 
-	test ('Fixed attribute', () => {
+	test ('Unexpected element', async () => {
 
-		messUp (xs, xml, '26.001', '26.002', 'must have')
+		await messUp (xs, xml, 'ns16:other>', 'ns16:kpp>', 'Unexpected <')
 
 	})
 
-	test ('Enumeration', () => {
+	test ('Unexpected element', async () => {
 
-		messUp (xs, xml, '>electronically<', '>protonically<', "not in list")
+		await messUp (xs, xml, '<ns4:actionCode>659511111112</ns4:actionCode>', '<ns4:actionCode><ns4:actionCode>659511111112</ns4:actionCode></ns4:actionCode>', 'No nested')
+
+	})
+
+	test ('Unknown attribute', async () => {
+
+		await messUp (xs, xml, '_id=', '_iddqd=', 'Unknown attribute')
+
+	})
+
+	test ('Missing required attribute', async () => {
+
+		await messUp (xs, xml, '_id="c543c4c1-6dd4-e8a7-7441-e66f394ae716"', '', 'Missing required attribute')
+
+	})
+
+	test ('Fixed attribute', async () => {
+
+		await messUp (xs, xml, '26.001', '26.002', 'must have')
+
+	})
+
+	test ('Enumeration', async () => {
+
+		await messUp (xs, xml, '>electronically<', '>protonically<', "not in list")
 		
 	})
 
-	test ('Pattern mismatch', () => {
+	test ('Pattern mismatch', async () => {
 
-		messUp (xs, xml, '>558630200000<', '>558630201000<', "doesn't match any")
-		messUp (xs, xml, '>659511111112<', '>659511111119<', "doesn't match any")
-
-	})
-
-	test ('bool', () => {
-
-		messUp (xs, xml, 'isDepositary>true<', 'isDepositary><', "bool")
-		messUp (xs, xml, 'isDepositary>true<', 'isDepositary>True<', "not a bool")
+		await messUp (xs, xml, '>558630200000<', '>558630201000<', "doesn't match any")
+		await messUp (xs, xml, '>659511111112<', '>659511111119<', "doesn't match any")
 
 	})
 
-	test ('date', () => {
+	test ('bool', async () => {
 
-		messUp (xs, xml, 'regDate>2017-11-01<', 'regDate>2017-11-01T00:00:00<', "time part cannot be present")
+		await messUp (xs, xml, 'isDepositary>true<', 'isDepositary><', "bool")
+		await messUp (xs, xml, 'isDepositary>true<', 'isDepositary>True<', "not a bool")
 
 	})
 
-	test ('dateTime', () => {
+	test ('date', async () => {
 
-		messUp (xs, xml, 'creationDate>2025-04-08T11:16:03.185874+03:00<', 'creationDate>2025-04-08Z<', "time part is mandatory")
+		await messUp (xs, xml, 'regDate>2017-11-01<', 'regDate>2017-11-01T00:00:00<', "time part cannot be present")
+
+	})
+
+	test ('dateTime', async () => {
+
+		await messUp (xs, xml, 'creationDate>2025-04-08T11:16:03.185874+03:00<', 'creationDate>2025-04-08Z<', "time part is mandatory")
 
 	})
 
@@ -220,7 +233,7 @@ describe ('sign', () => {
 			<ds:SignatureValue>5O18yV7M7x1w83bsuEqGI+HnroWBjUq6T4Um6uk+o/Vh16DHD6aG53TaVP6vp8zONyRThidV2Jut0Gbep8fNFg==</ds:SignatureValue>
 		</ds:Signature>`
 
-	test ('default attr', () => {
+	test ('default attr', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: true})
 
@@ -238,7 +251,7 @@ describe ('att', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-	test ('basic', () => {
+	test ('basic', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
@@ -246,7 +259,7 @@ describe ('att', () => {
 
 	})
 
-	test ('union', () => {
+	test ('union', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
@@ -275,36 +288,36 @@ describe ('qa_104_response', () => {
       </ns2:QA>	
 	`
 
-	test ('maxLength', () => {
+	test ('maxLength', async () => {
 
-		messUp (xs, xml, 'RSO_ACC="', 'RSO_ACC="00000000000000000000000000000000000000000000000000', "long, which exceeds the allowed maximum of")
-
-	})
-
-	test ('minLength', () => {
-
-		messUp (xs, xml, 'RSO_ACC="123114561"', 'RSO_ACC=""', "which is less than the allowed minimum")
+		await messUp (xs, xml, 'RSO_ACC="', 'RSO_ACC="00000000000000000000000000000000000000000000000000', "long, which exceeds the allowed maximum of")
 
 	})
 
-	test ('minmax', () => {
+	test ('minLength', async () => {
 
-		messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="0"', "less")
-		messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="9"', "greater")
-		messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="-', "less")
-		messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="10000000000', "greater")
+		await messUp (xs, xml, 'RSO_ACC="123114561"', 'RSO_ACC=""', "which is less than the allowed minimum")
 
 	})
 
-	test ('decimal', () => {
+	test ('minmax', async () => {
 
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=""', "empty")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="+"', "no digits")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0+"', "begin")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0..1"', "2nd period")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="3.76!"', "occured")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="1111111111111111111111111"', "only 10")
-		messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=".111111111"', "only 2")
+		await messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="0"', "less")
+		await messUp (xs, xml, 'LS_TYPE="1"', 'LS_TYPE="9"', "greater")
+		await messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="-', "less")
+		await messUp (xs, xml, 'SRV_NORM="', 'SRV_NORM="10000000000', "greater")
+
+	})
+
+	test ('decimal', async () => {
+
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=""', "empty")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="+"', "no digits")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0+"', "begin")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="0..1"', "2nd period")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="3.76!"', "occured")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY="1111111111111111111111111"', "only 10")
+		await messUp (xs, xml, 'SQ_PAY="33.00"', 'SQ_PAY=".111111111"', "only 2")
 
 	})
 
@@ -347,9 +360,9 @@ describe ('30681', () => {
 
 	const xml = m.stringify (data.livingPlaceRegistrationResponse)
 
-	test ('length', () => {
+	test ('length', async () => {
 
-		messUp (xs, xml, '5555', '555', "must be exaclty")
+		await messUp (xs, xml, '5555', '555', "must be exaclty")
 
 	})
 
@@ -361,7 +374,7 @@ describe ('all', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-	test ('basic1', () => {
+	test ('basic1', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:cl_lastname>Doe</ns:cl_lastname>
@@ -379,7 +392,7 @@ describe ('all', () => {
 
 	})
 
-	test ('basic2', () => {
+	test ('basic2', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:cl_firstname>John</ns:cl_firstname>
@@ -397,7 +410,7 @@ describe ('all', () => {
 
 	})
 
-	test ('miss', () => {
+	test ('miss', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_firstname>John</ns:cl_firstname></ns:client>`
 
@@ -407,7 +420,7 @@ describe ('all', () => {
 
 	})
 
-	test ('miss', () => {
+	test ('miss', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_middlename>C.</ns:cl_middlename></ns:client>`
 
@@ -425,7 +438,7 @@ describe ('choice', () => {
 
 	const xs = new XMLSchemata (xsdPath)
 
-	test ('basic1', () => {
+	test ('basic1', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:left>1</ns:left>
@@ -440,7 +453,7 @@ describe ('choice', () => {
 
 	})
 
-	test ('basic2', () => {
+	test ('basic2', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:right>1</ns:right>
@@ -455,7 +468,7 @@ describe ('choice', () => {
 
 	})
 
-	test ('miss', () => {
+	test ('miss', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:left>1</ns:left>
@@ -468,7 +481,7 @@ describe ('choice', () => {
 
 	})
 
-	test ('too few', () => {
+	test ('too few', async () => {
 
 		const xml = `<ns:client10 xmlns:ns="http://tempuri.org/">
 			<ns:left>1</ns:left>
@@ -490,7 +503,7 @@ describe ('sequence', () => {
 
 	const xs = new XMLSchemata (xsdPath)	
 
-	test ('miss', () => {
+	test ('miss', async () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/">
 			<ns:cl_firstname>John</ns:cl_firstname>
@@ -502,7 +515,7 @@ describe ('sequence', () => {
 
 	})
 
-	test ('miss', () => {
+	test ('miss', async () => {
 
 		const xml = `<ns:dummy xmlns:ns="http://tempuri.org/">
 			<ns:dummy></ns:dummy>
@@ -514,7 +527,7 @@ describe ('sequence', () => {
 
 	})
 
-	test ('empty', () => {
+	test ('empty', async () => {
 
 		const xml = `<ns:dummy xmlns:ns="http://tempuri.org/"></ns:dummy>`
 
