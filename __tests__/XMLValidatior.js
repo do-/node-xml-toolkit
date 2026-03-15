@@ -583,4 +583,16 @@ describe ('gml:id attribute ref', () => {
 
 	})
 
+	test ('wrong namespace rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
+			` xmlns:other="http://other.ns"`,
+			` other:id="FunctionalZone.0">`,
+			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
+			`</gml:FunctionalZone>`,
+		].join (''))).toThrow ('Unknown attribute')
+
+	})
+
 })
