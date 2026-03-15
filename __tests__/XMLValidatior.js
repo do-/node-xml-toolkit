@@ -265,7 +265,7 @@ describe ('att', () => {
 
 		const doc = XMLNode.toObject () (p.process (`<ns2:BetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
 
-		expect (() => p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>?</ns2:id><YetStatus>`)).toThrow ()
+		expect (() => p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>?</ns2:id><YetStatus>`)).toThrow (/not a valid decimal.*?not a floating point/)
 
 	})
 
