@@ -497,6 +497,22 @@ describe ('choice', () => {
 
 })
 
+describe ('empty extension', () => {
+
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'gml_FeatureCollection.xsd')
+
+	const xs = new XMLSchemata (xsdPath)
+
+	test ('basic', () => {
+
+		const p = new XMLParser ({xs})
+
+		p.process (`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2"><gml:featureMember/></gml:FeatureCollection>`)
+
+	})
+
+})
+
 describe ('sequence', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'sequence.xsd')
