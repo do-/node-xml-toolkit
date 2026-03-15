@@ -575,4 +575,30 @@ describe ('substitutionGroup', () => {
 
 	})
 
+	test ('element without substitutionGroup rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
+			`<gml:featureMember>`,
+			`<gml:FeatureCollection>`, // exists in schema but has no substitutionGroup
+			`</gml:FeatureCollection>`,
+			`</gml:featureMember>`,
+			`</gml:FeatureCollection>`,
+		].join (''))).toThrow ('Unexpected')
+
+	})
+
+	test ('unknown element rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
+			`<gml:featureMember>`,
+			`<gml:NoSuchElement>`,
+			`</gml:NoSuchElement>`,
+			`</gml:featureMember>`,
+			`</gml:FeatureCollection>`,
+		].join (''))).toThrow ('Unexpected')
+
+	})
+
 })
