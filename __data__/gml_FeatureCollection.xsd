@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- cut from GML 3.2.1: feature.xsd + deprecatedTypes.xsd -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:gml="http://www.opengis.net/gml/3.2"
+           targetNamespace="http://www.opengis.net/gml/3.2"
+           elementFormDefault="qualified">
+
+  <!-- feature.xsd -->
+  <xs:complexType name="AbstractFeatureType" abstract="true">
+    <xs:sequence>
+      <xs:element name="boundedBy" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AbstractFeature" type="gml:AbstractFeatureType" abstract="true"/>
+
+  <xs:complexType name="FeaturePropertyType">
+    <xs:sequence minOccurs="0">
+      <xs:element ref="gml:AbstractFeature"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- deprecatedTypes.xsd -->
+  <xs:element name="featureMember" type="gml:FeaturePropertyType"/>
+
+  <xs:complexType name="AbstractFeatureCollectionType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureType">
+        <xs:sequence>
+          <xs:element ref="gml:featureMember" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- empty extension, triggers the bug -->
+  <xs:complexType name="FeatureCollectionType">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureCollectionType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FeatureCollection" type="gml:FeatureCollectionType"/>
+</xs:schema>
