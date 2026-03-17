@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:gml="http://www.opengis.net/gml/3.2"
+           targetNamespace="http://www.opengis.net/gml/3.2"
+           elementFormDefault="qualified">
+
+  <xs:attribute name="id" type="xs:ID"/>
+
+  <xs:element name="FunctionalZone">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="GLOBALID" type="xs:string"/>
+      </xs:sequence>
+      <xs:attribute ref="gml:id"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
