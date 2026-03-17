@@ -1,0 +1,4 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.opengis.net/gml/3.2" elementFormDefault="qualified">
+  <xs:include schemaLocation="feature.xsd" />
+  <xs:include schemaLocation="deprecatedTypes.xsd" />
+</xs:schema>

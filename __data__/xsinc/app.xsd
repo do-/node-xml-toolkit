@@ -1,0 +1,17 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:app="http://app" targetNamespace="http://app" elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="gml/gml.xsd"/>
+  
+  <xs:complexType name="ElectricLineType">
+    <xs:complexContent>
+      <xs:extension base="gml:AbstractFeatureType">
+        <xs:sequence>
+          <xs:element name="GLOBALID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ElectricLine" type="app:ElectricLineType" substitutionGroup="gml:AbstractFeature" />
+
+</xs:schema>

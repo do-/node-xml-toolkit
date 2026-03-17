@@ -1,0 +1,13 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.opengis.net/gml/3.2" elementFormDefault="qualified">
+
+  <xs:element name="featureMember" type="gml:FeaturePropertyType"/>
+
+  <xs:complexType name="FeatureCollectionType">
+    <xs:sequence>
+      <xs:element ref="gml:featureMember" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="FeatureCollection" type="gml:FeatureCollectionType"/>
+
+</xs:schema>
