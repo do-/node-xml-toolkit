@@ -555,6 +555,20 @@ describe ('sequence', () => {
 
 	})
 
+	test ('xsi:schemaLocation', () => {
+
+		new XMLParser ({xs}).process ([
+			`<ns:client`,
+			` xmlns:ns="http://tempuri.org/"`,
+			` xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"`,
+			` xsi:schemaLocation="http://tempuri.org/ sequence.xsd">`,
+			`<ns:cl_firstname>John</ns:cl_firstname>`,
+			`<ns:cl_lastname>Doe</ns:cl_lastname>`,
+			`</ns:client>`,
+		].join (''))
+
+	})
+
 })
 
 describe ('gml:id attribute ref', () => {
