@@ -20,7 +20,7 @@ test('cyclic import', async () => {
 
 })
 
-test.only ('include', () => {
+test ('include', () => {
 
     const xs = new XMLSchemata (path.join (__dirname, '..', '__data__', 'xsinc', 'app.xsd'))
 
