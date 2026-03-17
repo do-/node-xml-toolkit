@@ -40,4 +40,18 @@
   </xs:complexType>
 
   <xs:element name="FeatureCollection" type="gml:FeatureCollectionType"/>
+
+  <!-- concrete feature with substitutionGroup -->
+  <xs:element name="ElectricLine" substitutionGroup="gml:AbstractFeature">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="gml:AbstractFeatureType">
+          <xs:sequence>
+            <xs:element name="GLOBALID" type="xs:string"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
 </xs:schema>

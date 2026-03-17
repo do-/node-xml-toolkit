@@ -571,6 +571,52 @@ describe ('sequence', () => {
 
 })
 
+describe ('substitutionGroup', () => {
+
+	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_FeatureCollection.xsd'))
+
+	test ('concrete element accepted where abstract expected', () => {
+
+		new XMLParser ({xs}).process ([
+			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
+			`<gml:featureMember>`,
+			`<gml:ElectricLine>`,
+			`<gml:GLOBALID>test</gml:GLOBALID>`,
+			`</gml:ElectricLine>`,
+			`</gml:featureMember>`,
+			`</gml:FeatureCollection>`,
+		].join (''))
+
+	})
+
+	test ('element without substitutionGroup rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
+			`<gml:featureMember>`,
+			`<gml:FeatureCollection>`, // exists in schema but has no substitutionGroup
+			`</gml:FeatureCollection>`,
+			`</gml:featureMember>`,
+			`</gml:FeatureCollection>`,
+		].join (''))).toThrow ('Unexpected')
+
+	})
+
+	test ('unknown element rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
+			`<gml:featureMember>`,
+			`<gml:NoSuchElement>`,
+			`</gml:NoSuchElement>`,
+			`</gml:featureMember>`,
+			`</gml:FeatureCollection>`,
+		].join (''))).toThrow ('Unexpected')
+
+	})
+
+})
+
 describe ('gml:id attribute ref', () => {
 
 	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_id.xsd'))
