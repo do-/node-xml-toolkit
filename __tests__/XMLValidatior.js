@@ -616,3 +616,43 @@ describe ('substitutionGroup', () => {
 	})
 
 })
+
+describe ('gml:id attribute ref', () => {
+
+	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_id.xsd'))
+
+	test ('gml:id accepted on FunctionalZone', () => {
+
+		new XMLParser ({xs}).process ([
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
+			` gml:id="FunctionalZone.0">`,
+			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
+			`</gml:FunctionalZone>`,
+		].join (''))
+
+	})
+
+	test ('bare id rejected (namespace required)', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
+			` id="FunctionalZone.0">`,
+			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
+			`</gml:FunctionalZone>`,
+		].join (''))).toThrow ('Unknown attribute')
+
+	})
+
+	test ('wrong namespace rejected', () => {
+
+		expect (() => new XMLParser ({xs}).process ([
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
+			` xmlns:other="http://other.ns"`,
+			` other:id="FunctionalZone.0">`,
+			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
+			`</gml:FunctionalZone>`,
+		].join (''))).toThrow ('Unknown attribute')
+
+	})
+
+})
