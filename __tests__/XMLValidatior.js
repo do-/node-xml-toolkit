@@ -569,6 +569,31 @@ describe ('sequence', () => {
 
 	})
 
+	test ('XMLParser position', () => {
+
+		const p = new XMLParser ({xs})
+
+		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).toThrow (/line 1, position 43, expected:/)
+
+		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).toThrow (/line 2, position 1, expected:/)
+
+	})
+
+	test ('XMLReader position', async () => {
+
+		const t = xml => new Promise ((ok, fail) => {
+			new XMLReader ({xs})
+				.on ('error', fail)
+				.on ('close', ok)
+				.process (xml)
+		})
+
+		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).rejects.toThrow (/line 1, position 43, expected:/)
+
+		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).rejects.toThrow (/line 2, position 1, expected:/)
+
+	})
+
 })
 
 describe ('substitutionGroup', () => {
