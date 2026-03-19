@@ -107,7 +107,7 @@ test ('overflow', async () => {
 				if (e.src.trim () !== '') a.push (e.type)	
 			})
 	
-			lexer.write ('<a href="#"')
+			lexer.write ('<a\nhref="#"')
 			lexer.end ('>')
 		
 		}) 	
@@ -115,7 +115,7 @@ test ('overflow', async () => {
 	}
 
 	await t (11)
-	await expect (() => t (10)).rejects.toBeDefined ()
+	expect (() => t (10)).rejects.toThrow (/maxLength.*?exceeded/)
 
 })
 

@@ -137,13 +137,13 @@ describe ('30213', () => {
 
 	test ('Unexpected element', async () => {
 
-		await messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'Unexpected <')
+		await messUp (xs, xml, '<ns4:actionCode>', '<ns26:inn>7842111111</ns26:inn><ns4:actionCode>', 'nexpected')
 
 	})
 
 	test ('Unexpected element', async () => {
 
-		await messUp (xs, xml, 'ns16:other>', 'ns16:kpp>', 'Unexpected <')
+		await messUp (xs, xml, 'ns16:other>', 'ns16:kpp>', 'nexpected')
 
 	})
 
@@ -416,7 +416,7 @@ describe ('all', () => {
 
 		const p = new XMLParser ({xs})
 
-		expect (() => p.process (xml)).toThrow ('expected: <ns:cl_lastname>')
+		expect (() => p.process (xml)).toThrow (/<\/ns:client>.*<ns:cl_lastname>/)
 
 	})
 
@@ -426,7 +426,7 @@ describe ('all', () => {
 
 		const p = new XMLParser ({xs})
 
-		expect (() => p.process (xml)).toThrow ('expected: (')
+		expect (() => p.process (xml)).toThrow ('nexpected')
 
 	})
 
@@ -573,9 +573,9 @@ describe ('sequence', () => {
 
 		const p = new XMLParser ({xs})
 
-		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).toThrow (/line 1, position 43, expected:/)
+		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).toThrow (/^\[1:43\].*nexpected/)
 
-		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).toThrow (/line 2, position 1, expected:/)
+		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).toThrow (/^\[2:1\].*nexpected/)
 
 	})
 
@@ -588,9 +588,9 @@ describe ('sequence', () => {
 				.process (xml)
 		})
 
-		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).rejects.toThrow (/line 1, position 43, expected:/)
+		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).rejects.toThrow (/^\[1:43\].*nexpected/)
 
-		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).rejects.toThrow (/line 2, position 1, expected:/)
+		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).rejects.toThrow (/^\[2:1\].*nexpected/)
 
 	})
 
@@ -623,7 +623,7 @@ describe ('substitutionGroup', () => {
 			`</gml:FeatureCollection>`,
 			`</gml:featureMember>`,
 			`</gml:FeatureCollection>`,
-		].join (''))).toThrow ('Unexpected')
+		].join (''))).toThrow ('nexpected')
 
 	})
 
@@ -636,7 +636,7 @@ describe ('substitutionGroup', () => {
 			`</gml:NoSuchElement>`,
 			`</gml:featureMember>`,
 			`</gml:FeatureCollection>`,
-		].join (''))).toThrow ('Unexpected')
+		].join (''))).toThrow ('nexpected')
 
 	})
 
