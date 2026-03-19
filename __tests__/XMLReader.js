@@ -81,11 +81,32 @@ test ('unbalanced', async () => {
 	await expect (
 		
 		new Promise ((ok, fail) => {
-			reader.findFirst ().then (ok, fail)
-			reader.end ('</a>')
+
+			reader.on ('error', fail)
+			reader.on ('finish', ok)
+			reader.process ('<a></a></b>')
+
 		})
 	
-	).rejects.toBeDefined ()
+	).rejects.toThrow ('nbalanced')
+
+})
+
+test ('unmatched', async () => {
+
+	const reader = new XMLReader ({filterElements : 'PARAMTYPES'})
+
+	await expect (
+		
+		new Promise ((ok, fail) => {
+
+			reader.on ('error', fail)
+			reader.on ('finish', ok)
+			reader.process ('<a></b>')
+
+		})
+	
+	).rejects.toThrow ('nmatched')
 
 })
 
