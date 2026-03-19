@@ -10,7 +10,8 @@ test ('bad', () => {
 
 	expect (() => p.process ('<broken')).toThrow ('Unfinished')
 	expect (() => p.process ('<broken                                                    ')).toThrow ('Unfinished')
-	expect (() => p.process ('</broken>')).toThrow ('Unbalanced')
+	expect (() => p.process ('<head></head></broken>')).toThrow ('nbalanced')
+	expect (() => p.process ('<head></body>')).toThrow ('nmatched')
 
 })
 
