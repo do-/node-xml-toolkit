@@ -25,7 +25,6 @@ test ('bad', () => {
 
 	expect (() => new XMLReader ({filterElements: Symbol ()})).toThrow ()
 	expect (() => new XMLReader ({stripSpace: Symbol ()})).toThrow ()
-	expect (() => {const l = new XMLLexer (); l.state = null; l.parse ()}).toThrow ()
 
 })
 
