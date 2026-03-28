@@ -33,9 +33,9 @@ test ('stringify float', () => {
 	expect (t.stringify (Number.NEGATIVE_INFINITY)).toBe ('-INF')
 	expect (t.stringify (Number.NaN)).toBe ('NaN')
 
-	expect (() => t.validateScalar ('')).toThrow ()
-	expect (() => t.validateScalar ('z')).toThrow ()
-	expect (t.validateScalar ('3.14')).toBeUndefined ()
+	expect (t.test ('')).toMatch ('empty')
+	expect (t.test ('z')).toMatch ('not a f')
+	expect (t.test ('3.14')).toBeNull ()
 	
 })
 
