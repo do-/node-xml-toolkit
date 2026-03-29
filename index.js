@@ -31,6 +31,7 @@ module.exports = {
 	XMLSchema:           require ('./lib/XMLSchema'),
 	XMLSchemaBuiltIn:    require ('./lib/XMLSchemaBuiltIn'),
 	XMLSchemata:         require ('./lib/XMLSchemata'),
+	XMLMessages:         require ('./lib/XMLMessages'),
 	XSSimpleType,
 	XSSimpleTypeFloat,
 	XSSimpleTypeDouble,
