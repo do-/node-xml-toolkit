@@ -11,7 +11,6 @@ test ('bad', () => {
 		expect (err.payload [0]).toBe ('XVS-00005')
 	}
 
-	expect (() => new DT7 ('************')).toThrow ('year separator')
 	expect (() => new DT7 ('-----------')).toThrow ('not a valid year')
 	expect (() => new DT7 ('1970-----------')).toThrow ('Invalid month')
 	expect (() => new DT7 ('1970-05----------')).toThrow ('Invalid day')

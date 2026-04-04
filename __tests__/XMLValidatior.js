@@ -690,4 +690,12 @@ describe ('dt7', () => {
 
 	})
 
+	test ('no year', async () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="**********" />`)).toThrow ('year sepa')
+
+	})
+
 })
