@@ -79,3 +79,17 @@ test ('basic', () => {
 	}
 	
 })
+
+test ('unbalanced', async () => {
+
+	const xml = [
+		'<order>',
+		'  <id>42</id>',
+		'  <amount>10.50</amount>',
+		'</order>',
+		'</oops>',
+	].join('\n');
+
+	expect (() => new XMLParser().process(xml)).toThrow (/\[5:1\].*?nbalanced/)
+
+})
