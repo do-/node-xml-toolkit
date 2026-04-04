@@ -33,8 +33,8 @@ test ('stringify float', () => {
 	expect (t.stringify (Number.NEGATIVE_INFINITY)).toBe ('-INF')
 	expect (t.stringify (Number.NaN)).toBe ('NaN')
 
-	expect (t.test ('')).toMatch ('empty')
-	expect (t.test ('z')).toMatch ('not a f')
+	expect (t.test ('')[0]).toBe ('XVS-00020')
+	expect (t.test ('z')[0]).toBe ('XVS-00021')
 	expect (t.test ('3.14')).toBeNull ()
 	
 })
