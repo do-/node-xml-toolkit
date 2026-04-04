@@ -78,6 +78,8 @@ test ('stringify date', () => {
 	const att = xs.get ('http://tempuri.org/').get ('GetStatus').children[0].children[1]
 	const dateType = xs.getAttributeSimpleType (att)
 
+	expect (() => dateType.testFormat (0)).toThrow ('can only be constructed from a string')
+
 	expect (dateType).toBeInstanceOf (XSSimpleTypeDate)
 	
 	expect (dateType.stringify (0)).toBe ('1970-01-01')

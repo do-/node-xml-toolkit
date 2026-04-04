@@ -3,7 +3,14 @@ const DT7 = require ('../lib/simple/DT7')
 test ('bad', () => {
 
 	expect (() => new DT7 (0)).toThrow ('from a string')
-	expect (() => new DT7 ('')).toThrow ('10 required')
+
+	try {
+		new DT7 ('')
+	}
+	catch (err) {
+		expect (err.payload [0]).toBe ('XVS-00005')
+	}
+
 	expect (() => new DT7 ('************')).toThrow ('year separator')
 	expect (() => new DT7 ('-----------')).toThrow ('not a valid year')
 	expect (() => new DT7 ('1970-----------')).toThrow ('Invalid month')
