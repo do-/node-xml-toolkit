@@ -101,7 +101,7 @@ test ('ts', () => {
 
 	const ts = new XSSimpleTypeDateTimeStamp ()
 
-	expect (ts.test ('1970-01-01T00:00:00')).toMatch ('both')
+	expect (ts.test ('1970-01-01T00:00:00')[0]).toBe ('XVS-00024')
 	expect (ts.test ('1970-01-01T00:00:00Z')).toBeNull ()
 
 })
