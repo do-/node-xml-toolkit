@@ -528,7 +528,7 @@ describe ('sequence', () => {
 	test ('miss', async () => {
 
 		const xml = `<ns:dummy xmlns:ns="http://tempuri.org/">
-			<ns:dummy></ns:dummy>
+			<ns:dummier></ns:dummier>
 		</ns:dummy>`
 
 		const p = new XMLParser ({xs})
