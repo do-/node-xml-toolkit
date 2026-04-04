@@ -722,4 +722,12 @@ describe ('dt7', () => {
 
 	})
 
+	test ('Invalid time', async () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15T+00:00" />`)).toThrow (/Invalid time part/)
+
+	})
+
 })

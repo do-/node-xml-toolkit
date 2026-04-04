@@ -17,7 +17,6 @@ test ('bad', () => {
 	expect (() => new DT7 ('1970-05-15Y')).toThrow ('timezone must start')
 	expect (() => new DT7 ('1970-05-15+')).toThrow ('Invalid timezone length')
 	expect (() => new DT7 ('1970-05-15+00000')).toThrow ("':' not found")
-	expect (() => new DT7 ('1970-05-15T+00:00')).toThrow ("Invalid time part")
 	expect (() => new DT7 ('2026-02-29T12:35:24.123+03:00')).toThrow ("Non existing day")
 	expect (() => new DT7 ('026-02-27T12:35:24.123+03:00')).toThrow ("exactly 4")
 	expect (() => new DT7 ('2O26-02-27T12:35:24.123+03:00')).toThrow ("Invalid year")
