@@ -148,7 +148,7 @@ test ('restrict pattern', () => {
 	const t = new (new XSSimpleType ().restrict (d.children [6].children [0].children [0].children.map (({localName, attributes}) => ({localName, attributes: {value: attributes.get ('value')}})))) ()
 
 	expect (t.test ('1')).toBe (null)
-	expect (t.test ('true')).toMatch ("n't")
+	expect (t.test ('true')[0]).toBe ("XVS-00001")
 	
 })
 
