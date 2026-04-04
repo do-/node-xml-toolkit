@@ -284,7 +284,7 @@ describe ('qa_104_response', () => {
 
 	test ('maxLength', async () => {
 
-		await messUp (xs, xml, 'RSO_ACC="', 'RSO_ACC="00000000000000000000000000000000000000000000000000', "long, which exceeds the allowed maximum of")
+		await messUp (xs, xml, 'RSO_ACC="', 'RSO_ACC="00000000000000000000000000000000000000000000000000', "exceeds the allowed maximum")
 
 	})
 
