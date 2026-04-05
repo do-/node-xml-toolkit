@@ -703,6 +703,8 @@ describe ('dt7', () => {
 		const p = new XMLParser ({xs, stripSpace: false})
 
 		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="19-70-01-01" />`)).toThrow ('not a valid year')
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="026-02-27+03:00" />`)).toThrow ('not a valid year')
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="197O-01-01" />`)).toThrow ('not a valid year')
 
 	})
 
