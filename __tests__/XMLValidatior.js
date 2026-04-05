@@ -9,7 +9,9 @@ async function messUp (xs, xml, asIs, toBe, err, debug = false) {
 
 	if (debug) console.log (brokenXml)
 
-	expect (() => new XMLParser ({xs}).process (brokenXml)).toThrow (err)
+	const p = new XMLParser ({xs})
+	p.process (brokenXml)
+	expect (p.validationMessages [0]).toMatch (err)
 
 	expect (new Promise ((ok, fail) => {
 
@@ -18,6 +20,7 @@ async function messUp (xs, xml, asIs, toBe, err, debug = false) {
 			map: XMLNode.toObject ({}),
 			xs,
 		})
+			.on ('validation-message', function (s) {this.destroy (Error (s))})
 			.on ('error', fail)
 			.on ('close', () => ok (a))
 			.on ('data', r => a.push (r))
@@ -249,17 +252,29 @@ describe ('att', () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
-		const doc = XMLNode.toObject () (p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
+		XMLNode.toObject () (p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
+
+		expect (p.validationMessages).toHaveLength (0)
 
 	})
 
-	test ('union', async () => {
+	test ('union -', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
+			
+		p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>?</ns2:id></ns2:YetStatus>`)
 
-		const doc = XMLNode.toObject () (p.process (`<ns2:BetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-01" />`))
+		expect (p.validationMessages [0]).toMatch (/not a valid decimal.*?not a floating point/)
 
-		expect (() => p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>?</ns2:id><YetStatus>`)).toThrow (/not a valid decimal.*?not a floating point/)
+	})
+
+	test ('union +', async () => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+			
+		p.process (`<ns2:YetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/"><ns2:id>1</ns2:id></ns2:YetStatus>`)
+
+		expect (p.validationMessages).toHaveLength (0)
 
 	})
 
@@ -366,7 +381,13 @@ describe ('all', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'all.xsd')
 
-	const xs = new XMLSchemata (xsdPath)
+	const xs = new XMLSchemata (xsdPath), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	test ('basic1', async () => {
 
@@ -408,9 +429,7 @@ describe ('all', () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_firstname>John</ns:cl_firstname></ns:client>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow (/<\/ns:client>.*<ns:cl_lastname>/)
+		expect (() => process (xml)).toThrow (/<\/ns:client>.*<ns:cl_lastname>/)
 
 	})
 
@@ -418,9 +437,7 @@ describe ('all', () => {
 
 		const xml = `<ns:client xmlns:ns="http://tempuri.org/"><ns:cl_middlename>C.</ns:cl_middlename></ns:client>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow ('nexpected')
+		expect (() => process (xml)).toThrow ('nexpected')
 
 	})
 
@@ -430,7 +447,13 @@ describe ('choice', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'choice.xsd')
 
-	const xs = new XMLSchemata (xsdPath)
+	const xs = new XMLSchemata (xsdPath), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	test ('basic1', async () => {
 
@@ -469,9 +492,7 @@ describe ('choice', () => {
 			<ns:right>2</ns:right>
 		</ns:client>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow (/expected.*left/)
+		expect (() => process (xml)).toThrow (/expected.*left/)
 
 	})
 
@@ -482,9 +503,7 @@ describe ('choice', () => {
 			<ns:left>2</ns:left>
 		</ns:client10>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow (/expected.*left/)
+		expect (() => process (xml)).toThrow (/expected.*left/)
 
 	})
 
@@ -503,13 +522,21 @@ describe ('empty extension', () => {
 
 		p.process (`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2"><gml:featureMember/></gml:FeatureCollection>`)
 
+		expect (p.validationMessages).toHaveLength (0)
+
 	})
 
 })
 
 describe ('sequence', () => {
 
-	const xsdPath = Path.join (__dirname, '..', '__data__', 'sequence.xsd')
+	const xsdPath = Path.join (__dirname, '..', '__data__', 'sequence.xsd'), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	const xs = new XMLSchemata (xsdPath)	
 
@@ -519,9 +546,7 @@ describe ('sequence', () => {
 			<ns:cl_firstname>John</ns:cl_firstname>
 		</ns:client>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow (/expected.*?lastname.*?middlename>/)
+		expect (() => process (xml)).toThrow (/expected.*?lastname.*?middlename>/)
 
 	})
 
@@ -531,9 +556,7 @@ describe ('sequence', () => {
 			<ns:dummier></ns:dummier>
 		</ns:dummy>`
 
-		const p = new XMLParser ({xs})
-
-		expect (() => p.process (xml)).toThrow (/No nested/)
+		expect (() => process (xml)).toThrow (/No nested/)
 
 	})
 
@@ -567,9 +590,9 @@ describe ('sequence', () => {
 
 		const p = new XMLParser ({xs})
 
-		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).toThrow (/^\[1:43\].*nexpected/)
+		expect (() => process (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).toThrow (/^\[1:43\].*nexpected/)
 
-		expect (() => p.process (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).toThrow (/^\[2:1\].*nexpected/)
+		expect (() => process (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).toThrow (/^\[2:1\].*nexpected/)
 
 	})
 
@@ -577,14 +600,15 @@ describe ('sequence', () => {
 
 		const t = xml => new Promise ((ok, fail) => {
 			new XMLReader ({xs})
+				.on ('validation-message', function (s) {this.destroy (Error (s))})
 				.on ('error', fail)
 				.on ('close', ok)
 				.process (xml)
 		})
 
-		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).rejects.toThrow (/^\[1:43\].*nexpected/)
+		await expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/"><ns:INVALID>x</ns:INVALID></ns:client>`)).rejects.toThrow (/^\[1:43\].*nexpected/)
 
-		expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).rejects.toThrow (/^\[2:1\].*nexpected/)
+		await expect (() => t (`<ns:client xmlns:ns="http://tempuri.org/">\n<ns:INVALID>x</ns:INVALID>\n</ns:client>`)).rejects.toThrow (/^\[2:1\].*nexpected/)
 
 	})
 
@@ -592,7 +616,13 @@ describe ('sequence', () => {
 
 describe ('substitutionGroup', () => {
 
-	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_FeatureCollection.xsd'))
+	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_FeatureCollection.xsd')), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	test ('concrete element accepted where abstract expected', () => {
 
@@ -610,7 +640,7 @@ describe ('substitutionGroup', () => {
 
 	test ('element without substitutionGroup rejected', () => {
 
-		expect (() => new XMLParser ({xs}).process ([
+		expect (() => process ([
 			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
 			`<gml:featureMember>`,
 			`<gml:FeatureCollection>`, // exists in schema but has no substitutionGroup
@@ -623,7 +653,7 @@ describe ('substitutionGroup', () => {
 
 	test ('unknown element rejected', () => {
 
-		expect (() => new XMLParser ({xs}).process ([
+		expect (() => process ([
 			`<gml:FeatureCollection xmlns:gml="http://www.opengis.net/gml/3.2">`,
 			`<gml:featureMember>`,
 			`<gml:NoSuchElement>`,
@@ -638,39 +668,45 @@ describe ('substitutionGroup', () => {
 
 describe ('gml:id attribute ref', () => {
 
-	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_id.xsd'))
+	const xs = new XMLSchemata (Path.join (__dirname, '..', '__data__', 'gml_id.xsd')), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	test ('gml:id accepted on FunctionalZone', () => {
 
-		new XMLParser ({xs}).process ([
-			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
-			` gml:id="FunctionalZone.0">`,
-			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
-			`</gml:FunctionalZone>`,
-		].join (''))
+		new XMLParser ({xs, stripSpace: false}).process (
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"
+			gml:id="FunctionalZone.0">
+			<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>
+			</gml:FunctionalZone>`
+		)
 
 	})
 
 	test ('bare id rejected (namespace required)', () => {
 
-		expect (() => new XMLParser ({xs}).process ([
-			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
-			` id="FunctionalZone.0">`,
-			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
-			`</gml:FunctionalZone>`,
-		].join (''))).toThrow ('Unknown attribute')
+		expect (() => process (
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"
+			id="FunctionalZone.0">
+			<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>
+			</gml:FunctionalZone>`
+		)).toThrow ('Unknown attribute')
 
 	})
 
 	test ('wrong namespace rejected', () => {
 
-		expect (() => new XMLParser ({xs}).process ([
-			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"`,
-			` xmlns:other="http://other.ns"`,
-			` other:id="FunctionalZone.0">`,
-			`<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>`,
-			`</gml:FunctionalZone>`,
-		].join (''))).toThrow ('Unknown attribute')
+		expect (() => process (
+			`<gml:FunctionalZone xmlns:gml="http://www.opengis.net/gml/3.2"
+			xmlns:other="http://other.ns"
+			 other:id="FunctionalZone.0">
+			<gml:GLOBALID>8b2457c9-85c4-466a-a14b-b20856527718</gml:GLOBALID>
+			</gml:FunctionalZone>`
+		)).toThrow ('Unknown attribute')
 
 	})
 
@@ -680,72 +716,68 @@ describe ('dt7', () => {
 
 	const xsdPath = Path.join (__dirname, '..', '__data__', 'att.xsd')
 
-	const xs = new XMLSchemata (xsdPath)
+	const xs = new XMLSchemata (xsdPath), process = xml => {
+
+		const p = new XMLParser ({xs, stripSpace: false})
+		p.process (xml)
+		throw Error (p.validationMessages [0] ?? `Didn't throw?!!`)
+
+	}
 
 	test ('too short', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-0" />`)).toThrow ('less than the allowed')
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" dt="1970-01-0" />`)).toThrow ('less than the allowed')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-01-0" />`)).toThrow ('less than the allowed')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" dt="1970-01-0" />`)).toThrow ('less than the allowed')
 
 	})
 
 	test ('no year', async () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="**********" />`)).toThrow ('year sepa')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="**********" />`)).toThrow ('year sepa')
 
 	})
 
 	test ('short year', async () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="19-70-01-01" />`)).toThrow ('not a valid year')
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="026-02-27+03:00" />`)).toThrow ('not a valid year')
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="197O-01-01" />`)).toThrow ('not a valid year')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="19-70-01-01" />`)).toThrow ('not a valid year')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="026-02-27+03:00" />`)).toThrow ('not a valid year')
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="197O-01-01" />`)).toThrow ('not a valid year')
 
 	})
 
 	test ('-', async () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
 		XMLMessages.VOCABULARY.set ('XVS-00027', `'%s' : Le caractère à %i doit être '-', pas '%s'`)
 
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-055-1" />`)).toThrow (/Le caractère à 7 doit être '-', pas '5'/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-055-1" />`)).toThrow (/Le caractère à 7 doit être '-', pas '5'/)
 
 	})
 
 	test ('a short day', async () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
-
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="11970-05-1" />`)).toThrow (/day part must be 2 chars/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="11970-05-1" />`)).toThrow (/day part must be 2 chars/)
 
 	})
 
 	test ('Invalid DT7 parts', async () => {
 
-		const p = new XMLParser ({xs, stripSpace: false})
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15T+00:00" />`)).toThrow (/Invalid time part/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-----------" />`)).toThrow (/Invalid month/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05----------" />`)).toThrow (/Invalid day/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-29" />`)).toThrow (/Non existing day/)
 
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15T+00:00" />`)).toThrow (/Invalid time part/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-----------" />`)).toThrow (/Invalid month/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05----------" />`)).toThrow (/Invalid day/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-29" />`)).toThrow (/Non existing day/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T25:35:24.123+03:00" />`)).toThrow (/Invalid hour/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:85:24.123+03:00" />`)).toThrow (/Invalid minute/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:94.123+03:00" />`)).toThrow (/Invalid second/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+30:00" />`)).toThrow (/Invalid TZ hour/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+03:99" />`)).toThrow (/Invalid TZ minute/)
 
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T25:35:24.123+03:00" />`)).toThrow (/Invalid hour/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:85:24.123+03:00" />`)).toThrow (/Invalid minute/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:94.123+03:00" />`)).toThrow (/Invalid second/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+30:00" />`)).toThrow (/Invalid TZ hour/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+03:99" />`)).toThrow (/Invalid TZ minute/)
-
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15---------" />`)).toThrow (/Invalid timezone length/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15Y" />`)).toThrow (/timezone must start/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+" />`)).toThrow (/Invalid timezone length/)
-		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+00000" />`)).toThrow (/':' not found/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15---------" />`)).toThrow (/Invalid timezone length/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15Y" />`)).toThrow (/timezone must start/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+" />`)).toThrow (/Invalid timezone length/)
+		expect (() => process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+00000" />`)).toThrow (/':' not found/)
 
 	})
 

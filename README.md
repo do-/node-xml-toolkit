@@ -30,6 +30,8 @@ const parser = new XMLParser  ({
 
 const document = parser.process (xml)
 
+// console.log (parser.validationMessages)
+
 for (const element of document.detach ().children) {
   console.log (element.attributes)
 }
@@ -46,7 +48,9 @@ const records = new XMLReader ({
 //xs,
   filterElements : 'Record', 
   map            : XMLNode.toObject ({})
-}).process (xmlSource)
+})
+//.on ('validation-message', s => console.log (s))
+  .process (xmlSource)
 
 // ...then:
 // await someLoader.load (records)
