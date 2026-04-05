@@ -713,7 +713,7 @@ describe ('dt7', () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
-		XMLMessages.VOCABULARY.set ('XVS-00027', `%s : Le caractère à %i doit être '-', pas '%s'`)
+		XMLMessages.VOCABULARY.set ('XVS-00027', `'%s' : Le caractère à %i doit être '-', pas '%s'`)
 
 		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-055-1" />`)).toThrow (/Le caractère à 7 doit être '-', pas '5'/)
 
