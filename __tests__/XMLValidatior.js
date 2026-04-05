@@ -739,6 +739,11 @@ describe ('dt7', () => {
 		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+30:00" />`)).toThrow (/Invalid TZ hour/)
 		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+03:99" />`)).toThrow (/Invalid TZ minute/)
 
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15---------" />`)).toThrow (/Invalid timezone length/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15Y" />`)).toThrow (/timezone must start/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+" />`)).toThrow (/Invalid timezone length/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15+00000" />`)).toThrow (/':' not found/)
+
 	})
 
 })

@@ -11,11 +11,6 @@ test ('bad', () => {
 		expect (err.payload [0]).toBe ('XVS-00005')
 	}
 
-	expect (() => new DT7 ('1970-05-15---------')).toThrow ('Invalid timezone length: 9')
-	expect (() => new DT7 ('1970-05-15Y')).toThrow ('timezone must start')
-	expect (() => new DT7 ('1970-05-15+')).toThrow ('Invalid timezone length')
-	expect (() => new DT7 ('1970-05-15+00000')).toThrow ("':' not found")
-
 })
 
 test ('basic dt ms tz', () => {
