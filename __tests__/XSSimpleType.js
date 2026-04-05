@@ -94,6 +94,8 @@ test ('stringify datetime', () => {
 
 	const dt = new XSSimpleTypeDateTime ()
 
+	expect (() => dt.testFormat (0)).toThrow ('can only be constructed from a string')
+
 	expect ([...dt.strings ('1970-01-01T00:00:00')]).toStrictEqual (['1970-01-01T00:00:00'])
 	expect ([...dt.strings ('1970-01-01T00:00:00Z00:00')]).toStrictEqual (['1970-01-01T00:00:00Z00:00', '1970-01-01T00:00:00'])
 
@@ -103,7 +105,10 @@ test ('ts', () => {
 
 	const ts = new XSSimpleTypeDateTimeStamp ()
 
+	expect (() => ts.testFormat (0)).toThrow ('can only be constructed from a string')
+
 	expect (ts.test ('1970-01-01T00:00:00')[0]).toBe ('XVS-00024')
+	expect (ts.test ('197O-01-01T00:00:00')[0]).toBe ('XVS-00030')
 	expect (ts.test ('1970-01-01T00:00:00Z')).toBeNull ()
 
 })
