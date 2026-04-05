@@ -11,18 +11,10 @@ test ('bad', () => {
 		expect (err.payload [0]).toBe ('XVS-00005')
 	}
 
-	expect (() => new DT7 ('1970-----------')).toThrow ('Invalid month')
-	expect (() => new DT7 ('1970-05----------')).toThrow ('Invalid day')
 	expect (() => new DT7 ('1970-05-15---------')).toThrow ('Invalid timezone length: 9')
 	expect (() => new DT7 ('1970-05-15Y')).toThrow ('timezone must start')
 	expect (() => new DT7 ('1970-05-15+')).toThrow ('Invalid timezone length')
 	expect (() => new DT7 ('1970-05-15+00000')).toThrow ("':' not found")
-	expect (() => new DT7 ('2026-02-29T12:35:24.123+03:00')).toThrow ("Non existing day")
-	expect (() => new DT7 ('2026-02-27T25:35:24.123+03:00')).toThrow ("Invalid hour")
-	expect (() => new DT7 ('2026-02-27T12:85:24.123+03:00')).toThrow ("Invalid minute")
-	expect (() => new DT7 ('2026-02-27T12:35:94.123+03:00')).toThrow ("Invalid second")
-	expect (() => new DT7 ('2026-02-27T12:35:24.123+30:00')).toThrow ("Invalid TZ hour")
-	expect (() => new DT7 ('2026-02-27T12:35:24.123+03:99')).toThrow ("Invalid TZ minute")
 
 })
 

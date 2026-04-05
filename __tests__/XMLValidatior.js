@@ -724,11 +724,20 @@ describe ('dt7', () => {
 
 	})
 
-	test ('Invalid time', async () => {
+	test ('Invalid DT7 parts', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: false})
 
 		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05-15T+00:00" />`)).toThrow (/Invalid time part/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-----------" />`)).toThrow (/Invalid month/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="1970-05----------" />`)).toThrow (/Invalid day/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-29" />`)).toThrow (/Non existing day/)
+
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T25:35:24.123+03:00" />`)).toThrow (/Invalid hour/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:85:24.123+03:00" />`)).toThrow (/Invalid minute/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:94.123+03:00" />`)).toThrow (/Invalid second/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+30:00" />`)).toThrow (/Invalid TZ hour/)
+		expect (() => p.process (`<ns2:GetStatus xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://tempuri.org/" a="2026-02-27T12:35:24.123+03:99" />`)).toThrow (/Invalid TZ minute/)
 
 	})
 
