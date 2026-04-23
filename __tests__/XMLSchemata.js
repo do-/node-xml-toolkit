@@ -39,11 +39,11 @@ test ('include', () => {
     const o = XMLNode.toObject () (d)
 
     expect (o).toEqual ({
-        featureMember: { 
+        featureMember: [{ 
             ElectricLine: { 
                 GLOBALID: '{test-uuid}' 
             } 
-        } 
+        }]
     })
 
 })

@@ -230,6 +230,16 @@ describe ('sign', () => {
 			<ds:SignatureValue>5O18yV7M7x1w83bsuEqGI+HnroWBjUq6T4Um6uk+o/Vh16DHD6aG53TaVP6vp8zONyRThidV2Jut0Gbep8fNFg==</ds:SignatureValue>
 		</ds:Signature>`
 
+	test ('no schema', async () => {
+
+		const p = new XMLParser ({stripSpace: true})
+
+		const doc = XMLNode.toObject () (p.process (xml))
+
+		expect (doc.SignedInfo.Reference.URI).toBe ('#U9552f341-4b2b-4cb3-b0b5-fea58fa165e1')
+
+	})
+
 	test ('default attr', async () => {
 
 		const p = new XMLParser ({xs, stripSpace: true})
@@ -237,6 +247,8 @@ describe ('sign', () => {
 		const doc = XMLNode.toObject () (p.process (xml))
 
 		expect (doc.SignedInfo.CanonicalizationMethod.Algorithm).toBe ('http://www.w3.org/2001/10/xml-exc-c14n#')
+
+		expect (doc.SignedInfo.Reference [0].URI).toBe ('#U9552f341-4b2b-4cb3-b0b5-fea58fa165e1')
 
 	})
 
