@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title }}</title>
+</head>
+<body>
+  <header><!-- site header --></header>
+  <main>
+  	{% include toc.html html=content %}
+    {{ content }}
+  </main>
+  <footer><!-- site footer --></footer>
+</body>
+</html>
