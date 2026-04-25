@@ -1,0 +1,9 @@
+{
+  "name": "node-xml-toolkit-tools",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "split": "node split-by-h2.js"
+  },
+  "dependencies": {}
+}

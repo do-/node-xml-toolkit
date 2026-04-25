@@ -1,0 +1,106 @@
+name: Build and publish user guide
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout (gh-pages)
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 0
+
+    - name: Fetch and extract gh-pages into workspace
+      run: |
+        git fetch origin gh-pages:gh-pages
+        git archive gh-pages | tar -x -C .
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install system deps (pandoc, wkhtmltopdf)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc wkhtmltopdf zip
+
+    - name: Install npm deps for scripts
+      run: npm install --prefix tools
+
+    - name: Build site sources (split markdown + emit toc)
+      run: |
+        node tools/split-by-h2.js docs/index.md build
+
+    - name: Render per-section HTML via Pandoc
+      run: |
+        mkdir -p build/html
+        for f in build/sections/*.md; do
+          base=$(basename "$f" .md)
+          pandoc "$f" -s --metadata title="The node-xml-toolkit User's Guide" --css=tools/templates/site.css --template=tools/templates/section.html -o build/html/$base.html
+        done
+
+    - name: Render single HTML book (for PDF)
+      run: |
+        pandoc docs/index.md -s --metadata title="The node-xml-toolkit User's Guide" --css=tools/templates/site.css --template=tools/templates/book.html --toc -o build/book.html
+
+    - name: Install XeLaTeX and fonts
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-xetex fonts-dejavu-core fonts-noto-core
+
+    - name: Generate PDF via pandoc + xelatex with a Unicode font
+      run: |
+        pandoc docs/index.md -s --toc -V geometry:margin=1in \
+          -V mainfont="DejaVu Serif" \
+          --pdf-engine=xelatex -o build/book.pdf
+
+    - name: Package site HTML
+      run: |
+        cd build/html && zip -r ../site-html.zip . && cd ../..
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: user-guide
+        path: |
+          build/book.md
+          build/book.html
+          build/book.pdf
+          build/site-html.zip
+
+    - name: Push generated site to gh-pages (force)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -e
+        GIT_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+        OUT_DIR=$(mktemp -d)
+        # copy generated site to temp dir
+        cp -r build/html/* "$OUT_DIR"/
+        cd "$OUT_DIR"
+        git init
+        git checkout -b gh-pages
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add -A
+        # commit only if there are changes
+        if git diff --staged --quiet; then
+          echo "No changes to publish"
+        else
+          git commit -m "Publish site: ${GITHUB_SHA}"
+          git push --force "$GIT_URL" gh-pages
+        fi
+
+    # - name: Deploy generated HTML to gh-pages
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: build/html
+    #     publish_branch: gh-pages
