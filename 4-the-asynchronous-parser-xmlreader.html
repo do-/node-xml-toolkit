@@ -1,0 +1,403 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>The node-xml-toolkit User's Guide</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="tools/templates/site.css">
+</head>
+<body>
+<header>
+  <h1>The <code>node-xml-toolkit</code> User's Guide</h1>
+</header>
+<aside id="toc"></aside>
+<main id="content">
+<h1 id="part-ii-reading-xml">Part II: Reading XML</h1>
+<h2 id="the-asynchronous-parser-xmlreader">4. The Asynchronous Parser:
+XMLReader</h2>
+<p>While <code>XMLParser</code> offers simplicity for small documents,
+real-world enterprise integrations rarely fit comfortably into memory.
+<code>XMLReader</code> is the streaming counterpart that processes XML
+incrementally, yielding nodes as they are encountered. This chapter
+explains when to choose it, how to configure it for efficient data
+extraction, and how to integrate it into both pull-based and push-based
+Node.js workflows.</p>
+<h3 id="when-to-use-xmlreader">4.1 When to use XMLReader</h3>
+<p><code>XMLReader</code> is purpose-built for scenarios where memory
+footprint, latency, or document size make synchronous parsing
+impractical.</p>
+<p><strong>Choose <code>XMLReader</code> when:</strong> - Processing
+files larger than 50–100 MB, or when file size is unbounded (e.g.,
+continuous log exports, database dumps) - Running on memory-constrained
+environments (containers, serverless functions, edge workers) - You only
+need specific sections of the document and can discard the rest - You
+want to process records incrementally as they arrive over a network
+stream - Early termination is required (e.g., finding the first matching
+element and stopping)</p>
+<p><strong>Avoid <code>XMLReader</code> when:</strong> - You need random
+access to arbitrary parts of the document after parsing - Your
+processing logic requires global context or cross-references between
+distant sections - You are building quick prototypes with small,
+known-safe XML inputs</p>
+<p><strong>The streaming trade-off:</strong> <code>XMLReader</code>
+never builds the full document tree. Instead, it maintains a shallow
+stack representing the current parsing path. As soon as an end tag is
+encountered, the corresponding subtree is released unless you explicitly
+retain it. This design keeps memory usage proportional to the maximum
+nesting depth, not the total file size.</p>
+<h3 id="configuring-filters-and-mappers">4.2 Configuring filters and
+mappers</h3>
+<p>To avoid yielding every single node in a large document,
+<code>XMLReader</code> supports declarative filtering and transformation
+during instantiation.</p>
+<h4 id="basic-configuration">Basic configuration</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// filter      : node    =&gt; node.type === &#39;EndElement&#39; &amp;&amp; node.level === 1,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">filterElements</span> <span class="op">:</span> element <span class="kw">=&gt;</span> element<span class="op">.</span><span class="at">level</span> <span class="op">===</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">map</span>            <span class="op">:</span> XMLNode<span class="op">.</span><span class="fu">toObject</span> ({})<span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">process</span> (fs<span class="op">.</span><span class="fu">createReadStream</span>(<span class="st">&#39;large-export.xml&#39;</span><span class="op">,</span> { <span class="dt">encoding</span><span class="op">:</span> <span class="st">&#39;utf8&#39;</span> }))<span class="op">;</span></span></code></pre></div>
+<h4 id="the-filter-filterelements-option">The <code>filter</code> /
+<code>filterElements</code> option</h4>
+<p>The <code>filter</code> predicate runs on each SAX event occured.
+Returning a <a
+href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</a>
+values causes the event to be yielded; otherwise it’s skipped.</p>
+<p>When parsing XML, you rarely need anything but elements in your
+output (bare text nodes are nearly meaningless). And for elements, you
+want attributes and child nodes together, not distinct
+<code>start</code> and <code>end</code> SAX events. This is why the
+<code>filter</code> option must virtually always include the
+<code>type='EndElement'</code> condition.</p>
+<p>This is why, instead of the raw <code>filter</code> option, the
+<code>filterElements</code> wrapper is commonly used.</p>
+<p>Common filtering patterns:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Match by localName only</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>filterElements<span class="op">:</span> <span class="st">&#39;order&#39;</span>                      <span class="co">// you can mention is as a string</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>filterElements<span class="op">:</span> e <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;order&#39;</span> <span class="co">// same thing</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Match by namespace and localName</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>filterElements<span class="op">:</span> e <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;product&#39;</span> <span class="op">&amp;&amp;</span> e<span class="op">.</span><span class="at">namespaceURI</span> <span class="op">===</span> <span class="st">&#39;http://shop.example.com&#39;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Match by level</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>filterElements<span class="op">:</span> e <span class="kw">=&gt;</span> e<span class="op">.</span><span class="at">level</span> <span class="op">===</span> <span class="dv">1</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Match by attribute value</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>filterElements<span class="op">:</span> n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">attributes</span><span class="op">.</span><span class="fu">get</span> (<span class="st">&#39;status&#39;</span>) <span class="op">===</span> <span class="st">&#39;active&#39;</span></span></code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: Filters execute synchronously so they must be
+highly optimized.</p>
+</blockquote>
+<h4 id="the-map-function">The <code>map</code> function</h4>
+<p>The <code>map</code> transforms the yielded object before it reaches
+your code. This is ideal for extracting only the fields you need,
+converting types, or flattening structures.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>map<span class="op">:</span> node <span class="kw">=&gt;</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Extract specific children safely</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sku <span class="op">=</span> node<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="fu">find</span>(c <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;sku&#39;</span>)<span class="op">?.</span><span class="at">innerText</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> weight <span class="op">=</span> node<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="fu">find</span>(c <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;weight&#39;</span>)<span class="op">?.</span><span class="at">innerText</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sku</span><span class="op">:</span> sku<span class="op">?.</span><span class="fu">trim</span>()<span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">weightKg</span><span class="op">:</span> <span class="pp">parseFloat</span>(weight) <span class="op">||</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">processedAt</span><span class="op">:</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Important:</strong> Mappers run synchronously. For heavy
+computation or I/O, collect minimal data in the mapper and defer
+processing to your iteration loop.</p>
+<h3 id="pull-mode-iterating-with-for-await-of">4.3 Pull mode: iterating
+with for-await-of</h3>
+<p>Being a subclass of <a
+href="https://nodejs.org/docs/latest/api/stream.html#readable-streams"><code>Readable</code></a>,
+<code>XMLReader</code> implements the <a
+href="https://tc39.es/ecma262/#sec-asynciterable-interface"><code>AsyncIterable</code></a>
+protocol, making <a
+href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of"><code>for await...of</code></a>
+available:</p>
+<h4 id="basic-iteration">Basic iteration</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">processRecords</span>(filepath) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filterElements</span><span class="op">:</span> <span class="st">&#39;record&#39;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> err <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err))  </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">process</span> (fs<span class="op">.</span><span class="fu">createReadStream</span>(filepath))<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> record <span class="kw">of</span> reader) {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Process each record</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> <span class="fu">saveToDatabase</span>(record)<span class="op">;</span> <span class="co">// ATTN! performance killer; demo only</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    count<span class="op">++;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Optional: log progress</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (count <span class="op">%</span> <span class="dv">1000</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Processed </span><span class="sc">${</span>count<span class="sc">}</span><span class="vs"> records...`</span>)<span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Complete. </span><span class="sc">${</span>count<span class="sc">}</span><span class="vs"> records processed.`</span>)<span class="op">;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="early-termination">Early termination</h4>
+<p>Because parsing is driven by your iteration, you can stop reading at
+any point:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> node <span class="kw">of</span> reader) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (node<span class="op">.</span><span class="at">attributes</span><span class="op">.</span><span class="at">id</span> <span class="op">===</span> targetId) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Found target node&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span><span class="op">;</span> <span class="co">// Stops iteration and closes underlying stream</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When <code>break</code> is executed, <code>XMLReader</code>
+automatically destroys the input stream and releases internal buffers.
+No manual cleanup is required.</p>
+<h3 id="push-mode-event-listeners-and-streams">4.4 Push mode: event
+listeners and streams</h3>
+<p>While pull mode is preferred for modern JavaScript,
+<code>XMLReader</code> also exposes a traditional event emitter
+interface for compatibility with legacy codebases or complex stream
+orchestration.</p>
+<h4 id="event-based-consumption">Event-based consumption</h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">filterElements</span><span class="op">:</span> <span class="st">&#39;transaction&#39;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> err <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">process</span> (fs<span class="op">.</span><span class="fu">createReadStream</span>(<span class="st">&#39;data.xml&#39;</span>))<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>reader<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> (err) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Parsing error:&#39;</span><span class="op">,</span> err<span class="op">.</span><span class="at">message</span><span class="op">,</span> err<span class="op">.</span><span class="at">line</span><span class="op">,</span> err<span class="op">.</span><span class="at">column</span>)<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>reader<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;end&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Stream ended successfully&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>reader<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;data&#39;</span><span class="op">,</span> <span class="kw">async</span> (node) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fastSyncProcessTransaction</span>(node)<span class="op">;</span> <span class="co">// it MUST be synchronous and real fast</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (err) {</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Errors in event handlers must be caught explicitly</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Transaction processing failed:&#39;</span><span class="op">,</span> err)<span class="op">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h3 id="combining-with-node.js-streams-pipeline">4.5 Combining with
+Node.js streams pipeline</h3>
+<p><code>XMLReader</code> seamlessly integrates with Node.js
+<code>stream.pipeline</code> API, enabling robust, error-handled data
+flows that respect backpressure across all components.</p>
+<h4 id="pipeline-example-xml-to-csv-conversion">Pipeline example: XML to
+CSV conversion</h4>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { pipeline } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;stream/promises&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { Transform } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;stream&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createCsvWriter</span>() {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> isFirst <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="kw">new</span> <span class="fu">Transform</span>({</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">objectMode</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform</span>(record<span class="op">,</span> encoding<span class="op">,</span> callback) {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> headers <span class="op">=</span> isFirst <span class="op">?</span> <span class="vs">`id,name,price,timestamp</span><span class="sc">\n</span><span class="vs">`</span> <span class="op">:</span> <span class="st">&#39;&#39;</span><span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> row <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>record<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">,&quot;</span><span class="sc">${</span>record<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&quot;,</span><span class="sc">${</span>record<span class="op">.</span><span class="at">price</span><span class="sc">}</span><span class="vs">,</span><span class="sc">${</span>record<span class="op">.</span><span class="at">timestamp</span><span class="sc">}\n</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      isFirst <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">callback</span>(<span class="kw">null</span><span class="op">,</span> headers <span class="op">+</span> row)<span class="op">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">xmlToCsv</span>(inputPath<span class="op">,</span> outputPath) {</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="fu">pipeline</span>(</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">filter</span><span class="op">:</span> n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;record&#39;</span><span class="op">,</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">mapper</span><span class="op">:</span> node <span class="kw">=&gt;</span> ({</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">id</span><span class="op">:</span> node<span class="op">.</span><span class="at">attributes</span><span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">name</span><span class="op">:</span> node<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="fu">find</span>(c <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;name&#39;</span>)<span class="op">?.</span><span class="at">innerText</span><span class="op">?.</span><span class="fu">trim</span>()<span class="op">,</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">price</span><span class="op">:</span> node<span class="op">.</span><span class="at">children</span><span class="op">.</span><span class="fu">find</span>(c <span class="kw">=&gt;</span> c<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;price&#39;</span>)<span class="op">?.</span><span class="at">innerText</span><span class="op">,</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="dt">timestamp</span><span class="op">:</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>()</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> err <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err))    </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">process</span> (fs<span class="op">.</span><span class="fu">createReadStream</span>(inputPath<span class="op">,</span> { <span class="dt">highWaterMark</span><span class="op">:</span> <span class="dv">64</span> <span class="op">*</span> <span class="dv">1024</span> }))<span class="op">,</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">createCsvWriter</span>()<span class="op">,</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    fs<span class="op">.</span><span class="fu">createWriteStream</span>(outputPath)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Conversion complete.&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="why-pipelines-matter">Why pipelines matter</h4>
+<ul>
+<li><strong>Automatic backpressure</strong>: If the CSV writer slows
+down (e.g., disk I/O bottleneck), the pipeline pauses the
+<code>XMLReader</code>, which pauses the underlying file stream. Memory
+remains bounded.</li>
+<li><strong>Centralized error handling</strong>: A single
+<code>try/catch</code> around <code>pipeline()</code> captures errors
+from any stage.</li>
+<li><strong>Resource cleanup</strong>: On completion or error, all
+streams are automatically closed and file descriptors released.</li>
+</ul>
+<h4 id="error-handling-in-pipelines">Error handling in pipelines</h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="fu">pipeline</span>(<span class="co">/* streams */</span>)<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">catch</span> (err) {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// err.cause contains the original error from the failing stage</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Pipeline failed at:&#39;</span><span class="op">,</span> err<span class="op">.</span><span class="at">cause</span><span class="op">?.</span><span class="at">constructor</span><span class="op">?.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Message:&#39;</span><span class="op">,</span> err<span class="op">.</span><span class="at">message</span>)<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="parallel-processing-considerations">Parallel processing
+considerations</h4>
+<p>If your downstream processing is CPU-intensive, split the stream
+inside the pipeline:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Inside pipeline:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="fu">Transform</span>({</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">objectMode</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(chunk<span class="op">,</span> enc<span class="op">,</span> cb) {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Offload heavy work to worker threads or queue</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    workerPool<span class="op">.</span><span class="fu">run</span>(processRecord<span class="op">,</span> chunk<span class="op">,</span> cb)<span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">,</span></span></code></pre></div>
+<p><code>XMLReader</code> will continue parsing at the pace dictated by
+your worker pool, preventing memory exhaustion while maintaining
+throughput.</p>
+<h3 id="error-handling-and-diagnostics">4.5 Error handling and
+diagnostics</h3>
+<p><code>XMLReader</code> handles errors differently from
+<code>XMLParser</code> due to its streaming, event-driven architecture.
+While validation message codes and formats are identical to those
+documented above, the delivery mechanism and recovery strategies differ
+significantly.</p>
+<h4 id="stream-level-errors-the-error-event">4.5.1 Stream-level errors:
+the <code>error</code> event</h4>
+<p><code>XMLReader</code> is a Node.js
+[]<code>Transform</code>](https://nodejs.org/docs/latest/api/stream.html#class-streamtransform)
+stream. Low-level parsing failures—such as malformed XML that breaks the
+underlying <code>XMLLexer</code>—propagate via the standard
+<code>error</code> event:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> (err) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Catch lexer errors: malformed XML, encoding issues, etc.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Stream error:&#39;</span><span class="op">,</span> err<span class="op">.</span><span class="at">message</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The stream is automatically destroyed; iteration stops</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Attach error handler BEFORE calling process()</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>reader<span class="op">.</span><span class="fu">process</span>(fs<span class="op">.</span><span class="fu">createReadStream</span>(<span class="st">&#39;data.xml&#39;</span>))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> node <span class="kw">of</span> reader) {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Loop terminates automatically if an error occurs</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(node<span class="op">.</span><span class="at">localName</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h5 id="key-behaviors">Key behaviors</h5>
+<ul>
+<li><strong>Automatic destruction</strong>: When the internal
+<code>XMLLexer</code> emits an <code>error</code>,
+<code>XMLReader</code> calls <code>this.destroy(err)</code>, terminating
+the stream and preventing further <code>data</code> events
+[[source]].</li>
+<li><strong>Async iteration safety</strong>: <code>for-await-of</code>
+loops handle stream errors gracefully—the loop exits and the error is
+available via the <code>error</code> event handler.</li>
+<li><strong>No recovery</strong>: Unlike validation messages (see
+below), stream-level errors are fatal. The document cannot be partially
+processed once the lexer fails.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Always attach an <code>error</code> handler before calling
+<code>process()</code></strong>. Unhandled stream errors may crash your
+Node.js process.</p>
+</blockquote>
+<h3 id="schema-validation-the-validation-message-event">4.5.2 Schema
+validation: the <code>validation-message</code> event</h3>
+<p>When the <code>xs</code> option is provided, <code>XMLReader</code>
+performs schema validation. Unlike <code>XMLParser</code>, which
+collects messages in an array, <code>XMLReader</code> <strong>emits each
+validation message immediately</strong> via the
+<code>validation-message</code> event:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader<span class="op">,</span> XMLSchemata } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> xs <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLSchemata</span>(<span class="st">&#39;schema.xsd&#39;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({ xs })</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;error&#39;</span><span class="op">,</span> err <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;validation-message&#39;</span><span class="op">,</span> (msg) <span class="kw">=&gt;</span> {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// msg format: &quot;&lt;CODE&gt; &lt;message&gt;&quot; (same as XMLParser)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">warn</span>(<span class="st">&#39;Schema issue:&#39;</span><span class="op">,</span> msg)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Decide whether to ignore, log, or abort</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>reader<span class="op">.</span><span class="fu">process</span>(fs<span class="op">.</span><span class="fu">createReadStream</span>(<span class="st">&#39;data.xml&#39;</span>))</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> node <span class="kw">of</span> reader) {</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Nodes are still yielded even if validation messages were emitted</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(node<span class="op">.</span><span class="at">localName</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="how-validation-works-internally">How validation works
+internally</h4>
+<ol type="1">
+<li>On the first <code>START_ELEMENT</code> event,
+<code>XMLReader</code> instantiates an <code>XMLValidator</code> with
+your schema and a callback that emits <code>validation-message</code>
+[[source]].</li>
+<li>As parsing proceeds, the validator checks each element, attribute,
+and text node against the schema.</li>
+<li>Any violation triggers
+<code>emit('validation-message', formattedString)</code>—<strong>not</strong>
+an exception.</li>
+</ol>
+<h4 id="important-distinctions-from-xmlparser">Important distinctions
+from <code>XMLParser</code></h4>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th><code>XMLParser</code> (sync)</th>
+<th><code>XMLReader</code> (async/streaming)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Message collection</strong></td>
+<td><code>parser.validationMessages</code> array</td>
+<td><code>validation-message</code> event emissions</td>
+</tr>
+<tr class="even">
+<td><strong>Timing</strong></td>
+<td>All messages available after <code>process()</code> returns</td>
+<td>Messages emitted incrementally during parsing</td>
+</tr>
+<tr class="odd">
+<td><strong>Control flow</strong></td>
+<td>You inspect array post-parsing</td>
+<td>You handle each message as it arrives</td>
+</tr>
+<tr class="even">
+<td><strong>Memory</strong></td>
+<td>All messages held in memory</td>
+<td>Messages processed on-the-fly (lower memory)</td>
+</tr>
+</tbody>
+</table>
+<nav class="pager">
+  <a id="prev" href="#" style="display:none">Prev</a>
+  <a id="up" href="#" style="display:none">Up</a>
+  <a id="next" href="#" style="display:none">Next</a>
+</nav>
+</main>
+<script src="tools/templates/site.js"></script>
+</body>
+</html>

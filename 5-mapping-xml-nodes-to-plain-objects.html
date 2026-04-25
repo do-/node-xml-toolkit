@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>The node-xml-toolkit User's Guide</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="tools/templates/site.css">
+</head>
+<body>
+<header>
+  <h1>The <code>node-xml-toolkit</code> User's Guide</h1>
+</header>
+<aside id="toc"></aside>
+<main id="content">
+<h1 id="part-ii-reading-xml">Part II: Reading XML</h1>
+<h2 id="mapping-xml-nodes-to-plain-objects">5. Mapping XML Nodes to
+Plain Objects</h2>
+<p>Converting XML to plain JavaScript objects is a frequent requirement
+when integrating with modern APIs, databases, or frontend frameworks.
+<code>node-xml-toolkit</code> provides a focused utility for this task:
+<code>XMLNode.toObject()</code>, powered internally by the
+<code>MoxyLikeJsonEncoder</code> module.</p>
+<blockquote>
+<p><strong>Clarification</strong>: Despite its name,
+<code>XMLNode.toObject()</code> is not an instance method on
+<code>XMLNode</code>. It is a standalone function exported for
+convenience, designed primarily to serve as a mapper function for
+<code>XMLReader</code>.</p>
+</blockquote>
+<h3 id="purpose-and-design-philosophy">5.1 Purpose and Design
+Philosophy</h3>
+<p><code>XMLNode.toObject()</code> transforms an <code>XMLNode</code>
+tree into a plain, <code>JSON.stringify</code>-ready JavaScript object.
+Its design prioritizes:</p>
+<ul>
+<li><strong>Simplicity</strong>: Minimal options, predictable
+output.</li>
+<li><strong>Streaming compatibility</strong>: Returns a function
+suitable for <code>XMLReader</code>’s <code>map</code> option.</li>
+<li><strong>Data-processing focus</strong>: Merges attributes with child
+elements; does not preserve document order or mixed content.</li>
+</ul>
+<p>It is <strong>not</strong> intended for general-purpose XML
+transformation tasks where namespace fidelity, processing instructions,
+or exact node ordering matter. For those cases, work directly with
+<code>XMLNode</code> methods like <code>detach()</code> or traverse the
+tree manually.</p>
+<p>The historical name of an internal class
+<code>MoxyLikeJsonEncoder</code> reflects that the core behavior draws
+loose inspiration from <a
+href="https://eclipse.dev/eclipselink/#moxy">EclipseLink MOXy</a>’s JSON
+binding conventions—but it is a lightweight, independent implementation
+with its own rules.</p>
+<h3 id="usage-pattern">5.2 Usage Pattern</h3>
+<h4 id="direct-invocation-on-a-parsed-node">Direct invocation on a
+parsed node</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLParser<span class="op">,</span> XMLNode } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> parser <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLParser</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> doc <span class="op">=</span> parser<span class="op">.</span><span class="fu">process</span>(<span class="st">&#39;&lt;root&gt;&lt;item id=&quot;1&quot;&gt;value&lt;/item&gt;&lt;/root&gt;&#39;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({ <span class="dt">wrap</span><span class="op">:</span> <span class="kw">true</span> })(doc)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">// result: { root: { item: { id: &quot;1&quot;, &quot;#text&quot;: &quot;value&quot; } } }</span></span></code></pre></div>
+<h4 id="as-a-mapper-for-xmlreader">As a mapper for XMLReader</h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader<span class="op">,</span> XMLNode } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">stripSpace</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">collect</span><span class="op">:</span> e <span class="kw">=&gt;</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">filterElements</span><span class="op">:</span> <span class="st">&#39;MessagePrimaryContent&#39;</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">map</span><span class="op">:</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// options here</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> obj <span class="kw">of</span> reader<span class="op">.</span><span class="fu">process</span>(stream)) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// obj is a plain JavaScript object</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(obj)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<blockquote>
+<p>Note: When used directly, <code>XMLNode.toObject(options)</code>
+returns a function that accepts an <code>XMLNode</code> and returns the
+transformed object.</p>
+</blockquote>
+<h3 id="options-reference">5.3 Options Reference</h3>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>wrap</code></td>
+<td><code>false</code></td>
+<td>If <code>true</code>, output includes the root element name as a
+top-level key: <code>{ RootName: {...} }</code>. If <code>false</code>
+(default), only the content object is returned.</td>
+</tr>
+<tr class="even">
+<td><code>getName</code></td>
+<td><code>(localName, namespaceURI) =&gt; localName</code></td>
+<td>Function to transform XML element/attribute names into JavaScript
+object keys. Receives <code>localName</code> and
+<code>namespaceURI</code>; returns the desired property name.</td>
+</tr>
+<tr class="odd">
+<td><code>map</code></td>
+<td><code>undefined</code></td>
+<td>If provided, a function applied to each resulting object (similar to
+<code>Array.prototype.map</code>). Useful for adding computed fields or
+normalizing structure.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="transformation-rules">5.4 Transformation Rules</h3>
+<h4 id="top-level-element-handling">Top-level element handling</h4>
+<p>By default, the root element’s name is omitted from the output:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">MyElement</span>&gt;&lt;<span class="kw">value</span>&gt;42&lt;/<span class="kw">value</span>&gt;&lt;/<span class="kw">MyElement</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// wrap: false (default)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">value</span><span class="op">:</span> <span class="st">&quot;42&quot;</span> }</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// wrap: true</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">MyElement</span><span class="op">:</span> { <span class="dt">value</span><span class="op">:</span> <span class="st">&quot;42&quot;</span> } }</span></code></pre></div>
+<p>This default avoids redundant wrapping when the root name is a known
+constant in your application logic.</p>
+<h4 id="attributes">Attributes</h4>
+<p>Attributes become direct key-value pairs on the element’s content
+object. Values are always strings (no automatic type coercion):</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Item</span><span class="ot"> id=</span><span class="st">&quot;123&quot;</span><span class="ot"> status=</span><span class="st">&quot;active&quot;</span>/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;123&quot;</span><span class="op">,</span> <span class="dt">status</span><span class="op">:</span> <span class="st">&quot;active&quot;</span> }</span></code></pre></div>
+<h4 id="text-content">Text content</h4>
+<p>If an element contains only text (no attributes or child elements),
+the result is the trimmed string value:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Name</span>&gt;John Doe&lt;/<span class="kw">Name</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>→ <span class="st">&quot;John Doe&quot;</span></span></code></pre></div>
+<blockquote>
+<p>⚠️ <strong>Limitation</strong>: Elements that mix text content with
+attributes or child elements cannot be represented unambiguously. The
+encoder does not support mixed content; such structures may produce
+unexpected results.</p>
+</blockquote>
+<h4 id="child-elements-singletons-vs.-collections">Child elements:
+singletons vs. collections</h4>
+<ul>
+<li><p><strong>Multiple same-name children</strong> → array:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">List</span>&gt;&lt;<span class="kw">item</span>&gt;A&lt;/<span class="kw">item</span>&gt;&lt;<span class="kw">item</span>&gt;B&lt;/<span class="kw">item</span>&gt;&lt;/<span class="kw">List</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">item</span><span class="op">:</span> [<span class="st">&quot;A&quot;</span><span class="op">,</span> <span class="st">&quot;B&quot;</span>] }</span></code></pre></div></li>
+<li><p><strong>Single child element</strong> → scalar value:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">User</span>&gt;&lt;<span class="kw">id</span>&gt;42&lt;/<span class="kw">id</span>&gt;&lt;/<span class="kw">User</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;42&quot;</span> }</span></code></pre></div></li>
+<li><p><strong>Schema-aware arrays</strong>: If the XML was parsed with
+schema context and an element is declared with
+<code>maxOccurs &gt; 1</code>, it is always represented as an array—even
+if only one instance appears:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Schema: &lt;xsd:element name=&quot;tag&quot; maxOccurs=&quot;unbounded&quot;/&gt; --&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Data</span>&gt;&lt;<span class="kw">tag</span>&gt;only-one&lt;/<span class="kw">tag</span>&gt;&lt;/<span class="kw">Data</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">tag</span><span class="op">:</span> [<span class="st">&quot;only-one&quot;</span>] }</span></code></pre></div></li>
+</ul>
+<h4 id="scalar-values-and-null-handling">Scalar values and null
+handling</h4>
+<ul>
+<li><p>All leaf values are either <code>null</code> or trimmed,
+non-empty strings.</p></li>
+<li><p>Empty strings (<code>""</code>) are converted to
+<code>null</code>:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Field</span><span class="ot"> value=</span><span class="st">&quot;&quot;</span>/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">value</span><span class="op">:</span> <span class="kw">null</span> }</span></code></pre></div></li>
+<li><p>Empty elements (<code>&lt;Empty/&gt;</code> or
+<code>&lt;Empty&gt;&lt;/Empty&gt;</code>) yield <code>null</code>:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">// wrap: false</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>→ <span class="kw">null</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">// wrap: true</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">Empty</span><span class="op">:</span> <span class="kw">null</span> }</span></code></pre></div></li>
+<li><p>No automatic parsing of numbers, booleans, or dates occurs.
+<code>"42"</code> remains a string; <code>"true"</code> remains a
+string.</p></li>
+</ul>
+<h4 id="namespace-handling">Namespace handling</h4>
+<p>By default, namespaces are ignored: only the local name is used for
+object keys:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">x:Product</span><span class="ot"> x:code=</span><span class="st">&quot;XYZ&quot;</span><span class="ot"> xmlns:x=</span><span class="st">&quot;urn:example&quot;</span>/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="dt">code</span><span class="op">:</span> <span class="st">&quot;XYZ&quot;</span> }  <span class="co">// namespace URI and prefix discarded</span></span></code></pre></div>
+<p>To preserve namespace information, customize the <code>getName</code>
+option:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>XMLNode<span class="op">.</span><span class="fu">toObject</span>({</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">getName</span><span class="op">:</span> (localName<span class="op">,</span> namespaceURI) <span class="kw">=&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    namespaceURI <span class="op">?</span> <span class="vs">`{</span><span class="sc">${</span>namespaceURI<span class="sc">}</span><span class="vs">}</span><span class="sc">${</span>localName<span class="sc">}</span><span class="vs">`</span> <span class="op">:</span> localName</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>→ { <span class="st">&quot;{urn:example}code&quot;</span><span class="op">:</span> <span class="st">&quot;XYZ&quot;</span> }</span></code></pre></div>
+<h3 id="practical-examples">5.5 Practical Examples</h3>
+<h4 id="example-1-extracting-a-flat-record-list">Example 1: Extracting a
+flat record list</h4>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">Export</span>&gt;</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">Record</span><span class="ot"> id=</span><span class="st">&quot;1&quot;</span><span class="ot"> name=</span><span class="st">&quot;Alpha&quot;</span>/&gt;</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">Record</span><span class="ot"> id=</span><span class="st">&quot;2&quot;</span><span class="ot"> name=</span><span class="st">&quot;Beta&quot;</span>/&gt;</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">Export</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { XMLReader<span class="op">,</span> XMLNode } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> records <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">filterElements</span><span class="op">:</span> <span class="st">&#39;Record&#39;</span><span class="op">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">map</span><span class="op">:</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>() <span class="co">// default: no wrap, attributes merged</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> rec <span class="kw">of</span> records<span class="op">.</span><span class="fu">process</span>(fs<span class="op">.</span><span class="fu">createReadStream</span>(<span class="st">&#39;data.xml&#39;</span>))) {</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// rec = { id: &quot;1&quot;, name: &quot;Alpha&quot; }</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(rec)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="example-2-adding-a-computed-field-via-map">Example 2: Adding a
+computed field via <code>map</code></h4>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mapper <span class="op">=</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">map</span><span class="op">:</span> obj <span class="kw">=&gt;</span> ({ <span class="op">...</span>obj<span class="op">,</span> <span class="dt">processedAt</span><span class="op">:</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>() })</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> <span class="fu">mapper</span>(parsedNode)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">// { id: &quot;1&quot;, name: &quot;Alpha&quot;, processedAt: &quot;2026-04-24T...&quot; }</span></span></code></pre></div>
+<h4 id="example-3-preserving-element-names-with-wrap">Example 3:
+Preserving element names with <code>wrap</code></h4>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mapper <span class="op">=</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({ <span class="dt">wrap</span><span class="op">:</span> <span class="kw">true</span> })</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> <span class="fu">mapper</span>(parsedNode)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">// { Record: { id: &quot;1&quot;, name: &quot;Alpha&quot; } }</span></span></code></pre></div>
+<p>Useful when the element name carries semantic meaning that should
+travel with the data.</p>
+<h4 id="example-4-normalizing-names-with-getname">Example 4: Normalizing
+names with <code>getName</code></h4>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mapper <span class="op">=</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">getName</span><span class="op">:</span> (localName) <span class="kw">=&gt;</span> localName<span class="op">.</span><span class="fu">toLowerCase</span>()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Input: &lt;UserProfile&gt;&lt;FirstName&gt;Ada&lt;/FirstName&gt;&lt;/UserProfile&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Output: { firstname: &quot;Ada&quot; }</span></span></code></pre></div>
+<nav class="pager">
+  <a id="prev" href="#" style="display:none">Prev</a>
+  <a id="up" href="#" style="display:none">Up</a>
+  <a id="next" href="#" style="display:none">Next</a>
+</nav>
+</main>
+<script src="tools/templates/site.js"></script>
+</body>
+</html>

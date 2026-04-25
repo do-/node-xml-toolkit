@@ -1,0 +1,402 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>The node-xml-toolkit User's Guide</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="tools/templates/site.css">
+</head>
+<body>
+<header>
+  <h1>The <code>node-xml-toolkit</code> User's Guide</h1>
+</header>
+<aside id="toc"></aside>
+<main id="content">
+<h1 id="part-iv-working-with-soap">Part IV: Working with SOAP</h1>
+<h2 id="implementing-a-soap-service-server-side">11. Implementing a SOAP
+Service (Server-Side)</h2>
+<p>While <code>node-xml-toolkit</code> is often used as a SOAP client,
+its architecture is equally suited for implementing server-side SOAP
+endpoints. The same <code>SOAP11</code> and <code>SOAP12</code> classes
+that build outbound requests can also construct compliant response
+envelopes, and the library’s schema-aware serialization ensures your
+replies match the WSDL contract. This section covers the complete
+server-side workflow: receiving requests, validating payloads,
+constructing responses, and handling faults.</p>
+<blockquote>
+<p><strong>Design note</strong>: The library intentionally avoids
+high-level server abstractions (like Express middleware wrappers).
+Instead, it provides low-level, composable primitives that integrate
+cleanly with any Node.js HTTP framework—aligning with the project’s
+philosophy of minimal dependencies and maximum control.</p>
+</blockquote>
+<h3 id="receiving-and-parsing-soap-requests">11.1 Receiving and parsing
+SOAP requests</h3>
+<p>When a SOAP request arrives at your endpoint, the first step is to
+parse the XML envelope and extract the body payload.
+<code>node-xml-toolkit</code> offers two parsing strategies depending on
+payload size and performance requirements.</p>
+<h4 id="parsing-with-xmlparser-smallmedium-payloads">Parsing with
+XMLParser (small/medium payloads)</h4>
+<p>For typical request sizes (&lt;10MB), the synchronous
+<code>XMLParser</code> provides the simplest workflow:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {XMLParser<span class="op">,</span> SOAP11} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/soap&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> body <span class="op">=</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  req<span class="op">.</span><span class="fu">setEncoding</span>(<span class="st">&#39;utf8&#39;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  req<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;data&#39;</span><span class="op">,</span> chunk <span class="kw">=&gt;</span> body <span class="op">+=</span> chunk)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  req<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;end&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Parse the full SOAP envelope</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> parser <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLParser</span>()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> envelope <span class="op">=</span> parser<span class="op">.</span><span class="fu">process</span>(body)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Navigate to the SOAP Body</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> soapNs <span class="op">=</span> <span class="st">&#39;http://schemas.xmlsoap.org/soap/envelope/&#39;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> soapBody <span class="op">=</span> envelope<span class="op">.</span><span class="at">children</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">find</span>(n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;Body&#39;</span> <span class="op">&amp;&amp;</span> n<span class="op">.</span><span class="at">namespaceURI</span> <span class="op">===</span> soapNs)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>soapBody) {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">&#39;Missing SOAP Body&#39;</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Extract the operation element (first child of Body)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> operation <span class="op">=</span> soapBody<span class="op">.</span><span class="at">children</span>[<span class="dv">0</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> operationName <span class="op">=</span> operation<span class="op">.</span><span class="at">localName</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Received </span><span class="sc">${</span>operationName<span class="sc">}</span><span class="vs"> request`</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Convert to plain object for business logic</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> payload <span class="op">=</span> operation<span class="op">.</span><span class="fu">toObject</span>({})</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ... process payload ...</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (err) {</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Parse error:&#39;</span><span class="op">,</span> err<span class="op">.</span><span class="at">message</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>      res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)<span class="op">.</span><span class="fu">send</span>(<span class="st">&#39;Malformed request&#39;</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<h4 id="streaming-with-xmlreader-large-payloads">Streaming with
+XMLReader (large payloads)</h4>
+<p>For large request bodies or when you need to filter specific
+elements, use the asynchronous <code>XMLReader</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {XMLReader<span class="op">,</span> XMLNode} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/soap/bulk&#39;</span><span class="op">,</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Stream only the &lt;Record&gt; elements from the request body</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> records <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLReader</span>({</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">filterElements</span><span class="op">:</span> <span class="st">&#39;Record&#39;</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">map</span><span class="op">:</span> XMLNode<span class="op">.</span><span class="fu">toObject</span>({})</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">process</span>(req)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> results <span class="op">=</span> []</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> record <span class="kw">of</span> records) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Process each record incrementally</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> processed <span class="op">=</span> <span class="cf">await</span> <span class="fu">businessLogic</span>(record)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      results<span class="op">.</span><span class="fu">push</span>(processed)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Send response (see Section 12.3)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sendSoapResponse</span>(res<span class="op">,</span> {<span class="dt">BulkProcessResponse</span><span class="op">:</span> {results}})</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (err) {</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Streaming error:&#39;</span><span class="op">,</span> err)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">status</span>(<span class="dv">500</span>)<span class="op">.</span><span class="fu">send</span>(<span class="st">&#39;Processing failed&#39;</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<h4 id="extracting-soap-headers">Extracting SOAP headers</h4>
+<p>If your service requires WS-Security or custom headers, extract them
+during parsing:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// After parsing the envelope:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> soapHeader <span class="op">=</span> envelope<span class="op">.</span><span class="at">children</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">find</span>(n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;Header&#39;</span> <span class="op">&amp;&amp;</span> n<span class="op">.</span><span class="at">namespaceURI</span> <span class="op">===</span> soapNs)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (soapHeader) {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> security <span class="op">=</span> soapHeader<span class="op">.</span><span class="at">children</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">find</span>(n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;Security&#39;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (security) {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> token <span class="op">=</span> security<span class="op">.</span><span class="at">children</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">find</span>(n <span class="kw">=&gt;</span> n<span class="op">.</span><span class="at">localName</span> <span class="op">===</span> <span class="st">&#39;Token&#39;</span>)<span class="op">?.</span><span class="at">src</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Validate token...</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<blockquote>
+<p><strong>Tip</strong>: Use <code>XMLNode.getLocalName()</code> and
+<code>attributes.get()</code> for namespace-safe attribute access, as
+shown in the library’s WSDL parsing logic.</p>
+</blockquote>
+<hr />
+<h3 id="validating-incoming-messages-against-schema">11.2 Validating
+incoming messages against schema</h3>
+<p>Schema validation ensures incoming requests conform to your WSDL
+contract. <code>node-xml-toolkit</code> supports validation through
+<code>XMLSchemata</code>, which can be initialized with your service’s
+WSDL or standalone XSD files.</p>
+<h4 id="loading-schema-for-validation">Loading schema for
+validation</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {XMLParser<span class="op">,</span> XMLSchemata} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Load WSDL at server startup (cache for performance)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> schemata <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLSchemata</span>(<span class="st">&#39;service.wsdl&#39;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/soap&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ... receive body ...</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> parser <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLParser</span>({<span class="dt">xs</span><span class="op">:</span> schemata})</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> envelope <span class="op">=</span> parser<span class="op">.</span><span class="fu">process</span>(body)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Check for validation messages after parsing</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (parser<span class="op">.</span><span class="at">validationMessages</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> errors <span class="op">=</span> parser<span class="op">.</span><span class="at">validationMessages</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (errors<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Return SOAP Fault (see Section 12.4)</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Client&#39;</span><span class="op">,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Schema validation failed&#39;</span><span class="op">,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">detail</span><span class="op">:</span> {errors}</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Proceed with valid request...</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<h3 id="constructing-and-sending-soap-responses">11.3 Constructing and
+sending SOAP responses</h3>
+<p>Once your business logic completes, use the <code>SOAP11</code> or
+<code>SOAP12</code> class to build a compliant response envelope. The
+same <code>http()</code> method used for client requests works
+symmetrically for server responses.</p>
+<h4 id="basic-response-construction">Basic response construction</h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {SOAP11} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">sendSoapResponse</span>(res<span class="op">,</span> payload<span class="op">,</span> header <span class="op">=</span> <span class="kw">null</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> soap <span class="op">=</span> <span class="kw">new</span> <span class="fu">SOAP11</span>(<span class="st">&#39;service.wsdl&#39;</span>) <span class="co">// WSDL for schema-aware serialization</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Build the SOAP envelope</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {body} <span class="op">=</span> soap<span class="op">.</span><span class="fu">http</span>(payload<span class="op">,</span> header)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Send with correct headers</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">status</span>(<span class="dv">200</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;Content-Type&#39;</span><span class="op">,</span> SOAP11<span class="op">.</span><span class="at">contentType</span> <span class="op">+</span> <span class="st">&#39;; charset=utf-8&#39;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">send</span>(body)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">// Usage in route handler:</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">sendSoapResponse</span>(res<span class="op">,</span> {</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">GetUserResponse</span><span class="op">:</span> {</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">userData</span><span class="op">:</span> {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">userId</span><span class="op">:</span> <span class="st">&#39;12345&#39;</span><span class="op">,</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">email</span><span class="op">:</span> <span class="st">&#39;alice@example.com&#39;</span><span class="op">,</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">active</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<h4 id="how-serialization-works">How serialization works</h4>
+<ol type="1">
+<li><p><strong>Schema-aware stringification</strong>: The payload object
+is passed to <code>XMLSchemata.stringify()</code>, which uses the WSDL’s
+embedded XML Schema to produce namespace-correct XML [[2]].</p></li>
+<li><p><strong>Envelope wrapping</strong>: The serialized body element
+is wrapped in a <code>&lt;soap:Envelope&gt;</code> with proper namespace
+declarations:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">soap:Envelope</span><span class="ot"> xmlns:soap=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span>&gt;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">soap:Body</span>&gt;</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">GetUserResponse</span><span class="ot"> xmlns=</span><span class="st">&quot;urn:service:types&quot;</span>&gt;</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">userData</span>&gt;</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">userId</span>&gt;12345&lt;/<span class="kw">userId</span>&gt;</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&lt;!-- ... --&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">userData</span>&gt;</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">GetUserResponse</span>&gt;</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">soap:Body</span>&gt;</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">soap:Envelope</span>&gt;</span></code></pre></div></li>
+<li><p><strong>Header support</strong>: Optional SOAP headers (e.g.,
+WS-Addressing <code>ReplyTo</code>) are passed as the second argument to
+<code>http()</code>:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> header <span class="op">=</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ReplyTo</span><span class="op">:</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Address</span><span class="op">:</span> <span class="st">&#39;http://client.example.com/callback&#39;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sendSoapResponse</span>(res<span class="op">,</span> payload<span class="op">,</span> header)</span></code></pre></div></li>
+</ol>
+<h3 id="error-handling-and-soapfault-generation">11.4 Error handling and
+SOAPFault generation</h3>
+<p>When errors occur, SOAP services must return properly formatted
+<code>&lt;soap:Fault&gt;</code> elements. <code>node-xml-toolkit</code>
+provides the <code>SOAPFault</code> class for structured fault data and
+the static <code>createError()</code> method for generating
+HTTP-compatible error responses.</p>
+<h4 id="using-soapfault-for-structured-errors">Using SOAPFault for
+structured errors</h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {SOAPFault} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Create a fault object with standard fields</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fault <span class="op">=</span> <span class="kw">new</span> <span class="fu">SOAPFault</span>({</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Client&#39;</span><span class="op">,</span>           <span class="co">// or &#39;Server&#39;, &#39;VersionMismatch&#39;, &#39;MustUnderstand&#39;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Invalid userId format&#39;</span><span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">detail</span><span class="op">:</span> {                 <span class="co">// Optional application-specific details</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">&#39;userId&#39;</span><span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">expected</span><span class="op">:</span> <span class="st">&#39;numeric string&#39;</span><span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">received</span><span class="op">:</span> <span class="st">&#39;abc123!&#39;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<h4 id="generating-http-error-responses-with-createerror">Generating
+HTTP error responses with createError()</h4>
+<p>The static <code>createError()</code> method returns an
+<code>http-errors</code> compatible object that sets the correct
+<code>Content-Type</code> header and includes the serialized
+<code>&lt;soap:Fault&gt;</code> XML:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {SOAP11} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> faultOptions) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// createError() returns an Error-like object with .status, .headers, .message</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> error <span class="op">=</span> SOAP11<span class="op">.</span><span class="fu">createError</span>(faultOptions)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">status</span>(error<span class="op">.</span><span class="at">status</span>)          <span class="co">// Always 500 for SOAP faults</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span>(error<span class="op">.</span><span class="at">headers</span>)             <span class="co">// Sets Content-Type: text/xml; charset=utf-8</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">send</span>(error<span class="op">.</span><span class="at">message</span>)            <span class="co">// Serialized &lt;soap:Fault&gt; XML</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Usage:</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="fu">isValidUserId</span>(userId)) {</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> {</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Client&#39;</span><span class="op">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;userId must be a numeric string&#39;</span><span class="op">,</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">detail</span><span class="op">:</span> {<span class="dt">field</span><span class="op">:</span> <span class="st">&#39;userId&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> userId}</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="soap-1.1-vs.-soap-1.2-fault-structures">SOAP 1.1 vs. SOAP 1.2
+fault structures</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 37%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>SOAP 1.1</th>
+<th>SOAP 1.2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Element name</strong></td>
+<td><code>&lt;faultcode&gt;</code>,
+<code>&lt;faultstring&gt;</code></td>
+<td><code>&lt;Code&gt;</code>, <code>&lt;Reason&gt;</code></td>
+</tr>
+<tr class="even">
+<td><strong>Code format</strong></td>
+<td><code>faultcode</code> (qualified name)</td>
+<td><code>Code/Value</code> (nested)</td>
+</tr>
+<tr class="odd">
+<td><strong>Actor/Role</strong></td>
+<td><code>&lt;faultactor&gt;</code></td>
+<td><code>&lt;Role&gt;</code></td>
+</tr>
+<tr class="even">
+<td><strong>Detail</strong></td>
+<td><code>&lt;detail&gt;</code> with custom XML</td>
+<td><code>&lt;Detail&gt;</code> with custom XML</td>
+</tr>
+<tr class="odd">
+<td><strong>Language</strong></td>
+<td>N/A</td>
+<td><code>Reason/Text[@xml:lang]</code></td>
+</tr>
+</tbody>
+</table>
+<p>The library handles these differences automatically based on whether
+you use <code>SOAP11</code> or <code>SOAP12</code>:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// SOAP 1.1 fault output:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">// &lt;soap:Fault&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;faultcode&gt;Client&lt;/faultcode&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;faultstring&gt;Invalid userId&lt;/faultstring&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;detail&gt;&lt;errors&gt;...&lt;/errors&gt;&lt;/detail&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">// &lt;/soap:Fault&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">// SOAP 1.2 fault output:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">// &lt;soap:Fault&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;Code&gt;&lt;Value&gt;Receiver&lt;/Value&gt;&lt;/Code&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;Reason&gt;&lt;Text xml:lang=&quot;en&quot;&gt;Invalid userId&lt;/Text&gt;&lt;/Reason&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">//   &lt;Detail&gt;&lt;errors&gt;...&lt;/errors&gt;&lt;/Detail&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">// &lt;/soap:Fault&gt;</span></span></code></pre></div>
+<h4 id="complete-error-handling-pattern">Complete error handling
+pattern</h4>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {SOAP11<span class="op">,</span> XMLParser} <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;xml-toolkit&#39;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/soap&#39;</span><span class="op">,</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 1. Parse request</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> body <span class="op">=</span> <span class="cf">await</span> <span class="fu">readRequestBody</span>(req)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> parser <span class="op">=</span> <span class="kw">new</span> <span class="fu">XMLParser</span>()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> envelope <span class="op">=</span> parser<span class="op">.</span><span class="fu">process</span>(body)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 2. Extract operation</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> operation <span class="op">=</span> <span class="fu">extractOperation</span>(envelope)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> payload <span class="op">=</span> operation<span class="op">.</span><span class="fu">toObject</span>({})</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 3. Business logic (may throw)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">processRequest</span>(payload)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 4. Send success response</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sendSoapResponse</span>(res<span class="op">,</span> {</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      [<span class="vs">`</span><span class="sc">${</span>operation<span class="op">.</span><span class="at">localName</span><span class="sc">}</span><span class="vs">Response`</span>]<span class="op">:</span> result</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (err) {</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 5. Map errors to SOAP faults</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (err <span class="kw">instanceof</span> ValidationError) {</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> {</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Client&#39;</span><span class="op">,</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        <span class="dt">message</span><span class="op">:</span> err<span class="op">.</span><span class="at">message</span><span class="op">,</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">detail</span><span class="op">:</span> err<span class="op">.</span><span class="at">details</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (err <span class="kw">instanceof</span> AuthenticationError) {</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> {</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Client&#39;</span><span class="op">,</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Authentication failed&#39;</span><span class="op">,</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        <span class="dt">actor</span><span class="op">:</span> <span class="st">&#39;http://service.example.com/auth&#39;</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Default: server error</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&#39;Unhandled error:&#39;</span><span class="op">,</span> err)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">sendSoapFault</span>(res<span class="op">,</span> {</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>      <span class="dt">code</span><span class="op">:</span> <span class="st">&#39;Server&#39;</span><span class="op">,</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>      <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Internal processing error&#39;</span><span class="op">,</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">detail</span><span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">NODE_ENV</span> <span class="op">===</span> <span class="st">&#39;development&#39;</span> <span class="op">?</span> {<span class="dt">stack</span><span class="op">:</span> err<span class="op">.</span><span class="at">stack</span>} <span class="op">:</span> <span class="kw">undefined</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<nav class="pager">
+  <a id="prev" href="#" style="display:none">Prev</a>
+  <a id="up" href="#" style="display:none">Up</a>
+  <a id="next" href="#" style="display:none">Next</a>
+</nav>
+</main>
+<script src="tools/templates/site.js"></script>
+</body>
+</html>
