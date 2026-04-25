@@ -1,0 +1,8 @@
+body{font-family:serif; margin:0; display:flex}
+header{padding:1rem; background:#f6f6f6; width:100%}
+aside#toc{width:260px; background:#fff; border-right:1px solid #ddd; padding:1rem; position:fixed; height:100%; overflow:auto}
+main#content{margin-left:280px; padding:1.5rem; max-width:900px}
+.pager{margin-top:2rem; display:flex; gap:1rem}
+a{color:#0366d6}
+code{background:#f3f4f6; padding:0.1rem 0.3rem}
+@media print{aside#toc{display:none}; main#content{margin-left:0}}
