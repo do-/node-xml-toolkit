@@ -1,156 +1,164 @@
 ![workflow](https://github.com/do-/node-xml-toolkit/actions/workflows/main.yml/badge.svg)
 ![Jest coverage](./badges/coverage-jest%20coverage.svg)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/do-/node-xml-toolkit)
+[![npm version](https://img.shields.io/npm/v/xml-toolkit.svg)](https://www.npmjs.com/package/xml-toolkit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-`node-xml-toolkit` is a pure node.js library for solving diverse XML related application tasks, e. g.:
-* scanning through multi gigabyte long XML files with a limited memory buffer;
-* invoke SOAP Web services given a WSDL, method name and a plain data object.
+> A pure Node.js library for solving diverse XML-related application tasks with minimal resources and dependencies.
 
-It features both (fast and simple, but greedy) [synchronous](https://github.com/do-/node-xml-toolkit/wiki/XMLParser) and (trickier to use, but robust and streaming capable) [asynchronous](https://github.com/do-/node-xml-toolkit/wiki/XMLReader) XML parsers along with various tools for writing well formed XML: [according to a schema](https://github.com/do-/node-xml-toolkit/wiki/XMLMarshaller) or [without any](https://github.com/do-/node-xml-toolkit/wiki/XMLPrinter).
+`node-xml-toolkit` handles XML parsing, marshalling, and SOAP integration — from streaming multi-gigabyte files to invoking SOAP 1.1 web services via WSDL.
 
-# Installation
+---
 
-```
+## ✨ Features
+
+- ♊ **Dual parsing modes**: Fast <ins>synchronous</ins> parser for small documents; <ins>streaming asynchronous</ins> parser for large files
+- 🧠 **Memory-efficient**: Scan multi-GB XML files with limited buffer
+- 🧬 **Schema support**: Validate and serialize objects using XML Schema (XSD)
+- 🧼 **[SOAP](https://www.w3.org/TR/soap/) 1.1, 1.2 adapters**: Invoke web services directly from WSDL + plain JS objects
+- 🖨️ **Flexible output**: Format, patch, or transform XML with configurable options
+- 🎏 **Stream-ready**: Works with Node.js streams, async iterators, and event emitters
+
+---
+
+## 📦 Installation
+
+```bash
 npm install xml-toolkit
 ```
 
-# Usage
-* [Parsing a small file completely](XMLParser) (optionally validating)
+---
+
+## 🚀 Quick Start
+
+### Parse a Small XML File (Sync)
 
 ```js
-const fs = require ('fs')
-const {XMLParser, XMLSchemata} = require ('xml-toolkit')
+const fs = require('fs');
+const { XMLParser, XMLSchemata } = require('xml-toolkit');
 
-const xml    = fs.readFileSync ('doc.xml')
-// const xs  = new XMLSchemata ('schema.xsd')
+const xml = fs.readFileSync('doc.xml');
+const parser = new XMLParser(); // optionally: { xs: new XMLSchemata('schema.xsd') }
+const document = parser.process(xml);
 
-const parser = new XMLParser  ({
-// xs,
-})
-
-const document = parser.process (xml)
-
-// console.log (parser.validationMessages)
-
-for (const element of document.detach ().children) {
-  console.log (element.attributes)
+for (const element of document.detach().children) {
+  console.log(element.attributes);
 }
 ```
 
-* [Reading a Record List](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Reading-a-Record-List) (optionally validating)
+### Stream Large XML Files (Async)
 
 ```js
-const {XMLReader, XMLNode, XMLSchemata} = require ('xml-toolkit')
+const { XMLReader, XMLNode } = require('xml-toolkit');
 
-// const xs  = new XMLSchemata ('schema.xsd')
+const records = new XMLReader({
+  filterElements: 'Record',
+  map: XMLNode.toObject({})
+}).process(xmlSource);
 
-const records = new XMLReader ({
-//xs,
-  filterElements : 'Record', 
-  map            : XMLNode.toObject ({})
-})
-//.on ('validation-message', s => console.log (s))
-  .process (xmlSource)
-
-// ...then:
-// await someLoader.load (records)
-
-// ...or
-// for await (const record of records) { // pull parser mode
-
-// ...or
-// records.on ('error', e => console.log (e))
-// records.pipe (nextStream)
-
-// ...or
-// records.on ('error', e => console.log (e))
-// records.on ('data', record => doSomethingWith (record))
-```
-
-* [Getting a Single Element](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Getting-a-Single-Element)
-
-```js
-const {XMLReader, XMLNode} = require ('xml-toolkit')
-
-const data = await new XMLReader ({
-  filterElements : 'MyElementName', 
-  map            : XMLNode.toObject ({})
-}).process (xmlSource).findFirst ()
-```
-
-* [Formatting XML](https://github.com/do-/node-xml-toolkit/wiki/XMLPrinter)
-```js
-const {XMLParser} = require ('xml-toolkit')
-xml = new XMLParser ()
-  .process (fs.readFileSync ('doc.xml'))
-  .toString ({
-//  decl: {encoding: 'UTF-8', standalone: 1},
-    space: '\t', 
-//  attrSpace: 2, 
-//  EOL: '\n',
-//  level: 0, 
-//  encodeLineBreaks: false,
-   })
-```
-
-* [Patching XML](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Patching-XML)
-
-```js
-const {XMLReader} = require ('xml-toolkit')
-
-let xmlResult = ''; for await (const node of new XMLReader ().process (xmlSource)) xmlResult += 
-    node.isCharacters && node.parent.localName === 'ThePlaceHolder' ? id : 
-    node.xml
-```
-
-* [Serializing an Object According to an XML Schema](https://github.com/do-/node-xml-toolkit/wiki/Use-Case:-Serializing-an-Object-According-to-an-XML-Schema)
-
-```js
-const data = {ExportDebtRequestsResponse: {	
-  "request-data": {
-   // ...
-  }
+// Use as async iterator
+for await (const record of records) {
+  // process each record
 }
 
-const xs = new XMLSchemata ('xs.xsd')
-
-const xml = xs.stringify (data)
-
-/* result:
-<ns0:ExportDebtRequestsResponse xmlns:ns0="urn:...">
-  <ns0:request-data>
-    <!-- ... and so on ... -->
-*/
+// Or pipe to another stream
+// records.pipe(nextStream);
 ```
-* Invoking a [SOAP 1.1](SOAP11) Web Service
+
+### Extract a Single Element
 
 ```js
-const http = require ('http')
-const {SOAP11} = require ('xml-toolkit')
+const { XMLReader, XMLNode } = require('xml-toolkit');
 
-const soap = new SOAP11 ('their.wsdl')
-
-const {method, headers, body} = soap.http ({RequestElementNameOfTheirs: {amount: '0.01'}})
-
-const rq = http.request (endpointURL, {method, headers})
-rq.write (body)
+const data = await new XMLReader({
+  filterElements: 'MyElementName',
+  map: XMLNode.toObject({})
+}).process(xmlSource).findFirst();
 ```
 
-# Motivation
+### Format / Pretty-Print XML
 
-Unlike Java (with [JAXB](https://www.oracle.com/technical-resources/articles/javase/jaxb.html) and [JAX-WS](https://www.oracle.com/technical-resources/articles/javase/jax-ws-2.html)) and some other software development platforms dating back to late 1990s, the core node.js library doesn't offer any standard tool for dealing with XML.
+```js
+const { XMLParser } = require('xml-toolkit');
 
-It might be a binding of a well known external library ([libxml](https://gitlab.gnome.org/GNOME/libxml2) comes to mind first — as it's [built in PostgreSQL](https://www.postgresql.org/docs/current/functions-xml.html) in many popular distros, for example), but, alas, nothing viable of this sort seem to be available.
+const formatted = new XMLParser()
+  .process(fs.readFileSync('doc.xml'))
+  .toString({
+    space: '\t',        // indentation
+    // EOL: '\n',        // line ending
+    // encodeLineBreaks: false
+  });
+```
 
-Pure js 3rd party modules are abundant, but after some real tasks based researches the author decided to start up yet another node.js DIY XML toolkit project to get the job done with:
-* minimum computing resources;
-* minimum lines of application code;
-* minimum external dependencies.
+### Serialize Objects to XML (via XSD)
 
-# Limitations
+```js
+const { XMLSchemata } = require('xml-toolkit');
 
-No W3C specification is 100% implemented here. For instance, DTDs are not supported, so, in theory, any rogue XML file using such bizarre deprecated feature as [Entity Declarations](https://www.w3.org/TR/xml/#sec-entity-decl) may crash the local XML parser.
+const data = { ExportDebtRequestsResponse: { 'request-data': { /* ... */ } } };
+const xs = new XMLSchemata('schema.xsd');
+const xml = xs.stringify(data);
+// → <ns0:ExportDebtRequestsResponse xmlns:ns0="urn:...">...
+```
 
-The [XMLSchema](https://github.com/do-/node-xml-toolkit/wiki/XMLSchemata) is fairly usable for most real world cases, still some features (like `xs:unique`) are ignored completely, some others may require more test coverage. In general, XML Schema support in `xml-toolkit` should be considered _forever beta_.
+### Invoke a SOAP 1.1 Web Service
 
-There are perfectly reliable external tools for XML validation: for instance, [xmllint](https://linux.die.net/man/1/xmllint) (used in the test suite here) do just fine.
+```js
+const http = require('http');
+const { SOAP11 } = require('xml-toolkit');
+
+const soap = new SOAP11('service.wsdl');
+const { method, headers, body } = soap.http({
+  RequestElementNameOfTheirs: { amount: '0.01' }
+});
+
+const req = http.request(endpointURL, { method, headers });
+req.write(body);
+req.end();
+```
+
+---
+
+## 🧭 Core API Overview
+
+| Class / Export     | Purpose                                      | Mode       |
+|--------------------|----------------------------------------------|------------|
+| [`XMLParser`](https://do-.github.io/node-xml-toolkit/chapter_03.html)        | Synchronous full-document parsing            | Sync       |
+| [`XMLReader`](https://do-.github.io/node-xml-toolkit/chapter_04.html)        | Streaming parser with filtering & mapping    | Async/Stream |
+| [`XMLNode`](https://github.com/do-/node-xml-toolkit/wiki/XMLNode)          | DOM-like node representation + utilities     | Both       |
+| `XMLSchemata`      | XSD-based [validation](https://do-.github.io/node-xml-toolkit/chapter_03.html#34-optional-validation-with-xmlschemata) & object→XML [serialization](https://do-.github.io/node-xml-toolkit/chapter_08.html) | Both    |
+| [`SOAP`](https://do-.github.io/node-xml-toolkit/chapter_09.html#version-selection)             | SOAP adapter using WSDL                      | Sync setup |
+
+---
+
+## ⚠️ Limitations
+
+- ❌ **No DTD support**: Entity declarations may cause parser errors
+- 🧪 **XML Schema is "forever beta"**: Features like `xs:unique` are not implemented; validation coverage is partial
+- 🔍 For production-grade validation, consider external tools like `xmllint` (used in the library's test suite)
+
+---
+
+## 💡 Motivation
+
+Node.js lacks built-in XML tooling comparable to Java's [JAXB](https://javaee.github.io/jaxb-v2/)/[JAX-WS](https://javaee.github.io/metro-jax-ws/). While many pure-JS XML modules exist, `node-xml-toolkit` was created to deliver most necessary functions with:
+
+- ✅ Minimal computing resources  
+- ✅ Minimal application code  
+- ✅ [Almost no](https://www.npmjs.com/package/xml-toolkit?activeTab=dependencies) external dependencies  
+
+All in a pure JavaScript implementation.
+
+---
+
+## 📄 License
+
+MIT © [do-](https://github.com/do-)
+
+---
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/do-/node-xml-toolkit)  
+- [npm Package](https://www.npmjs.com/package/xml-toolkit)  
+- [Documentation](https://do-.github.io/node-xml-toolkit)

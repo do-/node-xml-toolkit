@@ -1,7 +1,7 @@
 {
   "name": "xml-toolkit",
-  "version": "1.1.7",
-  "description": "XML parser, marshaller, SOAP adapter",
+  "version": "1.1.8",
+  "description": "A pure Node.js library for solving diverse XML-related application tasks with minimal resources and dependencies",
   "main": "index.js",
   "files": [
     "/lib",
@@ -46,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/do-/node-xml-toolkit/issues"
   },
-  "homepage": "https://github.com/do-/node-xml-toolkit#readme",
+  "homepage": "https://do-.github.io/node-xml-toolkit/",
   "devDependencies": {
     "jest": "^29.3.1"
   },
