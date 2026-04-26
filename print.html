@@ -1,0 +1,2241 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The node-xml-toolkit User&#x27;s Guide</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-23ed7b52.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-a9415588.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The node-xml-toolkit User&#x27;s Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="1-introduction"><a class="header" href="#1-introduction">1. Introduction</a></h1>
+<h2 id="11-why-node-xml-toolkit"><a class="header" href="#11-why-node-xml-toolkit">1.1 Why node-xml-toolkit?</a></h2>
+<p>Node.js has become a dominant platform for building scalable, event-driven applications. Yet, despite XML’s continued relevance in enterprise integration, configuration management, and legacy system interoperability, the Node.js core provides no built-in, high-level tools for working with XML.</p>
+<p>Third-party libraries exist, but many are either too heavyweight, lack streaming support, or require native bindings that complicate deployment. <code>node-xml-toolkit</code> was created to fill this gap with a pure JavaScript solution that prioritizes three things:</p>
+<ul>
+<li><strong>Minimal computing resources</strong>: Process multi-gigabyte XML files without exhausting memory.</li>
+<li><strong>Minimal application code</strong>: Solve common XML tasks with concise, readable patterns.</li>
+<li><strong>Minimal external dependencies</strong>: Avoid complex build chains and platform-specific binaries.</li>
+</ul>
+<p>If you need to parse large XML exports, invoke SOAP services defined by WSDL, or serialize JavaScript objects into schema-compliant XML—without pulling in a dozen npm packages—<code>node-xml-toolkit</code> is designed for you.</p>
+<h2 id="12-what-problems-does-it-solve"><a class="header" href="#12-what-problems-does-it-solve">1.2 What problems does it solve?</a></h2>
+<p>This library addresses several recurring challenges in Node.js XML development:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Problem</th><th>How node-xml-toolkit helps</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Memory exhaustion when parsing large files</strong></td><td>Asynchronous streaming parsers (<code>XMLReader</code>, <code>XMLLexer</code>) process documents incrementally, keeping memory usage bounded regardless of file size.</td></tr>
+<tr><td><strong>Boilerplate-heavy XML navigation</strong></td><td>High-level helpers like <code>XMLNode.toObject()</code> convert parsed structures into plain JavaScript objects, reducing manual traversal code.</td></tr>
+<tr><td><strong>Schema validation complexity</strong></td><td><code>XMLSchemata</code> and <code>XMLMarshaller</code> enable optional validation and schema-driven serialization without requiring external tools.</td></tr>
+<tr><td><strong>SOAP client development</strong></td><td><code>SOAP11</code> and <code>SOAP12</code> classes interpret WSDL files and generate properly formatted HTTP requests from plain JavaScript objects.</td></tr>
+<tr><td><strong>On-the-fly XML modification</strong></td><td>Streaming patching patterns allow targeted replacements without loading the entire document into memory.</td></tr>
+<tr><td><strong>Consistent XML output formatting</strong></td><td><code>XMLPrinter</code> and <code>XMLStreamPrinter</code> provide configurable indentation, encoding, and namespace handling for generated XML.</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="13-design-philosophy-minimal-dependencies-minimal-code-minimal-resources"><a class="header" href="#13-design-philosophy-minimal-dependencies-minimal-code-minimal-resources">1.3 Design philosophy: minimal dependencies, minimal code, minimal resources</a></h2>
+<p><code>node-xml-toolkit</code> follows a pragmatic, “do one thing well” philosophy:</p>
+<ul>
+<li><strong>Pure JavaScript</strong>: No native addons, no platform-specific compilation. Install via npm and run anywhere Node.js runs.</li>
+<li><strong>Modular architecture</strong>: Components are decoupled. Use only what you need—parsers, serializers, SOAP tools, or validation—without importing the entire toolkit.</li>
+<li><strong>Streaming-first</strong>: Wherever possible, APIs support both pull (<code>for await...of</code>) and push (<code>.on('data')</code>) patterns, integrating naturally with Node.js streams.</li>
+<li><strong>Explicit over implicit</strong>: Configuration options are clear and documented. There is no hidden magic that makes debugging difficult.</li>
+<li><strong>Practical validation</strong>: XML Schema support covers the features most commonly used in real-world integrations. Advanced or obscure XSD constructs are acknowledged but not prioritized, keeping the implementation lean.</li>
+</ul>
+<p>This philosophy means the library may not implement every corner of the W3C specifications—but it reliably solves the problems developers actually encounter in production.</p>
+<h2 id="14-prerequisites-nodejs-and-xml-fundamentals"><a class="header" href="#14-prerequisites-nodejs-and-xml-fundamentals">1.4 Prerequisites: Node.js and XML fundamentals</a></h2>
+<p>To get the most from this book and from <code>node-xml-toolkit</code>, you should be comfortable with:</p>
+<ul>
+<li><strong>Node.js fundamentals</strong>: Modules (<code>require</code>/<code>import</code>), asynchronous programming (callbacks, Promises, <code>async</code>/<code>await</code>), and the Streams API.</li>
+<li><strong>XML basics</strong>: Elements, attributes, namespaces, character data, and document structure. Familiarity with XPath concepts is helpful but not required.</li>
+<li><strong>XML Schema (XSD) awareness</strong>: Understanding of simple vs. complex types, element declarations, and namespace scoping will help when using validation or marshalling features.</li>
+<li><strong>SOAP concepts (optional)</strong>: If you plan to use the SOAP integration, basic knowledge of WSDL, SOAP envelopes, and RPC-style messaging will accelerate your progress.</li>
+</ul>
+<p>No prior experience with other Node.js XML libraries is assumed. If you have used <code>xml2js</code>, <code>sax</code>, or <code>fast-xml-parser</code>, you will notice architectural differences—<code>node-xml-toolkit</code> favors explicit streaming control over automatic object mapping.</p>
+<h2 id="15-installation-and-setup"><a class="header" href="#15-installation-and-setup">1.5 Installation and setup</a></h2>
+<p><code>node-xml-toolkit</code> is published to npm under the package name <code>xml-toolkit</code>.</p>
+<h3 id="basic-installation"><a class="header" href="#basic-installation">Basic installation</a></h3>
+<pre><code class="language-bash">npm install xml-toolkit
+</code></pre>
+<p>Or with Yarn:</p>
+<pre><code class="language-bash">yarn add xml-toolkit
+</code></pre>
+<h3 id="verifying-the-installation"><a class="header" href="#verifying-the-installation">Verifying the installation</a></h3>
+<p>Create a test file <code>verify.js</code>:</p>
+<pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
+
+const xml = '&lt;root&gt;&lt;item id="1"&gt;Hello&lt;/item&gt;&lt;/root&gt;';
+const parser = new XMLParser();
+const doc = parser.process(xml);
+
+console.log(doc.children[0].localName); // outputs: item
+console.log(doc.children[0].attributes.id); // outputs: 1
+</code></pre>
+<p>Run it:</p>
+<pre><code class="language-bash">node verify.js
+</code></pre>
+<p>If you see the expected output, the library is correctly installed.</p>
+<h3 id="environment-requirements"><a class="header" href="#environment-requirements">Environment requirements</a></h3>
+<ul>
+<li><strong>Node.js</strong>: Version 14 or higher is recommended. The library uses modern JavaScript features (async iterators, optional chaining) that require a recent runtime.</li>
+<li><strong>No build step</strong>: The package is ready to use after installation. No TypeScript compilation or native module rebuilding is needed.</li>
+<li><strong>Optional dependencies</strong>: None. All functionality is included in the core package.</li>
+</ul>
+<h3 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h3>
+<p>With the toolkit installed, you are ready to explore its capabilities. The following chapters will guide you through:</p>
+<ul>
+<li>Choosing between synchronous and asynchronous parsing strategies</li>
+<li>Navigating and transforming parsed XML documents</li>
+<li>Validating input against XML Schema definitions</li>
+<li>Generating well-formed, schema-compliant XML output</li>
+<li>Building SOAP clients that interact with enterprise web services</li>
+</ul>
+<p>Each concept is introduced with runnable examples that you can adapt to your own projects. The goal is not just to explain how the library works, but to equip you with patterns you can apply immediately to real-world tasks.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="2-core-concepts"><a class="header" href="#2-core-concepts">2. Core Concepts</a></h1>
+<p>Before diving into code examples, it is essential to understand the architectural decisions and mental models that underpin <code>node-xml-toolkit</code>. This chapter establishes the foundational concepts that will make the rest of the book—and your usage of the library—more intuitive and effective.</p>
+<h2 id="21-synchronous-vs-asynchronous-parsing"><a class="header" href="#21-synchronous-vs-asynchronous-parsing">2.1 Synchronous vs. asynchronous parsing</a></h2>
+<p><code>node-xml-toolkit</code> offers two distinct parsing approaches, each suited to different scenarios:</p>
+<h3 id="synchronous-parsing-with-xmlparser"><a class="header" href="#synchronous-parsing-with-xmlparser">Synchronous parsing with <code>XMLParser</code></a></h3>
+<pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
+
+const parser = new XMLParser();
+const doc = parser.process('&lt;catalog&gt;&lt;product id="101"&gt;Widget&lt;/product&gt;&lt;/catalog&gt;');
+
+console.log(doc.children[0].textContent); // Widget
+</code></pre>
+<p><strong>Use <code>XMLParser</code> when:</strong></p>
+<ul>
+<li>The XML document is small to medium-sized (typically under 10–50 MB, depending on available memory)</li>
+<li>You need random access to any part of the document after parsing</li>
+<li>Simplicity and readability are prioritized over memory efficiency</li>
+<li>You are processing configuration files, small API responses, or test data</li>
+</ul>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li>The entire document is loaded into memory as a tree of <code>XMLNode</code> objects</li>
+<li>Parsing blocks the event loop until completion (though this is usually negligible for small files)</li>
+</ul>
+<h3 id="asynchronous-parsing-with-xmlreader"><a class="header" href="#asynchronous-parsing-with-xmlreader">Asynchronous parsing with <code>XMLReader</code></a></h3>
+<pre><code class="language-javascript">const { XMLReader } = require('xml-toolkit');
+const fs = require('fs');
+
+async function processLargeFile(filepath) {
+  const reader = new XMLReader().process (fs.createReadStream(filepath));
+  
+  for await (const node of reader) {
+    if (node.localName === 'product' &amp;&amp; node.attributes.id === '101') {
+      console.log(await node.getTextContent());
+      break; // Early exit possible
+    }
+  }
+}
+</code></pre>
+<p><strong>Use <code>XMLReader</code> when:</strong></p>
+<ul>
+<li>Processing large files (hundreds of MB or GB) where memory usage must remain bounded</li>
+<li>You can process data incrementally (e.g., filtering, transforming, or aggregating as you read)</li>
+<li>You want to integrate with Node.js streams pipelines</li>
+<li>You need to stop parsing early once a condition is met</li>
+</ul>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li>Requires <code>async</code>/<code>await</code> or event-based handling</li>
+<li>Random access to arbitrary parts of the document is not possible without re-parsing</li>
+<li>Slightly more verbose setup for simple use cases</li>
+</ul>
+<h3 id="choosing-the-right-approach"><a class="header" href="#choosing-the-right-approach">Choosing the right approach</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Scenario</th><th>Recommended parser</th></tr>
+</thead>
+<tbody>
+<tr><td>Loading application config (<code>config.xml</code>)</td><td><code>XMLParser</code></td></tr>
+<tr><td>Parsing a 2 GB export from a legacy system</td><td><code>XMLReader</code></td></tr>
+<tr><td>Extracting a single value from a known path</td><td><code>XMLParser</code> (if file is small) or <code>XMLReader</code> with early exit</td></tr>
+<tr><td>Transforming records and writing to another stream</td><td><code>XMLReader</code> + <code>XMLStreamPrinter</code></td></tr>
+<tr><td>Unit testing XML generation logic</td><td><code>XMLParser</code> for simplicity</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="22-streaming-architecture-and-memory-efficiency"><a class="header" href="#22-streaming-architecture-and-memory-efficiency">2.2 Streaming architecture and memory efficiency</a></h2>
+<p>At its core, <code>node-xml-toolkit</code> is built around streaming principles. Even the synchronous <code>XMLParser</code> uses a streaming lexer internally; it simply consumes the entire stream before returning.</p>
+<h3 id="the-streaming-pipeline"><a class="header" href="#the-streaming-pipeline">The streaming pipeline</a></h3>
+<pre><code>Raw bytes → XMLLexer → SAXEvent stream → XMLReader/XMLParser → XMLNode tree (optional)
+</code></pre>
+<ul>
+<li><strong><code>XMLLexer</code></strong>: The lowest-level component. It tokenizes raw character data into SAX-style events (<code>startElement</code>, <code>endElement</code>, <code>characters</code>, etc.). It is memory-efficient but requires you to manage state.</li>
+<li><strong><code>XMLReader</code></strong>: Builds on <code>XMLLexer</code> to provide a higher-level, node-oriented async iterator. It yields <code>XMLNode</code> objects incrementally, allowing you to process documents without building the full tree.</li>
+<li><strong><code>XMLParser</code></strong>: Consumes the entire event stream from <code>XMLLexer</code> and constructs a complete in-memory document tree.</li>
+</ul>
+<h3 id="memory-usage-patterns"><a class="header" href="#memory-usage-patterns">Memory usage patterns</a></h3>
+<ul>
+<li><strong>Tree-based parsing</strong> (<code>XMLParser</code>): Memory usage scales with document size and complexity. A 100 MB XML file may consume 300–500 MB of RAM due to object overhead.</li>
+<li><strong>Streaming parsing</strong> (<code>XMLReader</code>): Memory usage remains roughly constant, determined by the depth of the current parsing path and any buffers you maintain. A 10 GB file can be processed with &lt;50 MB of RAM if you process and discard nodes promptly.</li>
+</ul>
+<p>The <code>XMLReader</code> will pause reading when downstream consumers cannot keep up, preventing memory buildup.</p>
+<h2 id="23-xml-nodes-events-and-the-document-model"><a class="header" href="#23-xml-nodes-events-and-the-document-model">2.3 XML nodes, events, and the document model</a></h2>
+<h3 id="the-xmlnode-abstraction"><a class="header" href="#the-xmlnode-abstraction">The <code>XMLNode</code> abstraction</a></h3>
+<p>Whether produced by <code>XMLParser</code> or yielded by <code>XMLReader</code>, an <code>XMLNode</code> represents a single XML construct. Key properties include:</p>
+<pre><code class="language-javascript">{
+  nodeType: 'element',        // 'element', 'text', 'comment', 'cdata', etc.
+  localName: 'product',       // Element name without namespace prefix
+  namespaceURI: 'http://...', // Full namespace identifier (or null)
+  prefix: 'ns',               // Namespace prefix used in source (or null)
+  attributes: AttributesMap,  // Map-like object for attribute access
+  namespaces: NamespacesMap,  // In-scope namespace declarations
+  children: [XMLNode],        // Child nodes (for element types)
+  textContent: string,        // Concatenated text of all child text nodes
+  parent: XMLNode | null      // Reference to parent (may be null in streaming)
+}
+</code></pre>
+<h3 id="navigating-the-tree"><a class="header" href="#navigating-the-tree">Navigating the tree</a></h3>
+<pre><code class="language-javascript">// Find first child element with localName 'price'
+const priceNode = doc.children.find(c =&gt; c.localName === 'price');
+
+// Access attribute safely
+const currency = priceNode?.attributes?.currency ?? 'USD';
+
+// Get text content
+const amount = priceNode?.textContent?.trim();
+</code></pre>
+<p>In streaming mode (<code>XMLReader</code>), the <code>parent</code> reference may be <code>null</code> for performance reasons, and <code>children</code> may be empty if you have not configured the reader to collect them. Always check the reader’s configuration when relying on tree structure.</p>
+<h3 id="events-vs-nodes"><a class="header" href="#events-vs-nodes">Events vs. nodes</a></h3>
+<p>Under the hood, parsing produces <code>SAXEvent</code> objects:</p>
+<pre><code class="language-javascript">{
+  type: 'startElement',  // 'endElement', 'characters', 'comment', etc.
+  localName: 'product',
+  attributes: AttributesMap,
+  namespaces: NamespacesMap,
+  // ... other event-specific fields
+}
+</code></pre>
+<p>You typically interact with <code>SAXEvent</code> only when using <code>XMLLexer</code> directly for maximum control. Most applications will work with <code>XMLNode</code> instances, which provide a more convenient, tree-oriented API.</p>
+<h2 id="24-namespaces-and-attributes-handling"><a class="header" href="#24-namespaces-and-attributes-handling">2.4 Namespaces and attributes handling</a></h2>
+<h3 id="namespaces-explicit-and-scoped"><a class="header" href="#namespaces-explicit-and-scoped">Namespaces: explicit and scoped</a></h3>
+<p>XML namespaces prevent naming conflicts but add complexity. <code>node-xml-toolkit</code> handles them explicitly:</p>
+<pre><code class="language-xml">&lt;catalog xmlns="http://example.com/products"
+         xmlns:tax="http://example.com/tax"&gt;
+  &lt;product id="101"&gt;
+    &lt;tax:rate&gt;0.08&lt;/tax:rate&gt;
+  &lt;/product&gt;
+&lt;/catalog&gt;
+</code></pre>
+<pre><code class="language-javascript">const doc = parser.process(xml);
+
+const product = doc.children[0];
+console.log(product.namespaceURI); // 'http://example.com/products'
+console.log(product.localName);    // 'product'
+
+const taxRate = product.children.find(
+  c =&gt; c.localName === 'rate' &amp;&amp; c.namespaceURI === 'http://example.com/tax'
+);
+</code></pre>
+<h3 id="the-namespacesmap-and-attributesmap-helpers"><a class="header" href="#the-namespacesmap-and-attributesmap-helpers">The <code>NamespacesMap</code> and <code>AttributesMap</code> helpers</a></h3>
+<p>Both namespaces and attributes are exposed via Map-like interfaces that support convenient access:</p>
+<pre><code class="language-javascript">// Attributes: direct property access or Map methods
+const id = node.attributes.id;
+const hasDiscount = node.attributes.has('discount');
+
+// Namespaces: resolve prefix to URI, or URI to prefix
+const taxUri = node.namespaces.get('tax'); // 'http://example.com/tax'
+const prefix = node.namespaces.getPrefix('http://example.com/tax'); // 'tax'
+</code></pre>
+<p>When serializing, the toolkit preserves namespace declarations and prefixes as needed to produce valid, well-scoped XML.</p>
+<h3 id="default-namespaces-and-inheritance"><a class="header" href="#default-namespaces-and-inheritance">Default namespaces and inheritance</a></h3>
+<p>Child elements inherit the default namespace of their parent unless overridden:</p>
+<pre><code class="language-javascript">// In the example above, &lt;product&gt; inherits xmlns="http://example.com/products"
+// So its namespaceURI is set automatically, even though the source XML
+// does not repeat the xmlns attribute on &lt;product&gt;.
+</code></pre>
+<p>Be mindful of this when filtering or matching elements by namespace in large documents.</p>
+<h2 id="25-schema-aware-vs-schema-less-workflows"><a class="header" href="#25-schema-aware-vs-schema-less-workflows">2.5 Schema-aware vs. schema-less workflows</a></h2>
+<p><code>node-xml-toolkit</code> supports both validation-driven and flexible, schema-less processing.</p>
+<h3 id="schema-less-rapid-prototyping-and-permissive-parsing"><a class="header" href="#schema-less-rapid-prototyping-and-permissive-parsing">Schema-less: rapid prototyping and permissive parsing</a></h3>
+<p>By default, the toolkit parses any well-formed XML without requiring a schema. This is ideal for:</p>
+<ul>
+<li>Exploratory data analysis</li>
+<li>Integrating with loosely specified external feeds</li>
+<li>Prototyping before formalizing data contracts</li>
+</ul>
+<pre><code class="language-javascript">const doc = parser.process(xml); // No schema needed
+const value = doc.children[0].textContent;
+</code></pre>
+<h3 id="schema-aware-validation-and-structured-serialization"><a class="header" href="#schema-aware-validation-and-structured-serialization">Schema-aware: validation and structured serialization</a></h3>
+<p>When you have an XML Schema (XSD), you can enable validation and leverage schema information for safer, more predictable processing:</p>
+<pre><code class="language-javascript">const { XMLSchemata, XMLParser } = require('xml-toolkit');
+
+const schemata = new XMLSchemata();
+schemata.addFromFile('catalog.xsd');
+
+const parser = new XMLParser({ schemata });
+const doc = parser.process(xml); // Throws if XML violates the schema
+</code></pre>
+<p><strong>Benefits of schema-aware workflows:</strong></p>
+<ul>
+<li>Catch data errors early, before they propagate through your application</li>
+<li>Enable <code>XMLMarshaller</code> to generate schema-compliant XML from JavaScript objects</li>
+<li>Provide clearer error messages with line/column information</li>
+<li>Document expected structure for team members and tools</li>
+</ul>
+<p><strong>When to skip validation:</strong></p>
+<ul>
+<li>Processing trusted internal data where schema enforcement is handled elsewhere</li>
+<li>Performance-critical paths where validation overhead is unjustified</li>
+<li>Working with heterogeneous or evolving external formats where strict validation would block progress</li>
+</ul>
+<hr>
+<p>Understanding these core concepts—parsing modes, streaming architecture, the node model, namespace handling, and schema integration—provides the mental framework needed to use <code>node-xml-toolkit</code> effectively. The remaining chapters build on this foundation with concrete patterns and real-world examples.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="3-the-synchronous-parser-xmlparser"><a class="header" href="#3-the-synchronous-parser-xmlparser">3. The Synchronous Parser: XMLParser</a></h1>
+<p>The <code>XMLParser</code> is the entry point for developers who need straightforward, blocking XML parsing. It consumes an entire XML document and returns a complete in-memory tree of <code>XMLNode</code> objects. This chapter covers when to choose it, how to load and parse documents, how to navigate the resulting structure, how to attach schema validation, and how to handle errors effectively.</p>
+<h2 id="31-when-to-use-xmlparser"><a class="header" href="#31-when-to-use-xmlparser">3.1 When to use XMLParser</a></h2>
+<p><code>XMLParser</code> is designed for simplicity and developer ergonomics. It shines in scenarios where:</p>
+<ul>
+<li><strong>Document size is predictable and moderate</strong>: Typically under 50 MB, though the exact threshold depends on your application’s memory budget and Node.js heap configuration.</li>
+<li><strong>You need random access</strong>: After parsing, you can traverse the tree in any direction, query arbitrary paths, or serialize the document multiple times without re-reading the source.</li>
+<li><strong>Synchronous code flow is acceptable</strong>: CLI tools, build scripts, configuration loaders, and test utilities often benefit from synchronous APIs that avoid <code>async</code>/<code>await</code> boilerplate.</li>
+<li><strong>You prefer a document-centric model</strong>: When your business logic operates on the XML as a whole (e.g., diffing documents, extracting metadata, transforming structure), a full tree representation simplifies implementation.</li>
+</ul>
+<p><strong>Avoid <code>XMLParser</code> when:</strong></p>
+<ul>
+<li>Processing unbounded or multi-gigabyte files from untrusted sources</li>
+<li>Building high-throughput HTTP endpoints where memory spikes could trigger garbage collection pauses</li>
+<li>Implementing streaming transformations or pipelines that must process records as they arrive</li>
+</ul>
+<p>In those cases, <code>XMLReader</code> (covered in Chapter 4) is the appropriate tool.</p>
+<h2 id="32-loading-and-parsing-small-to-medium-files"><a class="header" href="#32-loading-and-parsing-small-to-medium-files">3.2 Loading and parsing small to medium files</a></h2>
+<p>The synchronous parser accepts strings, Buffers, or file paths. It reads the entire input before constructing the document tree.</p>
+<h2 id="basic-usage-with-a-string"><a class="header" href="#basic-usage-with-a-string">Basic usage with a string</a></h2>
+<pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
+
+const xml = `
+  &lt;settings&gt;
+    &lt;database host="localhost" port="5432"/&gt;
+    &lt;logging level="info"/&gt;
+  &lt;/settings&gt;
+`;
+
+const parser = new XMLParser();
+const doc = parser.process(xml);
+// const obj = XMLNode.toObject({ wrap: true })(doc)
+
+console.log(doc.localName); // settings
+</code></pre>
+<blockquote>
+<p><strong>Tip</strong>: at this point, it’s a good idea to take a look on the section “Mapping XML Nodes to Plain Objects” unless you are familiar with the matter.</p>
+</blockquote>
+<h2 id="parsing-from-a-file"><a class="header" href="#parsing-from-a-file">Parsing from a file</a></h2>
+<p>For file-based workflows, combine <code>XMLParser</code> with Node.js synchronous file reading:</p>
+<pre><code class="language-javascript">const fs = require('fs');
+const { XMLParser } = require('xml-toolkit');
+
+const xmlBuffer = fs.readFileSync('config.xml');
+const parser = new XMLParser();
+const doc = parser.process(xmlBuffer);
+// const obj = XMLNode.toObject({ wrap: true })(doc)
+</code></pre>
+<h2 id="parser-configuration-options"><a class="header" href="#parser-configuration-options">Parser configuration options</a></h2>
+<p><code>XMLParser</code> accepts an optional configuration object during instantiation:</p>
+<pre><code class="language-javascript">const parser = new XMLParser({
+  stripSpace:    true,     // .trim() all text nodes' content
+  useEntities:   true      // support entities, including '&amp;amp;', '&amp;quot;' etc.
+  useNamespaces: true,     // enable namespace resolution
+  xs:        undefined     // XML Schema to validate against, see below
+});
+</code></pre>
+<p>Altering <code>useNamespaces</code> and especially <code>useEntities</code> is highly discouraged. Just never touch then unless you are totally sure.</p>
+<h2 id="33-navigating-the-parsed-document-tree"><a class="header" href="#33-navigating-the-parsed-document-tree">3.3 Navigating the parsed document tree</a></h2>
+<p>The result of <code>parser.process()</code> is a root <code>XMLNode</code> representing the document element. From there, you traverse the tree using standard array methods and node properties.</p>
+<h2 id="finding-elements"><a class="header" href="#finding-elements">Finding elements</a></h2>
+<pre><code class="language-javascript">// Find the first &lt;database&gt; child
+const dbNode = doc.children.find(node =&gt; node.localName === 'database');
+
+// Find all &lt;logging&gt; elements anywhere in the tree (recursive)
+function findAll(node, name) {
+  const matches = [];
+  if (node.localName === name) matches.push(node);
+  for (const child of node.children || []) {
+    matches.push(...findAll(child, name));
+  }
+  return matches;
+}
+
+const allLogNodes = findAll(doc, 'logging');
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: <code>node-xml-toolkit</code> does not include a built-in XPath evaluator. For complex queries, implement targeted recursive helpers or use <code>XMLNode.toObject()</code> for JSON-based filtering.</p>
+</blockquote>
+<h2 id="working-with-attributes"><a class="header" href="#working-with-attributes">Working with attributes</a></h2>
+<p>Attributes are exposed via an <code>AttributesMap</code> instance subclassing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a>:</p>
+<pre><code class="language-javascript">const dbHost = dbNode.attributes.get('host'); // "localhost"
+
+// Check existence
+if (dbNode.attributes.has('ssl')) {
+  console.log('SSL enabled:', dbNode.attributes.get('ssl'));
+}
+</code></pre>
+<p>Attribute values are always strings. When necessary, convert them explicitly:</p>
+<pre><code class="language-javascript">const port = parseInt(dbNode.attributes.get('port'), 10);
+const ssl = dbNode.attributes.get('ssl') === 'true';
+</code></pre>
+<h2 id="extracting-text-content"><a class="header" href="#extracting-text-content">Extracting text content</a></h2>
+<p><code>node.innerText</code> concatenates all child text and CDATA nodes:</p>
+<pre><code class="language-javascript">const config = `
+  &lt;title&gt;
+    Application &lt;![CDATA[Server]]&gt;
+  &lt;/title&gt;
+`;
+const doc = new XMLParser({stripSpace: true}).process(config);
+console.log(doc.innerText); // "Application Server"
+</code></pre>
+<h2 id="converting-to-plain-objects"><a class="header" href="#converting-to-plain-objects">Converting to plain objects</a></h2>
+<p>For seamless integration with most JavaScript code, use <code>XMLNode.toObject()</code> that flattens the tree into a JSON-compatible structure:</p>
+<pre><code class="language-javascript">const plain = XMLNode.toObject()(doc);
+
+console.log(JSON.stringify(plain, null, 2));
+/*
+{
+  "settings": {
+    "database": {"host": "localhost", "port": "5432"},
+    "logging": {"level": "info"}
+  }
+}
+*/
+</code></pre>
+<h2 id="34-optional-validation-with-xmlschemata"><a class="header" href="#34-optional-validation-with-xmlschemata">3.4 Optional validation with XMLSchemata</a></h2>
+<p>Validation is not required for parsing, but it dramatically improves data reliability when working with external or user-supplied XML.</p>
+<h2 id="loading-schemas"><a class="header" href="#loading-schemas">Loading schemas</a></h2>
+<pre><code class="language-javascript">const { XMLSchemata, XMLParser } = require('xml-toolkit');
+const schemata = new XMLSchemata('schemas/catalog.xsd');
+</code></pre>
+<p><code>XMLSchemata</code> source is loaded during the constructor execution. So HTTP and other asynchronous network sources are not supported; <code>&lt;xs:import&gt;</code> and <code>&lt;xs:include&gt;</code> elements only work when referencing local files.</p>
+<h2 id="attaching-validation-to-the-parser"><a class="header" href="#attaching-validation-to-the-parser">Attaching validation to the parser</a></h2>
+<p>Pass the schemata instance during parser construction:</p>
+<pre><code class="language-javascript">const parser = new XMLParser({ xs: schemata });
+
+try {
+  const doc = parser.process(fs.readFileSync('product-feed.xml'));
+  if (parser.validationMessages.length &gt; 0) {
+    for (const msg of parser.validationMessages) {
+      console.warn(msg) // e.g., "XVS-00004 The value 'abc' has the length 3, which exceeds the allowed maximum of 2"
+    }
+  }
+  else {
+    console.log('Document is valid and fully parsed.');
+  }
+
+} catch (err) {
+  // Parsing stops at the first validation or well-formedness error
+  console.error('Invalid document:', err.message);
+}
+</code></pre>
+<h2 id="35-error-handling-and-diagnostics"><a class="header" href="#35-error-handling-and-diagnostics">3.5 Error handling and diagnostics</a></h2>
+<p><code>XMLParser</code> adopts a resilient approach to error handling: parsing and validation issues do not halt execution by default. Instead, diagnostics are collected in the <code>validationMessages</code> array, allowing your application to decide whether to treat issues as warnings, recoverable errors, or fatal failures. This design enables graceful degradation when processing partially invalid documents or when schema validation is optional.</p>
+<blockquote>
+<p><strong>Version note</strong>: Prior to v1.1.6, validation errors caused <code>process()</code> to throw immediately (“fail fast”). Starting with v1.1.6, all diagnostics are collected in <code>parser.validationMessages</code> and parsing continues unless a well-formedness error occurs.</p>
+</blockquote>
+<h2 id="351-the-validationmessages-property"><a class="header" href="#351-the-validationmessages-property">3.5.1 The <code>validationMessages</code> property</a></h2>
+<p>After calling <code>parser.process(xml)</code>, inspect <code>parser.validationMessages</code> to retrieve any issues encountered:</p>
+<pre><code class="language-javascript">const { XMLParser, XMLSchemata } = require('xml-toolkit')
+
+const xml = fs.readFileSync('data.xml', 'utf8')
+const xs = new XMLSchemata('schema.xsd')
+const parser = new XMLParser({ xs })
+
+const doc = parser.process(xml)
+
+// Always check for messages after process()
+if (parser.validationMessages.length &gt; 0) {
+  for (const msg of parser.validationMessages) {
+    console.warn(msg) // e.g., "XVS-00004 The value 'abc' has the length 3, which exceeds the allowed maximum of 2"
+  }
+}
+</code></pre>
+<h3 id="message-format"><a class="header" href="#message-format">Message format</a></h3>
+<p>Each entry in <code>validationMessages</code> is a formatted string following this pattern:</p>
+<pre><code>&lt;CODE&gt; &lt;formatted message&gt;
+</code></pre>
+<p>Where <code>&lt;CODE&gt;</code> is one of the predefined identifiers from <code>lib/XMLMessages.js</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Prefix</th><th>Scope</th><th>Examples</th></tr>
+</thead>
+<tbody>
+<tr><td><code>XML-</code></td><td>Well-formedness / structural issues</td><td><code>XML-00001</code>, <code>XML-00002</code>, <code>XML-00003</code></td></tr>
+<tr><td><code>XSD-</code></td><td>Schema discovery / namespace issues</td><td><code>XSD-00001</code>, <code>XSD-00002</code></td></tr>
+<tr><td><code>XVC-</code></td><td>Validation: content model violations</td><td><code>XVC-00001</code> … <code>XVC-00005</code></td></tr>
+<tr><td><code>XVS-</code></td><td>Validation: simple type / value constraints</td><td><code>XVS-00001</code> … <code>XVS-00041</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="common-error-codes"><a class="header" href="#common-error-codes">Common error codes</a></h3>
+<p><strong>Structural / well-formedness (<code>XML-*</code>)</strong></p>
+<ul>
+<li><code>XML-00001</code>: <code>maxLength=%i exceeded</code> — internal buffer limit hit during parsing</li>
+<li><code>XML-00002</code>: <code>Unbalanced end element</code> — mismatched closing tag</li>
+<li><code>XML-00003</code>: <code>Unmatched end element, &lt;/${ %s }&gt; expected</code> — unexpected closing tag name</li>
+</ul>
+<p><strong>Schema discovery (<code>XSD-*</code>)</strong></p>
+<ul>
+<li><code>XSD-00001</code>: <code>Unknown namespace: %s</code> — element references an undeclared namespace</li>
+<li><code>XSD-00002</code>: <code>The element %s is not found in %s</code> — element not defined in schema</li>
+</ul>
+<p><strong>Content model violations (<code>XVC-*</code>)</strong></p>
+<ul>
+<li><code>XVC-00001</code>: <code>No nested elements allowed inside %s</code> — simple type element contains children</li>
+<li><code>XVC-00002</code>: <code>is unexpected here; should be %s</code> — element order violates schema sequence</li>
+<li><code>XVC-00003</code>: <code>Unknown attribute: %s</code> — attribute not declared in schema</li>
+<li><code>XVC-00004</code>: <code>The attribute "%s" must have the value "%s", not "%s"</code> — fixed attribute value mismatch</li>
+<li><code>XVC-00005</code>: <code>Missing required attribute: "%s"</code> — required attribute absent</li>
+</ul>
+<p><strong>Value constraints (<code>XVS-*</code>)</strong></p>
+<ul>
+<li><code>XVS-00001</code>/<code>00002</code>: Pattern mismatch (single/multiple patterns)</li>
+<li><code>XVS-00003</code>: Value not in enumeration list</li>
+<li><code>XVS-00004</code>/<code>00005</code>/<code>00006</code>: String length violations (max/min/exact)</li>
+<li><code>XVS-00007</code>–<code>00010</code>: Numeric range violations (less/greater than thresholds)</li>
+<li><code>XVS-00011</code>/<code>00012</code>: Boolean parsing failures</li>
+<li><code>XVS-00013</code>–<code>00019</code>: Decimal/number format and precision errors</li>
+<li><code>XVS-00020</code>/<code>00021</code>: Floating-point parsing failures</li>
+<li><code>XVS-00022</code>–<code>00041</code>: Date/time format, component, and timezone validation errors</li>
+</ul>
+<blockquote>
+<p><strong>Tip</strong>: Use the error code prefix to categorize issues programmatically:</p>
+<pre><code class="language-javascript">const errors = parser.validationMessages.filter(m =&gt; m.startsWith('XVC-') || m.startsWith('XVS-'))
+const warnings = parser.validationMessages.filter(m =&gt; m.startsWith('XML-'))
+</code></pre>
+</blockquote>
+<hr>
+<h2 id="352-distinguishing-fatal-vs-recoverable-errors"><a class="header" href="#352-distinguishing-fatal-vs-recoverable-errors">3.5.2 Distinguishing fatal vs. recoverable errors</a></h2>
+<p>Not all messages are equal. Some indicate malformed XML that cannot be reliably processed; others are schema warnings that may be acceptable in your context.</p>
+<h3 id="fatal-well-formedness-errors"><a class="header" href="#fatal-well-formedness-errors">Fatal: well-formedness errors</a></h3>
+<p>Errors with <code>XML-</code> codes typically indicate broken XML structure. These should usually halt processing:</p>
+<pre><code class="language-javascript">function isFatal(msg) {
+  return msg.startsWith('XML-00002') || msg.startsWith('XML-00003')
+}
+
+const doc = parser.process(xml)
+
+const fatal = parser.validationMessages.filter(isFatal)
+if (fatal.length &gt; 0) {
+  throw new Error(`Unrecoverable XML errors: ${fatal.join('; ')}`)
+}
+
+// Proceed with non-fatal messages logged or handled separately
+</code></pre>
+<h3 id="recoverable-schema-validation-issues"><a class="header" href="#recoverable-schema-validation-issues">Recoverable: schema validation issues</a></h3>
+<p><code>XVC-*</code> and <code>XVS-*</code> messages indicate schema mismatches. Depending on your use case, you may:</p>
+<ul>
+<li>Log and continue (for lenient ingestion pipelines)</li>
+<li>Reject the document (for strict validation gates)</li>
+<li>Attempt auto-correction (for known, fixable patterns)</li>
+</ul>
+<pre><code class="language-javascript">// Example: reject only on missing required attributes
+const missingRequired = parser.validationMessages
+  .filter(m =&gt; m.startsWith('XVC-00005'))
+
+if (missingRequired.length &gt; 0) {
+  console.error('Missing required attributes:', missingRequired)
+  return null // or throw, or return error envelope
+}
+
+// Log other warnings but continue
+const otherWarnings = parser.validationMessages
+  .filter(m =&gt; !missingRequired.includes(m))
+if (otherWarnings.length &gt; 0) {
+  console.warn('Schema warnings (ignored):', otherWarnings)
+}
+</code></pre>
+<h2 id="354-when-parsing-fails-entirely"><a class="header" href="#354-when-parsing-fails-entirely">3.5.4 When parsing fails entirely</a></h2>
+<p>While validation messages are collected non-fatally, certain conditions still cause <code>process()</code> to throw:</p>
+<ul>
+<li><strong>Invalid UTF-8 or encoding mismatches</strong> in the input string</li>
+<li><strong>Extremely malformed XML</strong> that breaks the underlying lexer (e.g., unclosed quotes in attributes)</li>
+<li><strong>Internal buffer limits</strong> (rare; configurable at build time)</li>
+</ul>
+<p>These cases are not represented in <code>validationMessages</code>. Wrap <code>process()</code> in a try/catch for robust error boundaries:</p>
+<pre><code class="language-javascript">try {
+  const doc = parser.process(xml)
+  // Handle validationMessages as shown above
+} catch (err) {
+  // Lexical/encoding/internal errors
+  console.error('Parser failure:', err.message)
+  // Consider returning a standardized error envelope
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="4-the-asynchronous-parser-xmlreader"><a class="header" href="#4-the-asynchronous-parser-xmlreader">4. The Asynchronous Parser: XMLReader</a></h1>
+<p>While <code>XMLParser</code> offers simplicity for small documents, real-world enterprise integrations rarely fit comfortably into memory. <code>XMLReader</code> is the streaming counterpart that processes XML incrementally, yielding nodes as they are encountered. This chapter explains when to choose it, how to configure it for efficient data extraction, and how to integrate it into both pull-based and push-based Node.js workflows.</p>
+<h2 id="41-when-to-use-xmlreader"><a class="header" href="#41-when-to-use-xmlreader">4.1 When to use XMLReader</a></h2>
+<p><code>XMLReader</code> is purpose-built for scenarios where memory footprint, latency, or document size make synchronous parsing impractical.</p>
+<p><strong>Choose <code>XMLReader</code> when:</strong></p>
+<ul>
+<li>Processing files larger than 50–100 MB, or when file size is unbounded (e.g., continuous log exports, database dumps)</li>
+<li>Running on memory-constrained environments (containers, serverless functions, edge workers)</li>
+<li>You only need specific sections of the document and can discard the rest</li>
+<li>You want to process records incrementally as they arrive over a network stream</li>
+<li>Early termination is required (e.g., finding the first matching element and stopping)</li>
+</ul>
+<p><strong>Avoid <code>XMLReader</code> when:</strong></p>
+<ul>
+<li>You need random access to arbitrary parts of the document after parsing</li>
+<li>Your processing logic requires global context or cross-references between distant sections</li>
+<li>You are building quick prototypes with small, known-safe XML inputs</li>
+</ul>
+<p><strong>The streaming trade-off:</strong>
+<code>XMLReader</code> never builds the full document tree. Instead, it maintains a shallow stack representing the current parsing path. As soon as an end tag is encountered, the corresponding subtree is released unless you explicitly retain it. This design keeps memory usage proportional to the maximum nesting depth, not the total file size.</p>
+<h2 id="42-configuring-filters-and-mappers"><a class="header" href="#42-configuring-filters-and-mappers">4.2 Configuring filters and mappers</a></h2>
+<p>To avoid yielding every single node in a large document, <code>XMLReader</code> supports declarative filtering and transformation during instantiation.</p>
+<h3 id="basic-configuration"><a class="header" href="#basic-configuration">Basic configuration</a></h3>
+<pre><code class="language-javascript">const { XMLReader } = require('xml-toolkit');
+const fs = require('fs');
+
+const reader = new XMLReader({
+  // filter      : node    =&gt; node.type === 'EndElement' &amp;&amp; node.level === 1,
+  filterElements : element =&gt; element.level === 1,
+  map            : XMLNode.toObject ({}),
+}).process (fs.createReadStream('large-export.xml', { encoding: 'utf8' }));
+</code></pre>
+<h3 id="the-filter--filterelements-option"><a class="header" href="#the-filter--filterelements-option">The <code>filter</code> / <code>filterElements</code> option</a></h3>
+<p>The <code>filter</code> predicate runs on each SAX event occured. Returning a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</a> values causes the event to be yielded; otherwise it’s skipped.</p>
+<p>When parsing XML, you rarely need anything but elements in your output (bare text nodes are nearly meaningless). And for elements, you want attributes and child nodes together, not distinct <code>start</code> and <code>end</code> SAX events. This is why the <code>filter</code> option must virtually always include the <code>type='EndElement'</code> condition.</p>
+<p>This is why, instead of the raw <code>filter</code> option, the <code>filterElements</code> wrapper is commonly used.</p>
+<p>Common filtering patterns:</p>
+<pre><code class="language-javascript">// Match by localName only
+filterElements: 'order'                      // you can mention is as a string
+filterElements: e =&gt; e.localName === 'order' // same thing
+
+// Match by namespace and localName
+filterElements: e =&gt; e.localName === 'product' &amp;&amp; e.namespaceURI === 'http://shop.example.com'
+
+// Match by level
+filterElements: e =&gt; e.level === 1
+
+// Match by attribute value
+filterElements: n =&gt; n.attributes.get ('status') === 'active'
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: Filters execute synchronously so they must be highly optimized.</p>
+</blockquote>
+<h3 id="the-map-function"><a class="header" href="#the-map-function">The <code>map</code> function</a></h3>
+<p>The <code>map</code> transforms the yielded object before it reaches your code. This is ideal for extracting only the fields you need, converting types, or flattening structures.</p>
+<pre><code class="language-javascript">map: node =&gt; {
+  // Extract specific children safely
+  const sku = node.children.find(c =&gt; c.localName === 'sku')?.innerText;
+  const weight = node.children.find(c =&gt; c.localName === 'weight')?.innerText;
+  
+  return {
+    sku: sku?.trim(),
+    weightKg: parseFloat(weight) || null,
+    processedAt: new Date().toISOString()
+  };
+}
+</code></pre>
+<p><strong>Important:</strong> Mappers run synchronously. For heavy computation or I/O, collect minimal data in the mapper and defer processing to your iteration loop.</p>
+<h2 id="43-pull-mode-iterating-with-for-await-of"><a class="header" href="#43-pull-mode-iterating-with-for-await-of">4.3 Pull mode: iterating with for-await-of</a></h2>
+<p>Being a subclass of <a href="https://nodejs.org/docs/latest/api/stream.html#readable-streams"><code>Readable</code></a>, <code>XMLReader</code> implements the <a href="https://tc39.es/ecma262/#sec-asynciterable-interface"><code>AsyncIterable</code></a> protocol, making <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of"><code>for await...of</code></a> available:</p>
+<h3 id="basic-iteration"><a class="header" href="#basic-iteration">Basic iteration</a></h3>
+<pre><code class="language-javascript">async function processRecords(filepath) {
+  const reader = new XMLReader({
+    filterElements: 'record'
+  })
+    .on('error', err =&gt; console.error(err))  
+    .process (fs.createReadStream(filepath));
+
+  let count = 0;
+  for await (const record of reader) {
+    // Process each record
+    await saveToDatabase(record); // ATTN! performance killer; demo only
+    count++;
+    
+    // Optional: log progress
+    if (count % 1000 === 0) {
+      console.log(`Processed ${count} records...`);
+    }
+  }
+  console.log(`Complete. ${count} records processed.`);
+}
+</code></pre>
+<h3 id="early-termination"><a class="header" href="#early-termination">Early termination</a></h3>
+<p>Because parsing is driven by your iteration, you can stop reading at any point:</p>
+<pre><code class="language-javascript">for await (const node of reader) {
+  if (node.attributes.id === targetId) {
+    console.log('Found target node');
+    break; // Stops iteration and closes underlying stream
+  }
+}
+</code></pre>
+<p>When <code>break</code> is executed, <code>XMLReader</code> automatically destroys the input stream and releases internal buffers. No manual cleanup is required.</p>
+<h2 id="44-push-mode-event-listeners-and-streams"><a class="header" href="#44-push-mode-event-listeners-and-streams">4.4 Push mode: event listeners and streams</a></h2>
+<p>While pull mode is preferred for modern JavaScript, <code>XMLReader</code> also exposes a traditional event emitter interface for compatibility with legacy codebases or complex stream orchestration.</p>
+<h3 id="event-based-consumption"><a class="header" href="#event-based-consumption">Event-based consumption</a></h3>
+<pre><code class="language-javascript">const reader = new XMLReader({
+  filterElements: 'transaction'
+})
+  .on('error', err =&gt; console.error(err))
+  .process (fs.createReadStream('data.xml'));
+
+reader.on('error', (err) =&gt; {
+  console.error('Parsing error:', err.message, err.line, err.column);
+});
+
+reader.on('end', () =&gt; {
+  console.log('Stream ended successfully');
+});
+
+reader.on('data', async (node) =&gt; {
+  try {
+    fastSyncProcessTransaction(node); // it MUST be synchronous and real fast
+  } catch (err) {
+    // Errors in event handlers must be caught explicitly
+    console.error('Transaction processing failed:', err);
+  }
+});
+</code></pre>
+<h2 id="45-combining-with-nodejs-streams-pipeline"><a class="header" href="#45-combining-with-nodejs-streams-pipeline">4.5 Combining with Node.js streams pipeline</a></h2>
+<p><code>XMLReader</code> seamlessly integrates with Node.js <code>stream.pipeline</code> API, enabling robust, error-handled data flows that respect backpressure across all components.</p>
+<h3 id="pipeline-example-xml-to-csv-conversion"><a class="header" href="#pipeline-example-xml-to-csv-conversion">Pipeline example: XML to CSV conversion</a></h3>
+<pre><code class="language-javascript">const { pipeline } = require('stream/promises');
+const { XMLReader } = require('xml-toolkit');
+const { Transform } = require('stream');
+const fs = require('fs');
+
+function createCsvWriter() {
+  let isFirst = true;
+  return new Transform({
+    objectMode: true,
+    transform(record, encoding, callback) {
+      const headers = isFirst ? `id,name,price,timestamp\n` : '';
+      const row = `${record.id},"${record.name}",${record.price},${record.timestamp}\n`;
+      isFirst = false;
+      callback(null, headers + row);
+    }
+  });
+}
+
+async function xmlToCsv(inputPath, outputPath) {
+  await pipeline(
+    new XMLReader({
+      filter: n =&gt; n.localName === 'record',
+      mapper: node =&gt; ({
+        id: node.attributes.id,
+        name: node.children.find(c =&gt; c.localName === 'name')?.innerText?.trim(),
+        price: node.children.find(c =&gt; c.localName === 'price')?.innerText,
+        timestamp: new Date().toISOString()
+      })
+    })
+      .on('error', err =&gt; console.error(err))    
+      .process (fs.createReadStream(inputPath, { highWaterMark: 64 * 1024 })),
+    createCsvWriter(),
+    fs.createWriteStream(outputPath)
+  );
+  console.log('Conversion complete.');
+}
+</code></pre>
+<h3 id="why-pipelines-matter"><a class="header" href="#why-pipelines-matter">Why pipelines matter</a></h3>
+<ul>
+<li><strong>Automatic backpressure</strong>: If the CSV writer slows down (e.g., disk I/O bottleneck), the pipeline pauses the <code>XMLReader</code>, which pauses the underlying file stream. Memory remains bounded.</li>
+<li><strong>Centralized error handling</strong>: A single <code>try/catch</code> around <code>pipeline()</code> captures errors from any stage.</li>
+<li><strong>Resource cleanup</strong>: On completion or error, all streams are automatically closed and file descriptors released.</li>
+</ul>
+<h3 id="error-handling-in-pipelines"><a class="header" href="#error-handling-in-pipelines">Error handling in pipelines</a></h3>
+<pre><code class="language-javascript">try {
+  await pipeline(/* streams */);
+} catch (err) {
+  // err.cause contains the original error from the failing stage
+  console.error('Pipeline failed at:', err.cause?.constructor?.name);
+  console.error('Message:', err.message);
+}
+</code></pre>
+<h3 id="parallel-processing-considerations"><a class="header" href="#parallel-processing-considerations">Parallel processing considerations</a></h3>
+<p>If your downstream processing is CPU-intensive, split the stream inside the pipeline:</p>
+<pre><code class="language-javascript">// Inside pipeline:
+new Transform({
+  objectMode: true,
+  transform(chunk, enc, cb) {
+    // Offload heavy work to worker threads or queue
+    workerPool.run(processRecord, chunk, cb);
+  }
+}),
+</code></pre>
+<p><code>XMLReader</code> will continue parsing at the pace dictated by your worker pool, preventing memory exhaustion while maintaining throughput.</p>
+<h2 id="45-error-handling-and-diagnostics"><a class="header" href="#45-error-handling-and-diagnostics">4.5 Error handling and diagnostics</a></h2>
+<p><code>XMLReader</code> handles errors differently from <code>XMLParser</code> due to its streaming, event-driven architecture. While validation message codes and formats are identical to those documented above, the delivery mechanism and recovery strategies differ significantly.</p>
+<h3 id="451-stream-level-errors-the-error-event"><a class="header" href="#451-stream-level-errors-the-error-event">4.5.1 Stream-level errors: the <code>error</code> event</a></h3>
+<p><code>XMLReader</code> is a Node.js []<code>Transform</code>](https://nodejs.org/docs/latest/api/stream.html#class-streamtransform) stream. Low-level parsing failures—such as malformed XML that breaks the underlying <code>XMLLexer</code>—propagate via the standard <code>error</code> event:</p>
+<pre><code class="language-javascript">const { XMLReader } = require('xml-toolkit')
+
+const reader = new XMLReader()
+  .on('error', (err) =&gt; {
+    // Catch lexer errors: malformed XML, encoding issues, etc.
+    console.error('Stream error:', err.message)
+    // The stream is automatically destroyed; iteration stops
+  })
+
+// Attach error handler BEFORE calling process()
+reader.process(fs.createReadStream('data.xml'))
+
+for await (const node of reader) {
+  // Loop terminates automatically if an error occurs
+  console.log(node.localName)
+}
+</code></pre>
+<h4 id="key-behaviors"><a class="header" href="#key-behaviors">Key behaviors</a></h4>
+<ul>
+<li><strong>Automatic destruction</strong>: When the internal <code>XMLLexer</code> emits an <code>error</code>, <code>XMLReader</code> calls <code>this.destroy(err)</code>, terminating the stream and preventing further <code>data</code> events [[source]].</li>
+<li><strong>Async iteration safety</strong>: <code>for-await-of</code> loops handle stream errors gracefully—the loop exits and the error is available via the <code>error</code> event handler.</li>
+<li><strong>No recovery</strong>: Unlike validation messages (see below), stream-level errors are fatal. The document cannot be partially processed once the lexer fails.</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Always attach an <code>error</code> handler before calling <code>process()</code></strong>. Unhandled stream errors may crash your Node.js process.</p>
+</blockquote>
+<h2 id="452-schema-validation-the-validation-message-event"><a class="header" href="#452-schema-validation-the-validation-message-event">4.5.2 Schema validation: the <code>validation-message</code> event</a></h2>
+<p>When the <code>xs</code> option is provided, <code>XMLReader</code> performs schema validation. Unlike <code>XMLParser</code>, which collects messages in an array, <code>XMLReader</code> <strong>emits each validation message immediately</strong> via the <code>validation-message</code> event:</p>
+<pre><code class="language-javascript">const { XMLReader, XMLSchemata } = require('xml-toolkit')
+
+const xs = new XMLSchemata('schema.xsd')
+const reader = new XMLReader({ xs })
+  .on('error', err =&gt; console.error(err))
+  .on('validation-message', (msg) =&gt; {
+    // msg format: "&lt;CODE&gt; &lt;message&gt;" (same as XMLParser)
+    console.warn('Schema issue:', msg)
+    // Decide whether to ignore, log, or abort
+  })
+
+reader.process(fs.createReadStream('data.xml'))
+
+for await (const node of reader) {
+  // Nodes are still yielded even if validation messages were emitted
+  console.log(node.localName)
+}
+</code></pre>
+<h3 id="how-validation-works-internally"><a class="header" href="#how-validation-works-internally">How validation works internally</a></h3>
+<ol>
+<li>On the first <code>START_ELEMENT</code> event, <code>XMLReader</code> instantiates an <code>XMLValidator</code> with your schema and a callback that emits <code>validation-message</code> [[source]].</li>
+<li>As parsing proceeds, the validator checks each element, attribute, and text node against the schema.</li>
+<li>Any violation triggers <code>emit('validation-message', formattedString)</code>—<strong>not</strong> an exception.</li>
+</ol>
+<h3 id="important-distinctions-from-xmlparser"><a class="header" href="#important-distinctions-from-xmlparser">Important distinctions from <code>XMLParser</code></a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Aspect</th><th><code>XMLParser</code> (sync)</th><th><code>XMLReader</code> (async/streaming)</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Message collection</strong></td><td><code>parser.validationMessages</code> array</td><td><code>validation-message</code> event emissions</td></tr>
+<tr><td><strong>Timing</strong></td><td>All messages available after <code>process()</code> returns</td><td>Messages emitted incrementally during parsing</td></tr>
+<tr><td><strong>Control flow</strong></td><td>You inspect array post-parsing</td><td>You handle each message as it arrives</td></tr>
+<tr><td><strong>Memory</strong></td><td>All messages held in memory</td><td>Messages processed on-the-fly (lower memory)</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="5-mapping-xml-nodes-to-plain-objects"><a class="header" href="#5-mapping-xml-nodes-to-plain-objects">5. Mapping XML Nodes to Plain Objects</a></h1>
+<p>Converting XML to plain JavaScript objects is a frequent requirement when integrating with modern APIs, databases, or frontend frameworks. <code>node-xml-toolkit</code> provides a focused utility for this task: <code>XMLNode.toObject()</code>, powered internally by the <code>MoxyLikeJsonEncoder</code> module.</p>
+<blockquote>
+<p><strong>Clarification</strong>: Despite its name, <code>XMLNode.toObject()</code> is not an instance method on <code>XMLNode</code>. It is a standalone function exported for convenience, designed primarily to serve as a mapper function for <code>XMLReader</code>.</p>
+</blockquote>
+<h2 id="51-purpose-and-design-philosophy"><a class="header" href="#51-purpose-and-design-philosophy">5.1 Purpose and Design Philosophy</a></h2>
+<p><code>XMLNode.toObject()</code> transforms an <code>XMLNode</code> tree into a plain, <code>JSON.stringify</code>-ready JavaScript object. Its design prioritizes:</p>
+<ul>
+<li><strong>Simplicity</strong>: Minimal options, predictable output.</li>
+<li><strong>Streaming compatibility</strong>: Returns a function suitable for <code>XMLReader</code>’s <code>map</code> option.</li>
+<li><strong>Data-processing focus</strong>: Merges attributes with child elements; does not preserve document order or mixed content.</li>
+</ul>
+<p>It is <strong>not</strong> intended for general-purpose XML transformation tasks where namespace fidelity, processing instructions, or exact node ordering matter. For those cases, work directly with <code>XMLNode</code> methods like <code>detach()</code> or traverse the tree manually.</p>
+<p>The historical name of an internal class <code>MoxyLikeJsonEncoder</code> reflects that the core behavior draws loose inspiration from <a href="https://eclipse.dev/eclipselink/#moxy">EclipseLink MOXy</a>’s JSON binding conventions—but it is a lightweight, independent implementation with its own rules.</p>
+<h2 id="52-usage-pattern"><a class="header" href="#52-usage-pattern">5.2 Usage Pattern</a></h2>
+<h3 id="direct-invocation-on-a-parsed-node"><a class="header" href="#direct-invocation-on-a-parsed-node">Direct invocation on a parsed node</a></h3>
+<pre><code class="language-javascript">const { XMLParser, XMLNode } = require('xml-toolkit')
+
+const parser = new XMLParser()
+const doc = parser.process('&lt;root&gt;&lt;item id="1"&gt;value&lt;/item&gt;&lt;/root&gt;')
+
+const result = XMLNode.toObject({ wrap: true })(doc)
+// result: { root: { item: { id: "1", "#text": "value" } } }
+</code></pre>
+<h3 id="as-a-mapper-for-xmlreader"><a class="header" href="#as-a-mapper-for-xmlreader">As a mapper for XMLReader</a></h3>
+<pre><code class="language-javascript">const { XMLReader, XMLNode } = require('xml-toolkit')
+
+const reader = new XMLReader({
+  stripSpace: true,
+  collect: e =&gt; true,
+  filterElements: 'MessagePrimaryContent',
+  map: XMLNode.toObject({
+    // options here
+  })
+})
+
+for await (const obj of reader.process(stream)) {
+  // obj is a plain JavaScript object
+  console.log(obj)
+}
+</code></pre>
+<blockquote>
+<p>Note: When used directly, <code>XMLNode.toObject(options)</code> returns a function that accepts an <code>XMLNode</code> and returns the transformed object.</p>
+</blockquote>
+<h2 id="53-options-reference"><a class="header" href="#53-options-reference">5.3 Options Reference</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>wrap</code></td><td><code>false</code></td><td>If <code>true</code>, output includes the root element name as a top-level key: <code>{ RootName: {...} }</code>. If <code>false</code> (default), only the content object is returned.</td></tr>
+<tr><td><code>getName</code></td><td><code>(localName, namespaceURI) =&gt; localName</code></td><td>Function to transform XML element/attribute names into JavaScript object keys. Receives <code>localName</code> and <code>namespaceURI</code>; returns the desired property name.</td></tr>
+<tr><td><code>map</code></td><td><code>undefined</code></td><td>If provided, a function applied to each resulting object (similar to <code>Array.prototype.map</code>). Useful for adding computed fields or normalizing structure.</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="54-transformation-rules"><a class="header" href="#54-transformation-rules">5.4 Transformation Rules</a></h2>
+<h3 id="top-level-element-handling"><a class="header" href="#top-level-element-handling">Top-level element handling</a></h3>
+<p>By default, the root element’s name is omitted from the output:</p>
+<pre><code class="language-xml">&lt;MyElement&gt;&lt;value&gt;42&lt;/value&gt;&lt;/MyElement&gt;
+</code></pre>
+<pre><code class="language-javascript">// wrap: false (default)
+→ { value: "42" }
+
+// wrap: true
+→ { MyElement: { value: "42" } }
+</code></pre>
+<p>This default avoids redundant wrapping when the root name is a known constant in your application logic.</p>
+<h3 id="attributes"><a class="header" href="#attributes">Attributes</a></h3>
+<p>Attributes become direct key-value pairs on the element’s content object. Values are always strings (no automatic type coercion):</p>
+<pre><code class="language-xml">&lt;Item id="123" status="active"/&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { id: "123", status: "active" }
+</code></pre>
+<h3 id="text-content"><a class="header" href="#text-content">Text content</a></h3>
+<p>If an element contains only text (no attributes or child elements), the result is the trimmed string value:</p>
+<pre><code class="language-xml">&lt;Name&gt;John Doe&lt;/Name&gt;
+</code></pre>
+<pre><code class="language-javascript">→ "John Doe"
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>Limitation</strong>: Elements that mix text content with attributes or child elements cannot be represented unambiguously. The encoder does not support mixed content; such structures may produce unexpected results.</p>
+</blockquote>
+<h3 id="child-elements-singletons-vs-collections"><a class="header" href="#child-elements-singletons-vs-collections">Child elements: singletons vs. collections</a></h3>
+<ul>
+<li>
+<p><strong>Multiple same-name children</strong> → array:</p>
+<pre><code class="language-xml">&lt;List&gt;&lt;item&gt;A&lt;/item&gt;&lt;item&gt;B&lt;/item&gt;&lt;/List&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { item: ["A", "B"] }
+</code></pre>
+</li>
+<li>
+<p><strong>Single child element</strong> → scalar value:</p>
+<pre><code class="language-xml">&lt;User&gt;&lt;id&gt;42&lt;/id&gt;&lt;/User&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { id: "42" }
+</code></pre>
+</li>
+<li>
+<p><strong>Schema-aware arrays</strong>: If the XML was parsed with schema context and an element is declared with <code>maxOccurs &gt; 1</code>, it is always represented as an array—even if only one instance appears:</p>
+<pre><code class="language-xml">&lt;!-- Schema: &lt;xsd:element name="tag" maxOccurs="unbounded"/&gt; --&gt;
+&lt;Data&gt;&lt;tag&gt;only-one&lt;/tag&gt;&lt;/Data&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { tag: ["only-one"] }
+</code></pre>
+</li>
+</ul>
+<h3 id="scalar-values-and-null-handling"><a class="header" href="#scalar-values-and-null-handling">Scalar values and null handling</a></h3>
+<ul>
+<li>All leaf values are either <code>null</code> or trimmed, non-empty strings.</li>
+<li>Empty strings (<code>""</code>) are converted to <code>null</code>:
+<pre><code class="language-xml">&lt;Field value=""/&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { value: null }
+</code></pre>
+</li>
+<li>Empty elements (<code>&lt;Empty/&gt;</code> or <code>&lt;Empty&gt;&lt;/Empty&gt;</code>) yield <code>null</code>:
+<pre><code class="language-javascript">// wrap: false
+→ null
+// wrap: true
+→ { Empty: null }
+</code></pre>
+</li>
+<li>No automatic parsing of numbers, booleans, or dates occurs. <code>"42"</code> remains a string; <code>"true"</code> remains a string.</li>
+</ul>
+<h3 id="namespace-handling"><a class="header" href="#namespace-handling">Namespace handling</a></h3>
+<p>By default, namespaces are ignored: only the local name is used for object keys:</p>
+<pre><code class="language-xml">&lt;x:Product x:code="XYZ" xmlns:x="urn:example"/&gt;
+</code></pre>
+<pre><code class="language-javascript">→ { code: "XYZ" }  // namespace URI and prefix discarded
+</code></pre>
+<p>To preserve namespace information, customize the <code>getName</code> option:</p>
+<pre><code class="language-javascript">XMLNode.toObject({
+  getName: (localName, namespaceURI) =&gt; 
+    namespaceURI ? `{${namespaceURI}}${localName}` : localName
+})
+</code></pre>
+<pre><code class="language-javascript">→ { "{urn:example}code": "XYZ" }
+</code></pre>
+<h2 id="55-practical-examples"><a class="header" href="#55-practical-examples">5.5 Practical Examples</a></h2>
+<h3 id="example-1-extracting-a-flat-record-list"><a class="header" href="#example-1-extracting-a-flat-record-list">Example 1: Extracting a flat record list</a></h3>
+<pre><code class="language-xml">&lt;Export&gt;
+  &lt;Record id="1" name="Alpha"/&gt;
+  &lt;Record id="2" name="Beta"/&gt;
+&lt;/Export&gt;
+</code></pre>
+<pre><code class="language-javascript">const { XMLReader, XMLNode } = require('xml-toolkit')
+
+const records = new XMLReader({
+  filterElements: 'Record',
+  map: XMLNode.toObject() // default: no wrap, attributes merged
+})
+
+for await (const rec of records.process(fs.createReadStream('data.xml'))) {
+  // rec = { id: "1", name: "Alpha" }
+  console.log(rec)
+}
+</code></pre>
+<h3 id="example-2-adding-a-computed-field-via-map"><a class="header" href="#example-2-adding-a-computed-field-via-map">Example 2: Adding a computed field via <code>map</code></a></h3>
+<pre><code class="language-javascript">const mapper = XMLNode.toObject({
+  map: obj =&gt; ({ ...obj, processedAt: new Date().toISOString() })
+})
+
+const result = mapper(parsedNode)
+// { id: "1", name: "Alpha", processedAt: "2026-04-24T..." }
+</code></pre>
+<h3 id="example-3-preserving-element-names-with-wrap"><a class="header" href="#example-3-preserving-element-names-with-wrap">Example 3: Preserving element names with <code>wrap</code></a></h3>
+<pre><code class="language-javascript">const mapper = XMLNode.toObject({ wrap: true })
+
+const result = mapper(parsedNode)
+// { Record: { id: "1", name: "Alpha" } }
+</code></pre>
+<p>Useful when the element name carries semantic meaning that should travel with the data.</p>
+<h3 id="example-4-normalizing-names-with-getname"><a class="header" href="#example-4-normalizing-names-with-getname">Example 4: Normalizing names with <code>getName</code></a></h3>
+<pre><code class="language-javascript">const mapper = XMLNode.toObject({
+  getName: (localName) =&gt; localName.toLowerCase()
+})
+
+// Input: &lt;UserProfile&gt;&lt;FirstName&gt;Ada&lt;/FirstName&gt;&lt;/UserProfile&gt;
+// Output: { firstname: "Ada" }
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="6-practical-reading-patterns"><a class="header" href="#6-practical-reading-patterns">6. Practical Reading Patterns</a></h1>
+<p>This chapter presents some basic patterns for using <code>XMLParser</code> and <code>XMLReader</code> in typical application tasks.</p>
+<h2 id="61-slurping-a-whole-document"><a class="header" href="#61-slurping-a-whole-document">6.1 Slurping a whole document</a></h2>
+<p>When your input is small enough (&lt;10 Mb), there is nothig wrong with the following trivial scenario:</p>
+<pre><code class="language-javascript">const { XMLParser, XMLSchemata } = require('xml-toolkit');
+const fs = require('fs');
+
+const parser = new XMLParser({
+  // xs: new XMLSchemata ('schema.xsd')
+});
+const doc = parser.process(fs.readFileSync('manifest.xml', 'utf8'));
+
+// console.log (parser.validationMessages)
+
+const obj = XMLNode.toObject({wrap: true})(doc);
+console.log (obj);
+
+// or you may operate on `doc` directly
+</code></pre>
+<h2 id="62-extracting-a-single-element"><a class="header" href="#62-extracting-a-single-element">6.2 Extracting a single element</a></h2>
+<p>Suppose you need to locate one piece of data in an XML document. The optimal approach depends on document size and your latency tolerance.</p>
+<h3 id="synchronous-approach-for-small-files"><a class="header" href="#synchronous-approach-for-small-files">Synchronous approach for small files</a></h3>
+<p>For configuration files, small messages etc. this problem is a trivial particular case of thre previuos one:</p>
+<pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
+const fs = require('fs');
+
+const {version} = XMLNode.toObject({wrap: true})(
+  (new XMLParser()).process (fs.readFileSync('manifest.xml', 'utf8'))
+);
+
+console.log (version);
+</code></pre>
+<h3 id="asynchronous-approach-xmlreaderfindfirst"><a class="header" href="#asynchronous-approach-xmlreaderfindfirst">Asynchronous approach: <code>XMLReader.findFirst()</code></a></h3>
+<p>For large files, parsing the entire tree just to extract one value is wasteful. <code>XMLReader.findFirst()</code> stops the parsing on the first node satisfying the condition, and returns it:</p>
+<pre><code class="language-javascript">const { XMLReader } = require('xml-toolkit');
+const fs = require('fs');
+async function extractTargetValue(filepath, targetName) {
+  const reader = new XMLReader({
+    filterElements: targetName
+  })
+    .on('error', err =&gt; console.error(err))
+    .process(fs.createReadStream(filepath));
+
+  const target = await reader.findFirst()
+  if (target === null) throw new Error(`${targetName} not found in ${filepath}`);
+  return target;
+}
+</code></pre>
+<p>The source is read to the end only if the element in question is missing from it.</p>
+<h2 id="63-reading-a-record-list"><a class="header" href="#63-reading-a-record-list">6.3 Reading a record list</a></h2>
+<p>For huge XML with linear structure (i. e. containing one long list of uniform elements), copy/paste/uncomment the necessary of the next code template:</p>
+<pre><code class="language-javascript">const records = new XMLReader ({
+const {XMLReader, XMLNode, XMLSchemata} = require ('xml-toolkit')
+
+const records = new XMLReader ({
+// xs: new XMLSchemata ('schema.xsd'),  
+  map            :  XMLNode.toObject ({}),
+  filterElements : 'Record',
+//filterElements :  e =&gt; e.localName === 'Record'
+//                    &amp;&amp; e.level === 1 
+//                    &amp;&amp; e.attributes.get ('status') === '1'
+//                    &amp;&amp; e.namespaceURI === 'http://shop.example.com'
+})
+  .on('error', err =&gt; console.error(err))
+  .process (xmlSource)
+
+// ...then:
+// records.pipe (nextStream)
+
+// ...or
+// for await (const record of records) {...} // pull parser mode
+
+// ...or
+// records
+//   .on ('end', () =&gt; someSyncEOFHandler ())
+//   .on ('data', record =&gt; doSomethingWith (record))
+
+// ...or
+// await someAsyncFunctionAcceptingReadableStream (records)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="7-generating-well-formed-xml-with-xmlprinter"><a class="header" href="#7-generating-well-formed-xml-with-xmlprinter">7. Generating Well Formed XML with XMLPrinter</a></h1>
+<p>This chapter covers the two primary components in <code>node-xml-toolkit</code> for generating well-formed XML: <code>XMLPrinter</code> and <code>XMLStreamPrinter</code>. Both provide a fluent, chainable API for constructing XML documents programmatically. The choice between them depends on the size of your output and memory constraints.</p>
+<h2 id="71-choosing-the-right-printer"><a class="header" href="#71-choosing-the-right-printer">7.1 Choosing the Right Printer</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Component</th><th>Use Case</th><th>Memory Model</th><th>Output Destination</th></tr>
+</thead>
+<tbody>
+<tr><td><code>XMLPrinter</code></td><td>Small to medium XML fragments (e.g., isolated elements, config snippets)</td><td>Accumulates entire output in <code>.text</code> property (in-memory string)</td><td>Returns complete string via <code>.text</code></td></tr>
+<tr><td><code>XMLStreamPrinter</code></td><td>Large documents, streaming to files/network, memory-constrained environments</td><td>Writes directly to a Writable stream; no in-memory accumulation</td><td>Requires <code>out</code> option: a Node.js <code>stream.Writable</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Rule of thumb</strong>: Use <code>XMLPrinter</code> when the entire XML output fits comfortably in memory. Use <code>XMLStreamPrinter</code> when generating large documents, writing to files, or integrating with HTTP responses.</p>
+<h2 id="72-common-configuration-options"><a class="header" href="#72-common-configuration-options">7.2 Common Configuration Options</a></h2>
+<p>Both printers accept the same constructor options. All are optional:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>decl</code></td><td><code>undefined</code></td><td>If set, automatically writes an XML declaration (<code>&lt;?xml ...?&gt;</code>) with the provided <code>encoding</code> and <code>standalone</code> values</td></tr>
+<tr><td><code>space</code></td><td><code>undefined</code></td><td>Indentation for pretty-printing. Accepts a string (e.g., <code>'\t'</code>) or a number (repeated spaces, e.g., <code>2</code> → <code>'  '</code>). If unset, output is minified (single-line)</td></tr>
+<tr><td><code>attrSpace</code></td><td><code>undefined</code></td><td>Additional indentation for attributes. When set, each attribute appears on its own line, indented relative to the opening tag</td></tr>
+<tr><td><code>EOL</code></td><td><code>os.EOL</code></td><td>Line ending string. Only relevant when <code>space</code> is set</td></tr>
+<tr><td><code>level</code></td><td><code>0</code></td><td>Initial indentation level (number of <code>space</code> units to prepend)</td></tr>
+<tr><td><code>encodeLineBreaks</code></td><td><code>true</code></td><td>When <code>true</code>, replaces <code>\n</code> and <code>\r</code> in text/attributes with numeric entities (<code>&amp;#10;</code>, <code>&amp;#13;</code>) for well-formedness</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="example-pretty-printed-output-with-custom-indentation"><a class="header" href="#example-pretty-printed-output-with-custom-indentation">Example: Pretty-printed output with custom indentation</a></h3>
+<pre><code class="language-javascript">const {XMLPrinter} = require('xml-toolkit');
+
+const xp = new XMLPrinter({
+  space: 2,              // 2-space indentation
+  attrSpace: '  ',       // Attributes on new lines, indented 2 extra spaces
+  decl: { encoding: 'UTF-8' } // Auto-write XML declaration
+});
+</code></pre>
+<h2 id="73-core-api-low-level-methods"><a class="header" href="#73-core-api-low-level-methods">7.3 Core API: Low-Level Methods</a></h2>
+<p>Both printers expose the same chainable methods. Each returns <code>this</code> to enable fluent composition.</p>
+<h3 id="reset"><a class="header" href="#reset"><code>reset()</code></a></h3>
+<p>(<code>XMLPrinter</code> only) Resets internal state: clears accumulated text, empties the element stack, and applies the <code>decl</code> option if present. Called automatically by the constructor.</p>
+<h3 id="writexmldeclencoding-standalone"><a class="header" href="#writexmldeclencoding-standalone"><code>writeXMLDecl({encoding, standalone})</code></a></h3>
+<p>Writes an XML declaration. Must be called before any elements. The <code>standalone</code> value is normalized: truthy → <code>'yes'</code>, falsy → <code>'no'</code>.</p>
+<pre><code class="language-javascript">xp.writeXMLDecl({ encoding: 'UTF-8', standalone: true });
+// Output: &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+</code></pre>
+<h3 id="openelementname"><a class="header" href="#openelementname"><code>openElement(name)</code></a></h3>
+<p>Begins an element: writes <code>&lt;${name}</code> and marks the tag as “open” for attribute appending. Pushes <code>name</code> onto the internal stack.</p>
+<h3 id="writeattributename-value"><a class="header" href="#writeattributename-value"><code>writeAttribute(name, value)</code></a></h3>
+<p>Appends an attribute to the currently open element. Both <code>name</code> and <code>value</code> must be strings. Values are automatically escaped for XML attribute context.</p>
+<pre><code class="language-javascript">xp.openElement('item')
+  .writeAttribute('id', '123')
+  .writeAttribute('status', 'active &amp; pending');
+// Output: &lt;item id="123" status="active &amp;amp; pending"
+</code></pre>
+<h3 id="writecharactersvalue"><a class="header" href="#writecharactersvalue"><code>writeCharacters(value)</code></a></h3>
+<p>Writes text content with automatic escaping for XML character data (<code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"</code>, and—optionally—line breaks).</p>
+<pre><code class="language-javascript">xp.writeCharacters('5 &lt; 10 &amp;&amp; 3 &gt; 1');
+// Output: 5 &amp;lt; 10 &amp;amp;&amp;amp; 3 &amp;gt; 1
+</code></pre>
+<h3 id="writebodyvalue"><a class="header" href="#writebodyvalue"><code>writeBody(value)</code></a></h3>
+<p>Writes raw XML content <em>without</em> escaping. Use only when <code>value</code> is a pre-validated, well-formed XML fragment (e.g., for embedding <code>xs:any</code> content). Throws if called outside an element context.</p>
+<h3 id="closeelement"><a class="header" href="#closeelement"><code>closeElement()</code></a></h3>
+<p>Closes the most recently opened element. If no content was added, emits a self-closing tag (<code>&lt;name /&gt;</code>); otherwise, emits <code>&lt;/name&gt;</code>. Pops the element name from the internal stack.</p>
+<h2 id="74-convenience-method-writenodenode"><a class="header" href="#74-convenience-method-writenodenode">7.4 Convenience Method: <code>writeNode(node)</code></a></h2>
+<p>For cases where you already have a structured representation generated by <code>XMLParser</code> or <code>XMLReader</code>, <code>writeNode</code> recursively serializes an <code>XMLNode</code> object:</p>
+<ul>
+<li>Handles element names, attributes, and child nodes</li>
+<li>Automatically emits necessary <code>xmlns</code> and <code>xmlns:prefix</code> declarations if the node includes a <code>namespacesMap</code></li>
+<li>Escapes text content appropriately</li>
+</ul>
+<pre><code class="language-javascript">// Assuming `node` is an XMLNode instance from xml-toolkit's parser
+xp.writeNode(node);
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: Namespace consistency is the caller’s responsibility unless using <code>writeNode</code>, which inspects <code>namespacesMap</code>.</p>
+</blockquote>
+<h2 id="75-using-xmlprinter-in-memory-generation"><a class="header" href="#75-using-xmlprinter-in-memory-generation">7.5 Using XMLPrinter: In-Memory Generation</a></h2>
+<p><code>XMLPrinter</code> accumulates output in the <code>.text</code> property. This is convenient for small outputs but risks memory exhaustion for large documents.</p>
+<h3 id="basic-example"><a class="header" href="#basic-example">Basic Example</a></h3>
+<pre><code class="language-javascript">const {XMLPrinter} = require('xml-toolkit');
+
+const xp = new XMLPrinter({ space: 2 });
+
+const xml = xp
+  .openElement('catalog')
+    .writeAttribute('updated', '2026-04-24')
+    .openElement('product')
+      .writeAttribute('id', 'p1')
+      .openElement('name')
+        .writeCharacters('Widget')
+      .closeElement()
+      .openElement('price')
+        .writeCharacters('19.99')
+      .closeElement()
+    .closeElement()
+  .closeElement()
+  .text;
+
+console.log(xml);
+</code></pre>
+<h3 id="reusing-a-printer-instance"><a class="header" href="#reusing-a-printer-instance">Reusing a Printer Instance</a></h3>
+<p>Call <code>reset()</code> to clear state and reuse the same instance for multiple independent fragments:</p>
+<pre><code class="language-javascript">const xp = new XMLPrinter({ space: 2 });
+
+// First fragment
+const frag1 = xp.openElement('a').writeCharacters('x').closeElement().text;
+
+// Reset and generate another
+xp.reset();
+const frag2 = xp.openElement('b').writeCharacters('y').closeElement().text;
+</code></pre>
+<h2 id="76-using-xmlstreamprinter-streaming-to-a-destination"><a class="header" href="#76-using-xmlstreamprinter-streaming-to-a-destination">7.6 Using XMLStreamPrinter: Streaming to a Destination</a></h2>
+<p><code>XMLStreamPrinter</code> writes directly to a Node.js <code>Writable</code> stream. It does not accumulate output in memory and does not expose a <code>.text</code> property.</p>
+<h3 id="basic-example-writing-to-a-file"><a class="header" href="#basic-example-writing-to-a-file">Basic Example: Writing to a File</a></h3>
+<pre><code class="language-javascript">const fs = require('node:fs');
+const {XMLStreamPrinter} = require('xml-toolkit');
+
+const out = fs.createWriteStream('output.xml');
+const xp = new XMLStreamPrinter({ out, space: 2 });
+
+xp
+  .openElement('report')
+    .openElement('summary')
+      .writeCharacters('Q1 2026 results')
+    .closeElement()
+  .closeElement();
+
+out.end(); // Finalizes the stream
+</code></pre>
+<h3 id="stream-lifecycle-notes"><a class="header" href="#stream-lifecycle-notes">Stream Lifecycle Notes</a></h3>
+<ul>
+<li>The printer monitors the destination stream’s <code>drain</code> event to apply backpressure automatically.</li>
+<li>The printer exposes <code>.destroy(err)</code> and <code>.end()</code> getters that delegate to the underlying stream.</li>
+</ul>
+<h3 id="advanced-integrating-with-transform-streams"><a class="header" href="#advanced-integrating-with-transform-streams">Advanced: Integrating with Transform Streams</a></h3>
+<p><code>XMLStreamPrinter</code> supports controlled streaming via its <code>forEach(stream, onData)</code> method (experimental). This allows pausing/resuming the input stream based on destination readiness. Nested streams are not yet supported.</p>
+<hr>
+<h2 id="77-escaping-and-well-formedness-guarantees"><a class="header" href="#77-escaping-and-well-formedness-guarantees">7.7 Escaping and Well-Formedness Guarantees</a></h2>
+<p>Both printers enforce XML well-formedness through automatic escaping:</p>
+<ul>
+<li><strong>Attribute values</strong>: <code>"</code> → <code>&amp;quot;</code>, <code>&lt;</code> → <code>&amp;lt;</code>, <code>&gt;</code> → <code>&amp;gt;</code>, <code>&amp;</code> → <code>&amp;amp;</code>, and (by default) line breaks → <code>&amp;#10;</code>/<code>&amp;#13;</code></li>
+<li><strong>Character data</strong>: Same as above, except <code>"</code> is not escaped</li>
+<li><strong>Line break handling</strong>: Controlled by <code>encodeLineBreaks</code>. Set to <code>false</code> only if you guarantee input contains no unescaped line breaks in contexts where they would break well-formedness</li>
+</ul>
+<blockquote>
+<p><strong>Critical</strong>: All <code>value</code> arguments to <code>writeAttribute</code> and <code>writeCharacters</code> must be strings. Numbers, <code>null</code>, <code>undefined</code>, or objects will throw. Convert explicitly: <code>String(value)</code> or format properly.</p>
+</blockquote>
+<h2 id="78-namespaces-practical-guidance"><a class="header" href="#78-namespaces-practical-guidance">7.8 Namespaces: Practical Guidance</a></h2>
+<p>The low-level API treats element and attribute names as opaque strings. You may include colons (e.g., <code>'xsi:type'</code>) manually:</p>
+<pre><code class="language-javascript">xp.openElement('root')
+  .writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
+  .writeAttribute('xsi:schemaLocation', '...')
+  .openElement('xsi:item') // Prefix used directly
+  .closeElement()
+.closeElement();
+</code></pre>
+<p>For automatic namespace declaration handling, use <code>writeNode(node)</code> with a node that includes a <code>namespacesMap</code> (a <code>Map</code> of prefix → URI, with an optional <code>default</code> property for the default namespace).</p>
+<h2 id="79-complete-example-generating-a-feed-document"><a class="header" href="#79-complete-example-generating-a-feed-document">7.9 Complete Example: Generating a Feed Document</a></h2>
+<pre><code class="language-javascript">const fs = require('node:fs');
+const {XMLStreamPrinter} = require('xml-toolkit');
+
+function generateFeed(items, outputPath) {
+  return new Promise((resolve, reject) =&gt; {
+    const out = fs.createWriteStream(outputPath);
+    const xp = new XMLStreamPrinter({
+      out,
+      space: 2,
+      decl: { encoding: 'UTF-8' }
+    });
+
+    xp.openElement('feed')
+      .writeAttribute('xmlns', 'http://www.w3.org/2005/Atom');
+
+    for (const item of items) {
+      xp.openElement('entry')
+        .openElement('title')
+          .writeCharacters(item.title)
+        .closeElement()
+        .openElement('content')
+          .writeCharacters(item.body)
+        .closeElement()
+      .closeElement();
+    }
+
+    xp.closeElement(); // Close &lt;feed&gt;
+    out.on('finish', resolve);
+    out.on('error', reject);
+    out.end();
+  });
+}
+
+// Usage
+generateFeed([
+  { title: 'First Post', body: 'Hello &amp; welcome!' },
+  { title: 'Second Post', body: 'More content &lt;here&gt;' }
+], 'feed.xml')
+.then(() =&gt; console.log('Done'))
+.catch(console.error);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="8-schema-driven-serialization-with-xmlmarshaller"><a class="header" href="#8-schema-driven-serialization-with-xmlmarshaller">8. Schema-Driven Serialization with XMLMarshaller</a></h1>
+<p>Generating XML from JavaScript objects is a common requirement in API clients, message brokers, and data export pipelines. However, producing structurally valid XML manually is error-prone. <code>XMLMarshaller</code> bridges this gap by using XML Schema (XSD) definitions to automatically transform plain JavaScript objects into well-formed, schema-compliant XML documents. This chapter covers schema loading, object mapping strategies, namespace handling, and troubleshooting techniques.</p>
+<h2 id="81-loading-and-indexing-xml-schema-definitions"><a class="header" href="#81-loading-and-indexing-xml-schema-definitions">8.1 Loading and indexing XML Schema definitions</a></h2>
+<p><code>XMLMarshaller</code> relies on <code>XMLSchemata</code> to understand the target structure, data types, and cardinality constraints. Proper schema management is the foundation of reliable serialization.</p>
+<pre><code class="language-javascript">const { XMLSchemata, XMLMarshaller } = require('xml-toolkit');
+const schemata = new XMLSchemata('schemas/order.xsd');
+</code></pre>
+<p>Schema parsing and type resolution have upfront costs. In long-running applications (HTTP servers, workers, CLI tools processing multiple files), reuse a single <code>XMLSchemata</code> instance:</p>
+<pre><code class="language-javascript">// Application initialization
+const globalSchemata = new XMLSchemata('schemas/order.xsd');
+
+// Route handler or worker function
+function someHandler() {
+  const marshaller = globalSchemata.createMarshaller(
+    'Order'                       // localName
+    // , 'http://tempuri.org/'    // namespace URI, if available
+  )
+  // use the `marshaller` instance in this scope
+}
+</code></pre>
+<p>This avoids redundant parsing, reduces startup latency, and ensures consistent type coercion across your application.</p>
+<h2 id="82-mapping-javascript-objects-to-schema-compliant-xml"><a class="header" href="#82-mapping-javascript-objects-to-schema-compliant-xml">8.2 Mapping JavaScript objects to schema-compliant XML</a></h2>
+<p>The core challenge in XML serialization is the structural mismatch between JavaScript objects and XML trees. <code>XMLMarshaller</code> uses a deterministic mapping algorithm that interprets object keys as element names, handles arrays for repeated elements, and applies a convention for attributes.</p>
+<h3 id="basic-object-structure-convention"><a class="header" href="#basic-object-structure-convention">Basic object structure convention</a></h3>
+<pre><code class="language-javascript">const marshaller = new XMLMarshaller({ schemata });
+
+const orderData = {
+  id: 'ORD-9921',
+  status: 'pending',
+  customer: {
+    name: 'Acme Corp',
+    contact: 'ops@acme.example.com'
+  },
+  items: [
+    { sku: 'WDG-01', quantity: 5, unitPrice: 12.50 },
+    { sku: 'WDG-02', quantity: 2, unitPrice: 45.00 }
+  ]
+};
+
+const xml = marshaller.stringify(orderData);
+</code></pre>
+<h3 id="how-the-mapper-interprets-objects"><a class="header" href="#how-the-mapper-interprets-objects">How the mapper interprets objects</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>JavaScript construct</th><th>XML mapping behavior</th></tr>
+</thead>
+<tbody>
+<tr><td>String/Number/Boolean</td><td>Converted to text content of the enclosing element</td></tr>
+<tr><td>Nested Object</td><td>Serialized as a child element</td></tr>
+<tr><td>Array of Objects/Primitives</td><td>Each item becomes a sibling element with the parent key’s name</td></tr>
+<tr><td><code>null</code> / <code>undefined</code></td><td>Omitted entirely (when <code>minOccurs="0"</code>) or <code>xsi:nil</code> (for <code>nillable</code> elements)</td></tr>
+<tr><td>Dates (<code>Date</code> objects)</td><td>Serialized according to <code>xs:date</code> or <code>xs:dateTime</code> format rules</td></tr>
+</tbody>
+</table>
+</div>
+<p>XML distinguishes between child elements and attributes, while JavaScript objects do not which may lead to collisions. On the other hand, a schema allowing element like</p>
+<pre><code class="language-xml">  &lt;object id="1"&gt; &lt;!-- `id` as an attribute --&gt;
+    &lt;id&gt;2&lt;/id&gt;    &lt;!-- `id` as a child element --&gt;
+  &lt;/object&gt;
+</code></pre>
+<p>seems extremely unlikely to be used in a real application. As of this writing, <code>XMLMarshaller</code> does nothing to address this potential issue.</p>
+<p>The same logic applies to possible namespace conflicts.</p>
+<h3 id="type-coercion-and-validation-during-marshalling"><a class="header" href="#type-coercion-and-validation-during-marshalling">Type coercion and validation during marshalling</a></h3>
+<p>The marshaller <em>partially</em> validates your JavaScript data against the schema before generating XML. Fatal type mismatches are caught early:</p>
+<pre><code class="language-javascript">// Schema expects xs:integer for quantity, but receives a string
+const badItem = { sku: 'WDG-01', quantity: 'five', unitPrice: 12.50 };
+
+try {
+  marshaller.stringify({ items: [badItem] }, 'Order');
+} catch (err) {
+  console.error (err)
+}
+</code></pre>
+<p>It worth bearing in mind that <code>XMLMarshaller</code> considers the XML schema as a blueprint for generating text, not as a set of rules to check. This is why validation errors occur only in cases when <code>XMLMarshaller</code> have completely no idea how to serialize a value: say a Boolean as a timestamp. For most non-textual values, the default <code>String()</code> conversion is used, so the output may occur to be invalid in ters of the schema. Ultimately, the proper formatting of numbers, dates etc. is left on the developer’s responsibility.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="9-soap-fundamentals-in-node-xml-toolkit"><a class="header" href="#9-soap-fundamentals-in-node-xml-toolkit">9. SOAP Fundamentals in node-xml-toolkit</a></h1>
+<p>The <code>node-xml-toolkit</code> library provides first-class support for SOAP web services through dedicated classes that bridge the gap between plain JavaScript objects and the XML-based SOAP protocol. Unlike many Node.js SOAP libraries that wrap external dependencies, <code>node-xml-toolkit</code> implements SOAP functionality using its own XML parsing and serialization infrastructure, maintaining the library’s core philosophy of minimal dependencies and maximum control.</p>
+<p>This section introduces the foundational concepts for working with SOAP in <code>node-xml-toolkit</code>, covering WSDL interpretation, version support, and message construction patterns.</p>
+<h2 id="91-wsdl-interpretation-and-service-discovery"><a class="header" href="#91-wsdl-interpretation-and-service-discovery">9.1 WSDL interpretation and service discovery</a></h2>
+<p>At the heart of SOAP integration in <code>node-xml-toolkit</code> is the ability to parse and interpret WSDL (Web Services Description Language) documents. When you instantiate a <code>SOAP11</code> or <code>SOAP12</code> client with a WSDL file path, the library performs several discovery steps automatically:</p>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+const soap = new SOAP11('service.wsdl')
+</code></pre>
+<h3 id="how-wsdl-parsing-works"><a class="header" href="#how-wsdl-parsing-works">How WSDL parsing works</a></h3>
+<ol>
+<li>
+<p><strong>Schema loading</strong>: The constructor loads the WSDL file using <code>XMLSchemata</code>, which parses the document into an internal tree representation of <code>XMLNode</code> objects.</p>
+</li>
+<li>
+<p><strong>Definition extraction</strong>: The library scans the parsed document for <code>&lt;wsdl:definitions&gt;</code> elements (namespace <code>http://schemas.xmlsoap.org/wsdl/</code>) and stores them in the <code>definitions</code> array for later lookup.</p>
+</li>
+<li>
+<p><strong>Metadata indexing</strong>: Several helper methods enable service discovery without manual XML traversal:</p>
+</li>
+</ol>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Method</th><th>Purpose</th><th>Returns</th></tr>
+</thead>
+<tbody>
+<tr><td><code>getMessageLocalNameByElementLocalName(elementName)</code></td><td>Maps a request element name to its containing <code>&lt;wsdl:message&gt;</code></td><td>Message name string</td></tr>
+<tr><td><code>getOperationNameByMessageLocalName(messageName)</code></td><td>Finds the <code>&lt;wsdl:operation&gt;</code> that uses a given message</td><td>Operation name string</td></tr>
+<tr><td><code>getSoapActionByOperationName(operationName)</code></td><td>Retrieves the <code>soapAction</code> HTTP header value for an operation</td><td>SOAPAction string</td></tr>
+<tr><td><code>getSoapActionByElementLocalName(elementName)</code></td><td>Convenience method: element name → SOAPAction</td><td>SOAPAction string</td></tr>
+</tbody>
+</table>
+</div>
+<p>These methods enable a declarative workflow: you provide a plain JavaScript object keyed by your request element name, and the library automatically determines the correct SOAPAction header and message structure.</p>
+<h3 id="service-discovery-pattern"><a class="header" href="#service-discovery-pattern">Service discovery pattern</a></h3>
+<pre><code class="language-javascript">// Given a WSDL with a method accepting &lt;GetUser&gt; elements:
+const requestPayload = {GetUser: {userId: '12345'}}
+const {method, headers, body} = soap.http(requestPayload)
+// headers.SOAPAction is automatically populated from WSDL metadata
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: WSDL parsing in <code>node-xml-toolkit</code> focuses on the structural metadata needed for message construction. Advanced WSDL features like complex binding configurations or policy assertions are not fully interpreted—this aligns with the library’s “forever beta” stance on XML Schema and WSDL support.</p>
+</blockquote>
+<h2 id="92-soap-11-vs-soap-12-support"><a class="header" href="#92-soap-11-vs-soap-12-support">9.2 SOAP 1.1 vs. SOAP 1.2 support</a></h2>
+<p><code>node-xml-toolkit</code> provides separate classes for each major SOAP version, reflecting their distinct protocol requirements:</p>
+<h3 id="soap-11-soap11-class"><a class="header" href="#soap-11-soap11-class">SOAP 1.1 (<code>SOAP11</code> class)</a></h3>
+<ul>
+<li><strong>Namespace</strong>: <code>http://schemas.xmlsoap.org/soap/envelope/</code></li>
+<li><strong>Content-Type</strong>: <code>text/xml; charset=utf-8</code> [[4]]</li>
+<li><strong>Fault structure</strong>: Uses <code>faultcode</code>, <code>faultstring</code>, <code>faultactor</code>, and <code>detail</code> elements</li>
+<li><strong>SOAPAction header</strong>: Required; extracted from WSDL <code>&lt;soap:operation soapAction="..."&gt;</code> or WS-Addressing <code>Action</code> attribute [[4]]</li>
+</ul>
+<h3 id="soap-12-soap12-class"><a class="header" href="#soap-12-soap12-class">SOAP 1.2 (<code>SOAP12</code> class)</a></h3>
+<ul>
+<li><strong>Namespace</strong>: <code>http://www.w3.org/2003/05/soap-envelope</code></li>
+<li><strong>Content-Type</strong>: <code>application/soap+xml; charset=utf-8</code> [[4]]</li>
+<li><strong>Fault structure</strong>: Uses <code>Code</code>, <code>Reason</code>, <code>Role</code>, and <code>Detail</code> with nested <code>Value</code>/<code>Text</code> elements</li>
+<li><strong>SOAPAction header</strong>: Not required by spec; header management is simplified</li>
+</ul>
+<h3 id="version-selection"><a class="header" href="#version-selection">Version selection</a></h3>
+<p>Use the factory helper for dynamic version selection:</p>
+<pre><code class="language-javascript">const {SOAP} = require('xml-toolkit')
+const SoapClient = SOAP('1.1') // or '1.2'
+const client = new SoapClient('service.wsdl')
+</code></pre>
+<h3 id="fault-handling-consistency"><a class="header" href="#fault-handling-consistency">Fault handling consistency</a></h3>
+<p>Both classes expose a static <code>createError()</code> method that generates HTTP 500 errors with properly formatted SOAP Fault bodies, enabling consistent server-side error responses:</p>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+// In an Express route handler:
+if (validationFailed) {
+  throw SOAP11.createError({
+    code: 'Client',
+    message: 'Invalid request format',
+    detail: {errors: ['missing userId']}
+  })
+}
+</code></pre>
+<h2 id="93-message-construction-and-encoding"><a class="header" href="#93-message-construction-and-encoding">9.3 Message construction and encoding</a></h2>
+<p>The primary interface for building SOAP messages is the <code>http()</code> method, which transforms a plain JavaScript object into a complete HTTP request configuration.</p>
+<h3 id="basic-message-construction"><a class="header" href="#basic-message-construction">Basic message construction</a></h3>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+const soap = new SOAP11('service.wsdl')
+
+const {method, headers, body} = soap.http({
+  CreateUser: {
+    username: 'alice',
+    email: 'alice@example.com'
+  }
+})
+
+// Result:
+// method: 'POST'
+// headers: {
+//   'Content-Type': 'text/xml; charset=utf-8',
+//   'SOAPAction': 'http://example.com/CreateUser' // auto-extracted
+// }
+// body: '&lt;soap:Envelope&gt;...&lt;CreateUser&gt;...&lt;/CreateUser&gt;...&lt;/soap:Envelope&gt;'
+</code></pre>
+<h3 id="how-serialization-works"><a class="header" href="#how-serialization-works">How serialization works</a></h3>
+<ol>
+<li>
+<p><strong>Object → XML</strong>: The request payload is serialized using <code>XMLSchemata.stringify()</code>, which leverages the WSDL’s embedded XML Schema definitions to produce namespace-aware, schema-compliant XML.</p>
+</li>
+<li>
+<p><strong>Envelope wrapping</strong>: The serialized body element is wrapped in a <code>&lt;soap:Envelope&gt;</code> with optional <code>&lt;soap:Header&gt;</code> support:</p>
+<pre><code class="language-javascript">// With custom header:
+const header = {Security: {Token: 'abc123'}}
+const {body} = soap.http({CreateUser: {...}}, header)
+</code></pre>
+</li>
+<li>
+<p><strong>Encoding declaration</strong>: UTF-8 is used by default; the XML declaration is included in the envelope [[4]].</p>
+</li>
+</ol>
+<h3 id="decoding-responses-with-soapencoding"><a class="header" href="#decoding-responses-with-soapencoding">Decoding responses with SOAPEncoding</a></h3>
+<p>For responses using SOAP encoding styles (e.g., <code>soapenc:Array</code>, <code>soap:Map</code>), the <code>SOAPEncoding</code> helper decodes XML nodes back to JavaScript values:</p>
+<pre><code class="language-javascript">const {SOAPEncoding} = require('xml-toolkit')
+const decoder = new SOAPEncoding({emptyScalar: null})
+
+// Given a parsed XMLNode from a SOAP response:
+const result = decoder.decode(responseNode)
+// Handles xsi:nil, xsi:type, soapenc:Array, soap:Map automatically
+</code></pre>
+<p>Supported decoding rules [[4]]:</p>
+<ul>
+<li><code>xsi:nil="true"</code> → <code>null</code></li>
+<li><code>xsi:type="xs:string"</code> → string value</li>
+<li><code>soapenc:Array</code> → JavaScript array</li>
+<li><code>soap:Map</code> → JavaScript object with key/value pairs</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="10-invoking-soap-services"><a class="header" href="#10-invoking-soap-services">10. Invoking SOAP Services</a></h1>
+<p>With the SOAP fundamentals established in the previous section, this chapter walks through the practical workflow for invoking SOAP web services using <code>node-xml-toolkit</code>. The library’s approach emphasizes minimal abstraction: you construct the HTTP request configuration, then use Node.js’s native <code>http</code> or <code>https</code> modules to transmit it. This design keeps dependencies low while giving you full control over transport-layer behavior like timeouts, retries, and connection pooling .</p>
+<h2 id="101-creating-a-soap-client-from-wsdl"><a class="header" href="#101-creating-a-soap-client-from-wsdl">10.1 Creating a SOAP client from WSDL</a></h2>
+<p>The entry point for SOAP integration is instantiating either <code>SOAP11</code> or <code>SOAP12</code> with a path to a WSDL document:</p>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+
+// Load and parse the WSDL at construction time
+const soap = new SOAP11('service.wsdl')
+</code></pre>
+<h3 id="what-happens-during-construction"><a class="header" href="#what-happens-during-construction">What happens during construction</a></h3>
+<ol>
+<li>
+<p><strong>WSDL parsing</strong>: The constructor creates an internal <code>XMLSchemata</code> instance to parse the WSDL file into a tree of <code>XMLNode</code> objects.</p>
+</li>
+<li>
+<p><strong>Definition indexing</strong>: The client scans for <code>&lt;wsdl:definitions&gt;</code> elements (namespace <code>http://schemas.xmlsoap.org/wsdl/</code>) and stores them in the <code>definitions</code> array for metadata lookups.</p>
+</li>
+<li>
+<p><strong>Schema caching</strong>: The embedded SOAP envelope schema (<code>soap-1.1.xsd</code> or <code>soap-1.2.xsd</code>) is loaded once and cached statically for message validation.</p>
+</li>
+</ol>
+<h3 id="reusing-clients"><a class="header" href="#reusing-clients">Reusing clients</a></h3>
+<p>Because WSDL parsing occurs only once at construction, you should reuse SOAP client instances across requests:</p>
+<pre><code class="language-javascript">// ✅ Recommended: singleton or module-level instance
+const soapClient = new SOAP11('service.wsdl')
+
+module.exports = {
+  callService: async (payload) =&gt; {
+    const {method, headers, body} = soapClient.http(payload)
+    // ... send request
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The WSDL file path is resolved relative to the caller’s working directory. For production deployments, consider using <code>path.join(__dirname, 'wsdl/service.wsdl')</code> for reliable resolution.</p>
+</blockquote>
+<h2 id="102-building-request-payloads-from-plain-objects"><a class="header" href="#102-building-request-payloads-from-plain-objects">10.2 Building request payloads from plain objects</a></h2>
+<p>The <code>http()</code> method is the primary interface for constructing SOAP requests. It accepts a plain JavaScript object and returns a complete HTTP request configuration.</p>
+<h3 id="basic-payload-structure"><a class="header" href="#basic-payload-structure">Basic payload structure</a></h3>
+<pre><code class="language-javascript">const {method, headers, body} = soap.http({
+  GetUser: {              // ← Request element name from WSDL
+    userId: '12345',      // ← Child elements become XML children
+    includeProfile: true
+  }
+})
+</code></pre>
+<h3 id="how-the-transformation-works"><a class="header" href="#how-the-transformation-works">How the transformation works</a></h3>
+<ol>
+<li>
+<p><strong>Element name resolution</strong>: The library uses the object’s top-level key (<code>GetUser</code>) to:</p>
+<ul>
+<li>Locate the corresponding <code>&lt;wsdl:message&gt;</code> in the parsed WSDL</li>
+<li>Extract the <code>soapAction</code> HTTP header value via <code>getSoapActionByElementLocalName()</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Schema-based serialization</strong>: The payload object is passed to <code>XMLSchemata.stringify()</code>, which uses the WSDL’s embedded XML Schema definitions to produce namespace-aware, schema-compliant XML.</p>
+</li>
+<li>
+<p><strong>Envelope wrapping</strong>: The serialized body element is wrapped in a <code>&lt;soap:Envelope&gt;</code> with proper namespace declarations:</p>
+</li>
+</ol>
+<pre><code class="language-xml">&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;soap:Body&gt;
+    &lt;GetUser xmlns="urn:service:types"&gt;
+      &lt;userId&gt;12345&lt;/userId&gt;
+      &lt;includeProfile&gt;true&lt;/includeProfile&gt;
+    &lt;/GetUser&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;
+</code></pre>
+<h3 id="dynamic-soapaction-resolution"><a class="header" href="#dynamic-soapaction-resolution">Dynamic SOAPAction resolution</a></h3>
+<p>The library automatically populates the <code>SOAPAction</code> header by traversing the WSDL metadata:</p>
+<pre><code class="language-javascript">// Internal lookup chain:
+// element name → message name → operation name → soapAction attribute
+headers.SOAPAction = soap.getSoapActionByElementLocalName('GetUser')
+// Returns: "http://example.com/GetUser" (from WSDL)
+</code></pre>
+<p>If the WSDL lacks explicit <code>soapAction</code> attributes, the client falls back to WS-Addressing <code>Action</code> attributes or returns an empty string.</p>
+<h2 id="103-sending-requests-with-nodejs-httphttps"><a class="header" href="#103-sending-requests-with-nodejs-httphttps">10.3 Sending requests with Node.js http/https</a></h2>
+<p>Once you have the <code>{method, headers, body}</code> configuration, use Node.js’s built-in HTTP modules to transmit the request.</p>
+<h3 id="basic-http-request"><a class="header" href="#basic-http-request">Basic HTTP request</a></h3>
+<pre><code class="language-javascript">const http = require('http')
+const {SOAP11} = require('xml-toolkit')
+
+const soap = new SOAP11('service.wsdl')
+const endpoint = 'http://api.example.com/soap'
+
+const {method, headers, body} = soap.http({
+  CreateUser: {username: 'alice', email: 'alice@example.com'}
+})
+
+const req = http.request(endpoint, {method, headers}, (res) =&gt; {
+  let data = ''
+  res.setEncoding('utf8')
+  res.on('data', chunk =&gt; data += chunk)
+  res.on('end', () =&gt; {
+    if (res.statusCode === 200) {
+      console.log('Response body:', data)
+      // Parse response XML here (see Section 11.4)
+    } else {
+      console.error('HTTP error:', res.statusCode, data)
+    }
+  })
+})
+
+req.on('error', (err) =&gt; console.error('Request failed:', err))
+req.write(body)
+req.end()
+</code></pre>
+<h3 id="https-with-tls-options"><a class="header" href="#https-with-tls-options">HTTPS with TLS options</a></h3>
+<p>For secure endpoints, use the <code>https</code> module with custom TLS configuration:</p>
+<pre><code class="language-javascript">const https = require('https')
+const fs = require('fs')
+
+const {method, headers, body} = soap.http({SecureOperation: {...}})
+
+const req = https.request('https://api.example.com/soap', {
+  method,
+  headers,
+  key: fs.readFileSync('client-key.pem'),
+  cert: fs.readFileSync('client-cert.pem'),
+  ca: [fs.readFileSync('ca-cert.pem')]
+}, handleResponse)
+
+req.write(body)
+req.end()
+</code></pre>
+<h2 id="104-parsing-and-handling-responses-and-faults"><a class="header" href="#104-parsing-and-handling-responses-and-faults">10.4 Parsing and handling responses and faults</a></h2>
+<p>After sending a request, you’ll need to parse the SOAP response and handle potential faults. The library provides utilities for both tasks.</p>
+<h3 id="parsing-successful-responses"><a class="header" href="#parsing-successful-responses">Parsing successful responses</a></h3>
+<p>Use <code>XMLParser</code> for small responses or <code>XMLReader</code> for streaming large responses:</p>
+<pre><code class="language-javascript">const {XMLParser} = require('xml-toolkit')
+
+// Parse the response body string
+const parser = new XMLParser()
+const responseDoc = parser.process(responseBody)
+
+// Navigate to the response element
+const result = responseDoc.children
+  .find(n =&gt; n.localName === 'GetUserResponse')
+  ?.children
+  ?.find(n =&gt; n.localName === 'userData')
+
+if (result) {
+  const userData = XMLNode.toObject({})(result) // Convert to plain JS object
+  console.log('User data:', userData)
+}
+</code></pre>
+<h3 id="decoding-soap-encoded-values"><a class="header" href="#decoding-soap-encoded-values">Decoding SOAP-encoded values</a></h3>
+<p>For responses using SOAP encoding styles (<code>soapenc:Array</code>, <code>soap:Map</code>), use the <code>SOAPEncoding</code> helper:</p>
+<pre><code class="language-javascript">const {SOAPEncoding, XMLParser} = require('xml-toolkit')
+
+const decoder = new SOAPEncoding({emptyScalar: null})
+const parser = new XMLParser()
+const responseDoc = parser.process(responseBody)
+
+// Find the encoded element (e.g., xsi:type="soapenc:Array")
+const encodedNode = responseDoc.children
+  .find(n =&gt; n.attributes.get('type', 'http://www.w3.org/2001/XMLSchema-instance')?.includes('Array'))
+
+if (encodedNode) {
+  const decoded = decoder.decode(encodedNode)
+  console.log('Decoded array:', decoded) // Now a native JavaScript array
+}
+</code></pre>
+<p>Supported decoding rules [[2]]:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>XML Attribute</th><th>JavaScript Result</th></tr>
+</thead>
+<tbody>
+<tr><td><code>xsi:nil="true"</code></td><td><code>null</code></td></tr>
+<tr><td><code>xsi:type="xs:string"</code></td><td>String value</td></tr>
+<tr><td><code>soapenc:Array</code></td><td>JavaScript <code>Array</code></td></tr>
+<tr><td><code>soap:Map</code></td><td>JavaScript <code>Object</code> with key/value pairs</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="handling-soap-faults"><a class="header" href="#handling-soap-faults">Handling SOAP faults</a></h3>
+<p>When a service returns a fault, the response body contains a <code>&lt;soap:Fault&gt;</code> element. You can detect and parse it manually, or use the library’s <code>SOAPFault</code> helper:</p>
+<pre><code class="language-javascript">const {SOAP11, XMLParser} = require('xml-toolkit')
+
+if (res.statusCode !== 200) {
+  const parser = new XMLParser()
+  const faultDoc = parser.process(responseBody)
+  
+  const faultNode = faultDoc.children
+    .find(n =&gt; n.localName === 'Fault')
+  
+  if (faultNode) {
+    // Extract fault details
+    const faultCode = faultNode.children
+      .find(n =&gt; n.localName === 'faultcode')?.src
+    const faultString = faultNode.children
+      .find(n =&gt; n.localName === 'faultstring')?.src
+    
+    console.error(`SOAP Fault [${faultCode}]: ${faultString}`)
+    throw new Error(`SOAP Error: ${faultString}`)
+  }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="11-implementing-a-soap-service-server-side"><a class="header" href="#11-implementing-a-soap-service-server-side">11. Implementing a SOAP Service (Server-Side)</a></h1>
+<p>While <code>node-xml-toolkit</code> is often used as a SOAP client, its architecture is equally suited for implementing server-side SOAP endpoints. The same <code>SOAP11</code> and <code>SOAP12</code> classes that build outbound requests can also construct compliant response envelopes, and the library’s schema-aware serialization ensures your replies match the WSDL contract. This section covers the complete server-side workflow: receiving requests, validating payloads, constructing responses, and handling faults.</p>
+<blockquote>
+<p><strong>Design note</strong>: The library intentionally avoids high-level server abstractions (like Express middleware wrappers). Instead, it provides low-level, composable primitives that integrate cleanly with any Node.js HTTP framework—aligning with the project’s philosophy of minimal dependencies and maximum control.</p>
+</blockquote>
+<h2 id="111-receiving-and-parsing-soap-requests"><a class="header" href="#111-receiving-and-parsing-soap-requests">11.1 Receiving and parsing SOAP requests</a></h2>
+<p>When a SOAP request arrives at your endpoint, the first step is to parse the XML envelope and extract the body payload. <code>node-xml-toolkit</code> offers two parsing strategies depending on payload size and performance requirements.</p>
+<h3 id="parsing-with-xmlparser-smallmedium-payloads"><a class="header" href="#parsing-with-xmlparser-smallmedium-payloads">Parsing with XMLParser (small/medium payloads)</a></h3>
+<p>For typical request sizes (&lt;10MB), the synchronous <code>XMLParser</code> provides the simplest workflow:</p>
+<pre><code class="language-javascript">const {XMLParser, SOAP11} = require('xml-toolkit')
+
+app.post('/soap', (req, res) =&gt; {
+  let body = ''
+  req.setEncoding('utf8')
+  req.on('data', chunk =&gt; body += chunk)
+  req.on('end', () =&gt; {
+    try {
+      // Parse the full SOAP envelope
+      const parser = new XMLParser()
+      const envelope = parser.process(body)
+      
+      // Navigate to the SOAP Body
+      const soapNs = 'http://schemas.xmlsoap.org/soap/envelope/'
+      const soapBody = envelope.children
+        .find(n =&gt; n.localName === 'Body' &amp;&amp; n.namespaceURI === soapNs)
+      
+      if (!soapBody) {
+        throw new Error('Missing SOAP Body')
+      }
+      
+      // Extract the operation element (first child of Body)
+      const operation = soapBody.children[0]
+      const operationName = operation.localName
+      
+      console.log(`Received ${operationName} request`)
+      
+      // Convert to plain object for business logic
+      const payload = operation.toObject({})
+      
+      // ... process payload ...
+      
+    } catch (err) {
+      console.error('Parse error:', err.message)
+      res.status(400).send('Malformed request')
+    }
+  })
+})
+</code></pre>
+<h3 id="streaming-with-xmlreader-large-payloads"><a class="header" href="#streaming-with-xmlreader-large-payloads">Streaming with XMLReader (large payloads)</a></h3>
+<p>For large request bodies or when you need to filter specific elements, use the asynchronous <code>XMLReader</code>:</p>
+<pre><code class="language-javascript">const {XMLReader, XMLNode} = require('xml-toolkit')
+
+app.post('/soap/bulk', async (req, res) =&gt; {
+  try {
+    // Stream only the &lt;Record&gt; elements from the request body
+    const records = new XMLReader({
+      filterElements: 'Record',
+      map: XMLNode.toObject({})
+    }).process(req)
+    
+    const results = []
+    for await (const record of records) {
+      // Process each record incrementally
+      const processed = await businessLogic(record)
+      results.push(processed)
+    }
+    
+    // Send response (see Section 12.3)
+    sendSoapResponse(res, {BulkProcessResponse: {results}})
+    
+  } catch (err) {
+    console.error('Streaming error:', err)
+    res.status(500).send('Processing failed')
+  }
+})
+</code></pre>
+<h3 id="extracting-soap-headers"><a class="header" href="#extracting-soap-headers">Extracting SOAP headers</a></h3>
+<p>If your service requires WS-Security or custom headers, extract them during parsing:</p>
+<pre><code class="language-javascript">// After parsing the envelope:
+const soapHeader = envelope.children
+  .find(n =&gt; n.localName === 'Header' &amp;&amp; n.namespaceURI === soapNs)
+
+if (soapHeader) {
+  const security = soapHeader.children
+    .find(n =&gt; n.localName === 'Security')
+  
+  if (security) {
+    const token = security.children
+      .find(n =&gt; n.localName === 'Token')?.src
+    
+    // Validate token...
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>Tip</strong>: Use <code>XMLNode.getLocalName()</code> and <code>attributes.get()</code> for namespace-safe attribute access, as shown in the library’s WSDL parsing logic.</p>
+</blockquote>
+<hr>
+<h2 id="112-validating-incoming-messages-against-schema"><a class="header" href="#112-validating-incoming-messages-against-schema">11.2 Validating incoming messages against schema</a></h2>
+<p>Schema validation ensures incoming requests conform to your WSDL contract. <code>node-xml-toolkit</code> supports validation through <code>XMLSchemata</code>, which can be initialized with your service’s WSDL or standalone XSD files.</p>
+<h3 id="loading-schema-for-validation"><a class="header" href="#loading-schema-for-validation">Loading schema for validation</a></h3>
+<pre><code class="language-javascript">const {XMLParser, XMLSchemata} = require('xml-toolkit')
+
+// Load WSDL at server startup (cache for performance)
+const schemata = new XMLSchemata('service.wsdl')
+
+app.post('/soap', (req, res) =&gt; {
+  // ... receive body ...
+  
+  const parser = new XMLParser({xs: schemata})
+  const envelope = parser.process(body)
+  
+  // Check for validation messages after parsing
+  if (parser.validationMessages.length &gt; 0) {
+    const errors = parser.validationMessages
+    
+    if (errors.length &gt; 0) {
+      // Return SOAP Fault (see Section 12.4)
+      return sendSoapFault(res, {
+        code: 'Client',
+        message: 'Schema validation failed',
+        detail: {errors}
+      })
+    }
+  }
+  
+  // Proceed with valid request...
+})
+</code></pre>
+<h2 id="113-constructing-and-sending-soap-responses"><a class="header" href="#113-constructing-and-sending-soap-responses">11.3 Constructing and sending SOAP responses</a></h2>
+<p>Once your business logic completes, use the <code>SOAP11</code> or <code>SOAP12</code> class to build a compliant response envelope. The same <code>http()</code> method used for client requests works symmetrically for server responses.</p>
+<h3 id="basic-response-construction"><a class="header" href="#basic-response-construction">Basic response construction</a></h3>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+
+function sendSoapResponse(res, payload, header = null) {
+  const soap = new SOAP11('service.wsdl') // WSDL for schema-aware serialization
+  
+  // Build the SOAP envelope
+  const {body} = soap.http(payload, header)
+  
+  // Send with correct headers
+  res.status(200)
+    .set('Content-Type', SOAP11.contentType + '; charset=utf-8')
+    .send(body)
+}
+
+// Usage in route handler:
+sendSoapResponse(res, {
+  GetUserResponse: {
+    userData: {
+      userId: '12345',
+      email: 'alice@example.com',
+      active: true
+    }
+  }
+})
+</code></pre>
+<h3 id="how-serialization-works-1"><a class="header" href="#how-serialization-works-1">How serialization works</a></h3>
+<ol>
+<li>
+<p><strong>Schema-aware stringification</strong>: The payload object is passed to <code>XMLSchemata.stringify()</code>, which uses the WSDL’s embedded XML Schema to produce namespace-correct XML [[2]].</p>
+</li>
+<li>
+<p><strong>Envelope wrapping</strong>: The serialized body element is wrapped in a <code>&lt;soap:Envelope&gt;</code> with proper namespace declarations:</p>
+<pre><code class="language-xml">&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;soap:Body&gt;
+    &lt;GetUserResponse xmlns="urn:service:types"&gt;
+      &lt;userData&gt;
+        &lt;userId&gt;12345&lt;/userId&gt;
+        &lt;!-- ... --&gt;
+      &lt;/userData&gt;
+    &lt;/GetUserResponse&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>Header support</strong>: Optional SOAP headers (e.g., WS-Addressing <code>ReplyTo</code>) are passed as the second argument to <code>http()</code>:</p>
+<pre><code class="language-javascript">const header = {
+  ReplyTo: {
+    Address: 'http://client.example.com/callback'
+  }
+}
+sendSoapResponse(res, payload, header)
+</code></pre>
+</li>
+</ol>
+<h2 id="114-error-handling-and-soapfault-generation"><a class="header" href="#114-error-handling-and-soapfault-generation">11.4 Error handling and SOAPFault generation</a></h2>
+<p>When errors occur, SOAP services must return properly formatted <code>&lt;soap:Fault&gt;</code> elements. <code>node-xml-toolkit</code> provides the <code>SOAPFault</code> class for structured fault data and the static <code>createError()</code> method for generating HTTP-compatible error responses.</p>
+<h3 id="using-soapfault-for-structured-errors"><a class="header" href="#using-soapfault-for-structured-errors">Using SOAPFault for structured errors</a></h3>
+<pre><code class="language-javascript">const {SOAPFault} = require('xml-toolkit')
+
+// Create a fault object with standard fields
+const fault = new SOAPFault({
+  code: 'Client',           // or 'Server', 'VersionMismatch', 'MustUnderstand'
+  message: 'Invalid userId format',
+  detail: {                 // Optional application-specific details
+    field: 'userId',
+    expected: 'numeric string',
+    received: 'abc123!'
+  }
+})
+</code></pre>
+<h3 id="generating-http-error-responses-with-createerror"><a class="header" href="#generating-http-error-responses-with-createerror">Generating HTTP error responses with createError()</a></h3>
+<p>The static <code>createError()</code> method returns an <code>http-errors</code> compatible object that sets the correct <code>Content-Type</code> header and includes the serialized <code>&lt;soap:Fault&gt;</code> XML:</p>
+<pre><code class="language-javascript">const {SOAP11} = require('xml-toolkit')
+
+function sendSoapFault(res, faultOptions) {
+  // createError() returns an Error-like object with .status, .headers, .message
+  const error = SOAP11.createError(faultOptions)
+  
+  res.status(error.status)          // Always 500 for SOAP faults
+    .set(error.headers)             // Sets Content-Type: text/xml; charset=utf-8
+    .send(error.message)            // Serialized &lt;soap:Fault&gt; XML
+}
+
+// Usage:
+if (!isValidUserId(userId)) {
+  return sendSoapFault(res, {
+    code: 'Client',
+    message: 'userId must be a numeric string',
+    detail: {field: 'userId', value: userId}
+  })
+}
+</code></pre>
+<h3 id="soap-11-vs-soap-12-fault-structures"><a class="header" href="#soap-11-vs-soap-12-fault-structures">SOAP 1.1 vs. SOAP 1.2 fault structures</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>SOAP 1.1</th><th>SOAP 1.2</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Element name</strong></td><td><code>&lt;faultcode&gt;</code>, <code>&lt;faultstring&gt;</code></td><td><code>&lt;Code&gt;</code>, <code>&lt;Reason&gt;</code></td></tr>
+<tr><td><strong>Code format</strong></td><td><code>faultcode</code> (qualified name)</td><td><code>Code/Value</code> (nested)</td></tr>
+<tr><td><strong>Actor/Role</strong></td><td><code>&lt;faultactor&gt;</code></td><td><code>&lt;Role&gt;</code></td></tr>
+<tr><td><strong>Detail</strong></td><td><code>&lt;detail&gt;</code> with custom XML</td><td><code>&lt;Detail&gt;</code> with custom XML</td></tr>
+<tr><td><strong>Language</strong></td><td>N/A</td><td><code>Reason/Text[@xml:lang]</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>The library handles these differences automatically based on whether you use <code>SOAP11</code> or <code>SOAP12</code>:</p>
+<pre><code class="language-javascript">// SOAP 1.1 fault output:
+// &lt;soap:Fault&gt;
+//   &lt;faultcode&gt;Client&lt;/faultcode&gt;
+//   &lt;faultstring&gt;Invalid userId&lt;/faultstring&gt;
+//   &lt;detail&gt;&lt;errors&gt;...&lt;/errors&gt;&lt;/detail&gt;
+// &lt;/soap:Fault&gt;
+
+// SOAP 1.2 fault output:
+// &lt;soap:Fault&gt;
+//   &lt;Code&gt;&lt;Value&gt;Receiver&lt;/Value&gt;&lt;/Code&gt;
+//   &lt;Reason&gt;&lt;Text xml:lang="en"&gt;Invalid userId&lt;/Text&gt;&lt;/Reason&gt;
+//   &lt;Detail&gt;&lt;errors&gt;...&lt;/errors&gt;&lt;/Detail&gt;
+// &lt;/soap:Fault&gt;
+</code></pre>
+<h3 id="complete-error-handling-pattern"><a class="header" href="#complete-error-handling-pattern">Complete error handling pattern</a></h3>
+<pre><code class="language-javascript">const {SOAP11, XMLParser} = require('xml-toolkit')
+
+app.post('/soap', async (req, res) =&gt; {
+  try {
+    // 1. Parse request
+    const body = await readRequestBody(req)
+    const parser = new XMLParser()
+    const envelope = parser.process(body)
+    
+    // 2. Extract operation
+    const operation = extractOperation(envelope)
+    const payload = operation.toObject({})
+    
+    // 3. Business logic (may throw)
+    const result = await processRequest(payload)
+    
+    // 4. Send success response
+    sendSoapResponse(res, {
+      [`${operation.localName}Response`]: result
+    })
+    
+  } catch (err) {
+    // 5. Map errors to SOAP faults
+    if (err instanceof ValidationError) {
+      return sendSoapFault(res, {
+        code: 'Client',
+        message: err.message,
+        detail: err.details
+      })
+    }
+    
+    if (err instanceof AuthenticationError) {
+      return sendSoapFault(res, {
+        code: 'Client',
+        message: 'Authentication failed',
+        actor: 'http://service.example.com/auth'
+      })
+    }
+    
+    // Default: server error
+    console.error('Unhandled error:', err)
+    return sendSoapFault(res, {
+      code: 'Server',
+      message: 'Internal processing error',
+      detail: process.env.NODE_ENV === 'development' ? {stack: err.stack} : undefined
+    })
+  }
+})
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
