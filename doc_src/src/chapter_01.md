@@ -2,9 +2,13 @@
 
 ## 1.1 Why node-xml-toolkit?
 
-Node.js has become a dominant platform for building scalable, event-driven applications. Yet, despite XML's continued relevance in enterprise integration, configuration management, and legacy system interoperability, the Node.js core provides no built-in, high-level tools for working with XML.
+XML emerged in the late 1990s as a W3C standard designed to bridge the gap between SGML's powerful but complex document modeling and HTML's web-friendly simplicity. For over two decades, it became the backbone of enterprise integration, enabling structured data exchange across heterogeneous systems through standards like SOAP, WSDL, and XML Schema. Even today, XML remains deeply embedded in financial messaging (ISO 20022), regulatory reporting, publishing workflows, and legacy system interoperability.
 
-Third-party libraries exist, but many are either too heavyweight, lack streaming support, or require native bindings that complicate deployment. `node-xml-toolkit` was created to fill this gap with a pure JavaScript solution that prioritizes three things:
+When Node.js arrived in 2009, it revolutionized server-side JavaScript with its event-driven, non-blocking I/O model—ideal for scalable web services and real-time applications. Yet the ecosystem's early focus leaned heavily toward JSON for data interchange, reflecting the preferences of modern web APIs. Meanwhile, the mature XML tooling common in Java or .NET ecosystems had no direct counterpart in Node.js core.
+
+Third-party libraries emerged to fill this void—`xml2js`, `sax`, `libxmljs`, and others—but each introduced trade-offs: some required native bindings that complicated cross-platform deployment; others buffered entire documents in memory, making them unsuitable for large files; still others prioritized convenience over streaming control. Developers working with enterprise XML payloads often found themselves stitching together multiple packages or accepting performance compromises.
+
+`node-xml-toolkit` was created to address this specific gap with a pure JavaScript solution that prioritizes three things:
 
 - **Minimal computing resources**: Process multi-gigabyte XML files without exhausting memory.
 - **Minimal application code**: Solve common XML tasks with concise, readable patterns.
