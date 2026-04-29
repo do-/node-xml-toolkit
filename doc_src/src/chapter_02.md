@@ -1,6 +1,8 @@
 # 2. Core Concepts
 
-Before diving into code examples, it is essential to understand the architectural decisions and mental models that underpin `node-xml-toolkit`. This chapter establishes the foundational concepts that will make the rest of the book—and your usage of the library—more intuitive and effective.
+Before diving into code examples, you may want to understand the architectural decisions and mental models that underpin `node-xml-toolkit`. 
+
+Though nothing stops you from going ahead to solve practical problems and maybe return here in case where you find the API too bizarre.
 
 ## 2.1 Synchronous vs. asynchronous parsing
 
