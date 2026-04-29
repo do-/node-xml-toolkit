@@ -2,22 +2,24 @@
 
 ## 1.1 Why node-xml-toolkit?
 
-So you’re working on a Node.js project, and suddenly XML drops into your scope. You have to:  
-- Invoke complex SOAP web services, where strict WSDL/XSD contracts make manual message assembly a headache.  
-- Ingest multi GB XML data exports, validating records against an XML Schema.
+So you’re working on a large Node.js project, and
+- one of your tasks is to load a multi GB XML data export into a database, unobtrusively reporting on inconsistencies with a given XML Schema,
+- another one is to invoke a SOAP web service with a WSDL complex enough to kill any hope to treat messages just as strings.
 
-The obvious solutions—reaching for a popular npm package like:  
-- `xml2js` (simple conversion, but loads everything into memory and skips validation),  
-- `fast-xml-parser` (blazing fast, yet DOM-bound and unforgiving on huge files),  
-- `libxmljs2` (full XSD support, but requires native compilation and breaks across CI environments),  
-- `@xmldom/xmldom` (DOM-compliant, but verbose and not built for streaming)—  
-…often lead to grave problems: memory exhaustion during imports, fragile native bindings that crash your builds, or verbose string/DOM manipulation that turns simple SOAP calls into boilerplate nightmares.
+Sure you look for obvious solutions and reach for popular npm packages like:  
+- [`xml2js`](https://www.npmjs.com/package/xml2js): simple conversion, but loads everything into memory and skips validation,  
+- [`fast-xml-parser`](https://www.npmjs.com/package/fast-xml-parser): blazing fast, yet DOM-bound and unforgiving on huge files,
+- [`libxmljs2`](https://www.npmjs.com/package/libxmljs2): full XSD support, but requires native compilation and breaks across CI environments,  
+- [`@xmldom/xmldom`](https://www.npmjs.com/package/@xmldom/xmldom): DOM-compliant, but verbose and not built for streaming,
+- [`saxophone`](https://www.npmjs.com/package/saxophone): streaming, fast, light, but lowest level API only,
+
+...and face grave problems: memory exhaustion, fragile native bindings, spaghetti code.
 
 AI? Not a silver bullet: you still have to guide it thoroughly, or you’ll end up debugging hallucinated envelopes, broken streaming pipelines, or namespace collisions that only surface under production load.
 
-Is something wrong with Node.js in general? No, it’s *so* perfect for I/O-heavy, event-driven work—but the history is that XML was deliberately excluded from the core. As a long-time contributor once put it: [*“XML... yuck.”*](https://github.com/nodejs/node/issues/2709) Node.js favors a minimal runtime + a vibrant ecosystem, and XML—while still critical in enterprise, finance, and government—was treated as a specialized domain where community tooling could evolve faster than a core implementation ever could.
+Is maybe something wrong with Node.js in general? Oh no, it’s *so* perfect for I/O-heavy, event-driven work—but the history is that XML was deliberately excluded from the core. As a long-time contributor once put it: [*“XML... yuck.”*](https://github.com/nodejs/node/issues/2709) While XML still stays critical in enterprise, finance and government–Node.js'core team treats it just as some old junk (think COBOL). And most independent developers focus on isolated tasks while ignoring the bigger picture.
 
-Happily, `node-xml-toolkit` is already here: a pure-JS, streaming-first, dependency-light companion that lets you tackle SOAP contracts and huge imports without compromising performance or maintainability.
+So meet node-xml-toolkit: a pure-JS, streaming-first, dependency-light companion that lets you tackle huge imports, complex structures, and solve many more XML-related problems without compromising performance or maintainability—the agile way.
 
 ## 1.2 What problems does it solve?
 
