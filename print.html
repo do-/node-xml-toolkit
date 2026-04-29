@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-a6320946.js";
+            window.path_to_searchindex_js = "searchindex-4770718e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -188,9 +188,9 @@
 <li><a href="https://www.npmjs.com/package/fast-xml-parser"><code>fast-xml-parser</code></a>: blazing fast, yet DOM-bound and unforgiving on huge files,</li>
 <li><a href="https://www.npmjs.com/package/libxmljs2"><code>libxmljs2</code></a>: full XSD support, but requires native compilation and breaks across CI environments,</li>
 <li><a href="https://www.npmjs.com/package/@xmldom/xmldom"><code>@xmldom/xmldom</code></a>: DOM-compliant, but verbose and not built for streaming,</li>
-<li><a href="https://www.npmjs.com/package/saxophone"><code>saxophone</code></a>: streaming, fast, light, but lowest level API only,
-…and face grave problems: memory exhaustion, fragile native bindings, spaghetti code.</li>
+<li><a href="https://www.npmjs.com/package/saxophone"><code>saxophone</code></a>: streaming, fast, light, but lowest level API only,</li>
 </ul>
+<p>…and face grave problems: memory exhaustion, fragile native bindings, spaghetti code.</p>
 <p>AI? Not a silver bullet: you still have to guide it thoroughly, or you’ll end up debugging hallucinated envelopes, broken streaming pipelines, or namespace collisions that only surface under production load.</p>
 <p>Is maybe something wrong with Node.js in general? Oh no, it’s <em>so</em> perfect for I/O-heavy, event-driven work—but the history is that XML was deliberately excluded from the core. As a long-time contributor once put it: <a href="https://github.com/nodejs/node/issues/2709"><em>“XML… yuck.”</em></a> While XML still stays critical in enterprise, finance and government–Node.js’core team treats it just as some old junk (think COBOL). And most independent developers focus on isolated tasks while ignoring the bigger picture.</p>
 <p>So meet node-xml-toolkit: a pure-JS, streaming-first, dependency-light companion that lets you tackle huge imports, complex structures, and solve many more XML-related problems without compromising performance or maintainability—the agile way.</p>
