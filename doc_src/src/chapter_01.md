@@ -2,19 +2,22 @@
 
 ## 1.1 Why node-xml-toolkit?
 
-XML emerged in the late 1990s as a W3C standard designed to bridge the gap between SGML's powerful but complex document modeling and HTML's web-friendly simplicity. For over two decades, it became the backbone of enterprise integration, enabling structured data exchange across heterogeneous systems through standards like SOAP, WSDL, and XML Schema. Even today, XML remains deeply embedded in financial messaging (ISO 20022), regulatory reporting, publishing workflows, and legacy system interoperability.
+So you’re working on a Node.js project, and suddenly XML drops into your scope. You have to:  
+- Invoke complex SOAP web services, where strict WSDL/XSD contracts make manual message assembly a headache.  
+- Ingest multi GB XML data exports, validating records against an XML Schema.
 
-When Node.js arrived in 2009, it revolutionized server-side JavaScript with its event-driven, non-blocking I/O model—ideal for scalable web services and real-time applications. Yet the ecosystem's early focus leaned heavily toward JSON for data interchange, reflecting the preferences of modern web APIs. Meanwhile, the mature XML tooling common in Java or .NET ecosystems had no direct counterpart in Node.js core.
+The obvious solutions—reaching for a popular npm package like:  
+- `xml2js` (simple conversion, but loads everything into memory and skips validation),  
+- `fast-xml-parser` (blazing fast, yet DOM-bound and unforgiving on huge files),  
+- `libxmljs2` (full XSD support, but requires native compilation and breaks across CI environments),  
+- `@xmldom/xmldom` (DOM-compliant, but verbose and not built for streaming)—  
+…often lead to grave problems: memory exhaustion during imports, fragile native bindings that crash your builds, or verbose string/DOM manipulation that turns simple SOAP calls into boilerplate nightmares.
 
-Third-party libraries emerged to fill this void—`xml2js`, `sax`, `libxmljs`, and others—but each introduced trade-offs: some required native bindings that complicated cross-platform deployment; others buffered entire documents in memory, making them unsuitable for large files; still others prioritized convenience over streaming control. Developers working with enterprise XML payloads often found themselves stitching together multiple packages or accepting performance compromises.
+AI? Not a silver bullet: you still have to guide it thoroughly, or you’ll end up debugging hallucinated envelopes, broken streaming pipelines, or namespace collisions that only surface under production load.
 
-`node-xml-toolkit` was created to address this specific gap with a pure JavaScript solution that prioritizes three things:
+Is something wrong with Node.js in general? No, it’s *so* perfect for I/O-heavy, event-driven work—but the history is that XML was deliberately excluded from the core. As a long-time contributor once put it: [*“XML... yuck.”*](https://github.com/nodejs/node/issues/2709) Node.js favors a minimal runtime + a vibrant ecosystem, and XML—while still critical in enterprise, finance, and government—was treated as a specialized domain where community tooling could evolve faster than a core implementation ever could.
 
-- **Minimal computing resources**: Process multi-gigabyte XML files without exhausting memory.
-- **Minimal application code**: Solve common XML tasks with concise, readable patterns.
-- **Minimal external dependencies**: Avoid complex build chains and platform-specific binaries.
-
-If you need to parse large XML exports, invoke SOAP services defined by WSDL, or serialize JavaScript objects into schema-compliant XML—without pulling in a dozen npm packages—`node-xml-toolkit` is designed for you.
+Happily, `node-xml-toolkit` is already here: a pure-JS, streaming-first, dependency-light companion that lets you tackle SOAP contracts and huge imports without compromising performance or maintainability.
 
 ## 1.2 What problems does it solve?
 
