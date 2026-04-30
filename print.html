@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0a139278.js";
+            window.path_to_searchindex_js = "searchindex-e19dd1e8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -305,7 +305,7 @@ async function processLargeFile(filepath) {
   
   for await (const node of reader) {
     if (node.localName === 'product' &amp;&amp; node.attributes.id === '101') {
-      console.log(await node.getTextContent());
+      console.log(node.innerText);
       break; // Early exit possible
     }
   }
@@ -366,7 +366,7 @@ async function processLargeFile(filepath) {
   attributes: AttributesMap,  // Map-like object for attribute access
   namespaces: NamespacesMap,  // In-scope namespace declarations
   children: [XMLNode],        // Child nodes (for element types)
-  textContent: string,        // Concatenated text of all child text nodes
+  innerText: string,        // Concatenated text of all child text nodes
   parent: XMLNode | null      // Reference to parent (may be null in streaming)
 }
 </code></pre>
@@ -378,7 +378,7 @@ const priceNode = doc.children.find(c =&gt; c.localName === 'price');
 const currency = priceNode?.attributes?.currency ?? 'USD';
 
 // Get text content
-const amount = priceNode?.textContent?.trim();
+const amount = priceNode?.innerText;
 </code></pre>
 <p>In streaming mode (<code>XMLReader</code>), the <code>parent</code> reference may be <code>null</code> for performance reasons, and <code>children</code> may be empty if you have not configured the reader to collect them. Always check the reader’s configuration when relying on tree structure.</p>
 <h3 id="events-vs-nodes"><a class="header" href="#events-vs-nodes">Events vs. nodes</a></h3>
