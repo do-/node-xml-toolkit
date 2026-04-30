@@ -42,7 +42,7 @@ async function processLargeFile(filepath) {
   
   for await (const node of reader) {
     if (node.localName === 'product' && node.attributes.id === '101') {
-      console.log(await node.getTextContent());
+      console.log(node.innerText);
       break; // Early exit possible
     }
   }
@@ -106,7 +106,7 @@ Whether produced by `XMLParser` or yielded by `XMLReader`, an `XMLNode` represen
   attributes: AttributesMap,  // Map-like object for attribute access
   namespaces: NamespacesMap,  // In-scope namespace declarations
   children: [XMLNode],        // Child nodes (for element types)
-  textContent: string,        // Concatenated text of all child text nodes
+  innerText: string,        // Concatenated text of all child text nodes
   parent: XMLNode | null      // Reference to parent (may be null in streaming)
 }
 ```
@@ -121,7 +121,7 @@ const priceNode = doc.children.find(c => c.localName === 'price');
 const currency = priceNode?.attributes?.currency ?? 'USD';
 
 // Get text content
-const amount = priceNode?.textContent?.trim();
+const amount = priceNode?.innerText;
 ```
 
 In streaming mode (`XMLReader`), the `parent` reference may be `null` for performance reasons, and `children` may be empty if you have not configured the reader to collect them. Always check the reader's configuration when relying on tree structure.
