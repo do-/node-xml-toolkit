@@ -20,44 +20,29 @@ In those cases, `XMLReader` (covered in Chapter 4) is the appropriate tool.
 
 ## 3.2 Loading and parsing small to medium files
 
-The synchronous parser accepts strings, Buffers, or file paths. It reads the entire input before constructing the document tree.
-
-## Basic usage with a string
-
-```javascript
-const { XMLParser } = require('xml-toolkit');
-
-const xml = `
-  <settings>
-    <database host="localhost" port="5432"/>
-    <logging level="info"/>
-  </settings>
-`;
-
-const parser = new XMLParser();
-const doc = parser.process(xml);
-// const obj = XMLNode.toObject({ wrap: true })(doc)
-
-console.log(doc.localName); // settings
-```
-
-> **Tip**: at this point, it's a good idea to take a look on the section "Mapping XML Nodes to Plain Objects" unless you are familiar with the matter.
-
-## Parsing from a file
-
-For file-based workflows, combine `XMLParser` with Node.js synchronous file reading:
+`XMLParser` accepts the XML source as a string. It reads the entire input and constructs the document tree.
 
 ```javascript
 const fs = require('fs');
 const { XMLParser } = require('xml-toolkit');
 
-const xmlBuffer = fs.readFileSync('config.xml');
-const parser = new XMLParser();
-const doc = parser.process(xmlBuffer);
-// const obj = XMLNode.toObject({ wrap: true })(doc)
+const xml = fs.readFileSync('config.xml', 'utf8');
+
+// const xml = `
+//   <settings>
+//     <database host="localhost" port="5432"/>
+//     <logging level="info"/>
+//   </settings>
+// `;
+
+const doc = (new XMLParser()).process(xml);
+console.log(doc.localName); // settings
+
+const obj = XMLNode.toObject({ wrap: true })(doc)
+console.log(obj); // {settings: {database: {host: 'localhost', port: '5432'}, logging: {level: 'info'}}}
 ```
 
-## Parser configuration options
+### Configuration options
 
 `XMLParser` accepts an optional configuration object during instantiation:
 
@@ -69,14 +54,19 @@ const parser = new XMLParser({
   xs:        undefined     // XML Schema to validate against, see below
 });
 ```
-
-Altering `useNamespaces` and especially `useEntities` is highly discouraged. Just never touch then unless you are totally sure.
+> **Note**: `useNamespaces` and `useEntities` are for expert use only. They may speed up the process in some cases, but restrict acceptable sources considerably.
 
 ## 3.3 Navigating the parsed document tree
 
-The result of `parser.process()` is a root `XMLNode` representing the document element. From there, you traverse the tree using standard array methods and node properties.
+The result of `parser.process()` is the document's root element in form of an `XMLNode` instance, basically featuring 
+* a [map](https://github.com/do-/node-xml-toolkit/wiki/AttributesMap) of `attributes` and 
+* an [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) of `children` `XMLNode`s (zero length for leaf nodes; never `null` nor `undefined`).
 
-## Finding elements
+As of this writing, `node-xml-toolkit` does not implement any [XPath](https://www.w3.org/TR/xpath/) evaluator, but in most practical cases it takes to use `XMLNode.toObject` (see Chapter 5) and then directly access necessary properties.
+
+Although, as the conversion takes a bit of extra memory and time (synchronously) and leads to some information loss (namespaces; single children vs. attributes distinction), you may opt to traverse the tree using standard array methods and node properties, as shown in next few sections.
+
+### Finding elements
 
 ```javascript
 // Find the first <database> child
@@ -95,9 +85,7 @@ function findAll(node, name) {
 const allLogNodes = findAll(doc, 'logging');
 ```
 
-> **Note**: `node-xml-toolkit` does not include a built-in XPath evaluator. For complex queries, implement targeted recursive helpers or use `XMLNode.toObject()` for JSON-based filtering.
-
-## Working with attributes
+### Working with attributes
 
 Attributes are exposed via an `AttributesMap` instance subclassing [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map):
 
@@ -117,7 +105,7 @@ const port = parseInt(dbNode.attributes.get('port'), 10);
 const ssl = dbNode.attributes.get('ssl') === 'true';
 ```
 
-## Extracting text content
+### Extracting text content
 
 `node.innerText` concatenates all child text and CDATA nodes:
 
@@ -131,7 +119,7 @@ const doc = new XMLParser({stripSpace: true}).process(config);
 console.log(doc.innerText); // "Application Server"
 ```
 
-## Converting to plain objects
+### Converting to plain objects
 
 For seamless integration with most JavaScript code, use `XMLNode.toObject()` that flattens the tree into a JSON-compatible structure:
 
@@ -153,7 +141,7 @@ console.log(JSON.stringify(plain, null, 2));
 
 Validation is not required for parsing, but it dramatically improves data reliability when working with external or user-supplied XML.
 
-## Loading schemas
+### Loading schemas
 
 ```javascript
 const { XMLSchemata, XMLParser } = require('xml-toolkit');
@@ -162,7 +150,7 @@ const schemata = new XMLSchemata('schemas/catalog.xsd');
 
 `XMLSchemata` source is loaded during the constructor execution. So HTTP and other asynchronous network sources are not supported; `<xs:import>` and `<xs:include>` elements only work when referencing local files.
 
-## Attaching validation to the parser
+### Attaching validation to the parser
 
 Pass the schemata instance during parser construction:
 
@@ -192,7 +180,7 @@ try {
 
 > **Version note**: Prior to v1.1.6, validation errors caused `process()` to throw immediately ("fail fast"). Starting with v1.1.6, all diagnostics are collected in `parser.validationMessages` and parsing continues unless a well-formedness error occurs.
 
-## 3.5.1 The `validationMessages` property
+### 3.5.1 The `validationMessages` property
 
 After calling `parser.process(xml)`, inspect `parser.validationMessages` to retrieve any issues encountered:
 
@@ -213,7 +201,7 @@ if (parser.validationMessages.length > 0) {
 }
 ```
 
-### Message format
+#### Message format
 
 Each entry in `validationMessages` is a formatted string following this pattern:
 
@@ -230,7 +218,7 @@ Where `<CODE>` is one of the predefined identifiers from `lib/XMLMessages.js`:
 | `XVC-` | Validation: content model violations | `XVC-00001` … `XVC-00005` |
 | `XVS-` | Validation: simple type / value constraints | `XVS-00001` … `XVS-00041` |
 
-### Common error codes
+#### Common error codes
 
 **Structural / well-formedness (`XML-*`)**
 - `XML-00001`: `maxLength=%i exceeded` — internal buffer limit hit during parsing
