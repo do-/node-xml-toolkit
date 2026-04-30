@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e19dd1e8.js";
+            window.path_to_searchindex_js = "searchindex-61c8e241.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -486,37 +486,26 @@ const doc = parser.process(xml); // Throws if XML violates the schema
 </ul>
 <p>In those cases, <code>XMLReader</code> (covered in Chapter 4) is the appropriate tool.</p>
 <h2 id="32-loading-and-parsing-small-to-medium-files"><a class="header" href="#32-loading-and-parsing-small-to-medium-files">3.2 Loading and parsing small to medium files</a></h2>
-<p>The synchronous parser accepts strings, Buffers, or file paths. It reads the entire input before constructing the document tree.</p>
-<h2 id="basic-usage-with-a-string"><a class="header" href="#basic-usage-with-a-string">Basic usage with a string</a></h2>
-<pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
-
-const xml = `
-  &lt;settings&gt;
-    &lt;database host="localhost" port="5432"/&gt;
-    &lt;logging level="info"/&gt;
-  &lt;/settings&gt;
-`;
-
-const parser = new XMLParser();
-const doc = parser.process(xml);
-// const obj = XMLNode.toObject({ wrap: true })(doc)
-
-console.log(doc.localName); // settings
-</code></pre>
-<blockquote>
-<p><strong>Tip</strong>: at this point, it’s a good idea to take a look on the section “Mapping XML Nodes to Plain Objects” unless you are familiar with the matter.</p>
-</blockquote>
-<h2 id="parsing-from-a-file"><a class="header" href="#parsing-from-a-file">Parsing from a file</a></h2>
-<p>For file-based workflows, combine <code>XMLParser</code> with Node.js synchronous file reading:</p>
+<p><code>XMLParser</code> accepts the XML source as a string. It reads the entire input and constructs the document tree.</p>
 <pre><code class="language-javascript">const fs = require('fs');
 const { XMLParser } = require('xml-toolkit');
 
-const xmlBuffer = fs.readFileSync('config.xml');
-const parser = new XMLParser();
-const doc = parser.process(xmlBuffer);
-// const obj = XMLNode.toObject({ wrap: true })(doc)
+const xml = fs.readFileSync('config.xml', 'utf8');
+
+// const xml = `
+//   &lt;settings&gt;
+//     &lt;database host="localhost" port="5432"/&gt;
+//     &lt;logging level="info"/&gt;
+//   &lt;/settings&gt;
+// `;
+
+const doc = (new XMLParser()).process(xml);
+console.log(doc.localName); // settings
+
+const obj = XMLNode.toObject({ wrap: true })(doc)
+console.log(obj); // {settings: {database: {host: 'localhost', port: '5432'}, logging: {level: 'info'}}}
 </code></pre>
-<h2 id="parser-configuration-options"><a class="header" href="#parser-configuration-options">Parser configuration options</a></h2>
+<h3 id="configuration-options"><a class="header" href="#configuration-options">Configuration options</a></h3>
 <p><code>XMLParser</code> accepts an optional configuration object during instantiation:</p>
 <pre><code class="language-javascript">const parser = new XMLParser({
   stripSpace:    true,     // .trim() all text nodes' content
@@ -525,10 +514,18 @@ const doc = parser.process(xmlBuffer);
   xs:        undefined     // XML Schema to validate against, see below
 });
 </code></pre>
-<p>Altering <code>useNamespaces</code> and especially <code>useEntities</code> is highly discouraged. Just never touch then unless you are totally sure.</p>
+<blockquote>
+<p><strong>Note</strong>: <code>useNamespaces</code> and <code>useEntities</code> are for expert use only. They may speed up the process in some cases, but restrict acceptable sources considerably.</p>
+</blockquote>
 <h2 id="33-navigating-the-parsed-document-tree"><a class="header" href="#33-navigating-the-parsed-document-tree">3.3 Navigating the parsed document tree</a></h2>
-<p>The result of <code>parser.process()</code> is a root <code>XMLNode</code> representing the document element. From there, you traverse the tree using standard array methods and node properties.</p>
-<h2 id="finding-elements"><a class="header" href="#finding-elements">Finding elements</a></h2>
+<p>The result of <code>parser.process()</code> is the document’s root element in form of an <code>XMLNode</code> instance, basically featuring</p>
+<ul>
+<li>a <a href="https://github.com/do-/node-xml-toolkit/wiki/AttributesMap">map</a> of <code>attributes</code> and</li>
+<li>an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a> of <code>children</code> <code>XMLNode</code>s (zero length for leaf nodes; never <code>null</code> nor <code>undefined</code>).</li>
+</ul>
+<p>As of this writing, <code>node-xml-toolkit</code> does not implement any <a href="https://www.w3.org/TR/xpath/">XPath</a> evaluator, but in most practical cases it takes to use <code>XMLNode.toObject</code> (see Chapter 5) and then directly access necessary properties.</p>
+<p>Although, as the conversion takes a bit of extra memory and time (synchronously) and leads to some information loss (namespaces; single children vs. attributes distinction), you may opt to traverse the tree using standard array methods and node properties, as shown in next few sections.</p>
+<h3 id="finding-elements"><a class="header" href="#finding-elements">Finding elements</a></h3>
 <pre><code class="language-javascript">// Find the first &lt;database&gt; child
 const dbNode = doc.children.find(node =&gt; node.localName === 'database');
 
@@ -544,10 +541,7 @@ function findAll(node, name) {
 
 const allLogNodes = findAll(doc, 'logging');
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: <code>node-xml-toolkit</code> does not include a built-in XPath evaluator. For complex queries, implement targeted recursive helpers or use <code>XMLNode.toObject()</code> for JSON-based filtering.</p>
-</blockquote>
-<h2 id="working-with-attributes"><a class="header" href="#working-with-attributes">Working with attributes</a></h2>
+<h3 id="working-with-attributes"><a class="header" href="#working-with-attributes">Working with attributes</a></h3>
 <p>Attributes are exposed via an <code>AttributesMap</code> instance subclassing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a>:</p>
 <pre><code class="language-javascript">const dbHost = dbNode.attributes.get('host'); // "localhost"
 
@@ -560,7 +554,7 @@ if (dbNode.attributes.has('ssl')) {
 <pre><code class="language-javascript">const port = parseInt(dbNode.attributes.get('port'), 10);
 const ssl = dbNode.attributes.get('ssl') === 'true';
 </code></pre>
-<h2 id="extracting-text-content"><a class="header" href="#extracting-text-content">Extracting text content</a></h2>
+<h3 id="extracting-text-content"><a class="header" href="#extracting-text-content">Extracting text content</a></h3>
 <p><code>node.innerText</code> concatenates all child text and CDATA nodes:</p>
 <pre><code class="language-javascript">const config = `
   &lt;title&gt;
@@ -570,7 +564,7 @@ const ssl = dbNode.attributes.get('ssl') === 'true';
 const doc = new XMLParser({stripSpace: true}).process(config);
 console.log(doc.innerText); // "Application Server"
 </code></pre>
-<h2 id="converting-to-plain-objects"><a class="header" href="#converting-to-plain-objects">Converting to plain objects</a></h2>
+<h3 id="converting-to-plain-objects"><a class="header" href="#converting-to-plain-objects">Converting to plain objects</a></h3>
 <p>For seamless integration with most JavaScript code, use <code>XMLNode.toObject()</code> that flattens the tree into a JSON-compatible structure:</p>
 <pre><code class="language-javascript">const plain = XMLNode.toObject()(doc);
 
@@ -586,12 +580,12 @@ console.log(JSON.stringify(plain, null, 2));
 </code></pre>
 <h2 id="34-optional-validation-with-xmlschemata"><a class="header" href="#34-optional-validation-with-xmlschemata">3.4 Optional validation with XMLSchemata</a></h2>
 <p>Validation is not required for parsing, but it dramatically improves data reliability when working with external or user-supplied XML.</p>
-<h2 id="loading-schemas"><a class="header" href="#loading-schemas">Loading schemas</a></h2>
+<h3 id="loading-schemas"><a class="header" href="#loading-schemas">Loading schemas</a></h3>
 <pre><code class="language-javascript">const { XMLSchemata, XMLParser } = require('xml-toolkit');
 const schemata = new XMLSchemata('schemas/catalog.xsd');
 </code></pre>
 <p><code>XMLSchemata</code> source is loaded during the constructor execution. So HTTP and other asynchronous network sources are not supported; <code>&lt;xs:import&gt;</code> and <code>&lt;xs:include&gt;</code> elements only work when referencing local files.</p>
-<h2 id="attaching-validation-to-the-parser"><a class="header" href="#attaching-validation-to-the-parser">Attaching validation to the parser</a></h2>
+<h3 id="attaching-validation-to-the-parser"><a class="header" href="#attaching-validation-to-the-parser">Attaching validation to the parser</a></h3>
 <p>Pass the schemata instance during parser construction:</p>
 <pre><code class="language-javascript">const parser = new XMLParser({ xs: schemata });
 
@@ -616,7 +610,7 @@ try {
 <blockquote>
 <p><strong>Version note</strong>: Prior to v1.1.6, validation errors caused <code>process()</code> to throw immediately (“fail fast”). Starting with v1.1.6, all diagnostics are collected in <code>parser.validationMessages</code> and parsing continues unless a well-formedness error occurs.</p>
 </blockquote>
-<h2 id="351-the-validationmessages-property"><a class="header" href="#351-the-validationmessages-property">3.5.1 The <code>validationMessages</code> property</a></h2>
+<h3 id="351-the-validationmessages-property"><a class="header" href="#351-the-validationmessages-property">3.5.1 The <code>validationMessages</code> property</a></h3>
 <p>After calling <code>parser.process(xml)</code>, inspect <code>parser.validationMessages</code> to retrieve any issues encountered:</p>
 <pre><code class="language-javascript">const { XMLParser, XMLSchemata } = require('xml-toolkit')
 
@@ -633,7 +627,7 @@ if (parser.validationMessages.length &gt; 0) {
   }
 }
 </code></pre>
-<h3 id="message-format"><a class="header" href="#message-format">Message format</a></h3>
+<h4 id="message-format"><a class="header" href="#message-format">Message format</a></h4>
 <p>Each entry in <code>validationMessages</code> is a formatted string following this pattern:</p>
 <pre><code>&lt;CODE&gt; &lt;formatted message&gt;
 </code></pre>
@@ -651,7 +645,7 @@ if (parser.validationMessages.length &gt; 0) {
 </tbody>
 </table>
 </div>
-<h3 id="common-error-codes"><a class="header" href="#common-error-codes">Common error codes</a></h3>
+<h4 id="common-error-codes"><a class="header" href="#common-error-codes">Common error codes</a></h4>
 <p><strong>Structural / well-formedness (<code>XML-*</code>)</strong></p>
 <ul>
 <li><code>XML-00001</code>: <code>maxLength=%i exceeded</code> — internal buffer limit hit during parsing</li>
