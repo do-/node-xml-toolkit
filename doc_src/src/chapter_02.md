@@ -6,7 +6,9 @@ Though nothing stops you from going ahead to solve practical problems and maybe 
 
 ## 2.1 Synchronous vs. asynchronous parsing
 
-`node-xml-toolkit` offers two distinct parsing approaches, each suited to different scenarios:
+An [ancient scripture](https://en.wikipedia.org/wiki/Programming_Perl) says: *“Easy things should be easy and hard things should be possible.”* This civilization is almost extinct by now, but the wisdom seems to be timeless.
+
+Guided by this principle, `node-xml-toolkit` offers two distinct parsing approaches, one for easy things, and another one for hard ones:
 
 ### Synchronous parsing with `XMLParser`
 
@@ -16,7 +18,7 @@ const { XMLParser } = require('xml-toolkit');
 const parser = new XMLParser();
 const doc = parser.process('<catalog><product id="101">Widget</product></catalog>');
 
-console.log(doc.children[0].textContent); // Widget
+console.log(doc.children[0].innerText); // Widget
 ```
 
 **Use `XMLParser` when:**
