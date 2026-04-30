@@ -59,12 +59,14 @@ const parser = new XMLParser({
 ## 3.3 Navigating the parsed document tree
 
 The result of `parser.process()` is the document's root element in form of an `XMLNode` instance, basically featuring 
-* a [map](https://github.com/do-/node-xml-toolkit/wiki/AttributesMap) of `attributes` and 
-* an [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) of `children` `XMLNode`s (zero length for leaf nodes; never `null` nor `undefined`).
+* the `innerText` property (inspired by the [HTML DOM counterpart](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText)),
+* a map of `attributes` and
+* an array of `children` `XMLNode`s:
+  * for a leaf node, it's an empty list (never `null` nor `undefined`).
 
 As of this writing, `node-xml-toolkit` does not implement any [XPath](https://www.w3.org/TR/xpath/) evaluator, but in most practical cases it takes to use `XMLNode.toObject` (see Chapter 5) and then directly access necessary properties.
 
-Although, as the conversion takes a bit of extra memory and time (synchronously) and leads to some information loss (namespaces; single children vs. attributes distinction), you may opt to traverse the tree using standard array methods and node properties, as shown in next few sections.
+Although, as the conversion takes a bit of extra memory + time (synchronously) and leads to some information loss (namespaces; single children vs. attributes distinction), you may opt to traverse the tree using standard array methods and node properties, as shown in next few sections.
 
 ### Finding elements
 
@@ -87,7 +89,7 @@ const allLogNodes = findAll(doc, 'logging');
 
 ### Working with attributes
 
-Attributes are exposed via an `AttributesMap` instance subclassing [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map):
+Attributes are exposed via an [`AttributesMap`](https://github.com/do-/node-xml-toolkit/wiki/AttributesMap) instance subclassing [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map):
 
 ```javascript
 const dbHost = dbNode.attributes.get('host'); // "localhost"
@@ -107,7 +109,7 @@ const ssl = dbNode.attributes.get('ssl') === 'true';
 
 ### Extracting text content
 
-`node.innerText` concatenates all child text and CDATA nodes:
+`node.innerText` concatenates all child text and CDATA nodes. With `stripSpace: true`, which is by default, the text is always `.trim()`med.
 
 ```javascript
 const config = `
@@ -115,31 +117,34 @@ const config = `
     Application <![CDATA[Server]]>
   </title>
 `;
-const doc = new XMLParser({stripSpace: true}).process(config);
+const doc = new XMLParser().process(config);
 console.log(doc.innerText); // "Application Server"
 ```
 
-### Converting to plain objects
+## 3.4 Error handling
 
-For seamless integration with most JavaScript code, use `XMLNode.toObject()` that flattens the tree into a JSON-compatible structure:
+An attempt to parse a ill-formed XML naturally leads `XMLParser` to throwing an `Error`. Its message contains the `[${line}:${position}]` prefix followed by one of:
+
+- `XML-00002`: `Unbalanced end element` — mismatched closing tag
+- `XML-00003`: `Unmatched end element, </${ %s }> expected` — unexpected closing tag name
+
+(`XML-00001` is reserved for `maxLength=%i exceeded` but is never thrown by `XMLParser` as it always processes the entire source).
 
 ```javascript
-const plain = XMLNode.toObject()(doc);
-
-console.log(JSON.stringify(plain, null, 2));
-/*
-{
-  "settings": {
-    "database": {"host": "localhost", "port": "5432"},
-    "logging": {"level": "info"}
-  }
+try {
+  const doc = parser.process(xml)
+} catch (err) {
+  console.error('Parser failure:', err.message)
 }
-*/
 ```
 
-## 3.4 Optional validation with XMLSchemata
+## 3.5 Optional validation with XMLSchemata
 
-Validation is not required for parsing, but it dramatically improves data reliability when working with external or user-supplied XML.
+Let’s be real: supporting IT integrations is a never-ending tug-of-war. Data providers and consumers are always pointing fingers over whose end caused the glitch. XML Schema can save a lot of troubleshooting time here. 
+
+In theory, any schema violation must immediately block broken input from being processed. Still it happens that management push us to swallow invalid, but somehow recoverable data. And nevertheless, keeping a precise log of who and how actually broke the agreed spec is our best bet for sorting things out down the line.
+
+Provided an XML Schema, `XMLParser` validates the input during the `.process()` execution. Inconsistencies are logged a strings into the `.validationMessages` array.
 
 ### Loading schemas
 
@@ -148,7 +153,7 @@ const { XMLSchemata, XMLParser } = require('xml-toolkit');
 const schemata = new XMLSchemata('schemas/catalog.xsd');
 ```
 
-`XMLSchemata` source is loaded during the constructor execution. So HTTP and other asynchronous network sources are not supported; `<xs:import>` and `<xs:include>` elements only work when referencing local files.
+> **Note**: The `XMLSchemata` is loaded synchronously, so no HTTP nor other similar network sources are supported; `<xs:import>` and `<xs:include>` elements only work with explicit references to local files.
 
 ### Attaching validation to the parser
 
@@ -161,7 +166,7 @@ try {
   const doc = parser.process(fs.readFileSync('product-feed.xml'));
   if (parser.validationMessages.length > 0) {
     for (const msg of parser.validationMessages) {
-      console.warn(msg) // e.g., "XVS-00004 The value 'abc' has the length 3, which exceeds the allowed maximum of 2"
+      console.warn(msg) // e.g., "[123:45] XVS-00004 The value 'abc' has the length 3, which exceeds the allowed maximum of 2"
     }
   }
   else {
@@ -174,58 +179,9 @@ try {
 }
 ```
 
-## 3.5 Error handling and diagnostics
+Here is the list of errors that can occur in `.validationMessages`:
 
-`XMLParser` adopts a resilient approach to error handling: parsing and validation issues do not halt execution by default. Instead, diagnostics are collected in the `validationMessages` array, allowing your application to decide whether to treat issues as warnings, recoverable errors, or fatal failures. This design enables graceful degradation when processing partially invalid documents or when schema validation is optional.
-
-> **Version note**: Prior to v1.1.6, validation errors caused `process()` to throw immediately ("fail fast"). Starting with v1.1.6, all diagnostics are collected in `parser.validationMessages` and parsing continues unless a well-formedness error occurs.
-
-### 3.5.1 The `validationMessages` property
-
-After calling `parser.process(xml)`, inspect `parser.validationMessages` to retrieve any issues encountered:
-
-```javascript
-const { XMLParser, XMLSchemata } = require('xml-toolkit')
-
-const xml = fs.readFileSync('data.xml', 'utf8')
-const xs = new XMLSchemata('schema.xsd')
-const parser = new XMLParser({ xs })
-
-const doc = parser.process(xml)
-
-// Always check for messages after process()
-if (parser.validationMessages.length > 0) {
-  for (const msg of parser.validationMessages) {
-    console.warn(msg) // e.g., "XVS-00004 The value 'abc' has the length 3, which exceeds the allowed maximum of 2"
-  }
-}
-```
-
-#### Message format
-
-Each entry in `validationMessages` is a formatted string following this pattern:
-
-```
-<CODE> <formatted message>
-```
-
-Where `<CODE>` is one of the predefined identifiers from `lib/XMLMessages.js`:
-
-| Prefix | Scope | Examples |
-|--------|-------|----------|
-| `XML-` | Well-formedness / structural issues | `XML-00001`, `XML-00002`, `XML-00003` |
-| `XSD-` | Schema discovery / namespace issues | `XSD-00001`, `XSD-00002` |
-| `XVC-` | Validation: content model violations | `XVC-00001` … `XVC-00005` |
-| `XVS-` | Validation: simple type / value constraints | `XVS-00001` … `XVS-00041` |
-
-#### Common error codes
-
-**Structural / well-formedness (`XML-*`)**
-- `XML-00001`: `maxLength=%i exceeded` — internal buffer limit hit during parsing
-- `XML-00002`: `Unbalanced end element` — mismatched closing tag
-- `XML-00003`: `Unmatched end element, </${ %s }> expected` — unexpected closing tag name
-
-**Schema discovery (`XSD-*`)**
+**Schema definition (`XSD-*`)**
 - `XSD-00001`: `Unknown namespace: %s` — element references an undeclared namespace
 - `XSD-00002`: `The element %s is not found in %s` — element not defined in schema
 
@@ -246,79 +202,4 @@ Where `<CODE>` is one of the predefined identifiers from `lib/XMLMessages.js`:
 - `XVS-00020`/`00021`: Floating-point parsing failures
 - `XVS-00022`–`00041`: Date/time format, component, and timezone validation errors
 
-> **Tip**: Use the error code prefix to categorize issues programmatically:
-> ```javascript
-> const errors = parser.validationMessages.filter(m => m.startsWith('XVC-') || m.startsWith('XVS-'))
-> const warnings = parser.validationMessages.filter(m => m.startsWith('XML-'))
-> ```
-
-----
-
-## 3.5.2 Distinguishing fatal vs. recoverable errors
-
-Not all messages are equal. Some indicate malformed XML that cannot be reliably processed; others are schema warnings that may be acceptable in your context.
-
-### Fatal: well-formedness errors
-
-Errors with `XML-` codes typically indicate broken XML structure. These should usually halt processing:
-
-```javascript
-function isFatal(msg) {
-  return msg.startsWith('XML-00002') || msg.startsWith('XML-00003')
-}
-
-const doc = parser.process(xml)
-
-const fatal = parser.validationMessages.filter(isFatal)
-if (fatal.length > 0) {
-  throw new Error(`Unrecoverable XML errors: ${fatal.join('; ')}`)
-}
-
-// Proceed with non-fatal messages logged or handled separately
-```
-
-### Recoverable: schema validation issues
-
-`XVC-*` and `XVS-*` messages indicate schema mismatches. Depending on your use case, you may:
-- Log and continue (for lenient ingestion pipelines)
-- Reject the document (for strict validation gates)
-- Attempt auto-correction (for known, fixable patterns)
-
-```javascript
-// Example: reject only on missing required attributes
-const missingRequired = parser.validationMessages
-  .filter(m => m.startsWith('XVC-00005'))
-
-if (missingRequired.length > 0) {
-  console.error('Missing required attributes:', missingRequired)
-  return null // or throw, or return error envelope
-}
-
-// Log other warnings but continue
-const otherWarnings = parser.validationMessages
-  .filter(m => !missingRequired.includes(m))
-if (otherWarnings.length > 0) {
-  console.warn('Schema warnings (ignored):', otherWarnings)
-}
-```
-
-## 3.5.4 When parsing fails entirely
-
-While validation messages are collected non-fatally, certain conditions still cause `process()` to throw:
-
-- **Invalid UTF-8 or encoding mismatches** in the input string
-- **Extremely malformed XML** that breaks the underlying lexer (e.g., unclosed quotes in attributes)
-- **Internal buffer limits** (rare; configurable at build time)
-
-These cases are not represented in `validationMessages`. Wrap `process()` in a try/catch for robust error boundaries:
-
-```javascript
-try {
-  const doc = parser.process(xml)
-  // Handle validationMessages as shown above
-} catch (err) {
-  // Lexical/encoding/internal errors
-  console.error('Parser failure:', err.message)
-  // Consider returning a standardized error envelope
-}
-```
+> **Note**: The `XMLSchemata` trusts the source provided and doesn't check the schema itself. So `XSD-00001` occurs during the schema application, not loading.
