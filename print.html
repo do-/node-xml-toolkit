@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-3a606547.js";
+            window.path_to_searchindex_js = "searchindex-0a139278.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -274,14 +274,15 @@ console.log(doc.children[0].attributes.id); // outputs: 1
 <p>Before diving into code examples, you may want to understand the architectural decisions and mental models that underpin <code>node-xml-toolkit</code>.</p>
 <p>Though nothing stops you from going ahead to solve practical problems and maybe return here in case where you find the API too bizarre.</p>
 <h2 id="21-synchronous-vs-asynchronous-parsing"><a class="header" href="#21-synchronous-vs-asynchronous-parsing">2.1 Synchronous vs. asynchronous parsing</a></h2>
-<p><code>node-xml-toolkit</code> offers two distinct parsing approaches, each suited to different scenarios:</p>
+<p>An <a href="https://en.wikipedia.org/wiki/Programming_Perl">ancient scripture</a> says: <em>“Easy things should be easy and hard things should be possible.”</em> This civilization is almost extinct by now, but the wisdom seems to be timeless.</p>
+<p>Guided by this principle, <code>node-xml-toolkit</code> offers two distinct parsing approaches, one for easy things, and another one for hard ones:</p>
 <h3 id="synchronous-parsing-with-xmlparser"><a class="header" href="#synchronous-parsing-with-xmlparser">Synchronous parsing with <code>XMLParser</code></a></h3>
 <pre><code class="language-javascript">const { XMLParser } = require('xml-toolkit');
 
 const parser = new XMLParser();
 const doc = parser.process('&lt;catalog&gt;&lt;product id="101"&gt;Widget&lt;/product&gt;&lt;/catalog&gt;');
 
-console.log(doc.children[0].textContent); // Widget
+console.log(doc.children[0].innerText); // Widget
 </code></pre>
 <p><strong>Use <code>XMLParser</code> when:</strong></p>
 <ul>
