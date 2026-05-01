@@ -2,7 +2,7 @@
 
 The `XMLParser` is the entry point for developers who need straightforward, blocking XML parsing. It consumes an entire XML document and returns a complete in-memory tree of `XMLNode` objects. This chapter covers when to choose it, how to load and parse documents, how to navigate the resulting structure, how to attach schema validation, and how to handle errors effectively.
 
-## 3.1 When to use XMLParser
+## 3.1 When to use
 
 `XMLParser` is designed for simplicity and developer ergonomics. It shines in scenarios where:
 
@@ -18,7 +18,7 @@ The `XMLParser` is the entry point for developers who need straightforward, bloc
 
 In those cases, `XMLReader` (covered in Chapter 4) is the appropriate tool.
 
-## 3.2 Loading and parsing small to medium files
+## 3.2 Parsing
 
 `XMLParser` accepts the XML source as a string. It reads the entire input and constructs the document tree.
 
@@ -36,10 +36,10 @@ const xml = fs.readFileSync('config.xml', 'utf8');
 // `;
 
 const doc = (new XMLParser()).process(xml);
-console.log(doc.localName); // settings
+console.log(doc.localName);         // settings
 
-const obj = XMLNode.toObject({ wrap: true })(doc)
-console.log(obj); // {settings: {database: {host: 'localhost', port: '5432'}, logging: {level: 'info'}}}
+const obj = XMLNode.toObject()(doc) // SIC! (double)(parentheses)
+console.log(obj.database);          // {host: 'localhost', port: '5432'}
 ```
 
 ### Configuration options
@@ -54,9 +54,11 @@ const parser = new XMLParser({
   xs:        undefined     // XML Schema to validate against, see below
 });
 ```
+
 > **Note**: `useNamespaces` and `useEntities` are for expert use only. They may speed up the process in some cases, but restrict acceptable sources considerably.
 
-## 3.3 Navigating the parsed document tree
+
+## 3.3 Navigating the document tree
 
 The result of `parser.process()` is the document's root element in form of an `XMLNode` instance, basically featuring 
 * the `innerText` property (inspired by the [HTML DOM counterpart](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText)),
@@ -87,7 +89,7 @@ function findAll(node, name) {
 const allLogNodes = findAll(doc, 'logging');
 ```
 
-### Working with attributes
+### Getting attributes' values
 
 Attributes are exposed via an [`AttributesMap`](https://github.com/do-/node-xml-toolkit/wiki/AttributesMap) instance subclassing [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map):
 
@@ -100,7 +102,7 @@ if (dbNode.attributes.has('ssl')) {
 }
 ```
 
-Attribute values are always strings. When necessary, convert them explicitly:
+> **Note**: Attribute values are always strings. When necessary, convert them explicitly:
 
 ```javascript
 const port = parseInt(dbNode.attributes.get('port'), 10);
@@ -121,9 +123,9 @@ const doc = new XMLParser().process(config);
 console.log(doc.innerText); // "Application Server"
 ```
 
-## 3.4 Error handling
+## 3.4 Handling Fatal Errors
 
-An attempt to parse a ill-formed XML naturally leads `XMLParser` to throwing an `Error`. Its message contains the `[${line}:${position}]` prefix followed by one of:
+An attempt to parse an ill-formed XML naturally leads `XMLParser` to throw an `Error`. Its message contains the `[${line}:${position}]` prefix followed by one of:
 
 - `XML-00002`: `Unbalanced end element` — mismatched closing tag
 - `XML-00003`: `Unmatched end element, </${ %s }> expected` — unexpected closing tag name
@@ -138,22 +140,24 @@ try {
 }
 ```
 
-## 3.5 Optional validation with XMLSchemata
+## 3.5 Validation using XML schema
 
-Let’s be real: supporting IT integrations is a never-ending tug-of-war. Data providers and consumers are always pointing fingers over whose end caused the glitch. XML Schema can save a lot of troubleshooting time here. 
+Let’s be real: supporting IT integrations is a never-ending tug-of-war. Data providers and consumers are always pointing fingers over whose end caused the glitch. The proper use of [XML Schema](https://www.w3.org/XML/Schema) can save a lot of troubleshooting time here.
 
 In theory, any schema violation must immediately block broken input from being processed. Still it happens that management push us to swallow invalid, but somehow recoverable data. And nevertheless, keeping a precise log of who and how actually broke the agreed spec is our best bet for sorting things out down the line.
 
-Provided an XML Schema, `XMLParser` validates the input during the `.process()` execution. Inconsistencies are logged a strings into the `.validationMessages` array.
+Based on this, `XMLParser` considers XML Schema as an additional set of rules to be checked in background during the `.process()` execution. All inconsistencies found are formatted like errors from the previous chapter (line, position, code, description) and accumulated in the `.validationMessages` array.
 
-### Loading schemas
+### Loading a schema
+
+The XML Schema memory representation is a fairly large and complex, so it must be first loaded explicitly, but then (being stateless) allows multiple usages.
 
 ```javascript
 const { XMLSchemata, XMLParser } = require('xml-toolkit');
 const schemata = new XMLSchemata('schemas/catalog.xsd');
 ```
 
-> **Note**: The `XMLSchemata` is loaded synchronously, so no HTTP nor other similar network sources are supported; `<xs:import>` and `<xs:include>` elements only work with explicit references to local files.
+> **Note**: As of this writing, the only way to load a schema is to call the `XMLSchemata` constructor with the local path of the root `.xsd` or `.wsdl` file. So this is a synchronous operation. [`<xs:import>`](https://www.w3.org/TR/xmlschema11-1/#composition-schemaImport) and [`<xs:include>`](https://www.w3.org/TR/xmlschema11-1/#compound-schema) work only with file `schemaLocation`s. No HTTP nor similar network locations are supported yet.
 
 ### Attaching validation to the parser
 
@@ -203,3 +207,4 @@ Here is the list of errors that can occur in `.validationMessages`:
 - `XVS-00022`–`00041`: Date/time format, component, and timezone validation errors
 
 > **Note**: The `XMLSchemata` trusts the source provided and doesn't check the schema itself. So `XSD-00001` occurs during the schema application, not loading.
+
