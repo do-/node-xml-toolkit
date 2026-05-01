@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93271c73.js";
+            window.path_to_searchindex_js = "searchindex-a9d4af31.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -176,7 +176,7 @@
                     <main>
                         <h1 id="3-the-synchronous-parser-xmlparser"><a class="header" href="#3-the-synchronous-parser-xmlparser">3. The Synchronous Parser: XMLParser</a></h1>
 <p>The <code>XMLParser</code> is the entry point for developers who need straightforward, blocking XML parsing. It consumes an entire XML document and returns a complete in-memory tree of <code>XMLNode</code> objects. This chapter covers when to choose it, how to load and parse documents, how to navigate the resulting structure, how to attach schema validation, and how to handle errors effectively.</p>
-<h2 id="31-when-to-use-xmlparser"><a class="header" href="#31-when-to-use-xmlparser">3.1 When to use XMLParser</a></h2>
+<h2 id="31-when-to-use"><a class="header" href="#31-when-to-use">3.1 When to use</a></h2>
 <p><code>XMLParser</code> is designed for simplicity and developer ergonomics. It shines in scenarios where:</p>
 <ul>
 <li><strong>Document size is predictable and moderate</strong>: Typically under 50 MB, though the exact threshold depends on your application’s memory budget and Node.js heap configuration.</li>
@@ -191,7 +191,7 @@
 <li>Implementing streaming transformations or pipelines that must process records as they arrive</li>
 </ul>
 <p>In those cases, <code>XMLReader</code> (covered in Chapter 4) is the appropriate tool.</p>
-<h2 id="32-loading-and-parsing-small-to-medium-files"><a class="header" href="#32-loading-and-parsing-small-to-medium-files">3.2 Loading and parsing small to medium files</a></h2>
+<h2 id="32-parsing"><a class="header" href="#32-parsing">3.2 Parsing</a></h2>
 <p><code>XMLParser</code> accepts the XML source as a string. It reads the entire input and constructs the document tree.</p>
 <pre><code class="language-javascript">const fs = require('fs');
 const { XMLParser } = require('xml-toolkit');
@@ -206,10 +206,10 @@ const xml = fs.readFileSync('config.xml', 'utf8');
 // `;
 
 const doc = (new XMLParser()).process(xml);
-console.log(doc.localName); // settings
+console.log(doc.localName);         // settings
 
-const obj = XMLNode.toObject({ wrap: true })(doc)
-console.log(obj); // {settings: {database: {host: 'localhost', port: '5432'}, logging: {level: 'info'}}}
+const obj = XMLNode.toObject()(doc) // SIC! (double)(parentheses)
+console.log(obj.database);          // {host: 'localhost', port: '5432'}
 </code></pre>
 <h3 id="configuration-options"><a class="header" href="#configuration-options">Configuration options</a></h3>
 <p><code>XMLParser</code> accepts an optional configuration object during instantiation:</p>
@@ -223,7 +223,7 @@ console.log(obj); // {settings: {database: {host: 'localhost', port: '5432'}, lo
 <blockquote>
 <p><strong>Note</strong>: <code>useNamespaces</code> and <code>useEntities</code> are for expert use only. They may speed up the process in some cases, but restrict acceptable sources considerably.</p>
 </blockquote>
-<h2 id="33-navigating-the-parsed-document-tree"><a class="header" href="#33-navigating-the-parsed-document-tree">3.3 Navigating the parsed document tree</a></h2>
+<h2 id="33-navigating-the-document-tree"><a class="header" href="#33-navigating-the-document-tree">3.3 Navigating the document tree</a></h2>
 <p>The result of <code>parser.process()</code> is the document’s root element in form of an <code>XMLNode</code> instance, basically featuring</p>
 <ul>
 <li>the <code>innerText</code> property (inspired by the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">HTML DOM counterpart</a>),</li>
@@ -252,7 +252,7 @@ function findAll(node, name) {
 
 const allLogNodes = findAll(doc, 'logging');
 </code></pre>
-<h3 id="working-with-attributes"><a class="header" href="#working-with-attributes">Working with attributes</a></h3>
+<h3 id="getting-attributes-values"><a class="header" href="#getting-attributes-values">Getting attributes’ values</a></h3>
 <p>Attributes are exposed via an <a href="https://github.com/do-/node-xml-toolkit/wiki/AttributesMap"><code>AttributesMap</code></a> instance subclassing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a>:</p>
 <pre><code class="language-javascript">const dbHost = dbNode.attributes.get('host'); // "localhost"
 
@@ -261,7 +261,9 @@ if (dbNode.attributes.has('ssl')) {
   console.log('SSL enabled:', dbNode.attributes.get('ssl'));
 }
 </code></pre>
-<p>Attribute values are always strings. When necessary, convert them explicitly:</p>
+<blockquote>
+<p><strong>Note</strong>: Attribute values are always strings. When necessary, convert them explicitly:</p>
+</blockquote>
 <pre><code class="language-javascript">const port = parseInt(dbNode.attributes.get('port'), 10);
 const ssl = dbNode.attributes.get('ssl') === 'true';
 </code></pre>
@@ -275,8 +277,8 @@ const ssl = dbNode.attributes.get('ssl') === 'true';
 const doc = new XMLParser().process(config);
 console.log(doc.innerText); // "Application Server"
 </code></pre>
-<h2 id="34-error-handling"><a class="header" href="#34-error-handling">3.4 Error handling</a></h2>
-<p>An attempt to parse a ill-formed XML naturally leads <code>XMLParser</code> to throwing an <code>Error</code>. Its message contains the <code>[${line}:${position}]</code> prefix followed by one of:</p>
+<h2 id="34-handling-fatal-errors"><a class="header" href="#34-handling-fatal-errors">3.4 Handling Fatal Errors</a></h2>
+<p>An attempt to parse an ill-formed XML naturally leads <code>XMLParser</code> to throw an <code>Error</code>. Its message contains the <code>[${line}:${position}]</code> prefix followed by one of:</p>
 <ul>
 <li><code>XML-00002</code>: <code>Unbalanced end element</code> — mismatched closing tag</li>
 <li><code>XML-00003</code>: <code>Unmatched end element, &lt;/${ %s }&gt; expected</code> — unexpected closing tag name</li>
@@ -288,16 +290,17 @@ console.log(doc.innerText); // "Application Server"
   console.error('Parser failure:', err.message)
 }
 </code></pre>
-<h2 id="35-optional-validation-with-xmlschemata"><a class="header" href="#35-optional-validation-with-xmlschemata">3.5 Optional validation with XMLSchemata</a></h2>
-<p>Let’s be real: supporting IT integrations is a never-ending tug-of-war. Data providers and consumers are always pointing fingers over whose end caused the glitch. XML Schema can save a lot of troubleshooting time here.</p>
+<h2 id="35-validation-using-xml-schema"><a class="header" href="#35-validation-using-xml-schema">3.5 Validation using XML schema</a></h2>
+<p>Let’s be real: supporting IT integrations is a never-ending tug-of-war. Data providers and consumers are always pointing fingers over whose end caused the glitch. The proper use of <a href="https://www.w3.org/XML/Schema">XML Schema</a> can save a lot of troubleshooting time here.</p>
 <p>In theory, any schema violation must immediately block broken input from being processed. Still it happens that management push us to swallow invalid, but somehow recoverable data. And nevertheless, keeping a precise log of who and how actually broke the agreed spec is our best bet for sorting things out down the line.</p>
-<p>Provided an XML Schema, <code>XMLParser</code> validates the input during the <code>.process()</code> execution. Inconsistencies are logged a strings into the <code>.validationMessages</code> array.</p>
-<h3 id="loading-schemas"><a class="header" href="#loading-schemas">Loading schemas</a></h3>
+<p>Based on this, <code>XMLParser</code> considers XML Schema as an additional set of rules to be checked in background during the <code>.process()</code> execution. All inconsistencies found are formatted like errors from the previous chapter (line, position, code, description) and accumulated in the <code>.validationMessages</code> array.</p>
+<h3 id="loading-a-schema"><a class="header" href="#loading-a-schema">Loading a schema</a></h3>
+<p>The XML Schema memory representation is a fairly large and complex, so it must be first loaded explicitly, but then (being stateless) allows multiple usages.</p>
 <pre><code class="language-javascript">const { XMLSchemata, XMLParser } = require('xml-toolkit');
 const schemata = new XMLSchemata('schemas/catalog.xsd');
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: The <code>XMLSchemata</code> is loaded synchronously, so no HTTP nor other similar network sources are supported; <code>&lt;xs:import&gt;</code> and <code>&lt;xs:include&gt;</code> elements only work with explicit references to local files.</p>
+<p><strong>Note</strong>: As of this writing, the only way to load a schema is to call the <code>XMLSchemata</code> constructor with the local path of the root <code>.xsd</code> or <code>.wsdl</code> file. So this is a synchronous operation. <a href="https://www.w3.org/TR/xmlschema11-1/#composition-schemaImport"><code>&lt;xs:import&gt;</code></a> and <a href="https://www.w3.org/TR/xmlschema11-1/#compound-schema"><code>&lt;xs:include&gt;</code></a> work only with file <code>schemaLocation</code>s. No HTTP nor similar network locations are supported yet.</p>
 </blockquote>
 <h3 id="attaching-validation-to-the-parser"><a class="header" href="#attaching-validation-to-the-parser">Attaching validation to the parser</a></h3>
 <p>Pass the schemata instance during parser construction:</p>
