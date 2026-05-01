@@ -1,34 +1,25 @@
 # 5. Mapping XML Nodes to Plain Objects
 
-Converting XML to plain JavaScript objects is a frequent requirement when integrating with modern APIs, databases, or frontend frameworks. `node-xml-toolkit` provides a focused utility for this task: `XMLNode.toObject()`, powered internally by the `MoxyLikeJsonEncoder` module.
+Funny thing: while XML still stands behind the *“X”* in [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) and [XHR](https://en.wikipedia.org/wiki/XMLHttpRequest), it was almost completely replaced by [JSON](https://www.json.org/json-en.html) so long ago that one could say it was never really used there. So, a fortiori, a native JS library for XML must have a means for transforming parsed DOM fragments into equivalent hierarchies of plain Objects.
 
-> **Clarification**: Despite its name, `XMLNode.toObject()` is not an instance method on `XMLNode`. It is a standalone function exported for convenience, designed primarily to serve as a mapper function for `XMLReader`.
+Alas, due to a well known sort of "impedance mismatch", this problem has no general solution. While JS[ON] data model is nearly ideal for business logic, XML DOM has some extra degrees of freedom that make the automatic conversion impossible. There is no way to map *mixed content* (distinguishable sequential text fragments intermitted by sibling elements–all this inside a parent element having attributes) to a plain JSON Object without either losing data or bloating the result with redundant elements requiring an immediate transformation to clean them up.
 
-## 5.1 Purpose and Design Philosophy
+`node-xml-toolkit` takes a practical approach to this problem: if offers a solution that works for most _data centric_ XML (like DB dumps–opposed to _document centric_ things like [OOXML](https://ooxml.info/docs/)).
 
-`XMLNode.toObject()` transforms an `XMLNode` tree into a plain, `JSON.stringify`-ready JavaScript object. Its design prioritizes:
-
-- **Simplicity**: Minimal options, predictable output.
-- **Streaming compatibility**: Returns a function suitable for `XMLReader`'s `map` option.
-- **Data-processing focus**: Merges attributes with child elements; does not preserve document order or mixed content.
-
-It is **not** intended for general-purpose XML transformation tasks where namespace fidelity, processing instructions, or exact node ordering matter. For those cases, work directly with `XMLNode` methods like `detach()` or traverse the tree manually.
-
-The historical name of an internal class `MoxyLikeJsonEncoder` reflects that the core behavior draws loose inspiration from [EclipseLink MOXy](https://eclipse.dev/eclipselink/#moxy)'s JSON binding conventions—but it is a lightweight, independent implementation with its own rules.
-
-## 5.2 Usage Pattern
-
+## 5.1 Usage Pattern
 ### Direct invocation on a parsed node
 
 ```javascript
 const { XMLParser, XMLNode } = require('xml-toolkit')
 
 const parser = new XMLParser()
-const doc = parser.process('<root><item id="1">value</item></root>')
+const doc = parser.process('<root><item id="1"><value>3.14<value></item></root>')
 
 const result = XMLNode.toObject({ wrap: true })(doc)
-// result: { root: { item: { id: "1", "#text": "value" } } }
+// result: { root: { item: { id: "1", "value": "3.14" } } }
 ```
+
+> **Clarification**: Despite its name, `XMLNode.toObject()` is not an instance method on `XMLNode`. It is a standalone function exported for convenience, designed primarily to serve as a mapper function for `XMLReader`.
 
 ### As a mapper for XMLReader
 
@@ -50,9 +41,9 @@ for await (const obj of reader.process(stream)) {
 }
 ```
 
-> Note: When used directly, `XMLNode.toObject(options)` returns a function that accepts an `XMLNode` and returns the transformed object.
+> **Note**: When used directly, `XMLNode.toObject(options)` returns a function that accepts an `XMLNode` and returns the transformed object.
 
-## 5.3 Options Reference
+## 5.2 Options Reference
 
 | Option | Default | Description |
 |--------|---------|-------------|
@@ -60,8 +51,7 @@ for await (const obj of reader.process(stream)) {
 | `getName` | `(localName, namespaceURI) => localName` | Function to transform XML element/attribute names into JavaScript object keys. Receives `localName` and `namespaceURI`; returns the desired property name. |
 | `map` | `undefined` | If provided, a function applied to each resulting object (similar to `Array.prototype.map`). Useful for adding computed fields or normalizing structure. |
 
-## 5.4 Transformation Rules
-
+## 5.3 Transformation Rules
 ### Top-level element handling
 
 By default, the root element's name is omitted from the output:
@@ -177,7 +167,7 @@ XMLNode.toObject({
 → { "{urn:example}code": "XYZ" }
 ```
 
-## 5.5 Practical Examples
+## 5.4 Practical Examples
 
 ### Example 1: Extracting a flat record list
 
