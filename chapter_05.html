@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-836adc59.js";
+            window.path_to_searchindex_js = "searchindex-b17cc8a7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -175,29 +175,22 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="5-mapping-xml-nodes-to-plain-objects"><a class="header" href="#5-mapping-xml-nodes-to-plain-objects">5. Mapping XML Nodes to Plain Objects</a></h1>
-<p>Converting XML to plain JavaScript objects is a frequent requirement when integrating with modern APIs, databases, or frontend frameworks. <code>node-xml-toolkit</code> provides a focused utility for this task: <code>XMLNode.toObject()</code>, powered internally by the <code>MoxyLikeJsonEncoder</code> module.</p>
-<blockquote>
-<p><strong>Clarification</strong>: Despite its name, <code>XMLNode.toObject()</code> is not an instance method on <code>XMLNode</code>. It is a standalone function exported for convenience, designed primarily to serve as a mapper function for <code>XMLReader</code>.</p>
-</blockquote>
-<h2 id="51-purpose-and-design-philosophy"><a class="header" href="#51-purpose-and-design-philosophy">5.1 Purpose and Design Philosophy</a></h2>
-<p><code>XMLNode.toObject()</code> transforms an <code>XMLNode</code> tree into a plain, <code>JSON.stringify</code>-ready JavaScript object. Its design prioritizes:</p>
-<ul>
-<li><strong>Simplicity</strong>: Minimal options, predictable output.</li>
-<li><strong>Streaming compatibility</strong>: Returns a function suitable for <code>XMLReader</code>’s <code>map</code> option.</li>
-<li><strong>Data-processing focus</strong>: Merges attributes with child elements; does not preserve document order or mixed content.</li>
-</ul>
-<p>It is <strong>not</strong> intended for general-purpose XML transformation tasks where namespace fidelity, processing instructions, or exact node ordering matter. For those cases, work directly with <code>XMLNode</code> methods like <code>detach()</code> or traverse the tree manually.</p>
-<p>The historical name of an internal class <code>MoxyLikeJsonEncoder</code> reflects that the core behavior draws loose inspiration from <a href="https://eclipse.dev/eclipselink/#moxy">EclipseLink MOXy</a>’s JSON binding conventions—but it is a lightweight, independent implementation with its own rules.</p>
-<h2 id="52-usage-pattern"><a class="header" href="#52-usage-pattern">5.2 Usage Pattern</a></h2>
+<p>Funny thing: while XML still stands behind the <em>“X”</em> in <a href="https://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> and <a href="https://en.wikipedia.org/wiki/XMLHttpRequest">XHR</a>, it was almost completely replaced by <a href="https://www.json.org/json-en.html">JSON</a> so long ago that one could say it was never really used there. So, a fortiori, a native JS library for XML must have a means for transforming parsed DOM fragments into equivalent hierarchies of plain Objects.</p>
+<p>Alas, due to a well known sort of “impedance mismatch”, this problem has no general solution. While JS[ON] data model is nearly ideal for business logic, XML DOM has some extra degrees of freedom that make the automatic conversion impossible. There is no way to map <em>mixed content</em> (distinguishable sequential text fragments intermitted by sibling elements–all this inside a parent element having attributes) to a plain JSON Object without either losing data or bloating the result with redundant elements requiring an immediate transformation to clean them up.</p>
+<p><code>node-xml-toolkit</code> takes a practical approach to this problem: if offers a solution that works for most <em>data centric</em> XML (like DB dumps–opposed to <em>document centric</em> things like <a href="https://ooxml.info/docs/">OOXML</a>).</p>
+<h2 id="51-usage-pattern"><a class="header" href="#51-usage-pattern">5.1 Usage Pattern</a></h2>
 <h3 id="direct-invocation-on-a-parsed-node"><a class="header" href="#direct-invocation-on-a-parsed-node">Direct invocation on a parsed node</a></h3>
 <pre><code class="language-javascript">const { XMLParser, XMLNode } = require('xml-toolkit')
 
 const parser = new XMLParser()
-const doc = parser.process('&lt;root&gt;&lt;item id="1"&gt;value&lt;/item&gt;&lt;/root&gt;')
+const doc = parser.process('&lt;root&gt;&lt;item id="1"&gt;&lt;value&gt;3.14&lt;value&gt;&lt;/item&gt;&lt;/root&gt;')
 
 const result = XMLNode.toObject({ wrap: true })(doc)
-// result: { root: { item: { id: "1", "#text": "value" } } }
+// result: { root: { item: { id: "1", "value": "3.14" } } }
 </code></pre>
+<blockquote>
+<p><strong>Clarification</strong>: Despite its name, <code>XMLNode.toObject()</code> is not an instance method on <code>XMLNode</code>. It is a standalone function exported for convenience, designed primarily to serve as a mapper function for <code>XMLReader</code>.</p>
+</blockquote>
 <h3 id="as-a-mapper-for-xmlreader"><a class="header" href="#as-a-mapper-for-xmlreader">As a mapper for XMLReader</a></h3>
 <pre><code class="language-javascript">const { XMLReader, XMLNode } = require('xml-toolkit')
 
@@ -216,9 +209,9 @@ for await (const obj of reader.process(stream)) {
 }
 </code></pre>
 <blockquote>
-<p>Note: When used directly, <code>XMLNode.toObject(options)</code> returns a function that accepts an <code>XMLNode</code> and returns the transformed object.</p>
+<p><strong>Note</strong>: When used directly, <code>XMLNode.toObject(options)</code> returns a function that accepts an <code>XMLNode</code> and returns the transformed object.</p>
 </blockquote>
-<h2 id="53-options-reference"><a class="header" href="#53-options-reference">5.3 Options Reference</a></h2>
+<h2 id="52-options-reference"><a class="header" href="#52-options-reference">5.2 Options Reference</a></h2>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -231,7 +224,7 @@ for await (const obj of reader.process(stream)) {
 </tbody>
 </table>
 </div>
-<h2 id="54-transformation-rules"><a class="header" href="#54-transformation-rules">5.4 Transformation Rules</a></h2>
+<h2 id="53-transformation-rules"><a class="header" href="#53-transformation-rules">5.3 Transformation Rules</a></h2>
 <h3 id="top-level-element-handling"><a class="header" href="#top-level-element-handling">Top-level element handling</a></h3>
 <p>By default, the root element’s name is omitted from the output:</p>
 <pre><code class="language-xml">&lt;MyElement&gt;&lt;value&gt;42&lt;/value&gt;&lt;/MyElement&gt;
@@ -315,7 +308,7 @@ for await (const obj of reader.process(stream)) {
 </code></pre>
 <pre><code class="language-javascript">→ { "{urn:example}code": "XYZ" }
 </code></pre>
-<h2 id="55-practical-examples"><a class="header" href="#55-practical-examples">5.5 Practical Examples</a></h2>
+<h2 id="54-practical-examples"><a class="header" href="#54-practical-examples">5.4 Practical Examples</a></h2>
 <h3 id="example-1-extracting-a-flat-record-list"><a class="header" href="#example-1-extracting-a-flat-record-list">Example 1: Extracting a flat record list</a></h3>
 <pre><code class="language-xml">&lt;Export&gt;
   &lt;Record id="1" name="Alpha"/&gt;
