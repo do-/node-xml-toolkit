@@ -1,51 +1,72 @@
 # 4. The Asynchronous Parser: XMLReader
 
-While `XMLParser` offers simplicity for small documents, real-world enterprise integrations rarely fit comfortably into memory. `XMLReader` is the streaming counterpart that processes XML incrementally, yielding nodes as they are encountered. This chapter explains when to choose it, how to configure it for efficient data extraction, and how to integrate it into both pull-based and push-based Node.js workflows.
+## 4.1 When and why to use XMLReader
 
-## 4.1 When to use XMLReader
+Sometimes you have to deal with XML documents so large that even their text (not to mention the internal representation) already exceeds the available memory. Or they may fit, but be large enough for their synchronous reading to be unacceptable. In such cases you absolutely need incremental processing. There are quite a few `npm` modules offering such a feature:
+- [`sax`](https://www.npmjs.com/package/sax),
+- [`saxophone`](https://www.npmjs.com/package/saxophone),
+- [`EasySAX`](https://www.npmjs.com/package/easysax).
 
-`XMLReader` is purpose-built for scenarios where memory footprint, latency, or document size make synchronous parsing impractical.
+All of them implement adoptions of [Simple API for XML](http://www.saxproject.org/) to the node.js platform: [event emitters](https://nodejs.org/docs/latest/api/events.html) fed by incoming chunks of text via `.write()` methods. For a one-off task, such a tool can come as a salvation, but using it in general is quite inconvenient.
 
-**Choose `XMLReader` when:**
-- Processing files larger than 50–100 MB, or when file size is unbounded (e.g., continuous log exports, database dumps)
-- Running on memory-constrained environments (containers, serverless functions, edge workers)
-- You only need specific sections of the document and can discard the rest
-- You want to process records incrementally as they arrive over a network stream
-- Early termination is required (e.g., finding the first matching element and stopping)
+Large XML files are mostly database dumps: a typical document has a single long sequence of similar elements representing records of a relational table. And, in your application logic, you need those records, not anything else. Preferably, in form of a [readable stream](https://nodejs.org/docs/latest/api/stream.html#readable-streams).
 
-**Avoid `XMLReader` when:**
-- You need random access to arbitrary parts of the document after parsing
-- Your processing logic requires global context or cross-references between distant sections
-- You are building quick prototypes with small, known-safe XML inputs
+For self-enclosed elements with all fields as attributes:
 
-**The streaming trade-off:**
-`XMLReader` never builds the full document tree. Instead, it maintains a shallow stack representing the current parsing path. As soon as an end tag is encountered, the corresponding subtree is released unless you explicitly retain it. This design keeps memory usage proportional to the maximum nesting depth, not the total file size.
+```xml
+<root>
+  <record id="1" label="one" />
+  <record id="2" label="two" />
+  <!-- ... --->
+```
 
-## 4.2 Configuring filters and mappers
+each `'start'` event carries the complete record, so SAX is OK.
 
-To avoid yielding every single node in a large document, `XMLReader` supports declarative filtering and transformation during instantiation.
+But when those same values are written as child elements, even one level deep:
 
-### Basic configuration
+```xml
+<root>
+  <record>
+    <id>1</id><label>one</label>
+  </record>
+  <record>
+    <id>2</id><label>two</label>
+  </record>
+  <!-- ... --->
+```
+you already have to maintain a stack for building something like restricted DOM trees. Sure it's doable, but it's clearly not an application level task.
+
+And now, imagine you have to validate the input against an XML Schema...
+
+Well, `XMLParser` is designed to fill all the gaps noted above. At the very core, there is yet another SAX event emitter, but wrapped into a  stream of objects ready to use in business logic.
+
+## 4.2 Setup
+
+This is how a typical `XMLReader` initialization looks like:
 
 ```javascript
 const { XMLReader } = require('xml-toolkit');
 const fs = require('fs');
 
+const src = fs.createReadStream('large-export.xml', { encoding: 'utf8' })
 const reader = new XMLReader({
-  // filter      : node    => node.type === 'EndElement' && node.level === 1,
-  filterElements : element => element.level === 1,
+  filterElements : e => e.level === 1,
   map            : XMLNode.toObject ({}),
-}).process (fs.createReadStream('large-export.xml', { encoding: 'utf8' }));
+  // xs          : new XMLSchemata('schema.xsd'),
+})
+  .on('error', err => console.error (err))
+  .process (src);
 ```
 
-### The `filter` / `filterElements` option
-The `filter` predicate runs on each SAX event occured. Returning a [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) values causes the event to be yielded; otherwise it's skipped.
+Now, reader is an [object mode](https://nodejs.org/docs/latest/api/stream.html#object-mode) [readable stream](https://nodejs.org/docs/latest/api/stream.html#readable-streams). Without any configuration options, it will publish every [`SAXEvent`](https://github.com/do-/node-xml-toolkit/wiki/SAXEvent) occurred.
 
-When parsing XML, you rarely need anything but elements in your output (bare text nodes are nearly meaningless). And for elements, you want attributes and child nodes together, not distinct `start` and `end` SAX events. This is why the `filter` option must virtually always include the `type='EndElement'` condition.
+It's worth noting here that, in `node-xml-toolkit`, [`XMLNode`](https://github.com/do-/node-xml-toolkit/wiki/XMLNode)s are considered particular cases of `SAXEvent`s: those with `type='EndElement'`. To be usable in business logic, `XMLReader`'s output is often filtered and transformed as early as possible. To this end, it features two options described in the next sections.
 
-This is why, instead of the raw `filter` option, the `filterElements` wrapper is commonly used.
+### `filterElements`
 
-Common filtering patterns:
+To exclude from the stream all but completely read elements (which is needed virtually always), use the `filterElements` option. This is a predicate which is run on every `'EndElement'` event. Its argument is an [`XMLNode`](https://github.com/do-/node-xml-toolkit/wiki/XMLNode) instance, with all attributes and children in place.
+
+Here are some common filtering patterns:
 ```javascript
 // Match by localName only
 filterElements: 'order'                      // you can mention is as a string
@@ -55,7 +76,7 @@ filterElements: e => e.localName === 'order' // same thing
 filterElements: e => e.localName === 'product' && e.namespaceURI === 'http://shop.example.com'
 
 // Match by level
-filterElements: e => e.level === 1
+filterElements: e => e.level === 1           // the root's children
 
 // Match by attribute value
 filterElements: n => n.attributes.get ('status') === 'active'
@@ -63,8 +84,10 @@ filterElements: n => n.attributes.get ('status') === 'active'
 
 > **Note**: Filters execute synchronously so they must be highly optimized.
 
-### The `map` function
+### `map`
 The `map` transforms the yielded object before it reaches your code. This is ideal for extracting only the fields you need, converting types, or flattening structures.
+
+`XMLNode.toObject ()` (see Chanter 5) is designed to fit in most cases. Or you can tailor a custom mapper like
 
 ```javascript
 map: node => {
@@ -80,88 +103,11 @@ map: node => {
 }
 ```
 
-**Important:** Mappers run synchronously. For heavy computation or I/O, collect minimal data in the mapper and defer processing to your iteration loop.
+**Important:** Mappers too run synchronously. For heavy computation or I/O, collect minimal data in the mapper and defer processing to your iteration loop.
 
-## 4.3 Pull mode: iterating with for-await-of
-
-Being a subclass of [`Readable`](https://nodejs.org/docs/latest/api/stream.html#readable-streams), `XMLReader` implements the [`AsyncIterable`](https://tc39.es/ecma262/#sec-asynciterable-interface) protocol, making [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) available:
-
-### Basic iteration
-
-```javascript
-async function processRecords(filepath) {
-  const reader = new XMLReader({
-    filterElements: 'record'
-  })
-    .on('error', err => console.error(err))  
-    .process (fs.createReadStream(filepath));
-
-  let count = 0;
-  for await (const record of reader) {
-    // Process each record
-    await saveToDatabase(record); // ATTN! performance killer; demo only
-    count++;
-    
-    // Optional: log progress
-    if (count % 1000 === 0) {
-      console.log(`Processed ${count} records...`);
-    }
-  }
-  console.log(`Complete. ${count} records processed.`);
-}
-```
-
-### Early termination
-
-Because parsing is driven by your iteration, you can stop reading at any point:
-
-```javascript
-for await (const node of reader) {
-  if (node.attributes.id === targetId) {
-    console.log('Found target node');
-    break; // Stops iteration and closes underlying stream
-  }
-}
-```
-
-When `break` is executed, `XMLReader` automatically destroys the input stream and releases internal buffers. No manual cleanup is required.
-
-## 4.4 Push mode: event listeners and streams
-
-While pull mode is preferred for modern JavaScript, `XMLReader` also exposes a traditional event emitter interface for compatibility with legacy codebases or complex stream orchestration.
-
-### Event-based consumption
-
-```javascript
-const reader = new XMLReader({
-  filterElements: 'transaction'
-})
-  .on('error', err => console.error(err))
-  .process (fs.createReadStream('data.xml'));
-
-reader.on('error', (err) => {
-  console.error('Parsing error:', err.message, err.line, err.column);
-});
-
-reader.on('end', () => {
-  console.log('Stream ended successfully');
-});
-
-reader.on('data', async (node) => {
-  try {
-    fastSyncProcessTransaction(node); // it MUST be synchronous and real fast
-  } catch (err) {
-    // Errors in event handlers must be caught explicitly
-    console.error('Transaction processing failed:', err);
-  }
-});
-```
-
-## 4.5 Combining with Node.js streams pipeline
+## 4.3 Building streams pipelines
 
 `XMLReader` seamlessly integrates with Node.js `stream.pipeline` API, enabling robust, error-handled data flows that respect backpressure across all components.
-
-### Pipeline example: XML to CSV conversion
 
 ```javascript
 const { pipeline } = require('stream/promises');
@@ -219,29 +165,86 @@ try {
 }
 ```
 
-### Parallel processing considerations
-If your downstream processing is CPU-intensive, split the stream inside the pipeline:
+## 4.4 Pull mode: iterating with for-await-of
+
+Being a subclass of [`Readable`](https://nodejs.org/docs/latest/api/stream.html#readable-streams), `XMLReader` implements the [`AsyncIterable`](https://tc39.es/ecma262/#sec-asynciterable-interface) protocol, making [`for await...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) available:
+
+### Basic iteration
 
 ```javascript
-// Inside pipeline:
-new Transform({
-  objectMode: true,
-  transform(chunk, enc, cb) {
-    // Offload heavy work to worker threads or queue
-    workerPool.run(processRecord, chunk, cb);
+async function processRecords(filepath) {
+  const reader = new XMLReader({
+    filterElements: 'record'
+  })
+    .on('error', err => console.error(err))  
+    .process (fs.createReadStream(filepath));
+
+  let count = 0;
+  for await (const record of reader) {
+    // Process each record
+    await saveToDatabase(record); // ATTN! performance killer; demo only
+    count++;
+    
+    // Optional: log progress
+    if (count % 1000 === 0) {
+      console.log(`Processed ${count} records...`);
+    }
   }
-}),
+  console.log(`Complete. ${count} records processed.`);
+}
 ```
 
-`XMLReader` will continue parsing at the pace dictated by your worker pool, preventing memory exhaustion while maintaining throughput.
+### Early termination
 
-## 4.5 Error handling and diagnostics
+Because parsing is driven by your iteration, you can stop reading at any point:
+
+```javascript
+for await (const node of reader) {
+  if (node.attributes.id === targetId) {
+    console.log('Found target node');
+    break; // Stops iteration and closes underlying stream
+  }
+}
+```
+
+When `break` is executed, `XMLReader` automatically destroys the input stream and releases internal buffers. No manual cleanup is required.
+
+## 4.5 Push mode: event listeners
+
+While using pipelines seems to be the best way to implement incremental data processing and `for await` is a syntactical sugar good enough for fast prototyping, old school raw event listeners are always here:
+
+```javascript
+const reader = new XMLReader({
+  filterElements: 'transaction'
+})
+  .on('error', err => console.error(err))
+  .process (fs.createReadStream('data.xml'));
+
+reader.on('error', (err) => {
+  console.error('Parsing error:', err.message, err.line, err.column);
+});
+
+reader.on('end', () => {
+  console.log('Stream ended successfully');
+});
+
+reader.on('data', async (node) => {
+  try {
+    fastSyncProcessTransaction(node); // it MUST be synchronous and real fast
+  } catch (err) {
+    // Errors in event handlers must be caught explicitly
+    console.error('Transaction processing failed:', err);
+  }
+});
+```
+
+## 4.6 Error handling and diagnostics
 
 `XMLReader` handles errors differently from `XMLParser` due to its streaming, event-driven architecture. While validation message codes and formats are identical to those documented above, the delivery mechanism and recovery strategies differ significantly.
 
-### 4.5.1 Stream-level errors: the `error` event
+### 4.6.1 Stream-level errors: the `error` event
 
-`XMLReader` is a Node.js []`Transform`](https://nodejs.org/docs/latest/api/stream.html#class-streamtransform) stream. Low-level parsing failures—such as malformed XML that breaks the underlying `XMLLexer`—propagate via the standard `error` event:
+`XMLReader` is a Node.js [`Transform`](https://nodejs.org/docs/latest/api/stream.html#class-streamtransform) stream. Low-level parsing failures—such as malformed XML that breaks the underlying `XMLLexer`—propagate via the standard `error` event:
 
 ```javascript
 const { XMLReader } = require('xml-toolkit')
@@ -264,14 +267,14 @@ for await (const node of reader) {
 
 #### Key behaviors
 
-- **Automatic destruction**: When the internal `XMLLexer` emits an `error`, `XMLReader` calls `this.destroy(err)`, terminating the stream and preventing further `data` events [[source]].
+- **Automatic destruction**: When the internal `XMLLexer` emits an `error`, `XMLReader` calls `this.destroy(err)`, terminating the stream and preventing further `data` events.
 - **Async iteration safety**: `for-await-of` loops handle stream errors gracefully—the loop exits and the error is available via the `error` event handler.
 - **No recovery**: Unlike validation messages (see below), stream-level errors are fatal. The document cannot be partially processed once the lexer fails.
 
 > ⚠️ **Always attach an `error` handler before calling `process()`**. Unhandled stream errors may crash your Node.js process.
 
 
-## 4.5.2 Schema validation: the `validation-message` event
+### 4.6.2 Schema validation: the `validation-message` event
 
 When the `xs` option is provided, `XMLReader` performs schema validation. Unlike `XMLParser`, which collects messages in an array, `XMLReader` **emits each validation message immediately** via the `validation-message` event:
 
@@ -279,7 +282,7 @@ When the `xs` option is provided, `XMLReader` performs schema validation. Unlike
 const { XMLReader, XMLSchemata } = require('xml-toolkit')
 
 const xs = new XMLSchemata('schema.xsd')
-const reader = new XMLReader({ xs })
+const reader = new XMLReader({ xs, filterElements: e => e.level === 1 })
   .on('error', err => console.error(err))
   .on('validation-message', (msg) => {
     // msg format: "<CODE> <message>" (same as XMLParser)
@@ -295,13 +298,13 @@ for await (const node of reader) {
 }
 ```
 
-### How validation works internally
+#### How validation works internally
 
 1. On the first `START_ELEMENT` event, `XMLReader` instantiates an `XMLValidator` with your schema and a callback that emits `validation-message` [[source]].
 2. As parsing proceeds, the validator checks each element, attribute, and text node against the schema.
 3. Any violation triggers `emit('validation-message', formattedString)`—**not** an exception.
 
-### Important distinctions from `XMLParser`
+#### Important distinctions from `XMLParser`
 
 | Aspect | `XMLParser` (sync) | `XMLReader` (async/streaming) |
 |--------|-----------------|-------------------------------|

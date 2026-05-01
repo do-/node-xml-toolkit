@@ -11,7 +11,9 @@ Sure you look for obvious solutions and reach for popular npm packages like:
 - [`fast-xml-parser`](https://www.npmjs.com/package/fast-xml-parser): blazing fast, yet DOM-bound and unforgiving on huge files,
 - [`libxmljs2`](https://www.npmjs.com/package/libxmljs2): full XSD support, but requires native compilation and breaks across CI environments,  
 - [`@xmldom/xmldom`](https://www.npmjs.com/package/@xmldom/xmldom): DOM-compliant, but verbose and not built for streaming,
-- [`saxophone`](https://www.npmjs.com/package/saxophone): streaming, fast, light, but lowest level API only,
+- [`sax`](https://www.npmjs.com/package/sax): most popular incremental (SAX style), but lowest level API only,
+- [`saxophone`](https://www.npmjs.com/package/saxophone): similar to `sax`, (maybe) faster, less known, outdated,
+- [`EasySAX`](https://www.npmjs.com/package/easysax): another `sax` alternative, (allegedly) fastest, not documented at all.
 
 ...and face grave problems: memory exhaustion, fragile native bindings, spaghetti code.
 
@@ -19,7 +21,7 @@ AI? Not a silver bullet: you still have to guide it thoroughly, or you’ll end 
 
 Is maybe something wrong with Node.js in general? Oh no, it’s *so* perfect for I/O-heavy, event-driven work—but the history is that XML was deliberately excluded from the core. As a long-time contributor once put it: [*“XML... yuck.”*](https://github.com/nodejs/node/issues/2709) While XML still stays critical in enterprise, finance and government–Node.js'core team treats it just as some old junk (think COBOL). And most independent developers focus on isolated tasks while ignoring the bigger picture.
 
-So meet node-xml-toolkit: a pure-JS, streaming-first, dependency-light companion that lets you tackle huge imports, complex structures, and solve many more XML-related problems without compromising performance or maintainability—the agile way.
+So meet `node-xml-toolkit`: a pure-JS, streaming-first, dependency-light companion that lets you tackle huge imports, complex structures, and solve many more XML-related problems without compromising performance or maintainability—the agile way.
 
 ## 1.2 What problems does it solve?
 
