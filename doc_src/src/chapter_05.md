@@ -1,10 +1,10 @@
 # 5. Mapping XML Nodes to Plain Objects
 
-Funny thing: while XML still stands behind the *“X”* in [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) and [XHR](https://en.wikipedia.org/wiki/XMLHttpRequest), it was almost completely replaced by [JSON](https://www.json.org/json-en.html) so long ago that one could say it was never really used there. So, a fortiori, a native JS library for XML must have a means for transforming parsed DOM fragments into equivalent hierarchies of plain Objects.
+Funny thing: while XML still stands behind the *“X”* in [*“AJAX”*](https://en.wikipedia.org/wiki/Ajax_(programming)) and [*“XHR”*](https://en.wikipedia.org/wiki/XMLHttpRequest), it was almost completely replaced by [JSON](https://www.json.org/json-en.html) so long ago that one could say it was never really used there. So, a fortiori, a native JS library for XML must have a means for transforming parsed DOM fragments into equivalent hierarchies of plain Objects.
 
-Alas, due to a well known sort of "impedance mismatch", this problem has no general solution. While JS[ON] data model is nearly ideal for business logic, XML DOM has some extra degrees of freedom that make the automatic conversion impossible. There is no way to map *mixed content* (distinguishable sequential text fragments intermitted by sibling elements–all this inside a parent element having attributes) to a plain JSON Object without either losing data or bloating the result with redundant elements requiring an immediate transformation to clean them up.
+Alas, due to a well known sort of "impedance mismatch", this problem has no general solution. Compared to JS[ON], XML DOM has extra degrees of freedom that make automatic conversions impossible. There is no way to concise plain JSON Object from a *mixed content*: text fragments interspersed with sibling elements–all that inside a parent element having attributes. You either lose data or bloat the output just to clean it up right away.
 
-`node-xml-toolkit` takes a practical approach to this problem: if offers a solution that works for most _data centric_ XML (like DB dumps–opposed to _document centric_ things like [OOXML](https://ooxml.info/docs/)).
+`node-xml-toolkit` takes a practical approach to this problem: it places _document centric_ things (like [OOXML](https://ooxml.info/docs/)) out of scope and offers a simple tool, `XMLNode.toObject`, that works for most _data centric_ XML (like DB dumps).
 
 ## 5.1 Usage Pattern
 ### Direct invocation on a parsed node
