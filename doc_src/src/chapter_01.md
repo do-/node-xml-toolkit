@@ -1,5 +1,7 @@
 # 1. Introduction
 
+> **Apology**: this documentation is an example of AI slop. Its first version was generated with chat prompts based on the [source code](https://github.com/do-/node-xml-toolkit/tree/main/lib) and local [wiki pages](https://github.com/do-/node-xml-toolkit/wiki). Though almost all code samples and a good deal of paragraphs were rewritten by a creature of flesh and blood, some meaningless hackwork may still persist. In case you notice such defects, feel free to address the author via [GitHub Issues](https://github.com/do-/node-xml-toolkit/issues).
+
 ## 1.1 Why node-xml-toolkit?
 
 So you’re working on a large Node.js project, and
