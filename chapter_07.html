@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b17cc8a7.js";
+            window.path_to_searchindex_js = "searchindex-851169c3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a9415588.js"></script>
@@ -175,22 +175,30 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="7-generating-well-formed-xml-with-xmlprinter"><a class="header" href="#7-generating-well-formed-xml-with-xmlprinter">7. Generating Well Formed XML with XMLPrinter</a></h1>
-<p>This chapter covers the two primary components in <code>node-xml-toolkit</code> for generating well-formed XML: <code>XMLPrinter</code> and <code>XMLStreamPrinter</code>. Both provide a fluent, chainable API for constructing XML documents programmatically. The choice between them depends on the size of your output and memory constraints.</p>
-<h2 id="71-choosing-the-right-printer"><a class="header" href="#71-choosing-the-right-printer">7.1 Choosing the Right Printer</a></h2>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>Component</th><th>Use Case</th><th>Memory Model</th><th>Output Destination</th></tr>
-</thead>
-<tbody>
-<tr><td><code>XMLPrinter</code></td><td>Small to medium XML fragments (e.g., isolated elements, config snippets)</td><td>Accumulates entire output in <code>.text</code> property (in-memory string)</td><td>Returns complete string via <code>.text</code></td></tr>
-<tr><td><code>XMLStreamPrinter</code></td><td>Large documents, streaming to files/network, memory-constrained environments</td><td>Writes directly to a Writable stream; no in-memory accumulation</td><td>Requires <code>out</code> option: a Node.js <code>stream.Writable</code></td></tr>
-</tbody>
-</table>
-</div>
-<p><strong>Rule of thumb</strong>: Use <code>XMLPrinter</code> when the entire XML output fits comfortably in memory. Use <code>XMLStreamPrinter</code> when generating large documents, writing to files, or integrating with HTTP responses.</p>
-<h2 id="72-common-configuration-options"><a class="header" href="#72-common-configuration-options">7.2 Common Configuration Options</a></h2>
-<p>Both printers accept the same constructor options. All are optional:</p>
+<p>As XML is totally human readable and hand writable, you generally don’t need any specialized tool to produce it. Especially with ES6 text templates, you just take a sample and put in some placeholders:</p>
+<pre><code class="language-js">  const xml = ```xml
+    &lt;request&gt;
+      &lt;param name="${param.name}"&gt;${param.value}&lt;/param&gt;
+    &lt;/request&gt;
+  ```
+</code></pre>
+<p>It works well until one of those pesky <code>'&lt;&amp;&gt;"</code> characters occurs. At that point, you have three basic options:</p>
+<ul>
+<li>resort to calling <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"><code>replace</code></a> / <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll"><code>replaceAll</code></a> with similar <code>RegExp</code>s for every string to interpolate (which slows down things by the way);</li>
+<li>start an (N+1)th XML serialization library micro project;</li>
+<li>use an existing one.</li>
+</ul>
+<p>If you are at the square #3, consider <code>node-xml-toolkit</code>’s</p>
+<ul>
+<li><code>XMLPrinter</code> (for limited size documents) and</li>
+<li><code>XMLStreamPrinter</code> (for large files)</li>
+</ul>
+<p>which work around most pitfalls and offer some configuration options for the case you want not just a well formed, but pretty printed XML.</p>
+<blockquote>
+<p><strong>Note</strong>: If you have an XML Schema your output must comply with, skip this charter and go ahead to the next one, about <code>XMLMarshaller</code>.</p>
+</blockquote>
+<h2 id="71-configuration"><a class="header" href="#71-configuration">7.1 Configuration</a></h2>
+<p>Both printers accept the same constructor parameters. All are optional:</p>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -200,9 +208,9 @@
 <tr><td><code>decl</code></td><td><code>undefined</code></td><td>If set, automatically writes an XML declaration (<code>&lt;?xml ...?&gt;</code>) with the provided <code>encoding</code> and <code>standalone</code> values</td></tr>
 <tr><td><code>space</code></td><td><code>undefined</code></td><td>Indentation for pretty-printing. Accepts a string (e.g., <code>'\t'</code>) or a number (repeated spaces, e.g., <code>2</code> → <code>'  '</code>). If unset, output is minified (single-line)</td></tr>
 <tr><td><code>attrSpace</code></td><td><code>undefined</code></td><td>Additional indentation for attributes. When set, each attribute appears on its own line, indented relative to the opening tag</td></tr>
-<tr><td><code>EOL</code></td><td><code>os.EOL</code></td><td>Line ending string. Only relevant when <code>space</code> is set</td></tr>
+<tr><td><code>EOL</code></td><td><a href="https://nodejs.org/docs/latest/api/os.html#oseol"><code>os.EOL</code></a></td><td>Line ending string. Only relevant when <code>space</code> is set</td></tr>
 <tr><td><code>level</code></td><td><code>0</code></td><td>Initial indentation level (number of <code>space</code> units to prepend)</td></tr>
-<tr><td><code>encodeLineBreaks</code></td><td><code>true</code></td><td>When <code>true</code>, replaces <code>\n</code> and <code>\r</code> in text/attributes with numeric entities (<code>&amp;#10;</code>, <code>&amp;#13;</code>) for well-formedness</td></tr>
+<tr><td><code>encodeLineBreaks</code></td><td><code>true</code></td><td>When <code>true</code>, replaces <code>\n</code> and <code>\r</code> in text/attributes with numeric entities (<code>&amp;#10;</code>, <code>&amp;#13;</code>)</td></tr>
 </tbody>
 </table>
 </div>
@@ -215,10 +223,8 @@ const xp = new XMLPrinter({
   decl: { encoding: 'UTF-8' } // Auto-write XML declaration
 });
 </code></pre>
-<h2 id="73-core-api-low-level-methods"><a class="header" href="#73-core-api-low-level-methods">7.3 Core API: Low-Level Methods</a></h2>
+<h2 id="72-core-api-low-level-methods"><a class="header" href="#72-core-api-low-level-methods">7.2 Core API: Low-Level Methods</a></h2>
 <p>Both printers expose the same chainable methods. Each returns <code>this</code> to enable fluent composition.</p>
-<h3 id="reset"><a class="header" href="#reset"><code>reset()</code></a></h3>
-<p>(<code>XMLPrinter</code> only) Resets internal state: clears accumulated text, empties the element stack, and applies the <code>decl</code> option if present. Called automatically by the constructor.</p>
 <h3 id="writexmldeclencoding-standalone"><a class="header" href="#writexmldeclencoding-standalone"><code>writeXMLDecl({encoding, standalone})</code></a></h3>
 <p>Writes an XML declaration. Must be called before any elements. The <code>standalone</code> value is normalized: truthy → <code>'yes'</code>, falsy → <code>'no'</code>.</p>
 <pre><code class="language-javascript">xp.writeXMLDecl({ encoding: 'UTF-8', standalone: true });
@@ -242,7 +248,7 @@ const xp = new XMLPrinter({
 <p>Writes raw XML content <em>without</em> escaping. Use only when <code>value</code> is a pre-validated, well-formed XML fragment (e.g., for embedding <code>xs:any</code> content). Throws if called outside an element context.</p>
 <h3 id="closeelement"><a class="header" href="#closeelement"><code>closeElement()</code></a></h3>
 <p>Closes the most recently opened element. If no content was added, emits a self-closing tag (<code>&lt;name /&gt;</code>); otherwise, emits <code>&lt;/name&gt;</code>. Pops the element name from the internal stack.</p>
-<h2 id="74-convenience-method-writenodenode"><a class="header" href="#74-convenience-method-writenodenode">7.4 Convenience Method: <code>writeNode(node)</code></a></h2>
+<h2 id="73-convenience-method-writenodenode"><a class="header" href="#73-convenience-method-writenodenode">7.3 Convenience Method: <code>writeNode(node)</code></a></h2>
 <p>For cases where you already have a structured representation generated by <code>XMLParser</code> or <code>XMLReader</code>, <code>writeNode</code> recursively serializes an <code>XMLNode</code> object:</p>
 <ul>
 <li>Handles element names, attributes, and child nodes</li>
@@ -252,10 +258,7 @@ const xp = new XMLPrinter({
 <pre><code class="language-javascript">// Assuming `node` is an XMLNode instance from xml-toolkit's parser
 xp.writeNode(node);
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: Namespace consistency is the caller’s responsibility unless using <code>writeNode</code>, which inspects <code>namespacesMap</code>.</p>
-</blockquote>
-<h2 id="75-using-xmlprinter-in-memory-generation"><a class="header" href="#75-using-xmlprinter-in-memory-generation">7.5 Using XMLPrinter: In-Memory Generation</a></h2>
+<h2 id="74-using-xmlprinter-in-memory-generation"><a class="header" href="#74-using-xmlprinter-in-memory-generation">7.4 Using XMLPrinter: In-Memory Generation</a></h2>
 <p><code>XMLPrinter</code> accumulates output in the <code>.text</code> property. This is convenient for small outputs but risks memory exhaustion for large documents.</p>
 <h3 id="basic-example"><a class="header" href="#basic-example">Basic Example</a></h3>
 <pre><code class="language-javascript">const {XMLPrinter} = require('xml-toolkit');
@@ -290,7 +293,7 @@ const frag1 = xp.openElement('a').writeCharacters('x').closeElement().text;
 xp.reset();
 const frag2 = xp.openElement('b').writeCharacters('y').closeElement().text;
 </code></pre>
-<h2 id="76-using-xmlstreamprinter-streaming-to-a-destination"><a class="header" href="#76-using-xmlstreamprinter-streaming-to-a-destination">7.6 Using XMLStreamPrinter: Streaming to a Destination</a></h2>
+<h2 id="75-using-xmlstreamprinter-streaming-to-a-destination"><a class="header" href="#75-using-xmlstreamprinter-streaming-to-a-destination">7.5 Using XMLStreamPrinter: Streaming to a Destination</a></h2>
 <p><code>XMLStreamPrinter</code> writes directly to a Node.js <code>Writable</code> stream. It does not accumulate output in memory and does not expose a <code>.text</code> property.</p>
 <h3 id="basic-example-writing-to-a-file"><a class="header" href="#basic-example-writing-to-a-file">Basic Example: Writing to a File</a></h3>
 <pre><code class="language-javascript">const fs = require('node:fs');
@@ -313,10 +316,7 @@ out.end(); // Finalizes the stream
 <li>The printer monitors the destination stream’s <code>drain</code> event to apply backpressure automatically.</li>
 <li>The printer exposes <code>.destroy(err)</code> and <code>.end()</code> getters that delegate to the underlying stream.</li>
 </ul>
-<h3 id="advanced-integrating-with-transform-streams"><a class="header" href="#advanced-integrating-with-transform-streams">Advanced: Integrating with Transform Streams</a></h3>
-<p><code>XMLStreamPrinter</code> supports controlled streaming via its <code>forEach(stream, onData)</code> method (experimental). This allows pausing/resuming the input stream based on destination readiness. Nested streams are not yet supported.</p>
-<hr>
-<h2 id="77-escaping-and-well-formedness-guarantees"><a class="header" href="#77-escaping-and-well-formedness-guarantees">7.7 Escaping and Well-Formedness Guarantees</a></h2>
+<h2 id="76-escaping-and-well-formedness-guarantees"><a class="header" href="#76-escaping-and-well-formedness-guarantees">7.6 Escaping and Well-Formedness Guarantees</a></h2>
 <p>Both printers enforce XML well-formedness through automatic escaping:</p>
 <ul>
 <li><strong>Attribute values</strong>: <code>"</code> → <code>&amp;quot;</code>, <code>&lt;</code> → <code>&amp;lt;</code>, <code>&gt;</code> → <code>&amp;gt;</code>, <code>&amp;</code> → <code>&amp;amp;</code>, and (by default) line breaks → <code>&amp;#10;</code>/<code>&amp;#13;</code></li>
@@ -326,8 +326,8 @@ out.end(); // Finalizes the stream
 <blockquote>
 <p><strong>Critical</strong>: All <code>value</code> arguments to <code>writeAttribute</code> and <code>writeCharacters</code> must be strings. Numbers, <code>null</code>, <code>undefined</code>, or objects will throw. Convert explicitly: <code>String(value)</code> or format properly.</p>
 </blockquote>
-<h2 id="78-namespaces-practical-guidance"><a class="header" href="#78-namespaces-practical-guidance">7.8 Namespaces: Practical Guidance</a></h2>
-<p>The low-level API treats element and attribute names as opaque strings. You may include colons (e.g., <code>'xsi:type'</code>) manually:</p>
+<h2 id="77-namespaces-diy"><a class="header" href="#77-namespaces-diy">7.7 Namespaces: DIY</a></h2>
+<p>In the spirit of perfectly pure <a href="https://www.w3.org/TR/xml/">XML 1.0</a> (thus <a href="http://www.jclark.com/xml/xmlns.htm">without any idea about namespaces</a>), the low-level API treats element and attribute names as opaque strings. You may include colons (e.g., <code>'xsi:type'</code>) manually:</p>
 <pre><code class="language-javascript">xp.openElement('root')
   .writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
   .writeAttribute('xsi:schemaLocation', '...')
@@ -335,8 +335,7 @@ out.end(); // Finalizes the stream
   .closeElement()
 .closeElement();
 </code></pre>
-<p>For automatic namespace declaration handling, use <code>writeNode(node)</code> with a node that includes a <code>namespacesMap</code> (a <code>Map</code> of prefix → URI, with an optional <code>default</code> property for the default namespace).</p>
-<h2 id="79-complete-example-generating-a-feed-document"><a class="header" href="#79-complete-example-generating-a-feed-document">7.9 Complete Example: Generating a Feed Document</a></h2>
+<h2 id="78-complete-example-generating-a-feed-document"><a class="header" href="#78-complete-example-generating-a-feed-document">7.8 Complete Example: Generating a Feed Document</a></h2>
 <pre><code class="language-javascript">const fs = require('node:fs');
 const {XMLStreamPrinter} = require('xml-toolkit');
 
