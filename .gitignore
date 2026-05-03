@@ -2,3 +2,4 @@ node_modules
 coverage
 /doc_src/book
 /doc_src/mdbook.exe
+/doc_src/jekyll/_site

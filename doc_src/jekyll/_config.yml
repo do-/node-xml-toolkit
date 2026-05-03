@@ -1,0 +1,59 @@
+permalink:           pretty
+
+# Setup
+title:               "The node-xml-toolkit User's Guide"
+# tagline:             'A Jekyll theme'
+url:                 https://do-.github.io/node-xml-toolkit/
+baseurl:             '/node-xml-toolkit'
+homepage_title:      Home
+default_lang:        'en'
+
+# About/contact
+author:
+  name:              Dmitry Ovsyanko
+  url:               https://github.com/do-
+github:
+  repo:              https://github.com/do-/node-xml-toolkit
+
+# Custom vars
+version:             1.0.0
+
+src:                 "."
+default_theme:       "light"
+
+kramdown:
+  header_links : true
+  toc_levels: 2..6
+  syntax_highlighter_opts:
+    disable : true
+  # math_engine: null
+
+# exclude:
+#   - README.md
+
+# prologues:
+#   - path: chapters/prologue.md
+#     sections:
+#       - path: chapters/prologue2.md
+chapters:
+  - path: en/install.md
+  - path: en/read.md
+    sections:
+    - path: en/XMLParser.md
+    - path: en/XMLReader.md
+    - path: en/XMLNode.toObject.md
+    - path: en/XMLNode.md
+  - path: en/write.md
+    sections:
+    - path: en/XMLMarshaller.md
+    - path: en/XMLPrinter.md
+  - path: en/XMLSchemata.md
+
+
+  # - path: chapters/chapter_02.md
+  #   sections:
+  #     - path: chapters/01-1.md
+  #     - path: chapters/01-2.md
+  # - path: chapters/02.md
+# epilogues:
+#   - path: chapters/epilogue.md

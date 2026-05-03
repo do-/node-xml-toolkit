@@ -1,0 +1,298 @@
+/* Base styles and content styles */
+
+@import 'variables.css';
+
+:root {
+    /* Browser default font-size is 16px, this way 1 rem = 10px */
+    font-size: 62.5%;
+}
+
+html {
+    font-family: "Open Sans", sans-serif;
+    color: var(--fg);
+    background-color: var(--bg);
+    text-size-adjust: none;
+}
+
+body {
+    margin: 0;
+    font-size: 1.6rem;
+    overflow-x: hidden;
+}
+
+code {
+    font-family: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace !important;
+    font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
+}
+
+.left { float: left; }
+.right { float: right; }
+.boring { opacity: 0.6; }
+.hide-boring .boring { display: none; }
+.hidden { display: none; }
+
+/*
+h2, h3 { margin-top: 2.5em; }
+h4, h5 { margin-top: 2em; }
+*/
+
+h2, h3, h4, h5 { margin-top: 1.5em; }
+
+.header + .header h3,
+.header + .header h4,
+.header + .header h5 {
+    margin-top: 1em;
+}
+
+h1 a.header:target::before,
+h2 a.header:target::before,
+h3 a.header:target::before,
+h4 a.header:target::before {
+    display: inline-block;
+    content: "»";
+    margin-left: -30px;
+    width: 30px;
+}
+
+h1 a.header:target,
+h2 a.header:target,
+h3 a.header:target,
+h4 a.header:target {
+    scroll-margin-top: calc(var(--menu-bar-height) + 0.5em);
+}
+
+.page {
+    outline: 0;
+    padding: 0 var(--page-padding);
+}
+.page-wrapper {
+    box-sizing: border-box;
+}
+.js:not(.sidebar-resizing) .page-wrapper {
+    transition: margin-left 0.3s ease, transform 0.3s ease; /* Animation: slide away */
+}
+
+.content {
+    overflow-y: auto;
+    padding: 0 15px;
+    padding-bottom: 50px;
+}
+.content main {
+    margin-left: 90px;
+    margin-right: 90px;
+/*    
+    margin-left: auto;
+    margin-right: auto;
+*/    
+    max-width: var(--content-max-width);
+}
+.content a { text-decoration: none; }
+.content a:hover { text-decoration: underline; }
+.content img { max-width: 100%; }
+.content .header:link,
+.content .header:visited {
+    color: var(--fg);
+}
+.content .header:link,
+.content .header:visited:hover {
+    text-decoration: none;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+table td {
+    padding: 3px 20px;
+    border: 1px var(--table-border-color) solid;
+}
+table thead {
+    background: var(--table-header-bg);
+}
+table thead td {
+    font-weight: 700;
+    border: none;
+}
+table thead th {
+    padding: 3px 20px;
+}
+table thead tr {
+    border: 1px var(--table-header-bg) solid;
+}
+/* Alternate background colors for rows */
+table tbody tr:nth-child(2n) {
+    background: var(--table-alternate-bg);
+}
+
+
+blockquote {
+    margin: 20px 0;
+    padding: 0 20px;
+    color: var(--fg);
+    background-color: var(--quote-bg);
+    border-top: .1em solid var(--quote-border);
+    border-bottom: .1em solid var(--quote-border);
+}
+
+
+:not(.footnote-definition) + .footnote-definition,
+.footnote-definition + :not(.footnote-definition) {
+    margin-top: 2em;
+}
+.footnote-definition {
+    font-size: 0.9em;
+    margin: 0.5em 0;
+}
+.footnote-definition p {
+    display: inline;
+}
+
+.tooltiptext {
+    position: absolute;
+    visibility: hidden;
+    color: #fff;
+    background-color: #333;
+    transform: translateX(-50%); /* Center by moving tooltip 50% of its width left */
+    left: -8px; /* Half of the width of the icon */
+    top: -35px;
+    font-size: 0.8em;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 8px;
+    margin: 5px;
+    z-index: 1000;
+}
+.tooltipped .tooltiptext {
+    visibility: visible;
+}
+
+ul[id="markdown-toc"] {
+    float: right;
+}
+
+/* Container: make headings positionable */
+/* h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+  position: relative;
+  scroll-margin-top: 1.5rem; / * offset for fixed headers * /
+} */
+
+/* Anchor link (if kramdown outputs a child <a class="headerlink"> or you inject one) */
+/* h1[id] .headerlink,
+h2[id] .headerlink,
+h3[id] .headerlink,
+h4[id] .headerlink,
+h5[id] .headerlink,
+h6[id] .headerlink {
+  position: absolute;
+  left: -1.6em;           / * show left of heading text; tweak as needed * /
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em;
+  height: 1em;
+  text-decoration: none;
+  color: #6b7280;         / * subtle icon color * /
+  opacity: 0;             / * hidden by default * /
+  transition: opacity .15s ease, color .15s ease;
+  font-size: 0.9em;
+  line-height: 1;
+} */
+
+/* Show on hover/focus of heading for keyboard accessibility */
+/* h1[id]:hover .headerlink,
+h2[id]:hover .headerlink,
+h3[id]:hover .headerlink,
+h4[id]:hover .headerlink,
+h5[id]:hover .headerlink,
+h6[id]:hover .headerlink,
+h1[id] .headerlink:focus,
+h2[id] .headerlink:focus,
+h3[id] .headerlink:focus,
+h4[id] .headerlink:focus,
+h5[id] .headerlink:focus,
+h6[id] .headerlink:focus {
+  opacity: 1;
+} */
+
+/* If you prefer the icon inline after heading text */
+/* .headerlink-inline {
+  margin-left: 0.5rem;
+  font-size: 0.85em;
+  vertical-align: middle;
+  color: #9ca3af;
+  text-decoration: none;
+  opacity: 0.75;
+} */
+
+/* Visited/focus states */
+/* .headerlink:focus,
+.headerlink-inline:focus {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  opacity: 1;
+} */
+
+/* Example: show a hash symbol using ::before when no link element exists */
+/* h1[id]::before,
+h2[id]::before,
+h3[id]::before,
+h4[id]::before,
+h5[id]::before,
+h6[id]::before {
+  content: "";
+  display: none;
+} */
+
+/* If you want a visible hash icon at the end of headings */
+/* h1[id]::after,
+h2[id]::after,
+h3[id]::after,
+h4[id]::after,
+h5[id]::after,
+h6[id]::after {
+  content: " #";
+  font-size: 0.85em;
+  margin-left: 0.45rem;
+  color: #9ca3af;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+h1[id]:hover::after,
+h2[id]:hover::after,
+h3[id]:hover::after,
+h4[id]:hover::after,
+h5[id]:hover::after,
+h6[id]:hover::after {
+  opacity: 1;
+} */
+
+/* Accessibility: ensure focusable anchors inside headings are visible */
+/* h1[id] a,
+h2[id] a,
+h3[id] a,
+h4[id] a,
+h5[id] a,
+h6[id] a {
+  text-decoration: none;
+  color: inherit;
+} */
+
+
+
+
+
+
+
+
+/*
+h1[id] a::after,
+h2[id] a::after,
+h3[id] a::after,
+h4[id] a::after,
+h5[id] a::after,
+h6[id] a::after {
+  content: " #";
+  text-decoration: none;
+  color: inherit; 
+} 
+*/
